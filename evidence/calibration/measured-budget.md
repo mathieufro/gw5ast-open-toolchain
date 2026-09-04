@@ -34,6 +34,18 @@ shapes should re-measure `yosys`/`nextpnr` at that scale and refresh this number
 as a parking-lot note, not fixed here.)
 
 ```
+
+**Machine-readable form** (`P0.T39`). `__main__.measured_per_run_total()` reads this
+file and needs the value adjacent to the name; the worked derivation above puts three
+addends between them, so the batch runner silently fell back to the `ASSUMED` 35-minute
+figure and every `BATCH_SIZE` line printed `source=ASSUMED`. The single-line form below
+is what the reader parses; it restates the derivation's result and nothing else.
+
+```
+measured_per_run_total = 41.481 s
+```
+
+```
 batch_runs = floor(10 h * parallelism / measured_per_run_total)
   @ parallelism = 1 (spec.md default until measured):  floor(36000 / 41.481) = 867
   @ parallelism = 2 (this run's measured floor):        floor(72000 / 41.481) = 1735

@@ -1,0 +1,47 @@
+BATCH_START batch=p0-e2e-0001 shape=smoke level=E1 pid=92259 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/e2e-p0
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+BATCH_HEAD gw_sh pre-flight: ok
+WARNING: no P0.T34 measured-budget.md found; falling back to the ASSUMED per-run total of 2100s (spec.md §8.2 ASSUMED, D51)
+BATCH_SIZE batch_runs=17 source=ASSUMED parallelism=1 (this batch: 1 run ids)
+BATCH_RESUME batch=p0-e2e-0001 planned=1 already_terminal=0
+RUN_START p0-e2e-0001-smoke-0000 sweep=None
+RUN_DONE p0-e2e-0001-smoke-0000 verdict=diff
+BATCH_SKIPPED batch=p0-e2e-0001 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p0-e2e-0001.rows.jsonl
+BATCH_COMPLETE p0-e2e-0001 runs=1 ok=0 diff=1 aborted=0
+BATCH_START batch=p0-e2e-0001 shape=smoke level=E1 pid=23590 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/e2e-p0
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+BATCH_RESUME batch=p0-e2e-0001 planned=1 already_terminal=1
+RUN_SKIP p0-e2e-0001-smoke-0000 (terminal row already present)
+BATCH_SKIPPED batch=p0-e2e-0001 n=1 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p0-e2e-0001.rows.jsonl
+BATCH_COMPLETE p0-e2e-0001 runs=0 ok=0 diff=0 aborted=0
+BATCH_START batch=p0-e2e-0001 shape=smoke level=E1 pid=29193 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/e2e-p0
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+BATCH_RESUME batch=p0-e2e-0001 planned=1 already_terminal=0
+RUN_START p0-e2e-0001-smoke-0000 sweep=None
+RUN_DONE p0-e2e-0001-smoke-0000 verdict=diff
+BATCH_SKIPPED batch=p0-e2e-0001 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p0-e2e-0001.rows.jsonl
+BATCH_COMPLETE p0-e2e-0001 runs=1 ok=0 diff=1 aborted=0
+BATCH_START batch=p0-e2e-0001 shape=smoke level=E1 pid=50635 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/e2e-p0
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+BATCH_RESUME batch=p0-e2e-0001 planned=1 already_terminal=1
+RUN_SKIP p0-e2e-0001-smoke-0000 (terminal row already present)
+BATCH_SKIPPED batch=p0-e2e-0001 n=1 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p0-e2e-0001.rows.jsonl
+BATCH_COMPLETE p0-e2e-0001 runs=0 ok=0 diff=0 aborted=0

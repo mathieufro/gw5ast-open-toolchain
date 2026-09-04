@@ -24,6 +24,8 @@
 # provenance stamps: sha256 lists, tool versions, gowinhome.selected
 !_runs/*.txt
 !_runs/*.selected
+# the Licence Gate's provisional marker read by P0.T39 (F10, D52)
+!_runs/*.flag
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo
