@@ -1,0 +1,7 @@
+STEP yosys returncode=0 wall_clock_s=0.255 log=/Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/yosys.log
+STEP nextpnr returncode=0 wall_clock_s=0.672 log=/Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/nextpnr.log
+STEP gowin_pack returncode=0 wall_clock_s=1.895 log=/Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/gowin_pack.log
+FMAX clock=clk_IBUF_I_O mhz=3012.05 verdict=PASS target_mhz=12.0
+BITSTREAM /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/top.fs 34668145 489587b1a547414a168664f1ccb38a7629df77316c3194ffc6947204a6170c64
+PROVENANCE yosys_version=Yosys 0.63 (git sha1 70a11c6bf0e8dd669f56c7da3587f78b405138e2, clang++ 17.0.0 -fPIC -O3) | apicula_sha=143d156c096a91a3d22cc4d75050517770eb1d0b | nextpnr_sha=e8440c716493f84534220c2c0e2345ec13441e77 | chipdb_sha256=929efdf8fa276a4d5eb82780c0361e5f9ac63c4c9d816d192fad145681fb139d | timing_allow_fail_needed=False
+EXIT=0

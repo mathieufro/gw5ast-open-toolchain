@@ -56,3 +56,19 @@ Replacement, installed to both locations above:
   sha256 a52ae4fc11f84028460aeaa1729dcc0b44f208705fda06f5112de14984ef8fcf
 Details, including the smoke that this .bin does load and route:
   evidence/_runs/openflow-t21.txt
+
+## SUPERSEDED by P0.T40 (2026-09-04) -- rebuild on de-aliased tm_parser
+Source chipdb: apicula/apycula/GW5AST-138C.msgpack.xz, sha256
+  fd1d112d0c463d9e7ba918b0651cac0c9b4e90dac392ae36e8cec297bf9ee2bb, 816620 bytes
+  (P0.T35/T36 de-aliased tm_parser, apicula HEAD 143d156).
+Build: gowin_arch_gen.py -d GW5AST-138C -o chipdb-GW5AST-138C.bba (98 s) ->
+  bbasm --le chipdb-GW5AST-138C.bba chipdb-GW5AST-138C.bin (4 s). .bba deleted after.
+Artifact: chipdb-GW5AST-138C.bin, 63,856,432 bytes,
+  sha256 929efdf8fa276a4d5eb82780c0361e5f9ac63c4c9d816d192fad145681fb139d
+  (the P0.T21 artifact, 63,977,039 B / bb2af952..., is now superseded).
+Installed byte-identical to both:
+  $DATASTORE/toolchains/nextpnr/share/himbaechel/gowin/chipdb-GW5AST-138C.bin
+  $DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin
+Openflow smoke re-run against this .bin (fuzz.gw5ast138c.harness.openflow, oracle-smoke
+design): exit 0, top.fs 34,668,145 B, chipdb_sha256=929efdf8... in the PROVENANCE line.
+Full log: evidence/_runs/openflow-t40.txt.

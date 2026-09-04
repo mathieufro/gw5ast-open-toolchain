@@ -126,3 +126,60 @@ its sha256 was recorded.
 
 Artefacts: `$DATASTORE/chipdb/std/{GW5AST-138C,GW5AST-138C-run2,GW5A-25A,GW5AT-60B}.msgpack.xz`.
 Logs: `evidence/_runs/chipdb-std-{GW5AST-138C,GW5AST-138C-run2,GW5A-25A,GW5AT-60B,GW1N-9C}.log`.
+
+---
+
+## P0.T40 — rebuild every chipdb artefact on the de-aliased `tm_parser` (2026-09-04)
+
+Re-ran `P0.T15`'s procedure (chipdb builds) and `P0.T16`'s procedure (nextpnr `.bin`)
+against `tm_parser.py` as landed by `P0.T35` (6ce06da) and `P0.T36` (b6f7c8e), on `apicula`
+HEAD `143d156`. `chipdb-sha256.txt` gained a second, labelled block; the six lines `P0.T15`
+wrote are untouched (they were in fact **restored** — see deviation below).
+
+| artefact | pre-T35/T40 sha256 | post-T40 sha256 | bytes (pre -> post) | changed? |
+|---|---|---|---|---|
+| GW5AST-138C.msgpack.xz | `ab1339e4…` (P0.T15b) / `a52ae4fc…` (P0.T21, dat-fix, unrecorded in this file) | `fd1d112d…` | 811780 -> 816620 | **yes** (already landed by T35's own commit; this task re-confirms and re-derives it independently) |
+| GW5A-25A.msgpack.xz | `fa431045…` (P0.T15b) | `6311219d…` | 320296 -> 321484 | **yes** |
+| GW5AT-60B.msgpack.xz | `5a921a83…` (P0.T15b) | `615d4d03…` | 320908 -> 322028 | **yes** |
+| chipdb-GW5AST-138C.bin (nextpnr) | `bb2af952…` (P0.T21) | `929efdf8…` | 63,977,039 -> 63,856,432 | **yes** |
+
+None of the three devices' sha256 is unchanged, so there is no "de-aliasing did not reach
+the artefact" finding this time.
+
+**Determinism**: `GW5AST-138C` built twice this task, same shell, same parser commit —
+both runs `fd1d112d…`, 816620 B, byte-identical (`save_chipdb` canonicalisation from
+P0.T13b holds).
+
+**Timing-table proof** (test_chipdb_138c_timing_changed_after_dealias, second half):
+loading the rebuilt `apycula/GW5AST-138C.msgpack.xz` and inspecting `Device.timing.keys()`
+gives `{'C1/I0', 'C2/I1', 'unidentified_1', 'unidentified_2'}` — `C1/I0` and `C2/I1` present,
+`ES` and `A0` absent. Confirms `S17a`'s de-aliasing reached the artefact the harness reads.
+
+**`.bin` rebuild** (P0.T16 procedure verbatim): `gowin_arch_gen.py -d GW5AST-138C` (98 s) ->
+`bbasm --le` (4 s) -> `chipdb-GW5AST-138C.bin`, 63,856,432 B, sha256 `929efdf8…`. Installed
+byte-identical to both `$DATASTORE/toolchains/nextpnr/share/himbaechel/gowin/` (install
+prefix) and `$DATASTORE/chipdb/std/` (harness `--chipdb` pin). The 220 MB `.bba` was
+deleted per the disk rule.
+
+**Openflow smoke re-run** (openflow.py, P0.T21's smoke design, against the new `.bin`):
+exit 0, `top.fs` produced. See `evidence/_runs/openflow-t40.txt`.
+
+### Deviations (P0.T40)
+
+- **`chipdb-sha256.txt` did not exist in `open-toolchain/`.** Traced to the C10/D80
+  evidence-tree relocation (`ce22bc8`): the file existed with 21 lines at umbrella commit
+  `46a5b22` and was **not** carried into the new submodule (`30f28c0`, the initial import,
+  omits it; `git log --all` for the path inside `open-toolchain` returns nothing). Per the
+  standing order this is fixed on the spot, not just noted: the six P0.T15/T15b lines
+  (3 devices + 138C determinism run + the GW1N-9C `gw_sh` proof) were restored verbatim
+  from `46a5b22` as block one before the post-T35 block was appended. The two blocks
+  therefore have **6** and **5** data lines respectively (the post-T35 block adds a `bin`
+  row the pre-T35 block never had, and omits the GW1N-9C pre-GW5 proof — pre-GW5 chipdbs
+  are untouched by the GW5A-only `tm_parser` de-aliasing and were not rebuilt).
+- **"Both installs" is unreachable on this box**, same as `P0.T15b`/`P0.T16b`/`P0.T21`: the
+  Education 1.9.11.03 install was removed from disk 2026-09-04 (C9/D79). Every row in both
+  blocks is `std`. This is the same, already-recorded deviation, not a new one.
+- Pre-GW5 chipdbs (`GW1N-9C`, `GW1NS-4`, `GW2A-18C`) were **not** rebuilt: `tm_parser`'s
+  `P0.T35`/`P0.T36` changes are scoped to the `GW5A*` chunk-order branch only (`grounding-facts.md`
+  F/`tm_parser.py:314-329`); pre-GW5 `.tm` parsing was already proven repr-identical to
+  apycula 0.33 by `P0.T35`. Rebuilding them would exercise no changed code path.

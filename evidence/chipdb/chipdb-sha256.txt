@@ -1,0 +1,32 @@
+# format: <install> <device> <sha256|FAILED> <bytes|-> <ide_version>
+# P0.T15b (2026-09-04): Standard 1.9.12.03 only. The Education 1.9.11.03 install was
+# removed from disk on 2026-09-04 (owner constraint C9, decision D79); its rows are
+# superseded and are recorded as such in summary.md, not here.
+# Each artefact was copied to $DATASTORE/chipdb/std/<device>.msgpack.xz immediately after
+# its build, before the next build could overwrite apycula/<device>.msgpack.xz.
+# NOTE (P0.T40, 2026-09-04): this block was lost in the evidence-tree migration
+# (ce22bc8, C10/D80) — the file did not exist in the open-toolchain submodule; the six
+# lines below are restored verbatim from umbrella commit 46a5b22 (pre-migration source of
+# truth) per the standing order ("if something is not working, FIX IT"). These are the
+# P0.T15/P0.T15b lines and are frozen -- never rewritten by this or any later task.
+std GW5AST-138C ab1339e4cfb6d58cd5f646fca35d42b9a4b53b629c0edf27dd7ae1e9702bb88d 811780 1.9.12.03
+std GW5A-25A    fa431045b35965ca96ed829dfebe7931ebc1bcab8563c084675bbafcc1b5a12e 320296 1.9.12.03
+std GW5AT-60B   5a921a831b923899d03a70ce1791f0d938d8fb7c7794608a55e3cec0527acf18 320908 1.9.12.03
+# determinism (spec.md 8.3): GW5AST-138C built twice on the same install, same shell
+std GW5AST-138C-run2 ab1339e4cfb6d58cd5f646fca35d42b9a4b53b629c0edf27dd7ae1e9702bb88d 811780 1.9.12.03
+# gw_sh path proof (pre-5-series device, chipdb_builder shells out to gw_sh)
+std GW1N-9C 54cc6fa4722250f277847a79487769270290fb1c93f5aedee0779af2e3d5c6db 191816 1.9.12.03
+#
+# post-T35 rebuild
+# P0.T40 (2026-09-04): re-run against the de-aliased tm_parser (T35 6ce06da, T36 b6f7c8e),
+# HEAD 143d156. Only the Standard install exists on this box (Education removed 2026-09-04,
+# C9/D79) -- the "two distinct installs" shape from the original P0.T15 six-line block is
+# unreachable here, same deviation already recorded for P0.T15b/T16b/T21. Three devices,
+# Standard only, plus a second GW5AST-138C build for determinism.
+std GW5AST-138C fd1d112d0c463d9e7ba918b0651cac0c9b4e90dac392ae36e8cec297bf9ee2bb 816620 1.9.12.03
+std GW5A-25A    6311219d52b996b8431d573cd5c547426370db00852aed285033a19a5518c3ca 321484 1.9.12.03
+std GW5AT-60B   615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8 322028 1.9.12.03
+# determinism (spec.md 8.3): GW5AST-138C built twice this task, same shell, same parser
+std GW5AST-138C-run2 fd1d112d0c463d9e7ba918b0651cac0c9b4e90dac392ae36e8cec297bf9ee2bb 816620 1.9.12.03
+# nextpnr chipdb .bin, rebuilt from the msgpack above (P0.T16 procedure)
+bin GW5AST-138C 929efdf8fa276a4d5eb82780c0361e5f9ac63c4c9d816d192fad145681fb139d 63856432 1.9.12.03

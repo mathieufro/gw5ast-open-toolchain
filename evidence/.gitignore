@@ -15,6 +15,10 @@
 !**/diff/**
 # the S22/V8 parity exception file
 !parity-exceptions.tsv
+# the chipdb sha256 ledger (P0.T15/T15b/T40) -- was silently untracked after the
+# evidence-tree move (C10/D80): "*.txt" is allowed only under _runs/, and this file
+# lives directly under evidence/chipdb/. Fixed on the spot (P0.T40).
+!chipdb/chipdb-sha256.txt
 # batch, watchdog and tool logs (`spec-harness.md` §8)
 !_runs/*.log
 # provenance stamps: sha256 lists, tool versions, gowinhome.selected
