@@ -211,3 +211,46 @@ def test_real_chipdb_reports_nextpnr_gaps():
     rc, out, err = run_tool("--classes", "cfu", "--chipdb", REAL_CHIPDB)
     assert "nextpnr emission" in out
     assert "unconsumed" in out
+
+
+# --------------------------------------------------------------------------
+# P0.T37: fixes forced by the first real vendor SDF
+# (attosoc-tangmega138k, Gowin SDF Writer 1.0, IDE 1.9.12.03)
+# --------------------------------------------------------------------------
+def test_check_timing_l0_condition_joins_multiline_header(tmp_path):
+    """A real Gowin SDF puts VOLTAGE / PROCESS / TEMPERATURE on three lines.
+
+    `D49f` requires *the corner* recorded, so all three header condition
+    lines are echoed as ONE line (`V12a` allows exactly one), each verbatim
+    and in file order. Taking only the first (VOLTAGE) loses the process and
+    temperature corner entirely.
+    """
+    multi = ("(VOLTAGE 0.93:0.90:0.87)\n"
+             '  (PROCESS "best=0.65: nom=1.0: worst=1.8")\n'
+             "  (TEMPERATURE 85:25:0)")
+    chipdb = write_timing(tmp_path, synthetic_timing())
+    sdf = write_sdf(tmp_path, [1.25] * 10, condition=multi)
+    rc, out, err = run_tool("--classes", "cfu", "--sdf", sdf, "--chipdb", chipdb)
+    assert rc == 0, out + err
+    lines = out.splitlines()
+    assert lines[0] == "L0 ok: 10/10 arcs within ±10%, 0 exceptions listed"
+    assert lines[1] == ('(VOLTAGE 0.93:0.90:0.87) '
+                        '(PROCESS "best=0.65: nom=1.0: worst=1.8") '
+                        "(TEMPERATURE 85:25:0)")
+    # still exactly one condition line
+    assert sum(1 for ln in lines if ln.startswith("(VOLTAGE")) == 1
+
+
+def test_check_timing_l0_matches_bus_indexed_pins(tmp_path):
+    """`DO[0]` in the SDF and `DO0` in nextpnr's model are the same arc.
+
+    nextpnr's BSRAM cell variants name the data-out bits `DO0..DO31`
+    (`gowin_arch_gen.py`), while the vendor SDF names the Verilog port bit
+    `DO[0]`. Without normalisation every BSRAM arc on a real design lands in
+    `unmapped` and the BSRAM half of the `D60` CFU class is never measured.
+    """
+    assert ctl.norm_pin("DO[0]") == ctl.norm_pin("DO0")
+    assert ctl.norm_pin("RAD[3]") == ctl.norm_pin("RAD3")
+    assert ctl.norm_pin("CLKB") == "CLKB"
+    # different indices must stay different
+    assert ctl.norm_pin("DO[0]") != ctl.norm_pin("DO1")

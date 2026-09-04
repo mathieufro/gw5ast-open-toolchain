@@ -255,6 +255,17 @@ def sdf_triple_max(text):
     return float(field) if field.strip() else 0.0
 
 
+def norm_pin(name):
+    """Canonical pin name: `DO[0]` and `DO0` are the same physical arc.
+
+    The vendor SDF names a Verilog port bit `DO[0]`; nextpnr's cell variants
+    name the same bit `DO0` (`gowin_arch_gen.py`), while `RAM16SDP4` uses the
+    bracketed form on both sides. Stripping the brackets makes the two
+    namespaces comparable without inventing any mapping (`P0.T37`).
+    """
+    return re.sub(r"\[(\d+)\]", r"\1", name.strip())
+
+
 def read_sdf(path):
     """Return `(arcs, condition_line, timescale_ns)`.
 
@@ -265,11 +276,12 @@ def read_sdf(path):
     # `(CELL ` starts a cell block; `(CELLTYPE` must not be mistaken for one.
     cell_split = re.compile(r"\(CELL\b(?!TYPE)")
     head = cell_split.split(text, 1)[0]
-    condition = None
-    for line in head.splitlines():
-        if CONDITION_RE.search(line):
-            condition = line.strip()
-            break
+    # `D49f` wants the corner, and a real Gowin SDF spreads it over three
+    # header lines (VOLTAGE / PROCESS / TEMPERATURE). `V12a` allows exactly
+    # one condition line, so they are joined -- each verbatim, in file order.
+    parts = [line.strip() for line in head.splitlines()
+             if CONDITION_RE.search(line)]
+    condition = " ".join(parts) if parts else None
     ts = 1.0
     m = re.search(r"\(TIMESCALE\s+([0-9.]*)\s*(ps|ns)\s*\)", text)
     if m:
@@ -305,13 +317,17 @@ def band_mode(timing, sdf_path, grade, out):
         print(f"L0 FAIL: cannot read nextpnr's emitted arcs: {err}", file=out)
         return 2
 
+    # index the model on normalised pin names (`P0.T37`: SDF `DO[0]` vs
+    # nextpnr `DO0` are the same arc)
+    norm_model = {(g, c, norm_pin(f), norm_pin(t)): v
+                  for (g, c, f, t), v in model.items()}
     compared, exceptions, unmapped = [], [], []
     for cell, inst, frm, to, ns in sdf_arcs:
-        key = (grade, cell, frm, to)
-        if key not in model:
+        key = (grade, cell, norm_pin(frm), norm_pin(to))
+        if key not in norm_model:
             unmapped.append(f"{cell}/{inst} {frm}->{to}")
             continue
-        m = model[key]
+        m = norm_model[key]
         dev = (m - ns) / ns if ns else (0.0 if m == 0 else 1.0)
         compared.append((cell, inst, frm, to, m, ns, dev))
         if abs(dev) > BAND:
