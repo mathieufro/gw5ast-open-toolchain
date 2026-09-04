@@ -11,8 +11,9 @@ Call shape (`spec.md` F2 reconciliation, `blueprints/P0-foundation.md` P0.T30)::
                               [--evidence <dir>] [--slug <name>]...
                               [--exclude-slug <name>]...
 
-- both positionals are optional, defaulting to `$PIPE/spec-primitives.md` and
-  `$PIPE/evidence` (`$PIPE` is this script's own grandparent directory --
+- both positionals are optional, defaulting to this checkout's own
+  `spec-primitives.md` (else the pipeline docs dir, `C10`/`D80`, read-only)
+  and `$OTC/evidence` (`$OTC` is this script's own grandparent directory --
   never inferred from cwd);
 - `--evidence <dir>` is an alternative spelling of the second positional and
   **wins** over it;
@@ -56,10 +57,41 @@ import re
 import sys
 
 # --------------------------------------------------------------------------
-# 0. Locating $PIPE and the apicula checkout (the evidence-row schema lives
+# 0. Locating $OTC and the apicula checkout (the evidence-row schema lives
 #    in the harness, imported rather than re-declared -- one schema, D63).
 # --------------------------------------------------------------------------
 PIPE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+#: The pipeline docs dir (documents only, `C10`/`D80`) -- `spec-primitives.md`
+#: is read from here by default; never written here. Tried after `PIPE_ROOT`
+#: itself (which a test fixture may populate directly, see
+#: `tools/tests/test_check_evidence.py`), so a checkout carrying its own
+#: `spec-primitives.md` beside `tools/` still wins.
+_PIPELINE_DOCS_CANDIDATES = [
+    os.environ.get("FL_PIPELINE_DOCS"),
+    "/Users/alex/fine-line/.atelier/worktrees/"
+    "2026-09-03-open-toolchain-gw5ast-7e84/.atelier/pipelines/"
+    "2026-09-03-open-toolchain-gw5ast-7e84",
+    "/Users/alex/fine-line/.atelier/pipelines/"
+    "2026-09-03-open-toolchain-gw5ast-7e84",
+]
+
+
+def default_spec_primitives():
+    """`spec-primitives.md`'s default path: `PIPE_ROOT` first (test fixtures
+    and any checkout that carries its own copy beside `tools/`), then the
+    pipeline docs dir."""
+    local = os.path.join(PIPE_ROOT, "spec-primitives.md")
+    if os.path.isfile(local):
+        return local
+    for docs in _PIPELINE_DOCS_CANDIDATES:
+        if not docs:
+            continue
+        candidate = os.path.join(docs, "spec-primitives.md")
+        if os.path.isfile(candidate):
+            return candidate
+    return local
+
 
 _APICULA_CANDIDATES = [
     os.environ.get("FL_APICULA"),
@@ -88,7 +120,7 @@ def load_schema():
     The venv's editable apicula install only exposes the `apycula` package,
     not `fuzz/` (`fuzz/__init__.py` is not part of the packaged distribution)
     -- so this tool adds the apicula checkout root to `sys.path` itself,
-    exactly as `$PIPE/tools/evidence.py` (`P0.T28`'s shim) already does.
+    exactly as `$OTC/tools/evidence.py` (`P0.T28`'s shim) already does.
     """
     root = find_apicula_root()
     if root is None:
@@ -397,9 +429,10 @@ def build_parser():
         prog="check_evidence.py",
         description="V9: spec-primitives.md rows vs the evidence tree (DEL-e first cut).")
     parser.add_argument("spec_primitives", nargs="?", default=None,
-                        help="Path to spec-primitives.md (default: $PIPE/spec-primitives.md).")
+                        help="Path to spec-primitives.md (default: this "
+                             "checkout's own copy, else the pipeline docs dir).")
     parser.add_argument("evidence_dir", nargs="?", default=None,
-                        help="Path to the evidence tree (default: $PIPE/evidence).")
+                        help="Path to the evidence tree (default: $OTC/evidence).")
     parser.add_argument("--evidence", dest="evidence_opt", default=None,
                         help="Alternative spelling of the evidence-dir positional; wins over it.")
     parser.add_argument("--slug", action="append", default=[],
@@ -413,7 +446,7 @@ def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     args = build_parser().parse_args(argv)
 
-    spec_path = args.spec_primitives or os.path.join(PIPE_ROOT, "spec-primitives.md")
+    spec_path = args.spec_primitives or default_spec_primitives()
     evidence_dir = (args.evidence_opt or args.evidence_dir
                      or os.path.join(PIPE_ROOT, "evidence"))
 

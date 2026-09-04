@@ -2,7 +2,7 @@
 """`P0.T31` -- the DONE-STD criteria checker (`DEL-e` first cut, `D63`, `D42`).
 
 Reads `spec-primitives.md`'s per-primitive table, and for each row asks
-whether the evidence directory (`$PIPE/evidence/`) proves DONE-STD
+whether the evidence directory (`$OTC/evidence/`) proves DONE-STD
 (`spec-primitives.md` "DONE-STD" note, clauses a-e):
 
     (a) instantiates on the device without error
