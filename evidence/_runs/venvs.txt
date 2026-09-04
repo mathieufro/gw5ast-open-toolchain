@@ -1,0 +1,20 @@
+# P0.T08 — venv wiring evidence (2026-09-04)
+
+## vendor/venv (day-to-day, editable apycula from submodule)
+resolved apycula.__file__: /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula/apycula/__init__.py
+pip show version: Apycula 0.34.dev1+g332809527 (editable)
+Editable project location: /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula
+submodule HEAD (apicula, worktree checkout): 332809527ad0d3acd7e6c1204ae6f29818b6da10
+NOTE: vendor/apicula (the retired throwaway clone) is no longer the target of this
+editable install; apicula/nextpnr are now submodules of the umbrella, checked out only in
+the worktree /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84
+per the 2026-09-04 owner ruling (vendor/apicula, vendor/nextpnr retired, RETIRED.md left in
+place). Command run: `vendor/venv/bin/pip uninstall -y apycula && vendor/venv/bin/pip
+install -e $WT/apicula`.
+
+## vendor/venv-upstream (S26 baseline only, D56)
+apycula version (importlib.metadata): 0.33
+pip show: Apycula 0.33, non-editable, site-packages install
+Verified pre-existing (created 2026-09-04 during ws_baseline) — NOT recreated, per D56 /
+task instruction to verify rather than recreate. Used only for the S26 regression
+comparison; not added to PATH, not sourced by any harness command.

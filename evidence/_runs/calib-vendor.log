@@ -1,0 +1,11 @@
+=== VENDOR big-shift start 15:57:56 ===
+CST_FINDING big-shift: port "clk" (pin V22) has no IO_TYPE; port "reset" (pin Y12) has no IO_TYPE; port "uart_tx" (pin U15) has no IO_TYPE; port "uart_rx" (pin V14) has no IO_TYPE
+VENDOR big-shift: rc=1 ok=False reason=gw_sh exited 1 wall=1.838s fs=[]
+=== VENDOR uart-message start 15:58:38 ===
+CST_FINDING uart-message: port "clk" (pin V22) has no IO_TYPE; port "reset" (pin Y12) has no IO_TYPE; port "uart_tx" (pin U15) has no IO_TYPE; port "uart_rx" (pin V14) has no IO_TYPE
+VENDOR uart-message: rc=1 ok=False reason=gw_sh exited 1 wall=1.954s fs=[]
+=== VENDOR attosoc start 15:58:40 ===
+CST_FINDING attosoc: port "clk" (pin V22) has no IO_TYPE; port "reset" (pin Y12) has no IO_TYPE; port "uart_tx" (pin U15) has no IO_TYPE; port "uart_rx" (pin V14) has no IO_TYPE
+VENDOR attosoc: rc=1 ok=False reason=gw_sh exited 1 wall=9.282s fs=[]
+VENDORBUILD_DONE
+BATCH_COMPLETE calib-vendor runs=3 ok=3 diff=0 aborted=0

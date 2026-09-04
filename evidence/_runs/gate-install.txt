@@ -1,0 +1,4 @@
+P0.T41 -- local blocking gate install (C8, D75-D77), 2026-09-04T16:32:23Z
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula  core.hooksPath=.githooks
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr  core.hooksPath=.githooks
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84  core.hooksPath=.githooks

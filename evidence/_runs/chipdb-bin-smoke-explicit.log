@@ -1,0 +1,3 @@
+Info: Using uarch 'gowin' for device 'GW5AST-LV138PG484AC1/I0'
+ERROR: Failed to parse JSON file '/dev/null': unexpected end of input.
+0 warnings, 1 error

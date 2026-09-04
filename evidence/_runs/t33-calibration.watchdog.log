@@ -1,0 +1,8 @@
+/Users/alex/fine-line/coherence-m/waveguide/pipeline/acoustics/longhaul_watchdog.sh: line 18: /home/mathi/fine-line/coherence-m/waveguide/pipeline/acoustics/longhaul_progress.log: No such file or directory
+grep: /home/mathi/fine-line/coherence-m/waveguide/pipeline/acoustics/longhaul_progress.log: No such file or directory
+/Users/alex/fine-line/coherence-m/waveguide/pipeline/acoustics/longhaul_watchdog.sh: line 18: /home/mathi/fine-line/coherence-m/waveguide/pipeline/acoustics/longhaul_progress.log: No such file or directory
+n ids with a terminal row are skipped)
+17:36:48 WATCHDOG_ARMED batch=t33-calibration stall=8min poll=100s (independent process)
+17:45:49 WATCHDOG_DEAD batch=t33-calibration exited WITHOUT BATCH_COMPLETE (batch pid 12518 exited) — resume with the identical batch command (run ids with a terminal row are skipped)
+17:53:03 WATCHDOG_ARMED batch=t33-calibration stall=8min poll=100s (independent process)
+18:02:31 WATCHDOG_DEAD batch=t33-calibration exited WITHOUT BATCH_COMPLETE (batch pid 36084 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

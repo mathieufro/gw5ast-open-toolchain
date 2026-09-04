@@ -1,0 +1,4 @@
+15:57:14 WATCHDOG_ARMED batch=calib-vendor stall=10min poll=100s (independent process)
+15:57:16 WATCHDOG_COMPLETE batch=calib-vendor saw BATCH_COMPLETE (clean exit)
+15:58:03 WATCHDOG_ARMED batch=calib-vendor stall=10min poll=100s (independent process)
+15:58:51 WATCHDOG_DEAD batch=calib-vendor exited WITHOUT BATCH_COMPLETE (batch pid 85269 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

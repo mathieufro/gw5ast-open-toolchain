@@ -1,0 +1,18 @@
+DIFF tile (2,1) bel 2: cell vendor=<absent> open=LUT
+DIFF_COUNT cells=3 attrs=36 conns=40
+PIPS diff=2014041 (statistic, never a verdict term)
+PER_TILE (2,1) cells=3 attrs=36 conns=65
+RESIDUAL_UNEXPLAINED entries=3 bits=15422 bytes=162
+  UNEXPLAINED unmodelled_fuse bits=14935 bytes=0 tiles=231 :: BOTH unpackers produced the SAME cells and attributes in this tile and the raw bits still differ: a fuse apicula does not model at all, dropped on both sides during unpack. This is exactly the blind spot D35 exists to catch and it is NOT masked
+  UNEXPLAINED unattributed_tile bits=487 bytes=0 tiles=180 :: bits differ in a tile in which NEITHER side unpacks any cell: no cell accounts for them (spec-harness.md 5.1c's named-error case)
+  UNEXPLAINED extra_command_words bits=0 bytes=162 tiles=0 :: whole command/preamble words one side emits and the other does not, outside the fuse bitmap and outside the `//` comment block, so neither the header-words nor the CRC mask entry covers them
+  ACCOUNTED set_level_diff bits=531 bytes=0 tiles=3 mask_entry=None
+  ACCOUNTED vendor_only_fill bits=3855836 bytes=0 tiles=17213 mask_entry=unused_tile_fill
+  ACCOUNTED comment_header bits=0 bytes=634 tiles=0 mask_entry=header_words
+E1 placement level=E1 constrained=1 matched=1 mismatched=0 unobserved=0
+DECODE_CHECK c1=ok c2=ok (c1 recovered 13/13 placed cells, 6 not fuse-backed; c2 0 differing bytes of 4147478)
+RESIDUAL frame_bits=3871789 bitmap_row_delta=0 rows=[(9, 2), (14, 2), (15, 2), (17, 2), (20, 7201), (21, 7205), (22, 3248), (23, 2526)]
+RESIDUAL_OUTSIDE size_delta_bytes=796 comment_delta_bytes=634 unaccounted_bytes=162
+RESIDUAL_LINE side=vendor line=2 bits=96 prefix=11111111111111111111111111111111
+RESIDUAL_LINE side=vendor line=6 bits=64 prefix=00010000000000000000000000000000
+MASK sha256=59147bfc633e10c5c1f4875bef6cf0cf9b76f8d58868ffc084f8c252557a1ec0 entries=6 [header_words,crc_checksum_padding,unused_tile_fill,free_placement,net_route,io_default_unused_pins]

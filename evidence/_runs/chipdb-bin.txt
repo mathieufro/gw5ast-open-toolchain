@@ -1,0 +1,58 @@
+# P0.T16b — nextpnr chipdb .bin for GW5AST-138C, regenerated from the STANDARD msgpack
+# (2026-09-04; supersedes the P0.T16 record, which was built from the Education 1.9.11.03
+# msgpack. Owner constraint C9 / decision D79: Standard 1.9.12.03 is GOWINHOME for
+# everything; the Education install was removed from disk.)
+
+Source chipdb: apicula/apycula/GW5AST-138C.msgpack.xz
+  Standard 1.9.12.03 build (P0.T15b), sha256
+  ab1339e4cfb6d58cd5f646fca35d42b9a4b53b629c0edf27dd7ae1e9702bb88d, 811780 bytes.
+  Matches gowinhome.selected = /Applications/GowinIDE.app/Contents/Resources/Gowin_EDA.
+
+## Build (both mechanisms recorded, F1 amendment)
+1. gowin_arch_gen.py -d GW5AST-138C -o chipdb-GW5AST-138C.bba
+   (vendor/venv/bin/python; $FL_WT/nextpnr/himbaechel/uarch/gowin/gowin_arch_gen.py)
+   -> 219,739,416 B .bba, 78 s
+2. bbasm --le chipdb-GW5AST-138C.bba chipdb-GW5AST-138C.bin
+   ($FL_WT/nextpnr/build/bba/bbasm), 5 s
+   The .bba was deleted afterwards (220 MB, regenerable; disk rule).
+
+## Artifact
+- chipdb-GW5AST-138C.bin
+- size: 63974404 bytes (> 1,000,000 required)
+- sha256: 68ab0135a04d1cf8c373e083597e8c89207cf6c077518bb615c2e55983d09a28
+  (the Education-sourced P0.T16 artifact was 63952112 B / 8b413016…, now deleted)
+
+## Installed copies (byte-identical, sha256 verified equal)
+1. INSTALL PREFIX (default for unmodified recipes -- Makefile, gate, upstream CI mirror):
+   $DATASTORE/toolchains/nextpnr/share/himbaechel/gowin/chipdb-GW5AST-138C.bin
+   sha256: 68ab0135a04d1cf8c373e083597e8c89207cf6c077518bb615c2e55983d09a28
+2. HARNESS-ONLY explicit --chipdb pin (openflow.py, P0.T21):
+   $DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin
+   sha256: 68ab0135a04d1cf8c373e083597e8c89207cf6c077518bb615c2e55983d09a28
+The stale Education copy $DATASTORE/chipdb/edu/chipdb-GW5AST-138C.bin was removed.
+
+## Smoke tests (test_chipdb_bin_generated, test_chipdb_bin_installed_into_share_dir)
+1. Explicit --chipdb -> "Info: Using uarch 'gowin' for device 'GW5AST-LV138PG484AC1/I0'"
+   then the expected JSON-parse error on /dev/null. 0 occurrences of "chipdb-gw5a.bin".
+   log: evidence/_runs/chipdb-bin-smoke-explicit.log
+2. No --chipdb (install-prefix resolution) -> the same device-named Info line and the same
+   expected JSON error. 0 occurrences of "chipdb not found".
+   log: evidence/_runs/chipdb-bin-smoke-installed.log
+
+Note: there is no per-family chipdb-gw5a.bin (gowin.cc:162-183 resolves
+GW5AST-LV138PG484AC1/I0 -> family GW5AST-138C -> gowin/chipdb-GW5AST-138C.bin;
+CMakeLists.txt builds one .bin per device) -- confirmed by both smoke logs.
+
+## SUPERSEDED by P0.T21 (2026-09-04)
+The artifact recorded above (sha256 68ab0135..., 63,974,404 B) was built from a
+msgpack whose PINCFG bel had NO input wires -- a `.dat` table relocation
+between IDE 1.9.10.03 and 1.9.11+ that `dat_parser.py` did not track. With it,
+`nextpnr-himbaechel` places any design but fails at routing with
+`No wire found for port UNK0_VCC on destination cell PINCFG`.
+Replacement, installed to both locations above:
+  chipdb-GW5AST-138C.bin  63,977,039 B
+  sha256 bb2af952ac21269e5423532bfbf3cdd750b87f7d3d44f795b3cd27e7d852c373
+  from apycula/GW5AST-138C.msgpack.xz  815,496 B
+  sha256 a52ae4fc11f84028460aeaa1729dcc0b44f208705fda06f5112de14984ef8fcf
+Details, including the smoke that this .bin does load and route:
+  evidence/_runs/openflow-t21.txt

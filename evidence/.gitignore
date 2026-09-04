@@ -1,0 +1,30 @@
+# Evidence tree: deny by default, allow text only (`D41`, P0.T28).
+# Binaries live in /Users/alex/fine-line-data/open-toolchain-gw5ast/ and are
+# referenced from a row by absolute path plus sha256 -- never committed here.
+# git takes the WHOLE line as the pattern, so every justification is its own
+# comment line, never a trailing one.
+*
+# Descend into slug directories so the allowlist below can be reached.
+!*/
+!.gitignore
+# summary.md, evidence-table.md and any prose beside a runs.jsonl
+!*.md
+# the JSON Lines rows themselves (`spec-harness.md` §6)
+!runs.jsonl
+# text diffs quoted by summaries and PR bodies, at any depth
+!**/diff/**
+# the S22/V8 parity exception file
+!parity-exceptions.tsv
+# batch, watchdog and tool logs (`spec-harness.md` §8)
+!_runs/*.log
+# provenance stamps: sha256 lists, tool versions, gowinhome.selected
+!_runs/*.txt
+!_runs/*.selected
+# Explicitly denied, even under an allowed directory (last match wins):
+*.fs
+*.vo
+*.tr
+*.sdf
+*.fse
+*.dat
+*.tm

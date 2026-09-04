@@ -1,0 +1,5 @@
+litex-boards	https://github.com/litex-hub/litex-boards.git	b8424ee7487281c29750c75ffee4532d56db5015
+litedram	https://github.com/enjoy-digital/litedram.git	3cf585a60a37113f18a9f6c6f3ee774be521623e
+hardfloat	https://github.com/ucb-bar/berkeley-hardfloat.git	c1105e6ac6a0dd90fc80893efc4830ab609005d3
+verilog-ethernet	https://github.com/alexforencich/verilog-ethernet.git	77320a9471d19c7dd383914bc049e02d9f4f1ffb
+openFPGALoader	https://github.com/trabucayre/openFPGALoader.git	c3a1232f8730dbde42453ab96d0275b29a384271

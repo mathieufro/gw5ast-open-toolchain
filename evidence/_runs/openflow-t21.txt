@@ -1,0 +1,82 @@
+# P0.T21 -- openflow.py: yosys -> nextpnr-himbaechel -> gowin_pack (2026-09-04)
+
+## Done-when, verbatim
+$ python -m fuzz.gw5ast138c.harness.openflow --design-dir $DATASTORE/oracle-smoke --shape smoke
+STEP yosys returncode=0 wall_clock_s=0.29 log=.../oracle-smoke/yosys.log
+STEP nextpnr returncode=0 wall_clock_s=0.618 log=.../oracle-smoke/nextpnr.log
+STEP gowin_pack returncode=0 wall_clock_s=1.809 log=.../oracle-smoke/gowin_pack.log
+FMAX clock=clk_IBUF_I_O mhz=3759.4 verdict=PASS target_mhz=12.0
+BITSTREAM .../oracle-smoke/top.fs 34668145 0bf603d13ae6645780f5f277d58141c0a61bea69c5de6af2e80ce6d0eb248ab6
+PROVENANCE yosys_version=Yosys 0.63 (git sha1 70a11c6bf0e8dd669f56c7da3587f78b405138e2, clang++ 17.0.0 -fPIC -O3) | apicula_sha=4201a4e58e0fe47559de675e33da6d6037d23f34 | nextpnr_sha=8dbcee5c3c4415770b6fd06d5ccb2db89545b8ec | chipdb_sha256=bb2af952ac21269e5423532bfbf3cdd750b87f7d3d44f795b3cd27e7d852c373 | timing_allow_fail_needed=False
+EXIT=0
+
+Vendor comparison for the same design (P0.T20b): run.fs = 34,668,941 B.
+Open flow      top.fs = 34,668,145 B  (796 B smaller; no E0 comparison at this
+task id -- equiv.py is P0.T23-T26).
+
+`--timing-allow-fail` was passed and was NOT needed (single clock, PASS).
+
+## Coordination note answered: the chipdb .bin and lzma.LZMAError
+1. nextpnr DOES load the installed/explicit .bin. It always did: the T16b
+   smoke was real and the T21 run resolves the device, places, routes globals
+   and finishes normally.
+2. The `lzma.LZMAError` T20b saw is not a defect: `chipdb-GW5AST-138C.bin` is a
+   raw bbasm binary (`file` says `data`), NOT an xz stream. Only
+   `apycula/<device>.msgpack.xz` is xz-compressed, and that is what
+   `gowin_pack` reads (`gowin_pack.py:462`, via `importlib.resources`).
+   Feeding the nextpnr .bin to a Python chipdb loader is a category error.
+   Nothing to fix; the two artefacts are different formats with different
+   consumers.
+
+## Blocker found and fixed: PINCFG had no input wires
+The first open-flow attempt failed at routing:
+    ERROR: No wire found for port UNK0_VCC on destination cell PINCFG.
+    ERROR: Routing design failed.        (nextpnr exit 125)
+Root cause, verified end to end:
+- `dat_parser.py` read `CibFabricNode` at a fixed delta `RSTable5ATOffset +
+  0x27254`. That is the Gowin IDE 1.9.10.03 layout (the release upstream
+  apicula pins). Both 1.9.11.03 and 1.9.12.03 `.dat` files hold the table
+  0xb8 further on, at `+0x2730c` -- confirmed on the archived Education
+  1.9.11.03 tree and the installed Standard 1.9.12.03 tree, and for GW5A-25A
+  as well as GW5AST-138C.
+- Reading the stale delta returns an all-0xffff grid, which is *silently
+  legal* (0xffff is the "port absent" marker), so
+  `chipdb.fse_create_pincfg` emitted `{'ins': {}}` while
+  `chipdb.py:4172/4183` still set `HAS_PINCFG`.
+- `nextpnr` then unconditionally packs a PINCFG cell with UNK0..3_VCC + SSPI
+  (`himbaechel/uarch/gowin/pack.cc:56-71`) whose ports have no bel wires.
+  Consequence: NO design of any shape could be routed on our chipdb.
+- Stock `apycula==0.33`'s own parser reproduces the empty grid on the same
+  1.9.11 file, so this is an IDE-version drift, not a fork regression. Its
+  shipped GW5AST-138C chipdb has the right values only because it was built
+  from 1.9.10.03 device files.
+
+Fix (data-driven, version-tolerant): `dat_parser.Datfile.read_cib_fabric_node`
+tries `CIB_FABRIC_NODE_DELTAS = (0x27254, 0x2730c)` and takes the first
+*populated and plausible* grid, so a 1.9.10 file still reads at its own offset
+and a future relocation is one list entry. Guards added:
+`tests/test_dat_cib_fabric_node.py` (2 tests, both devices + the built chipdb).
+
+Result after the fix, matching upstream apycula 0.33 exactly:
+  extra_func[(108,166)]['pincfg']['ins'] =
+    {'SSPI': 'D7', 'UNK0_VCC': 'B5', 'UNK1_VCC': 'D5',
+     'UNK2_VCC': 'PINCFGUNK2_VCCC0', 'UNK3_VCC': 'D6'}
+
+## Artefacts rebuilt (supersede P0.T16b)
+- apicula/apycula/GW5AST-138C.msgpack.xz  815,496 B
+  sha256 a52ae4fc11f84028460aeaa1729dcc0b44f208705fda06f5112de14984ef8fcf
+  (was 811,780 B / ab1339e4...; not tracked by git -- .gitignore:16)
+  copy: $DATASTORE/chipdb/std/GW5AST-138C.msgpack.xz
+- chipdb-GW5AST-138C.bin  63,977,039 B
+  sha256 bb2af952ac21269e5423532bfbf3cdd750b87f7d3d44f795b3cd27e7d852c373
+  (was 63,974,404 B / 68ab0135...)
+  installed, byte-identical, to BOTH recorded locations:
+    $DATASTORE/toolchains/nextpnr/share/himbaechel/gowin/chipdb-GW5AST-138C.bin
+    $DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin
+  The 220 MB .bba was deleted after assembly (disk rule).
+Any evidence row carrying chipdb_sha256 68ab0135... predates this fix.
+
+## Tests
+`vendor/venv/bin/python -m pytest tests -q` -> 180 passed
+(172 before this task: +4 test_openflow, +2 test_dat_cib_fabric_node,
+ +1 openflow moved from the stub list to IMPLEMENTED_MODULES, -1 stub test).

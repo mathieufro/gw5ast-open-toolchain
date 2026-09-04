@@ -1,0 +1,26 @@
+17:00:57 === 1. minimal gw_sh run all (REUSED from prior partial run) ===
+17:00:57 {"design_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/minimal", "top_module": "top", "returncode": 0, "preflight_ok": true, "preflight_reason": "ok", "wall_clock_s": 23.144, "python_wall_s": 23.147620916366577, "log_path": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/minimal/gw_sh.log"}
+17:00:57 === 2. largest gw_sh run all (attosoc-tangmega138k) ===
+17:00:57 LOCK_ACQUIRED kind=gwsh-largest
+17:01:03 LOCK_RELEASED
+17:01:03 {"design_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/largest", "top_module": "attosoc", "returncode": 1, "preflight_ok": false, "preflight_reason": "gw_sh exited 1", "wall_clock_s": 6.277, "python_wall_s": 6.278381109237671, "log_path": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/largest/gw_sh.log"}
+17:01:03 === 2b. chipdb build timing (GW5AST-138C, Standard) ===
+17:01:25 {"returncode": 1, "wall_clock_s": 22.192034006118774, "out_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calibration/chipdb-timing"}
+17:01:25 === 3. yosys + nextpnr on largest ===
+17:01:44 {"yosys_returncode": 0, "yosys_wall_s": 5.063870906829834, "nextpnr_returncode": 0, "nextpnr_wall_s": 13.272756099700928}
+17:01:44 === 4. parallelism: two concurrent gw_sh invocations (minimal design) ===
+17:02:00 {"a": {"returncode": 0, "wall_from_launch_s": 15.960889101028442, "preflight_ok": true, "preflight_reason": "ok", "log": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/par-a/gw_sh.log"}, "b": {"returncode": 0, "wall_from_launch_s": 15.960924863815308, "preflight_ok": true, "preflight_reason": "ok", "log": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/par-b/gw_sh.log"}}
+17:02:00 CALIB_DONE
+17:02:00 RESULTS_WRITTEN /Users/alex/fine-line-data/open-toolchain-gw5ast/calib/results.json
+17:02:49 === fixup 2. largest gw_sh run all (filtered cst) ===
+17:02:49 LOCK_HELD waiting: 15787 1788534162.6523452 oracle:uart-message
+17:03:04 LOCK_ACQUIRED kind=gwsh-largest
+17:03:11 LOCK_RELEASED
+17:03:11 {"design_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/largest", "top_module": "attosoc", "returncode": 1, "preflight_ok": false, "preflight_reason": "gw_sh exited 1", "wall_clock_s": 6.542, "python_wall_s": 6.5444769859313965, "log_path": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/largest/gw_sh.log"}
+17:03:11 === fixup 2b. chipdb build timing (fixed -o path) ===
+17:03:44 {"returncode": 0, "wall_clock_s": 33.07137584686279, "out_file": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calibration/chipdb-timing/GW5AST-138C.msgpack.xz"}
+17:03:44 FIXUP_DONE
+18:19:38 === fixup2 largest with -use_sspi_as_gpio 1 ===
+18:19:38 LOCK_ACQUIRED kind=gwsh-largest
+18:20:05 LOCK_RELEASED
+18:20:05 {"design_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/largest", "top_module": "attosoc", "returncode": 0, "preflight_ok": true, "preflight_reason": "ok", "wall_clock_s": 26.834, "python_wall_s": 26.836494207382202, "log_path": "/Users/alex/fine-line-data/open-toolchain-gw5ast/calib/largest/gw_sh.log"}

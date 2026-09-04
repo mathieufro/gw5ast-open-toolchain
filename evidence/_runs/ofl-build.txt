@@ -1,0 +1,16 @@
+task=P0.T10
+component=openFPGALoader
+tag=v1.1.1
+sha=85be4fa02b2dd6a83716d7dfac3d25bbd260ff7b
+build_dir=/Users/alex/fine-line/vendor/openFPGALoader/build
+install_prefix=/Users/alex/fine-line-data/open-toolchain-gw5ast/toolchains/openFPGALoader
+binary=/Users/alex/fine-line-data/open-toolchain-gw5ast/toolchains/openFPGALoader/bin/openFPGALoader
+version_output=openFPGALoader v1.1.1
+version_exit=0
+cmake_version=cmake version 4.3.0
+compiler=AppleClang 17.0.0.17000603
+deps: libusb-1.0=1.0.29 hidapi=0.15.0 (hidapi-libusb/hidraw pkgconfig modules not present, plain hidapi module used) zlib=1.2.12 libudev=not found (Linux-only, udev support disabled, expected on macOS)
+build_log=/Users/alex/fine-line/.atelier/pipelines/2026-09-03-open-toolchain-gw5ast-7e84/evidence/_runs/ofl-build.log
+build_mode=foreground (per orchestrator instruction override of blueprint's detached/watchdog note; single build lock not needed, no concurrent openFPGALoader build)
+no_hardware_touched=true (no --detect, no device access; build+install only)
+note_F69=doc/boards.yml:901-906 describes tangmega138k as GW5AST-138B/FG676 with Flash: TBD, mismatched against owner's -138C/PG484 target; not corrected here per D51 (Phase 8/9 deliverable). File left untouched.

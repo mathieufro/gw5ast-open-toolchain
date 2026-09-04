@@ -1,0 +1,86 @@
+*** GOWIN Tcl Command Line Console  *** 
+The available OpenGL surface format was either not version 3.2 or higher or not a Core Profile.
+Chromium on macOS will fall back to software rendering in this case.
+Hardware acceleration and features such as WebGL will not be available.
+add new file: "/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/top.cst"
+add new file: "/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/top.v"
+current device: GW1NR-9C  GW1NR-LV9QN88PC6/I5
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file '/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/top.v'
+Compiling module 'top'("/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/top.v":1)
+NOTE  (EX0101) : Current top module is "top"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/gwsynthesis/top.vg" completed
+[100%] Generate report file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/gwsynthesis/top_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/gwsynthesis/top.vg"
+Parsing netlist file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/gwsynthesis/top.vg" completed
+Processing netlist completed
+Reading constraint file: "/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/top.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.power.html" completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.pin.html" completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.rpt.html" completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.rpt.txt" completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.tr.html" completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.posp" completed
+Generate file "/private/var/folders/5j/hh8kd_655x15s1s865qsp5n00000gn/T/tmpgdhjph69/impl/pnr/top.io.cst" completed
+Fri Sep  4 13:39:05 2026
+
+check 19199191
+Create logic to clock gates. Half:0
+129 0 28 124 TRBDCLK0
+136 0 27 124 TLBDCLK0
+141 28 27 125 BLBDCLK3
+132 9 46 125 TRBDCLK3
+137 28 28 124 BRBDCLK2
+139 10 46 126 BRBDCLK0
+144 28 27 124 BLBDCLK2
+150 27 19 126 BRMDCLK1
+151 9 27 126 TLMDCLK1
+149 27 18 126 BLMDCLK1
+131 9 46 124 TRBDCLK2
+143 11 0 126 BLBDCLK1
+142 10 0 126 BLBDCLK0
+138 28 28 125 BRBDCLK3
+147 18 19 126 BRMDCLK0
+133 0 27 125 TLBDCLK1
+134 9 0 124 TLBDCLK2
+135 9 0 125 TLBDCLK3
+140 11 46 126 BRBDCLK1
+130 0 28 125 TRBDCLK1
+152 9 28 126 TRMDCLK1
+148 18 18 126 BLMDCLK0

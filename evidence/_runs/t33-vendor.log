@@ -1,0 +1,13 @@
+CST big-shift: top=top kept_ports=['clk', 'led', 'reset'] dropped=['uart_rx', 'uart_tx']
+=== VENDOR big-shift start 17:02:02 ===
+CST_FINDING big-shift: port "clk" (pin V22) has no IO_TYPE; port "reset" (pin Y12) has no IO_TYPE
+VENDOR big-shift: rc=0 ok=True reason=ok wall=14.868s fs=['/Users/alex/fine-line-data/open-toolchain-gw5ast/calibration/big-shift/run/impl/pnr/run.fs']
+CST attosoc: top=attosoc kept_ports=['clk', 'led'] dropped=['led[10]', 'led[11]', 'led[12]', 'led[13]', 'led[14]', 'led[15]', 'led[8]', 'led[9]', 'reset', 'uart_rx', 'uart_tx']
+=== VENDOR attosoc start 17:02:17 ===
+CST_FINDING attosoc: port "clk" (pin V22) has no IO_TYPE
+VENDOR attosoc: rc=0 ok=True reason=ok wall=25.065s fs=['/Users/alex/fine-line-data/open-toolchain-gw5ast/calibration/attosoc/run/impl/pnr/run.fs']
+CST uart-message: top=top kept_ports=['clk', 'led', 'uart_tx'] dropped=['led[10]', 'led[11]', 'led[12]', 'led[13]', 'led[14]', 'led[15]', 'led[5]', 'led[6]', 'led[7]', 'led[8]', 'led[9]', 'reset', 'uart_rx']
+=== VENDOR uart-message start 17:02:42 ===
+CST_FINDING uart-message: port "clk" (pin V22) has no IO_TYPE; port "uart_tx" (pin U15) has no IO_TYPE
+VENDOR uart-message: rc=0 ok=True reason=ok wall=15.476s fs=['/Users/alex/fine-line-data/open-toolchain-gw5ast/calibration/uart-message/run/impl/pnr/run.fs']
+VENDORBUILD_DONE

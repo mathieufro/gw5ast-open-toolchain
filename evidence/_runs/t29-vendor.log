@@ -1,0 +1,8 @@
+PREFLIGHT run ok=True returncode=0 reason=ok
+ARTEFACT fs /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/run/impl/pnr/run.fs 34668941 43b4c28fd1c28a3b5c4c4a9029cc91c3a4822e826d6c301f2f435882ab4fed05
+ARTEFACT tr /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/run/impl/pnr/run.tr 27589 75aa1f63e111c7f62179d0ce5501f82a99dfc353dd86260047244d47149f6349
+ARTEFACT sdf /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/run/impl/pnr/run.sdf 5193 6330a9496780eeeddf7feee3c0e8793f0de09f99361dfa0ac7f2e532799385f2
+ARTEFACT vo /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/run/impl/pnr/run.vo 1215 279dff94a0e012879485a3f8ac426e9ad678ea6116d5af12461f08f223f7acd0
+ARTEFACT vg /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke/run/impl/gwsynthesis/run.vg 1309 706aa05edd00ea8fcebcd5253db1a72bb5664e98ee12e6645a70a661a13dabb3
+EVIDENCE /Users/alex/fine-line/.atelier/pipelines/2026-09-03-open-toolchain-gw5ast-7e84/evidence/oracle-smoke/runs.jsonl
+BATCH_COMPLETE t29-vendor runs=1 ok=1 diff=0 aborted=0 rc=0

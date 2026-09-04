@@ -1,0 +1,6 @@
+15:57:59 WATCHDOG_ARMED batch=t34-calib stall=12min poll=240s pid=85243
+16:02:00 WATCHDOG_DEAD batch=t34-calib exited WITHOUT CALIB_DONE
+17:01:06 WATCHDOG_ARMED batch=t34-calib stall=12min poll=240s pid=12840
+17:02:52 WATCHDOG_ARMED batch=t34-calib stall=5min poll=100s pid=18010
+17:04:32 WATCHDOG_COMPLETE batch=t34-calib saw CALIB_DONE (clean exit)
+17:05:06 WATCHDOG_COMPLETE batch=t34-calib saw CALIB_DONE (clean exit)

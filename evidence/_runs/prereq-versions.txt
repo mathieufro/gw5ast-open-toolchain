@@ -1,0 +1,8 @@
+yosys	Yosys 0.63 (git sha1 70a11c6bf0e8dd669f56c7da3587f78b405138e2, clang++ 17.0.0 -fPIC -O3)
+verilator	Verilator 5.050 2026-07-01 rev vUNKNOWN-built20260701
+iverilog	Icarus Verilog version 13.0 (stable) (v13_0)
+openocd	Open On-Chip Debugger 0.12.0
+riscv32-unknown-elf-gcc	riscv32-unknown-elf-gcc (g6afcc4f6d) 16.1.0 (symlink to multilib riscv64-unknown-elf-gcc; source env.sh)
+cmake	cmake version 4.3.0
+gh	gh version 2.86.0 (2026-01-21)
+cocotb	cocotb 2.1.0

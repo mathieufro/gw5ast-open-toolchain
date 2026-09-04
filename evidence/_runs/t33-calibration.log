@@ -1,0 +1,7 @@
+=== big-shift E0 rc=0 wall=104.4s
+=== big-shift E1 rc=0 wall=102.8s
+=== attosoc E0 rc=0 wall=83.1s
+=== attosoc E1 rc=0 wall=90.5s
+=== uart-message E0 rc=0 wall=77.2s
+=== uart-message E1 rc=0 wall=107.4s
+CALIBRATION_DONE

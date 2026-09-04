@@ -1,0 +1,3 @@
+18:26:23 WATCHDOG_ARMED batch=t33-recovery stall=5min poll=100s pid=79430
+18:31:23 WATCHDOG_STALL batch=t33-recovery newest=/Users/alex/fine-line/.atelier/pipelines/2026-09-03-open-toolchain-gw5ast-7e84/evidence/_runs/t33-recovery.log age=5min > 5min
+18:33:03 WATCHDOG_STALL batch=t33-recovery newest=/Users/alex/fine-line/.atelier/pipelines/2026-09-03-open-toolchain-gw5ast-7e84/evidence/_runs/t33-recovery.log age=6min > 5min

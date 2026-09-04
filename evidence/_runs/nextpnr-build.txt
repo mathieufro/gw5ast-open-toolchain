@@ -1,0 +1,11 @@
+P0.T09 — nextpnr-himbaechel build
+submodule sha: 8dbcee5c3c4415770b6fd06d5ccb2db89545b8ec
+binary: /Users/alex/fine-line-data/open-toolchain-gw5ast/toolchains/nextpnr/bin/nextpnr-himbaechel
+version: "nextpnr-himbaechel" -- Next Generation Place and Route (Version nextpnr-0.11.1-19-g8dbcee5c)
+list-uarch: Info: Supported uarches: gowin
+configure: cmake -B /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr/build -S /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr -DARCH=himbaechel -DHIMBAECHEL_UARCH=gowin -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/Users/alex/fine-line-data/open-toolchain-gw5ast/toolchains/nextpnr -DHIMBAECHEL_GOWIN_DEVICES=
+build: cmake --build /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr/build -j8
+install: cmake --install /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr/build
+note: ran in FOREGROUND per orchestrator dispatch override (not detached+watched as blueprint HOW default); wall time recorded below.
+note: 3rdparty submodules (corrosion, googletest, himbaechel/uarch/xilinx/meta, tests) NOT initialized -- not required (BUILD_RUST/BUILD_TESTS default OFF, xilinx uarch not selected). 3rdparty/pybind11, json11, oourafft, sanitizers-cmake are vendored directly (not submodules), no init needed.
+note: no brew installs required -- boost 1.90.0_1, eigen 5.0.1, python 3.14.6 already present and sufficient.

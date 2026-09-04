@@ -1,0 +1,2 @@
+15:31:23 WATCHDOG_ARMED batch=t29-vendor stall=5min poll=100s (independent process)
+15:31:51 WATCHDOG_COMPLETE batch=t29-vendor saw BATCH_COMPLETE (clean exit)
