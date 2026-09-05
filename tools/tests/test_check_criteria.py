@@ -186,3 +186,111 @@ def test_check_criteria_phase_flag_resolves_rows(tmp_path, capsys):
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))
+
+
+# --------------------------------------------------------------------------
+# `D90` (gestalt `G6`): a scoped run also asserts the phase's own ledger, and
+# an assertion that examined nothing is no longer a pass.
+# --------------------------------------------------------------------------
+def write_phase_report(evidence_dir, phase, rows):
+    """`rows`: list of `(first cell, verdict cell)`. Returns the file path."""
+    phase_dir = os.path.join(evidence_dir, f"phase{phase}")
+    os.makedirs(phase_dir, exist_ok=True)
+    path = os.path.join(phase_dir, cc.PHASE_REPORT_NAME)
+    lines = [f"# Phase {phase} — close report", "",
+             "| S-id | Step | Verdict |", "|---|---|---|"]
+    lines += [f"| {first} | `V1` | {verdict} |" for first, verdict in rows]
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines) + "\n")
+    return path
+
+
+def write_slug_claim(evidence_dir, slug, criterion_ids, rows=()):
+    """A slug whose `summary.md` claims `criterion_ids`, with `rows` rows."""
+    slug_dir = os.path.join(evidence_dir, slug)
+    os.makedirs(slug_dir, exist_ok=True)
+    claim = " ".join(f"`{cid}`" for cid in criterion_ids)
+    with open(os.path.join(slug_dir, "summary.md"), "w", encoding="utf-8") as fh:
+        fh.write(f"# {slug} — {claim}, the criteria this slug backs\n")
+    if rows:
+        with open(os.path.join(slug_dir, "runs.jsonl"), "w", encoding="utf-8") as fh:
+            for row in rows:
+                fh.write(json.dumps(row) + "\n")
+
+
+def test_check_criteria_rejects_unbacked_reached(tmp_path, capsys):
+    """Negative control: REACHED, claimed by a slug that carries no row."""
+    spec = write_spec_primitives(tmp_path, [])
+    evidence = str(tmp_path / "evidence")
+    os.makedirs(evidence, exist_ok=True)
+    write_phase_report(evidence, 0, [
+        ("`S1` a criterion with rows", "**REACHED** — proven"),
+        ("`S2` a criterion with none", "**REACHED** — claimed only"),
+        ("`S3` an honest one", "**NOT REACHED** — owed to phase 1"),
+    ])
+    write_slug_claim(evidence, "backed-slug", ["S1"],
+                     rows=[_evidence_row("S1", notes=SATISFIED)])
+    write_slug_claim(evidence, "empty-slug", ["S2"])  # summary.md, no rows
+
+    exit_code = cc.main([spec, evidence, "--phase", "0"])
+    out = capsys.readouterr().out
+
+    assert exit_code != 0, out
+    assert "unbacked REACHED: S2" in out
+    assert "empty-slug" in out
+    assert "unbacked REACHED: S1" not in out
+    assert "S3" not in out            # NOT REACHED is not a claim
+    assert "CRITERIA ok: 1/2" in out
+
+
+def test_check_criteria_accepts_backed_reached(tmp_path, capsys):
+    """The same ledger passes once the claiming slug carries a row."""
+    spec = write_spec_primitives(tmp_path, [])
+    evidence = str(tmp_path / "evidence")
+    os.makedirs(evidence, exist_ok=True)
+    write_phase_report(evidence, 0, [
+        ("`S1` a criterion with rows", "**REACHED** — proven"),
+        ("standing: the gate is blocking", "**REACHED** — proven by tests"),
+    ])
+    write_slug_claim(evidence, "backed-slug", ["S1"],
+                     rows=[_evidence_row("S1", notes=SATISFIED)])
+
+    exit_code = cc.main([spec, evidence, "--phase", "0"])
+    out = capsys.readouterr().out
+
+    assert exit_code == 0, out
+    assert "CRITERIA ok: 2/2" in out
+    # A criterion no slug claims is reported, not silently counted as proven.
+    assert "unlinked: standing: the gate is blocking" in out
+
+
+def test_check_criteria_rejects_vacuous_zero(tmp_path, capsys):
+    """Negative control: `CRITERIA ok: 0/0` is no longer a pass (`D90`)."""
+    spec = write_spec_primitives(tmp_path, [("R1", "1", "r1")])
+    evidence = write_evidence(tmp_path, {"r1": [_evidence_row("R1")]})
+
+    # --phase 0 resolves to no spec-primitives row and there is no phase
+    # report: the old tool printed "CRITERIA ok: 0/0" and exited 0.
+    exit_code = cc.main([spec, evidence, "--phase", "0"])
+    out = capsys.readouterr().out
+
+    assert exit_code != 0, out
+    assert "CRITERIA ok: 0/0" in out
+    assert "vacuous assertion" in out
+
+
+def test_check_criteria_vacuous_phase_report_is_examined(tmp_path, capsys):
+    """A phase report with criteria makes `--phase N` non-vacuous by itself."""
+    spec = write_spec_primitives(tmp_path, [])
+    evidence = str(tmp_path / "evidence")
+    os.makedirs(evidence, exist_ok=True)
+    write_phase_report(evidence, 0, [("`S1` claimed", "**REACHED**")])
+    write_slug_claim(evidence, "empty-slug", ["S1"])
+
+    exit_code = cc.main([spec, evidence, "--phase", "0"])
+    out = capsys.readouterr().out
+
+    assert exit_code != 0, out
+    assert "PHASE-REPORT" in out
+    assert "vacuous assertion" not in out   # it examined 1 criterion
+    assert "unbacked REACHED: S1" in out

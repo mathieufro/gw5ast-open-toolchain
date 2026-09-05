@@ -19,6 +19,16 @@ apply..."): it only needs the exact error text recorded (clause a/c's
 
 Stdout contract (exact): `CRITERIA ok: <n>/<n>`.
 
+**`D90` (gestalt `G6`).** A scoped run (`--phase <n>`) additionally asserts
+the phase's own ledger, `<evidence>/phase<n>/phase-report.md`: every
+criterion that report marks `REACHED` must be **backed** by at least one
+evidence row, linked through the evidence slug that claims that criterion in
+its own markdown (`summary.md` and siblings).  A criterion whose claiming
+slugs carry zero rows fails the run; a criterion no slug claims is printed
+as `unlinked:` and counted (a phase's tooling/hygiene criteria are proven by
+tests, not by `runs.jsonl` rows).  `CRITERIA ok: 0/0` is no longer a pass:
+a scoped run that examined nothing is a vacuous assertion and fails.
+
 Scoping (mandatory, `F8`):
   - unscoped (no `--rows`, no `--phase`): a SURVEY. Reports satisfied/total
     over the whole table, lists every unmet row as `pending: <id>`, and
@@ -263,6 +273,159 @@ def evaluate_row(row, evidence_rows, evidence_dir, enable_clause_d):
 
 
 # --------------------------------------------------------------------------
+# 3b. The phase report (`D90`, gestalt `G6`)
+# --------------------------------------------------------------------------
+#: `<evidence>/phase<N>/phase-report.md` -- the ledger a phase closes on.
+PHASE_REPORT_NAME = "phase-report.md"
+
+#: `REACHED` in a verdict cell, but never `NOT REACHED`.
+_REACHED_RE = re.compile(r"(?<!NOT )\bREACHED\b")
+
+#: A criterion id (`S1`, `S6b`, `S17a`) as a standalone token.  `S0->O` and
+#: `.../S3` (an SDF pin, a path) are not criterion references.
+_CRITERION_ID_RE = re.compile(r"(?<![\w/\\])(S\d+[a-z]?)\b(?!\s*->)")
+
+#: Evidence-tree directories that are never a slug: the raw-log drop
+#: (`_runs`) and the phase-report directories themselves.
+_NON_SLUG_RE = re.compile(r"^(_.*|phase\d+[a-z]?)$")
+
+
+class Criterion:
+    __slots__ = ("id", "text")
+
+    def __init__(self, id_, text):
+        self.id = id_
+        self.text = text
+
+    def __repr__(self):
+        return f"Criterion({self.id!r})"
+
+
+def phase_report_path(evidence_dir, phase):
+    """`<evidence>/phase<N>/phase-report.md`, or None when there is none."""
+    if not evidence_dir or phase is None:
+        return None
+    candidate = os.path.join(evidence_dir, f"phase{phase}", PHASE_REPORT_NAME)
+    return candidate if os.path.isfile(candidate) else None
+
+
+def parse_phase_report(path):
+    """The criteria the phase report marks **REACHED**, in table order.
+
+    One `Criterion` per markdown table row whose last cell says `REACHED`
+    (and not `NOT REACHED`).  The id is the first criterion token in the
+    row's first cell (`S5`, `S17a`), else the cleaned first cell itself --
+    a phase report also carries `entry:` and `standing:` rows that have no
+    `S`-id and are still criteria.
+    """
+    criteria = []
+    if not path or not os.path.isfile(path):
+        return criteria
+    with open(path, encoding="utf-8") as fh:
+        lines = fh.readlines()
+
+    header = None
+    for raw in lines:
+        line = raw.rstrip("\n")
+        if not line.strip().startswith("|"):
+            header = None
+            continue
+        cells = _split_row(line)
+        if header is None:
+            header = cells
+            continue
+        if _is_separator(cells):
+            continue
+        if len(cells) < 2:
+            continue
+        verdict_cell = cells[-1]
+        if not _REACHED_RE.search(verdict_cell):
+            continue
+        first = cells[0]
+        m = _CRITERION_ID_RE.search(first.replace("`", ""))
+        cid = m.group(1) if m else re.sub(r"[`*]", "", first).strip()
+        if not cid:
+            continue
+        criteria.append(Criterion(cid, line))
+    return criteria
+
+
+def _slug_dirs(evidence_dir):
+    if not evidence_dir or not os.path.isdir(evidence_dir):
+        return []
+    return [name for name in sorted(os.listdir(evidence_dir))
+            if os.path.isdir(os.path.join(evidence_dir, name))
+            and not _NON_SLUG_RE.match(name)]
+
+
+def slug_claims(evidence_dir):
+    """`{slug: {criterion id, ...}}` -- which criteria each slug claims.
+
+    A slug claims a criterion by naming it in one of its own markdown
+    documents (`summary.md` and its siblings): that is the link between a
+    phase report's `REACHED` line and the rows that are supposed to back it,
+    and it is data already in the tree rather than a second ledger.
+    """
+    claims = {}
+    for slug in _slug_dirs(evidence_dir):
+        slug_dir = os.path.join(evidence_dir, slug)
+        ids = set()
+        for name in sorted(os.listdir(slug_dir)):
+            if not name.endswith(".md"):
+                continue
+            try:
+                with open(os.path.join(slug_dir, name), encoding="utf-8") as fh:
+                    text = fh.read()
+            except OSError:
+                continue
+            ids.update(_CRITERION_ID_RE.findall(text))
+        claims[slug] = ids
+    return claims
+
+
+def slug_row_counts(evidence_rows, evidence_dir):
+    """`{slug: n rows}` for every slug directory, zero-filled."""
+    counts = {slug: 0 for slug in _slug_dirs(evidence_dir)}
+    for row in evidence_rows:
+        slug = row.get("_slug")
+        if slug in counts:
+            counts[slug] += 1
+    return counts
+
+
+def check_phase_report(report_path, evidence_rows, evidence_dir):
+    """`(criteria, backed, unlinked, findings)` for one phase report.
+
+    A criterion marked `REACHED` must be **backed**: at least one evidence
+    slug that claims it carries at least one evidence row.  A criterion no
+    slug claims at all is `unlinked` -- reported, counted, not fatal: a
+    phase's tooling and hygiene criteria (`the local gate is blocking`,
+    `forks are submodules`) are proven by tests, not by `runs.jsonl` rows.
+    A criterion whose claiming slugs carry **zero** rows is the vacuous
+    case `D90` exists to stop, and is a hard failure.
+    """
+    criteria = parse_phase_report(report_path)
+    claims = slug_claims(evidence_dir)
+    counts = slug_row_counts(evidence_rows, evidence_dir)
+
+    backed, unlinked, findings = [], [], []
+    for crit in criteria:
+        claiming = sorted(slug for slug, ids in claims.items()
+                          if crit.id in ids)
+        if not claiming:
+            unlinked.append(crit)
+            continue
+        if any(counts.get(slug, 0) > 0 for slug in claiming):
+            backed.append(crit)
+            continue
+        findings.append(
+            f"unbacked REACHED: {crit.id} is marked REACHED but the only "
+            f"evidence slug(s) claiming it ({', '.join(claiming)}) carry 0 "
+            f"evidence rows (D90)")
+    return criteria, backed, unlinked, findings
+
+
+# --------------------------------------------------------------------------
 # 4. Scoping
 # --------------------------------------------------------------------------
 def resolve_rows(all_rows, row_ids=None, phase=None):
@@ -301,6 +464,11 @@ def build_parser():
     p.add_argument("--rows", help="comma-separated row ids to assert")
     p.add_argument("--phase", help="phase value to assert (e.g. 0, 5a, 5b)")
     p.add_argument(
+        "--phase-report", default=None,
+        help=("Path to the phase report to assert against (default: "
+              "<evidence>/phase<N>/phase-report.md). Every criterion it "
+              "marks REACHED must be backed by an evidence row (D90)."))
+    p.add_argument(
         "--enable-clause-d", action="store_true",
         help=(
             "Enforce DONE-STD clause (d) (the gate example). Off by "
@@ -331,10 +499,26 @@ def main(argv=None):
         (satisfied if ok else unmet).append(row)
         any_deferred = any_deferred or deferred
 
+    # `D90`/`G6`: a scoped run also asserts the phase report's own ledger.
+    report_path = args.phase_report or phase_report_path(
+        args.evidence_dir, args.phase)
+    report_findings = []
+    n_reached = n_backed = n_unlinked = 0
+    if is_scoped and report_path:
+        criteria, backed, unlinked, report_findings = check_phase_report(
+            report_path, evidence_rows, args.evidence_dir)
+        n_reached, n_backed, n_unlinked = len(criteria), len(backed), len(unlinked)
+        print(f"PHASE-REPORT {os.path.relpath(report_path, args.evidence_dir)}: "
+              f"{n_reached} REACHED, {n_backed} backed, {n_unlinked} unlinked, "
+              f"{len(report_findings)} unbacked")
+        for crit in unlinked:
+            print(f"unlinked: {crit.id} (no evidence slug claims it)")
+
     if not args.enable_clause_d and any_deferred:
         print(CLAUSE_D_DEFERRED_LINE)
 
-    n_ok, n_total = len(satisfied), len(target_rows)
+    n_ok = len(satisfied) + n_backed + n_unlinked
+    n_total = len(target_rows) + n_reached
     print(f"CRITERIA ok: {n_ok}/{n_total}")
 
     if not is_scoped:
@@ -342,9 +526,19 @@ def main(argv=None):
             print(f"pending: {row.id}")
         return 0
 
+    if n_total == 0:
+        # `D90`: an assertion that examined nothing is not a pass.
+        print("CRITERIA FAIL: vacuous assertion -- 0 criteria examined "
+              "(no spec-primitives.md rows in scope and no phase report "
+              "claiming criteria)")
+        return 1
+
+    for finding in report_findings:
+        print(finding)
     if unmet:
         names = ", ".join(row.id for row in unmet)
         print(f"CRITERIA FAIL: unmet rows: {names}")
+    if unmet or report_findings:
         return 1
     return 0
 
