@@ -1,25 +1,36 @@
-# `evidence/hclk/` — P1 clocking evidence skeleton (`P1.T03`)
+# `evidence/hclk/` — GW5AST-138C HCLK
 
 ## Row
 
-_No oracle runs recorded yet. This is the pre-measurement evidence skeleton
-(`P1.T03`); rows land here as `runs.jsonl` entries appended by the
-harness (`fuzz.gw5ast138c.harness.evidence.append_row`), one per
-(primitive, shape, sweep point), per `spec-harness.md` §6. `runs.jsonl`
-itself is created lazily on the first appended row, exactly as
-`append_row` already does elsewhere in this tree — an empty `runs.jsonl`
-is deliberately never committed (`D90`: "an empty ... evidence file is not
-evidence")._
+One row so far, `hclk-note-0001` — `kind=note`: the P1.T05-T09 verification
+record, not an oracle/fuzz run (`level: E0`, `verdict: ok`, no vendor run
+charged). Its full write-up is `port-138c.md`; the measured topology it is
+checked against is `../clocking/hclk-topology.md` (P1.T04).
 
 ## Sweep
 
-_Filled in once the owning task's first batch runs; see
-`blueprints/P1-clocking.md` for this slug's sweep plan._
+None. The measurement sweep for this slug is P1.T04's (14 vendor runs, recorded
+in `../clocking/oracle-runs.jsonl`); P1.T14-T16 add the CLKDIV / CLKDIV2 /
+HCLK-to-FCLK shape rows.
 
 ## Verdict
 
-_Pending._
+P1.T05, T06, T07, T08 **PASS**; P1.T09 **FIXED** (it was missing from the
+landed commits). Built 138C chipdb: 6 HCLK blocks x 4 = 24 CLKDIV + 24 CLKDIV2,
+halves 2 top / 4 bottom, `HAS_5A_HCLK` set. GW5A-25A chipdb byte-identical to
+the Phase-0 baseline. Openflow smoke still routes.
+
+**Not closed**: the 138C's HCLK *routing* model is still four-block and
+fuse-less — `gw5_hclk_idx` returns `-1` for the 138C and
+`gw5_make_hclk_pips`' default-PIP section is `range(4)`. Both are pre-existing
+25A-shaped code outside Phase 1's owned-function list, both are measured and
+quantified in `port-138c.md` §FINDINGS, and P1.T14-T16 cannot close `S8`'s
+HCLK->FCLK half until they are taken.
 
 ## Artefacts
 
-_None yet._
+- `port-138c.md` — the verification write-up (verdicts, hashes, findings)
+- `runs.jsonl` — the row
+- `../_runs/hclk-port-138c-openflow.log` — the openflow smoke log
+- `$DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin`
+  sha256 `0227f0914c615cf6858c8cb4e0e1e17afbe7d2c399d705a9c01dd12bc5ac14b3`, 63,860,996 B
