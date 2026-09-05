@@ -1,15 +1,8 @@
 """Tests for `tools/check_evidence.py` (`P0.T30`, `DEL-e` first cut, `D63`).
 
-**Deviation from the blueprint's file placement**: `P0.T30`'s HOW says nothing
-explicit about test location, but the sibling `P0.T31` (`check_criteria.py`)
-put its tests in `$PIPE/tools/tests/`. Another agent is concurrently editing
-`apicula/tests/` for a different task; putting these tests under the pipeline
-`tools/tests/` (matching `check_criteria.py`'s own test location) avoids that
-collision and keeps both checkers' tests side by side.
-
-These tests build a throwaway `spec-primitives.md` + evidence tree per test
-(never touching the live pipeline tree) and invoke `check_evidence.py` as a
-subprocess, matching how `V9` actually runs it.
+Each test builds a throwaway `spec-primitives.md` + evidence tree (never
+touching the live tree) and invokes `check_evidence.py` as a subprocess,
+matching how `V9` actually runs it.
 """
 import hashlib
 import json
@@ -24,24 +17,10 @@ TOOLS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHECK_EVIDENCE = os.path.join(TOOLS_DIR, "check_evidence.py")
 PYTHON = sys.executable
 
-_APICULA_CANDIDATES = [
-    os.environ.get("FL_APICULA"),
-    "/Users/alex/fine-line/.atelier/worktrees/"
-    "2026-09-03-open-toolchain-gw5ast-7e84/apicula",
-    "/Users/alex/fine-line/apicula",
-    "/Users/alex/fine-line/vendor/apicula",
-]
+sys.path.insert(0, TOOLS_DIR)
+from paths import apicula_root  # noqa: E402
 
-
-def _find_apicula_root():
-    for candidate in _APICULA_CANDIDATES:
-        if candidate and os.path.isfile(
-                os.path.join(candidate, "fuzz", "gw5ast138c", "harness", "evidence.py")):
-            return candidate
-    return None
-
-
-APICULA_ROOT = _find_apicula_root()
+APICULA_ROOT = apicula_root()
 MASK_PATH = (os.path.join(APICULA_ROOT, "fuzz", "gw5ast138c", "dontcare.mask")
              if APICULA_ROOT else None)
 
@@ -155,6 +134,8 @@ class TestCallShapesEquivalent(CheckEvidenceTestCase):
         bare_tools = os.path.join(self.tmp, "tools")
         os.makedirs(bare_tools, exist_ok=True)
         shutil.copy(CHECK_EVIDENCE, os.path.join(bare_tools, "check_evidence.py"))
+        shutil.copy(os.path.join(TOOLS_DIR, "paths.py"),
+                    os.path.join(bare_tools, "paths.py"))
         bare = subprocess.run(
             [PYTHON, os.path.join(bare_tools, "check_evidence.py")],
             capture_output=True, text=True)

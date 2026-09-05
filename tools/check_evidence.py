@@ -56,62 +56,15 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 # --------------------------------------------------------------------------
 # 0. Locating $OTC and the apicula checkout (the evidence-row schema lives
 #    in the harness, imported rather than re-declared -- one schema, D63).
 # --------------------------------------------------------------------------
-PIPE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-#: The pipeline docs dir (documents only, `C10`/`D80`) -- `spec-primitives.md`
-#: is read from here by default; never written here. Tried after `PIPE_ROOT`
-#: itself (which a test fixture may populate directly, see
-#: `tools/tests/test_check_evidence.py`), so a checkout carrying its own
-#: `spec-primitives.md` beside `tools/` still wins.
-_PIPELINE_DOCS_CANDIDATES = [
-    os.environ.get("FL_PIPELINE_DOCS"),
-    "/Users/alex/fine-line/.atelier/worktrees/"
-    "2026-09-03-open-toolchain-gw5ast-7e84/.atelier/pipelines/"
-    "2026-09-03-open-toolchain-gw5ast-7e84",
-    "/Users/alex/fine-line/.atelier/pipelines/"
-    "2026-09-03-open-toolchain-gw5ast-7e84",
-]
-
-
-def default_spec_primitives():
-    """`spec-primitives.md`'s default path: `PIPE_ROOT` first (test fixtures
-    and any checkout that carries its own copy beside `tools/`), then the
-    pipeline docs dir."""
-    local = os.path.join(PIPE_ROOT, "spec-primitives.md")
-    if os.path.isfile(local):
-        return local
-    for docs in _PIPELINE_DOCS_CANDIDATES:
-        if not docs:
-            continue
-        candidate = os.path.join(docs, "spec-primitives.md")
-        if os.path.isfile(candidate):
-            return candidate
-    return local
-
-
-_APICULA_CANDIDATES = [
-    os.environ.get("FL_APICULA"),
-    "/Users/alex/fine-line/.atelier/worktrees/"
-    "2026-09-03-open-toolchain-gw5ast-7e84/apicula",
-    "/Users/alex/fine-line/apicula",
-    "/Users/alex/fine-line/vendor/apicula",
-]
-
-
-def find_apicula_root():
-    """The apicula checkout carrying `fuzz/gw5ast138c/harness/evidence.py`."""
-    for candidate in _APICULA_CANDIDATES:
-        if not candidate:
-            continue
-        marker = os.path.join(
-            candidate, "fuzz", "gw5ast138c", "harness", "evidence.py")
-        if os.path.isfile(marker):
-            return candidate
-    return None
+from paths import (OTC_ROOT as PIPE_ROOT, apicula_candidates,  # noqa: E402
+                   apicula_root as find_apicula_root,
+                   default_spec_primitives)
 
 
 def load_schema():
@@ -126,7 +79,7 @@ def load_schema():
     if root is None:
         raise SystemExit(
             "check_evidence.py: no apicula checkout found (tried "
-            + ", ".join(c for c in _APICULA_CANDIDATES if c)
+            + ", ".join(c for c in apicula_candidates() if c)
             + "); cannot import the evidence-row schema")
     if root not in sys.path:
         sys.path.insert(0, root)

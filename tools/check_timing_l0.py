@@ -46,6 +46,10 @@ import re
 import statistics
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from paths import sibling  # noqa: E402
+
 # --------------------------------------------------------------------------
 # 0. class membership (D60) and grade provenance (P0.T35 / P0.T36)
 # --------------------------------------------------------------------------
@@ -87,15 +91,6 @@ BAND = 0.10                      # +/-10% (D24 L0)
 # --------------------------------------------------------------------------
 # 1. chipdb / timing-dict loading
 # --------------------------------------------------------------------------
-def _otc_root():
-    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-def _sibling(name, env):
-    """`$OTC/../<name>`, overridable by `$<env>` -- the sibling-checkout layout."""
-    return os.environ.get(env) or os.path.join(os.path.dirname(_otc_root()), name)
-
-
 def load_timing(chipdb_path):
     """Return the `db.timing` mapping: {grade: {group: {arc: value}}}.
 
@@ -105,7 +100,7 @@ def load_timing(chipdb_path):
     if chipdb_path.endswith(".json"):
         with open(chipdb_path) as f:
             return json.load(f)
-    apicula = _sibling("apicula", "APICULA_DIR")
+    apicula = sibling("apicula", "APICULA_DIR")
     if apicula not in sys.path:
         sys.path.insert(0, apicula)
     from apycula.chipdb import load_chipdb  # noqa: E402
@@ -209,8 +204,8 @@ def record_emission(timing):
       * `error`    a string if nextpnr's generator could not be imported
     """
     gowin_dir = os.path.join(
-        _sibling("nextpnr", "NEXTPNR_DIR"), "himbaechel", "uarch", "gowin")
-    apicula = _sibling("apicula", "APICULA_DIR")
+        sibling("nextpnr", "NEXTPNR_DIR"), "himbaechel", "uarch", "gowin")
+    apicula = sibling("apicula", "APICULA_DIR")
     for p in (gowin_dir, apicula):
         if p not in sys.path:
             sys.path.insert(0, p)

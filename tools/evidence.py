@@ -4,11 +4,18 @@
 `--ensure-tree`, `--evidence-root`). It re-implements nothing; no phase
 anywhere creates a second implementation.
 """
+import os
 import sys
-for _apicula in (
-        "/Users/alex/fine-line/apicula",
-        "/Users/alex/fine-line/.atelier/worktrees/"
-        "2026-09-03-open-toolchain-gw5ast-7e84/apicula"):
-    sys.path.insert(0, _apicula)
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from paths import apicula_root  # noqa: E402
+
+_root = apicula_root()
+if _root is None:
+    raise SystemExit("evidence.py: no apicula checkout found")
+sys.path.insert(0, _root)
+
 from fuzz.gw5ast138c.harness.evidence import main  # noqa: E402
+
 sys.exit(main(sys.argv[1:]))
