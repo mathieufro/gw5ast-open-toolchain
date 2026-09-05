@@ -148,7 +148,16 @@ def test_plla_25a_enumeration_unchanged():
     with open(chipdb_py, encoding="utf-8") as fh:
         src = fh.read()
 
-    body = src.split("def fse_create_slot_plls(", 1)[1].split("\ndef ", 1)[0]
+    # `P1.T18` moves the literal out of the function body and into the
+    # per-device table `_gw5a_pll_slots`, so look there first and fall back to
+    # the body. What this test pins is the six ENTRIES, not where they live:
+    # re-pointing it at the new home is the whole point of the move, while
+    # letting an entry change is not.
+    if "_gw5a_pll_slots = {" in src:
+        table = src.split("_gw5a_pll_slots = {", 1)[1]
+        body = table.split("'GW5A-25A':", 1)[1].split("},", 1)[0]
+    else:
+        body = src.split("def fse_create_slot_plls(", 1)[1].split("\ndef ", 1)[0]
     entries = set(
         (int(r), int(c), int(s), t)
         for r, c, s, t in re.findall(

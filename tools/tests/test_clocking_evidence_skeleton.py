@@ -47,7 +47,19 @@ def test_clocking_evidence_skeleton_present():
     header, data_rows = lines[0], lines[1:]
     assert header.split("\t") == [
         "batch_id", "slug", "runs", "cumulative", "timestamp"]
-    assert len(data_rows) == 1, f"expected exactly 1 data row, got {data_rows}"
+    # The seed row plus one row per recorded batch. This used to assert
+    # `== 1`, which pinned the ledger at its pre-measurement state and turned
+    # the first recorded batch into a failure -- a guard that forbade its own
+    # subject. What it guards now is the schema and the running total.
+    assert len(data_rows) >= 1, f"expected at least 1 data row, got {data_rows}"
+    running = 0
+    for line in data_rows:
+        cols = line.split("\t")
+        assert len(cols) == 5, f"malformed ledger row: {line!r}"
+        running += int(cols[2])
+        assert int(cols[3]) == running, (
+            f"cumulative column is not the running sum of runs: {line!r} "
+            f"(expected {running})")
     fields = data_rows[0].split("\t")
     cumulative = fields[3]
     assert cumulative == "0", f"expected cumulative == 0, got {cumulative!r}"

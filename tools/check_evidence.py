@@ -513,11 +513,20 @@ def check(spec_path, evidence_dir, slugs, exclude_slugs, schema, apicula_root):
                     f"{prow.id}/{run_id}: verdict 'diff' but diff_count's "
                     f"cells/attrs/conns are all zero")
 
-            if expected_mask_sha256 and row.get("mask_sha256") != expected_mask_sha256:
-                findings.append(
-                    f"{prow.id}/{run_id}: mask_sha256 {row.get('mask_sha256')!r} "
-                    f"does not match the checked-in dontcare.mask "
-                    f"({expected_mask_sha256})")
+            # The mask is an input to the E0/E1 comparison, so it is only
+            # meaningful on a row whose comparison actually ran. An `aborted`
+            # or `refused` row stopped before `equiv` and legitimately carries
+            # no mask -- demanding one there turns every recorded refusal into
+            # a finding, and a refusal is a deliverable (`spec-harness.md` 6).
+            # A *wrong* non-null mask is still caught on every verdict.
+            row_mask = row.get("mask_sha256")
+            mask_required = verdict in ("ok", "diff")
+            if expected_mask_sha256 and (mask_required or row_mask is not None):
+                if row_mask != expected_mask_sha256:
+                    findings.append(
+                        f"{prow.id}/{run_id}: mask_sha256 {row_mask!r} "
+                        f"does not match the checked-in dontcare.mask "
+                        f"({expected_mask_sha256})")
 
             if _unexplained_bits_unjustified(row.get("unexplained_bits")):
                 findings.append(

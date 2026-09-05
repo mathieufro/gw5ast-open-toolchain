@@ -1,0 +1,32 @@
+21:44:22 BATCH_START batch=pll-trace-pilot2 shape=clocking_pll_trace level=E1 pid=57794 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/pll-trace
+21:49:01 BATCH_HEAD selftest --inject-one-fuse: ok
+21:49:45 BATCH_HEAD selftest --unpacker-completeness: ok
+21:49:47 BATCH_HEAD selftest --probe-mask-classes: ok
+21:50:00 BATCH_HEAD gw_sh pre-flight: ok
+21:50:00 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 12 run ids)
+21:50:00 BATCH_RESUME batch=pll-trace-pilot2 planned=12 already_terminal=1
+21:50:00 RUN_SKIP pll-trace-pilot2-clocking_pll_trace-0000 (terminal row already present)
+21:50:00 RUN_START pll-trace-pilot2-clocking_pll_trace-0001 sweep='PLL_L[1]'
+21:50:30 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0001 verdict=aborted
+21:50:30 RUN_START pll-trace-pilot2-clocking_pll_trace-0002 sweep='PLL_L[2]'
+21:50:58 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0002 verdict=aborted
+21:50:58 RUN_START pll-trace-pilot2-clocking_pll_trace-0003 sweep='PLL_L[3]'
+21:51:27 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0003 verdict=aborted
+21:51:27 RUN_START pll-trace-pilot2-clocking_pll_trace-0004 sweep='PLL_R[0]'
+21:51:57 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0004 verdict=aborted
+21:51:57 RUN_START pll-trace-pilot2-clocking_pll_trace-0005 sweep='PLL_R[1]'
+21:52:26 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0005 verdict=aborted
+21:52:26 RUN_START pll-trace-pilot2-clocking_pll_trace-0006 sweep='PLL_R[2]'
+21:52:54 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0006 verdict=aborted
+21:52:54 RUN_START pll-trace-pilot2-clocking_pll_trace-0007 sweep='PLL_R[3]'
+21:53:21 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0007 verdict=aborted
+21:53:21 RUN_START pll-trace-pilot2-clocking_pll_trace-0008 sweep='PLL_B[0]'
+21:53:49 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0008 verdict=aborted
+21:53:49 RUN_START pll-trace-pilot2-clocking_pll_trace-0009 sweep='PLL_B[1]'
+21:54:17 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0009 verdict=aborted
+21:54:17 RUN_START pll-trace-pilot2-clocking_pll_trace-0010 sweep='PLL_B[2]'
+21:54:46 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0010 verdict=aborted
+21:54:46 RUN_START pll-trace-pilot2-clocking_pll_trace-0011 sweep='PLL_B[3]'
+21:55:14 RUN_DONE pll-trace-pilot2-clocking_pll_trace-0011 verdict=aborted
+21:55:14 BATCH_SKIPPED batch=pll-trace-pilot2 n=1 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/pll-trace-pilot2.rows.jsonl
+BATCH_COMPLETE pll-trace-pilot2 runs=11 ok=0 diff=0 aborted=11

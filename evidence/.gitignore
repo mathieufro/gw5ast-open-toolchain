@@ -44,6 +44,12 @@
 !plla/sites-138c.json
 !plla/attrids-138c.tsv
 !plla/gen_sites_138c.py
+# the P1.T19 site trace: the analyser that turns each run's .fs into per-tile
+# fuse counts, and its output -- the per-run bit census for all twelve
+# candidate three-tile groups, which is the evidence behind the
+# site-name -> anchor bijection in sites-138c.md section 8.
+!plla/gen_trace_138c.py
+!plla/runs/trace-138c.json
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo

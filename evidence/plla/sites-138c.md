@@ -1,6 +1,8 @@
 # P1.T17 — GW5AST-138C PLL sites, enumerated from the shipped vendor tables
 
 **Status: MEASURED** (except where a row says ASSUMED).
+**Updated by `P1.T19`** (§8): every site is now `traced`, the two §3 ASSUMED
+items are settled, and the vendor cell type is `PLL`, not `PLLA`.
 Source files: `$GOWINHOME/IDE/share/device/GW5AST-138C/GW5AST-138C.{fse,dat}`,
 Gowin IDE **1.9.12.03 Standard** (`GOWINHOME=/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA`).
 Comparison device: `GW5A-25A` from the same install.
@@ -18,7 +20,7 @@ Regenerate: `GOWINHOME=... $FL/vendor/venv/bin/python evidence/plla/gen_sites_13
 | PLLs on the device | **12** (DS1239E Table 1-1 `Phase Locked Loop (PLLs) 12`; Figure 2-1 and Figure 2-10 draw 4 left + 4 right + 4 bottom) | vendor doc |
 | PLL sites found in the shipped `.fse` | **12** | MEASURED |
 | Sites the `.dat` **names** | **0** | MEASURED |
-| Sites needing tracing (`P1.T19`) | **12** — positions are already measured here; what is missing is the *port wiring* and the bel anchor tile | MEASURED |
+| Sites needing tracing (`P1.T19`) | **12** — all traced, see §8 | MEASURED |
 | PLL slots (`fse_create_slot_plls`'s mechanism) on 138C | **none exist** — the `.fse` carries **no pseudo-ttyp ≥ 1024** at all and **no `drpfuse` header table** | MEASURED |
 
 ---
@@ -55,20 +57,20 @@ no slots (§2). `source` values: `fse` = position measured from the shipped `.fs
 
 | pll_idx | side | slot_idx | (row, col) | tiles (row, col, ttyp, table-35 rows) | source | ports |
 |---|---|---|---|---|---|---|
-| 0 | L | n/a | (27, 1) | (27,1,74,804) (27,2,75,968) (27,3,76,685) | fse | trace (T19) |
-| 1 | R | n/a | (27, 177) | (27,177,77,804) (27,178,78,968) (27,179,79,685) | fse | trace (T19) |
-| 2 | L | n/a | (45, 0) | (45,0,268,808) (45,1,75,968) (45,2,76,685) | fse | trace (T19) |
-| 3 | R | n/a | (45, 178) | (45,178,77,804) (45,179,78,968) (45,180,79,685) | fse | trace (T19) |
-| 4 | L | n/a | (63, 0) | (63,0,270,808) (63,1,75,968) (63,2,76,685) | fse | trace (T19) |
-| 5 | R | n/a | (63, 178) | (63,178,77,804) (63,179,78,968) (63,180,79,685) | fse | trace (T19) |
-| 6 | L | n/a | (81, 1) | (81,1,74,804) (81,2,75,968) (81,3,76,685) | fse | trace (T19) |
-| 7 | R | n/a | (81, 177) | (81,177,77,804) (81,178,78,968) (81,179,79,685) | fse | trace (T19) |
-| 8 | B | n/a | (108, 28) | (108,28,182,804) (108,29,183,968) (108,30,184,685) | fse | trace (T19) |
-| 9 | B | n/a | (108, 32) | (108,32,182,804) (108,33,183,968) (108,34,184,685) | fse | trace (T19) |
-| 10 | B | n/a | (108, 146) | (108,146,182,804) (108,147,183,968) (108,148,184,685) | fse | trace (T19) |
-| 11 | B | n/a | (108, 150) | (108,150,182,804) (108,151,183,968) (108,152,184,685) | fse | trace (T19) |
+| 0 | L | n/a | (27, 1) | (27,1,74,804) (27,2,75,968) (27,3,76,685) | traced | 23 in / 8 out (T19) |
+| 1 | R | n/a | (27, 177) | (27,177,77,804) (27,178,78,968) (27,179,79,685) | traced | 23 in / 8 out (T19) |
+| 2 | L | n/a | (45, 0) | (45,0,268,808) (45,1,75,968) (45,2,76,685) | traced | 23 in / 8 out (T19) |
+| 3 | R | n/a | (45, 178) | (45,178,77,804) (45,179,78,968) (45,180,79,685) | traced | 23 in / 8 out (T19) |
+| 4 | L | n/a | (63, 0) | (63,0,270,808) (63,1,75,968) (63,2,76,685) | traced | 23 in / 8 out (T19) |
+| 5 | R | n/a | (63, 178) | (63,178,77,804) (63,179,78,968) (63,180,79,685) | traced | 23 in / 8 out (T19) |
+| 6 | L | n/a | (81, 1) | (81,1,74,804) (81,2,75,968) (81,3,76,685) | traced | 23 in / 8 out (T19) |
+| 7 | R | n/a | (81, 177) | (81,177,77,804) (81,178,78,968) (81,179,79,685) | traced | 23 in / 8 out (T19) |
+| 8 | B | n/a | (108, 28) | (108,28,182,804) (108,29,183,968) (108,30,184,685) | traced | 23 in / 8 out (T19) |
+| 9 | B | n/a | (108, 32) | (108,32,182,804) (108,33,183,968) (108,34,184,685) | traced | 23 in / 8 out (T19) |
+| 10 | B | n/a | (108, 146) | (108,146,182,804) (108,147,183,968) (108,148,184,685) | traced | 23 in / 8 out (T19) |
+| 11 | B | n/a | (108, 150) | (108,150,182,804) (108,151,183,968) (108,152,184,685) | traced | 23 in / 8 out (T19) |
 
-Counts: `source == "fse"` **12**, `source == "dat"` **0**, `source == "traced"` **0**,
+Counts: `source == "traced"` **12**, `source == "dat"` **0**, `source == "fse"` **0**,
 `source == "unknown"` **0**. Sides: 4 L / 4 R / 4 B — the DS1239E Figure 2-1 layout.
 
 **ASSUMED (not measured here), for `P1.T18`/`P1.T19` to settle:**
@@ -186,3 +188,114 @@ byte-for-byte, so `P1.T18`'s move into `_gw5a_pll_slots` is provably identity-pr
 the 25A).
 
 No apicula code was changed by this task.
+
+---
+
+## 8. `P1.T19` — the trace (MEASURED, 13 oracle runs)
+
+**Method.** One vendor project per site: a single hard PLL pinned by
+`INS_LOC "dut_pll" PLL_<side>[<n>];`, compiled through the oracle
+(`fuzz/gw5ast138c/shapes/clocking_pll_trace.py`, batch `pll-trace-pilot2`).
+Each run's `run/impl/pnr/run.fs` is decoded to per-tile bitmaps
+(`bslib.read_bitstream` -> `chipdb.tile_bitmap`) and the bits are counted in
+each of §3's twelve candidate three-tile groups
+(`evidence/plla/gen_trace_138c.py`, output `runs/trace-138c.json`).
+
+The discrimination is total, not statistical: with one PLL in the design the
+constrained site's three tiles carry ~120 bits each and eleven of the twelve
+groups are **all-zero**, so no baseline run and no cross-run subtraction is
+needed. That is why the trace cost 12 runs and not the blueprint's 14.
+
+### 8.1 The mapping — a bijection, measured
+
+| vendor site | anchor `(row, col)` | tiles | bits per tile | side |
+|---|---|---|---|---|
+| `PLL_L[0]` | (27, 1)   | (27,1) (27,2) (27,3)       | 122 / 126 / 126 | L |
+| `PLL_L[1]` | (45, 0)   | (45,0) (45,1) (45,2)       | 123 / 125 / 127 | L |
+| `PLL_L[2]` | (63, 0)   | (63,0) (63,1) (63,2)       | 123 / 125 / 127 | L |
+| `PLL_L[3]` | (81, 1)   | (81,1) (81,2) (81,3)       | 122 / 126 / 126 | L |
+| `PLL_R[0]` | (27, 177) | (27,177) (27,178) (27,179) | 122 / 126 / 130 | R |
+| `PLL_R[1]` | (45, 178) | (45,178) (45,179) (45,180) | 123 / 125 / 126 | R |
+| `PLL_R[2]` | (63, 178) | (63,178) (63,179) (63,180) | 123 / 125 / 126 | R |
+| `PLL_R[3]` | (81, 177) | (81,177) (81,178) (81,179) | 122 / 126 / 130 | R |
+| `PLL_B[0]` | (108, 28) | (108,28) (108,29) (108,30) | 106 / 121 / 147 | B |
+| `PLL_B[1]` | (108, 32) | (108,32) (108,33) (108,34) | 108 / 121 / 147 | B |
+| `PLL_B[2]` | (108, 146)| (108,146) (108,147) (108,148) | 102 / 121 / 142 | B |
+| `PLL_B[3]` | (108, 150)| (108,150) (108,151) (108,152) | 104 / 121 / 142 | B |
+
+Twelve distinct anchors for twelve distinct site names: the mapping is a
+**bijection**, and `slot_idx` in `chipdb._gw5a_pll_slots['GW5AST-138C']` is now
+the vendor site index (`L[0..3]` -> 0..3, `R[0..3]` -> 4..7, `B[0..3]` -> 8..11)
+rather than P1.T17's assumed row-major numbering. The two happen to agree on
+the left/right *ordering* (top to bottom) and the bottom ordering (left to
+right); that agreement is now measured rather than assumed.
+
+**Both §3 ASSUMED items are settled:**
+
+1. the **anchor** — the lowest-column tile of the run — is the right cell to
+   hang the bel on: it is the tile the constrained site lights up, in all
+   twelve runs;
+2. the `pll_idx` order matches the vendor's `PLL_L/R/B[n]` naming, as above.
+
+**One honest imperfection.** `PLL_B[0]` also sets 8/4/0 bits in `PLL_B[1]`'s
+group, and `PLL_B[2]` sets 5/4/0 bits in `PLL_B[3]`'s — the adjacent bottom
+pairs share something (most plausibly a shared clock-output mux), 12 bits
+against 374. The primary group is never in doubt; the shared bits are recorded
+here rather than thresholded away, and belong to whoever models the bottom PLL
+clock outputs.
+
+### 8.2 Blueprint expectation refuted: the cell type is `PLL`, not `PLLA`
+
+The first oracle run (`pll-trace-pilot`, a `PLLA` instantiation) was refused:
+
+```
+ERROR (RP0008) : There is no PLLA resource in current device, please change device
+```
+
+That refusal is a measurement, and it corroborates `UG306-1.0.1E` Table 5-11
+("PLLA Device Supported"), which lists **GW5A-25 and nothing else**. Rerunning
+the identical design with the `PLL` primitive (`prim_sim.v:13333`) placed and
+routed cleanly on every one of the twelve sites.
+
+The two primitives differ in a way that matches this device's `.dat` exactly:
+
+| | `PLLA` (`prim_sim.v:15202`) | `PLL` (`prim_sim.v:13333`) |
+|---|---|---|
+| MDIO/DRP ports | `MDCLK`, `MDOPC`, `MDAINC`, `MDWDI`, `MDRDO` | **none** |
+| dynamic dividers | none | `ENCLK0-6`, `FBDSEL`, `IDSEL`, `MDSEL`, `MDSEL_FRAC`, `ODSEL0-6`, `DT0-3`, `ICPSEL`, `LPFRES`, `LPFCAP` |
+| 138C `.dat` agrees? | no — every MDIO row is `-1` | **yes** |
+
+This is the same finding as §2's "no DRP slots" seen from the vendor's side:
+the 138C hard PLL has no mini-DRP, so it is not a `PLLA`.
+
+### 8.3 What is still open (named, not papered over)
+
+* **The dynamic-divider port wires.** `chipdb._plla_inputs`/`_plla_outputs`
+  index 23 inputs and 8 outputs that `PLL` and `PLLA` share, and those are the
+  ports `P1.T18` builds. The other ~108 populated `PllIn` rows are `PLL`'s
+  `ENCLKn`/`FBDSEL`/`IDSEL`/`MDSEL`/`ODSELn`/`DTn` ports at indices apicula
+  has **no table for**. Recovering them is a per-port trace of ~50 signals, not
+  a 12-run placement sweep, and it is not needed for the bels this phase owes.
+* **Packing.** `gowin_pack.get_pll_slot_fuses`/`set_pll_slot_fuses` still
+  address fuses through `drpfuse_lookup` on pseudo-ttyp 1024, which does not
+  exist on this device (§2). A 138C PLL needs a per-device branch onto the
+  ordinary `shortval[ttyp]['PLL']` tiles named in §8.1.
+
+### 8.4 Reproduction
+
+```sh
+export GOWINHOME=/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+export OTC_EVIDENCE=$OTC/evidence PYTHONPATH=<apicula worktree>
+python -m fuzz.gw5ast138c.harness --design-dir $DATASTORE/batch/pll-trace \
+    --shape clocking_pll_trace --batch-id pll-trace-pilot2 --level E1 \
+    --detach --expected-minutes 90
+python evidence/plla/gen_trace_138c.py $DATASTORE/batch/pll-trace \
+    evidence/plla/runs/trace-138c.json
+```
+
+Batch log `evidence/_runs/pll-trace-pilot2.log` ends
+`BATCH_COMPLETE pll-trace-pilot2 runs=11 ok=0 diff=0 aborted=11` (run `0000`
+was the earlier single-point run of the same batch id and was resumed past).
+Every verdict is `aborted` because the **open** half of each run has no PLL bel
+in the installed nextpnr `.bin` yet; the **vendor** half — the half this task
+measures — completed and produced `run.fs` in all twelve.

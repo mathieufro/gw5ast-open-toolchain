@@ -1,0 +1,2 @@
+23:44:22 WATCHDOG_ARMED batch=pll-trace-pilot2 stall=9min poll=180s (independent process)
+23:55:15 WATCHDOG_COMPLETE batch=pll-trace-pilot2 saw BATCH_COMPLETE (clean exit)
