@@ -1,0 +1,28 @@
+P1.T01 — Phase entry gate and edition stamp
+Run 2026-09-05, worktree /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84
+
+== V0 first two lines (spec.md:1452-1490) ==
+OK-gw_sh
+OK-gw_sh-starts
+
+== gowinhome.selected ==
+/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+(unchanged from Phase 0; not refreshed, since V0 above reproduced OK-gw_sh-starts on the
+same Standard install already selected there. edu-provisional.flag = false; the Education
+1.9.11.03 install no longer exists on disk (D79/C9), so installs_available: 1.)
+
+== apycula/GW5AST-138C.msgpack.xz ==
+fd1d112d0c463d9e7ba918b0651cac0c9b4e90dac392ae36e8cec297bf9ee2bb  apycula/GW5AST-138C.msgpack.xz
+(matches PROGRESS.md ws_00 exit-state record fd1d112d)
+
+== fuzz.gw5ast138c.harness.selftest --design-dir $DATASTORE/oracle-smoke --inject-one-fuse ==
+SELFTEST ok: 1 difference reported, 0 spurious
+
+== fuzz.gw5ast138c.harness.selftest --design-dir $DATASTORE/oracle-smoke --unpacker-completeness ==
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+
+== Tool contracts present ==
+$OTC/tools/check_criteria.py: present
+$OTC/tools/check_evidence.py: present
+$OTC/tools/check_timing_l0.py: present
+$OTC/evidence/evidence-table.md: present
