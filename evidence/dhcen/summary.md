@@ -1,25 +1,45 @@
-# `evidence/dhcen/` — P1 clocking evidence skeleton (`P1.T03`)
+# `evidence/dhcen/` — GW5AST-138C DHCEN control-pin trace (P1.T25)
 
-## Row
+## Rows
 
-_No oracle runs recorded yet. This is the pre-measurement evidence skeleton
-(`P1.T03`); rows land here as `runs.jsonl` entries appended by the
-harness (`fuzz.gw5ast138c.harness.evidence.append_row`), one per
-(primitive, shape, sweep point), per `spec-harness.md` §6. `runs.jsonl`
-itself is created lazily on the first appended row, exactly as
-`append_row` already does elsewhere in this tree — an empty `runs.jsonl`
-is deliberately never committed (`D90`: "an empty ... evidence file is not
-evidence")._
+`28` rows in `runs.jsonl`, one per vendor compile: `26` `ok`, `2` `refused`.
+Both refusals are the deliverable, not a hole —
+`ERROR (EX3937) : Instantiating unknown module 'DHCEN'` (the primitive does not
+exist on this family) and
+`ERROR (PA2017) : The number(25) of CLKDIV in the design exceeds the resource
+limit(24) of current device` (the capacity). Every row is `level: E0`,
+`primitive: DHCEN` (the `spec-primitives.md` row id; the vendor spelling `DHCE` is in `sweep`/`notes`), `shape: clocking_dhcen_trace`; there is no `E0`/`E1`
+comparison because there is no open-source side to compare against until
+`P1.T26` teaches `fse_create_dhcen` about this device.
 
 ## Sweep
 
-_Filled in once the owning task's first batch runs; see
-`blueprints/P1-clocking.md` for this slug's sweep plan._
+`n_dhce` = 0..6, 12, 16..24, 25, in two variants (`tie_resetn` on and off) plus
+the `0 DHCE / 24 CLKDIV` control point. `28` oracle runs against the D62 budget
+(dispatch cap 30, blueprint estimate 24), booked to
+`../_budget/clocking-runs.tsv` as six batch rows.
 
 ## Verdict
 
-_Pending._
+**MEASURED.** 24 DHCE sites = 6 HCLK block cells x 4, enable wires
+`C2 C5 C7 D2` per block except `(81, 0)`, which is `C2 A5 C7 A4`. Two
+refutations of the blueprint recorded: the primitive is `DHCE` with port `CEN`
+(not `DHCEN`/`CE`), and the table is 6 blocks x 4 with no top side and no
+interbank entries (not 4 sides x 6). No `chipdb.py` change was made — that is
+`P1.T26`, whose handover list is `trace-138c.md` §8.
 
 ## Artefacts
 
-_None yet._
+- `ce-wires-138c.md` / `ce-wires-138c.json` — the `(side, idx, row, col, wire)`
+  table, and the literal `_dhcen_ce` entry `P1.T26` needs
+- `trace-138c.md` — method, the two refutations, the identification argument,
+  the fuse->pin table, the evidence rows, reproduction
+- `probe_dhce.py` — the campaign driver (oracle runs + the routing trace)
+- `build_ce_wires.py` — the deterministic reduction from `trace-result*.json`
+  to the committed table
+- `oracle-runs.jsonl` — the raw per-run ledger the batches append to
+- `trace-result*.json`, `fuse-presence-diff.json` — the two instruments' output
+- `../_runs/p1-dhcen-trace-{1..5}.{log,watchdog.log}` — batch and watchdog logs
+- Shape: `fuzz/gw5ast138c/shapes/clocking_dhcen_trace.py` on apicula branch
+  `clocking/dhcen-gw5a`
+- Gate test: `tools/tests/test_dhcen_ce_wires.py`

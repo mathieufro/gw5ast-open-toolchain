@@ -1,0 +1,2 @@
+00:07:36 WATCHDOG_ARMED batch=p1-dhcen-trace-3 stall=10min poll=200s (independent process)
+00:09:34 WATCHDOG_COMPLETE batch=p1-dhcen-trace-3 saw BATCH_COMPLETE (clean exit)

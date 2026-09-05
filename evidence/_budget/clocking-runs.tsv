@@ -2,3 +2,9 @@ batch_id	slug	runs	cumulative	timestamp
 0	-	0	0	2026-09-05T00:00:00+00:00
 pll-trace-pilot	plla	1	1	2026-09-05T21:35:00+00:00
 pll-trace-pilot2	plla	12	13	2026-09-05T21:55:14+00:00
+p1-dhcen-feas	dhcen	2	15	2026-09-05T22:45:16+00:00
+p1-dhcen-trace	dhcen	9	24	2026-09-05T22:45:16+00:00
+p1-dhcen-trace-2	dhcen	7	31	2026-09-05T22:45:16+00:00
+p1-dhcen-trace-3	dhcen	1	32	2026-09-05T22:45:16+00:00
+p1-dhcen-trace-4	dhcen	2	34	2026-09-05T22:45:16+00:00
+p1-dhcen-trace-5	dhcen	7	41	2026-09-05T22:45:16+00:00

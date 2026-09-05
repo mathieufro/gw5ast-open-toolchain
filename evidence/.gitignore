@@ -50,6 +50,21 @@
 # site-name -> anchor bijection in sites-138c.md section 8.
 !plla/gen_trace_138c.py
 !plla/runs/trace-138c.json
+# the P1.T25 DHCEN control-pin trace: the campaign driver, the deterministic
+# reduction from its raw output to the committed table, and that output itself.
+# Same named-exception pattern as plla/ above -- .json/.jsonl/.py are not
+# covered by "*.md", and trace-138c.md claims the reduction is auditable
+# without re-running the oracle, which is only true if these are in the tree.
+!dhcen/probe_dhce.py
+!dhcen/build_ce_wires.py
+!dhcen/ce-wires-138c.json
+!dhcen/oracle-runs.jsonl
+!dhcen/trace-result.json
+!dhcen/trace-result-tieresetn.json
+!dhcen/trace-result-control.json
+!dhcen/trace-result-1620.json
+!dhcen/trace-result-1719.json
+!dhcen/fuse-presence-diff.json
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo
