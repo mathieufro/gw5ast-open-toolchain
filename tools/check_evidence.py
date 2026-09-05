@@ -43,11 +43,16 @@ additive-field allowance for the `calibration` slug applied by
 
 `<n>` counts evidence rows matched to a `spec-primitives.md` primitive within
 the active slug scope. `<p>` (`PENDING`) counts primitive rows whose evidence
-*directory* does not exist yet -- never a failure, the whole point of
-authoring this checker in Phase 0 against a partial table (`D63`). A
-directory that exists but carries zero rows is `BLANK` and always fails.  On
-failure the first token is `EVIDENCE FAIL:` and every finding is printed, one
-per line, before the final counted line (`<k> admissibility findings`).
+*directory* does not exist yet, **or** exists only as a pre-measurement
+skeleton (no `runs.jsonl` written yet -- `P1.T03`) -- never a failure, the
+whole point of authoring this checker in Phase 0 against a partial table
+(`D63`), and of a later phase being able to scaffold its evidence
+directories ahead of its own oracle runs without tripping the gate. A
+directory whose `runs.jsonl` exists and carries rows, none of which are for
+this primitive, is `BLANK` and always fails -- that is a real anomaly, not a
+scaffold. On failure the first token is `EVIDENCE FAIL:` and every finding is
+printed, one per line, before the final counted line (`<k> admissibility
+findings`).
 
 It fails on: any `blocked:<row>` status recorded against a primitive in
 `spec-primitives.md`'s Done column (an in-flight marker, never terminal --
@@ -452,11 +457,21 @@ def check(spec_path, evidence_dir, slugs, exclude_slugs, schema, apicula_root):
                 f"in-flight marker, never terminal (D33): {prow.done_text.strip()!r}")
 
         slug_dir = os.path.join(evidence_dir, prow.slug) if evidence_dir else None
-        if not slug_dir or not os.path.isdir(slug_dir):
+        jsonl_path = os.path.join(slug_dir, "runs.jsonl") if slug_dir else None
+        if not slug_dir or not os.path.isdir(slug_dir) or not os.path.isfile(jsonl_path):
+            # P1.T03: a slug directory created ahead of its first oracle run
+            # (the evidence *skeleton*: summary.md stub, no runs.jsonl yet --
+            # `runs.jsonl` is created lazily by `append_row` on the first
+            # real row, same as the harness) is not yet evidence of
+            # anything, one way or the other -- indistinguishable in intent
+            # from the directory not existing at all, so it is PENDING like
+            # any other not-yet-reached primitive, never BLANK. BLANK stays
+            # reserved for the real anomaly the D63 note describes: a
+            # `runs.jsonl` that exists and carries rows, none of which are
+            # for this primitive.
             n_pending += 1
             continue
 
-        jsonl_path = os.path.join(slug_dir, "runs.jsonl")
         try:
             rows = _read_jsonl(jsonl_path)
         except json.JSONDecodeError as exc:

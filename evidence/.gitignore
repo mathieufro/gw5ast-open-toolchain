@@ -19,6 +19,10 @@
 # evidence-tree move (C10/D80): "*.txt" is allowed only under _runs/, and this file
 # lives directly under evidence/chipdb/. Fixed on the spot (P0.T40).
 !chipdb/chipdb-sha256.txt
+# the D62 oracle-run ledger the clocking checkpoint reads (P1.T03), same
+# named-exception pattern as chipdb-sha256.txt above: a .tsv is not covered
+# by the "*.md" allowance and lives directly under evidence/_budget/.
+!_budget/clocking-runs.tsv
 # batch, watchdog and tool logs (`spec-harness.md` §8)
 !_runs/*.log
 # provenance stamps: sha256 lists, tool versions, gowinhome.selected

@@ -238,6 +238,43 @@ class TestTolerartesPartialSpec(CheckEvidenceTestCase):
             proc.stdout.split("\n"))
 
 
+class TestSkeletonDirectoryIsPending(CheckEvidenceTestCase):
+    def test_check_evidence_skeleton_directory_is_pending_not_blank(self):
+        """`P1.T03`: a slug dir created ahead of its first oracle run (a
+        `summary.md` stub, no `runs.jsonl` yet) is PENDING, not BLANK -- it
+        is indistinguishable in intent from the directory not existing at
+        all. BLANK stays reserved for a `runs.jsonl` that exists and carries
+        rows, none of which are for this primitive.
+        """
+        write_spec_primitives(self.spec_path, [
+            ("PA", "a"), ("PLLA", "plla"),
+        ])
+        write_runs(self.evidence_dir, "a", [good_row("a-A-0001", "PA")])
+        # plla: directory + summary.md scaffold only, no runs.jsonl.
+        plla_dir = os.path.join(self.evidence_dir, "plla")
+        os.makedirs(plla_dir, exist_ok=True)
+        with open(os.path.join(plla_dir, "summary.md"), "w") as fh:
+            fh.write("## Row\n## Sweep\n## Verdict\n## Artefacts\n")
+
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn(
+            "EVIDENCE ok: 1 rows, 1 pending, 0 blank, 0 missing artifacts",
+            proc.stdout.split("\n"))
+
+    def test_check_evidence_still_flags_a_true_blank(self):
+        """Negative control: a `runs.jsonl` with rows, none for this
+        primitive, is still BLANK and still fails -- the fix above narrows
+        PENDING, it does not remove BLANK.
+        """
+        write_spec_primitives(self.spec_path, [("PLLA", "plla")])
+        write_runs(self.evidence_dir, "plla", [good_row("plla-A-0001", "OTHER-PRIM")])
+
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        self.assertNotEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("BLANK", proc.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()
 
