@@ -395,6 +395,17 @@ and listed as `A8`/`A9` in `phase-report.md`.
 
 ---
 
+### Artefact retention (a correction made during this close)
+
+The `run/` trees under `$DATASTORE/e2e-p0/**` and `$DATASTORE/oracle-smoke/`
+were deleted once as routine disk hygiene and then **restored by re-running**,
+because an admissible row cites them: E2E condition 5 requires every
+`vendor_fs`/`sdf`/`tr` path to resolve on disk with a matching sha256, and
+`oracle-smoke` is the reference pair the batch head's self-tests and `V6` use.
+The "delete `run/` after evidence is recorded" rule applies to throwaway runs,
+**not** to a run an evidence row references. Verified after the restore:
+every path in `evidence/e2e-p0/runs.jsonl` resolves with a matching sha256.
+
 ## Roll-up and the aggregate check
 
 ```

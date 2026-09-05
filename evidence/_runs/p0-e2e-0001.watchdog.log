@@ -1,2 +1,2 @@
-22:48:47 WATCHDOG_ARMED batch=p0-e2e-0001 stall=6min poll=120s (independent process)
-22:52:12 WATCHDOG_COMPLETE batch=p0-e2e-0001 saw BATCH_COMPLETE (clean exit)
+02:25:13 WATCHDOG_ARMED batch=p0-e2e-0001 stall=6min poll=120s (independent process)
+02:26:58 WATCHDOG_COMPLETE batch=p0-e2e-0001 saw BATCH_COMPLETE (clean exit)
