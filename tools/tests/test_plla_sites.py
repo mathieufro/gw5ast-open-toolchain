@@ -107,8 +107,15 @@ def test_plla_sites_artifact_counts():
     assert all(v == 0 for v in doc["dat"]["named_tables_populated_rows"].values())
 
     # 5. the attrid census: > 0 rows, and its row count recorded verbatim.
+    # `P1.T22` appended further blocks to this file (its reconciliation counts
+    # and the nameless-id list), each separated by a blank line and introduced
+    # by `#` comments. The census this task owns is the FIRST block, so read
+    # exactly that -- the row count below is a `P1.T17` invariant about the
+    # per-tile census, not about the file's total line count.
     with open(ATTRIDS_TSV, encoding="utf-8") as fh:
-        tsv = [ln for ln in fh.read().splitlines() if ln.strip()]
+        first_block = fh.read().split("\n\n")[0]
+    tsv = [ln for ln in first_block.splitlines()
+           if ln.strip() and not ln.startswith("#")]
     header, data = tsv[0], tsv[1:]
     assert header.split("\t")[0] == "device"
     assert len(data) > 0
