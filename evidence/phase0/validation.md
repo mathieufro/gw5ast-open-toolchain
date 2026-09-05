@@ -15,7 +15,7 @@ record: Gowin **Standard 1.9.12.03**, licensed (`gowinhome.selected`,
 | `V2` `S1`/`S3` six chipdb builds | **PASS** (amended Education half) |
 | `V3` `S2` no opaque parser failure | **PASS** |
 | `V4` `S4` oracle end to end | **PASS** |
-| `V5` `S6` calibration on three baselines | **PASS** (amended CLI) |
+| `V5` `S6` calibration on three baselines | **FAIL** — `S6` **NOT REACHED** (`D89`+`D92` re-judgement) |
 | `V6` `S5`/`S6b` harness and watchdog | **PASS** for what `V6` measures; `S5` itself is **PARTIALLY REACHED** — see `V6` |
 | `V7` `S17a` timing tables are honest | **PASS** (one value 0.7% over the quoted band — see below) |
 | `V12a --classes cfu` L0 arc band | **PASS on the stated contract; the ±10% band is NOT met** (`P0.T37`) |
@@ -173,7 +173,7 @@ exit 0, all four artefact classes present.
 
 ---
 
-## `V5` — `S6`, checker calibration on the three baselines — **PASS**
+## `V5` — `S6`, checker calibration on the three baselines — **FAIL** (`S6` NOT REACHED)
 
 Two amendments. `--makefile-recipe` **takes an argument** (it is recorded in
 the row and never invoked), so the blueprint's bare-flag form aborts with
@@ -190,28 +190,62 @@ python -m fuzz.gw5ast138c.harness.equiv \
   --mask fuzz/gw5ast138c/dontcare.mask --calibration --level E1
 ```
 
+**Re-run 2026-09-05 under `D89` + `D92`.** The three lines below are the
+current, honest measurement — the same three bitstream pairs, the same mask
+file (`59147bfc…`, six base entries, none added), a checker that now
+implements each mask row's stated condition instead of reading a fuse-group
+name (`D89`), with routing judged per net and, in whole-design calibration
+mode, kept as the `D32` statistic (`D92`).
+
 ```
 === big-shift E1
+DIFF tile (1,1) bel 0: cell vendor=DFF open=<absent>
 DIFF_COUNT cells=137690 attrs=139311 conns=552818
-RESIDUAL_UNEXPLAINED entries=0 bits=0 bytes=0
+PIPS diff=2012168 (statistic, never a verdict term)
+RESIDUAL_UNEXPLAINED entries=2 bits=619 bytes=0
 DECODE_CHECK c1=mismatch c2=ok (c1 recovered 123/160 placed cells, 6 not fuse-backed; c2 0 differing bytes of 4147478)
-CALIBRATION ok: 829826 diffs enumerated, 0 unexplained
+CALIBRATION FAIL top: 829826 diffs enumerated, 2 unexplained
 === attosoc E1
+DIFF tile (89,69) bel 0: cell vendor=DFF open=LUT
 DIFF_COUNT cells=136401 attrs=175923 conns=566961
-RESIDUAL_UNEXPLAINED entries=0 bits=0 bytes=0
+PIPS diff=1970978 (statistic, never a verdict term)
+RESIDUAL_UNEXPLAINED entries=2 bits=631 bytes=0
 DECODE_CHECK c1=mismatch c2=ok (c1 recovered 2265/3050 placed cells, 6 not fuse-backed; c2 0 differing bytes of 4147478)
-CALIBRATION ok: 879294 diffs enumerated, 0 unexplained
+CALIBRATION FAIL top: 879294 diffs enumerated, 2 unexplained
 === uart-message E1
+DIFF tile (1,1) bel 0: cell vendor=DFF open=<absent>
 DIFF_COUNT cells=137421 attrs=139287 conns=554129
-RESIDUAL_UNEXPLAINED entries=0 bits=0 bytes=0
+PIPS diff=2008776 (statistic, never a verdict term)
+RESIDUAL_UNEXPLAINED entries=2 bits=635 bytes=0
 DECODE_CHECK c1=mismatch c2=ok (c1 recovered 110/168 placed cells, 6 not fuse-backed; c2 0 differing bytes of 4147478)
-CALIBRATION ok: 830846 diffs enumerated, 0 unexplained
+CALIBRATION FAIL top: 830846 diffs enumerated, 2 unexplained
 ```
 
-Three `CALIBRATION ok` lines, **no `FAIL`**, and all three counts reproduce
-`P0.T33`'s recorded values exactly. `c1=mismatch` on a whole design is the
-named Phase-3/Phase-4 gap `P0.T33` recorded, not an `S6` failure: `S6b` scopes
-`c1` to the primitive under test.
+`DIFF_COUNT` and `PIPS` reproduce `P0.T33`'s recorded values **exactly** — the
+comparison itself did not move. What moved is the residual: `entries=0 bits=0`
+became `entries=2`, and the checker exits **1**.
+
+The two entries, per design (`--calibration`, so routing is fully absorbed by
+`net_route` per `D92`/`D32`):
+
+| design | `net_route` (masked statistic) | `io_used_pin_config` | `io_nondefault_config` | unexplained |
+|---|---|---|---|---|
+| `big-shift` | 3,872,278 | 326 | 293 | **619** |
+| `attosoc` | 3,916,990 | 330 | 301 | **631** |
+| `uart-message` | 3,874,200 | 330 | 305 | **635** |
+
+**`S6` — NOT REACHED.** `spec.md:686` asks for a diff *"every differing item
+listed by category, **none unexplained**"* and measures it as *"checker **exit
+0** with an enumerated diff report on three designs; no mask entry added beyond
+the documented base set"*. Enumeration holds and the mask is unchanged; *none
+unexplained* and *exit 0* both fail on all three designs. The unexplained bits
+are §5.3 row 6's two hand-named exclusions — IO fuses on a **used** pin, and IO
+fuses reachable by a `DRIVE`/`PULLMODE` value, which the row names as the PR
+#423 overheating class. They are a named gap owned by **Phase 3**
+(IO/IOLOGIC), not a mask candidate.
+
+`c1=mismatch` on a whole design remains the named Phase-3/Phase-4 gap `P0.T33`
+recorded, not an `S6` term: `S6b` scopes `c1` to the primitive under test.
 
 ---
 

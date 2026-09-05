@@ -107,3 +107,48 @@ establish is that the vendor and open bitstreams agree once the mask is held
 to its own conditions. Whether the smoke pair is expected to agree at that
 level, or whether §5.3's rows want re-scoping for a whole-device comparison, is
 a spec question for the orchestrator, recorded here rather than masked away.
+
+## Re-measured again under `D92` — routing judged per net (2026-09-05)
+
+The round-1 fix above implemented §5.3 row 5 **per fuse**: it asked whether
+*the same wire* carried the same net on both sides. Two independently written
+routers never satisfy that for the same net, so the row could only ever mask a
+coincidence — 4 bits of 3,871,035. `D92` fixes the level the row is read at:
+**per net**. A net's pip fuses are the masked don't-care iff that net's
+canonical endpoint set (§5.1 point 3) exists on **both** sides; otherwise every
+pip fuse of that net is a `DIFF`. Same bitstream pair, same mask file
+(`59147bfc…`), same `residual()`:
+
+```
+explained    set_level_diff 41 | vendor_only_fill 33 (unused_tile_fill)
+             net_route 1,935,147 (net_route) | io_default_unused_pins 6
+             comment_header 634 B (header_words)
+unexplained  net_route_endpoint_diff 1,935,888
+             io_used_pin_config 333 | io_nondefault_config 309
+             total 1,936,530 bits
+```
+
+Round 1 → round 2, on the identical pair:
+
+| class | round 1 (per fuse) | round 2 (`D92`, per net) |
+|---|---|---|
+| `net_route` (masked) | 4 | **1,935,147** |
+| `net_route_endpoint_diff` (`DIFF`) | 3,871,031 | **1,935,888** |
+| `io_used_pin_config` / `io_nondefault_config` | 333 / 309 | 333 / 309 (unchanged, `D89`) |
+| unexplained total | 3,871,673 | **1,936,530** |
+
+Half the routing delta is now what §5.3 row 5 actually describes — the same
+endpoints reached over different pips — and is masked. The other half is not:
+the vendor side unpacks 138,576 cells against the open side's 873, so most
+vendor routing serves nets the open design has no endpoint-identical net for.
+That is a real difference between the two bitstreams, and the checker says so.
+
+`unexplained 0` still does **not** hold for this pair, and no Phase-0 criterion
+is closed on it. `S6` is re-judged in `evidence/phase0/phase-report.md` §1c and
+`evidence/phase0/validation.md` `V5`: **NOT REACHED**.
+
+Two regressions pin the level: `test_net_route_masked_only_when_endpoint_sets_match`
+(G3 — a flipped bit that changes a net's endpoints is a `DIFF`) and
+`test_net_route_masked_when_the_same_net_is_routed_differently` (`D92` — the
+same net over a different wire is a route). `--probe-mask-classes` gained a
+sixth class, `net_route_rerouted`, for the second.

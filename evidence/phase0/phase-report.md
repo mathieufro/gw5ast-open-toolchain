@@ -21,7 +21,7 @@ Roll-up: `evidence/evidence-table.md` (24 rows across the **six** owned slugs
 | `S3` no family regression (25A / 60B, two **device-file sets**) | `V2` | **REACHED** — six builds, six sha256s, zero failures; **one install**, see §1b |
 | `S4` oracle runs end to end | `V4` | **REACHED** — 0 `Error`, 0 `unknown option:`, four artefact classes |
 | `S5` harness runs unattended and correctly | `V6`, E2E | **NOT REACHED** — machinery reached; the ≥20-run half is owed to Phase 1 — see §1a |
-| `S6` equivalence checker calibrated on a whole-design baseline | `V5` | **REACHED** — three `CALIBRATION ok … 0 unexplained` lines on `big-shift`/`attosoc`/`uart-message`, mask unchanged (`59147bfc…`, six base entries, none added) |
+| `S6` equivalence checker calibrated on a whole-design baseline | `V5` | **NOT REACHED** — re-judged under `D89`+`D92`: three `CALIBRATION FAIL … 2 unexplained` lines, 619 / 631 / 635 bits. Mask still unchanged (`59147bfc…`, six base entries, none added) — see §1c |
 | `S6b` unpacker is complete enough to be evidence | `V6` | **REACHED** — `COMPLETENESS ok: 0 unattributed tiles, 0 missing cells`; E2E row `decode_check {c1: ok, c2: ok}` |
 | `S17a` C1/I0 de-aliased + derived, `V7` regression passes | `V7`, `V12a` | **REACHED for the de-aliasing half; the L0 ±10% band is NOT met** — see §2 |
 | `S28` (creation half) forks are submodules | `V1` | **REACHED** — `apicula`, `nextpnr` are submodules of `mathieufro/*`; the throwaway `vendor/` clones are gone |
@@ -55,6 +55,58 @@ clause moves to the first phase that ships a swept shape, **Phase 1**, which
 must run it on a real multi-point shape before it closes. Recording `S5` as
 REACHED on the strength of the machinery alone was the false PASS this
 correction removes.
+
+### 1c. `S6` — NOT REACHED once the mask is held to its own conditions
+
+`S6`, `spec.md:686` verbatim, is one sentence with three conjuncts:
+
+> *"For each of the three existing `tangmega138k` examples (`big-shift`,
+> `attosoc`, `uart-message`) the checker runs end to end on the open-flow and
+> oracle bitstreams and reports a **bounded, fully enumerated diff** — every
+> differing item listed by category, **none unexplained** — with the pip delta
+> recorded as a statistic."*
+> *Measure:* *"checker exit 0 with an enumerated diff report on three designs;
+> no mask entry added beyond the documented base set."*
+
+Judged literally, under `D89` (every mask entry's stated condition is
+implemented, not approximated by fuse-group name) and `D92` (routing masking
+is decided per NET, and in whole-design calibration mode routing stays the
+`D32` statistic):
+
+| conjunct | verdict |
+|---|---|
+| runs end to end on all three | **met** — three runs, no `ABORT` |
+| bounded, fully enumerated, every item listed by category | **met** — every differing bit lands in a named class; nothing anonymous |
+| **none unexplained** | **NOT met** — 619 / 631 / 635 bits |
+| pip delta recorded as a statistic | **met** — `PIPS diff=2012168 / 1970978 / 2008776`, and under `D92` calibration mode every pip fuse is absorbed by `net_route` |
+| **checker exit 0** | **NOT met** — exit 1, `CALIBRATION FAIL` on all three |
+| no mask entry added beyond the base set | **met** — mask `59147bfc…`, six base entries |
+
+Two of six conjuncts fail, and they are the two the *Measure* line names. **`S6`
+is NOT REACHED.**
+
+What is left unexplained is **not** routing. Routing is fully absorbed as the
+statistic `D32` asks for. The residual is entirely `§5.3` row 6's two
+conditions — the row masks the IO default *"on pins used by neither design"*
+and *"only when both sides carry a defaulted value"*:
+
+| design | `io_used_pin_config` | `io_nondefault_config` | total |
+|---|---|---|---|
+| `big-shift` | 326 | 293 | **619** |
+| `attosoc` | 330 | 301 | **631** |
+| `uart-message` | 330 | 305 | **635** |
+
+These are `IOBA`/`IOBB` `longval` fuses on IOB sites at least one side
+instantiates, and fuses reachable by a `DRIVE`/`PULLMODE` attribute value.
+Row 6 excludes both by hand, naming the second as the PR #423
+bank/drive-strength overheating class. They are **not** masked and **not**
+waved through: they are a named gap carried to the IO/IOLOGIC workstream
+(**Phase 3**), which owns the 5A IOB fuse model.
+
+The earlier `REACHED` was produced by a checker that decided a bit's class
+from its chipdb fuse-group *name* alone, so neither conditioned row ever
+tested its own condition. Same bitstreams, same mask, same numbers —
+re-attributed.
 
 ### 1b. `S3` — six builds, one install and one archived device tree
 
