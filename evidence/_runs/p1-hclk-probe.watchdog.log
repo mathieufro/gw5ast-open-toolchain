@@ -1,0 +1,2 @@
+20:17:08 WATCHDOG_ARMED batch=p1-hclk-probe stall=5min poll=100s (independent process)
+20:22:58 WATCHDOG_DEAD batch=p1-hclk-probe exited WITHOUT BATCH_COMPLETE (batch pid 36629 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

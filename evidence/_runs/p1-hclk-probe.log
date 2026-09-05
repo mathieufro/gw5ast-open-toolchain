@@ -1,0 +1,22 @@
+20:17:09 BATCH_START p1-hclk-probe runs=12
+20:17:29 RUN base n_clkdiv=0 n_clkdiv2=0 verdict=ok wall=20.5s errs=[]
+20:17:48 RUN clkdiv01 n_clkdiv=1 n_clkdiv2=0 verdict=ok wall=19.0s errs=[]
+20:18:11 RUN clkdiv04 n_clkdiv=4 n_clkdiv2=0 verdict=ok wall=22.8s errs=[]
+20:18:34 RUN clkdiv08 n_clkdiv=8 n_clkdiv2=0 verdict=ok wall=22.8s errs=[]
+20:19:01 RUN clkdiv12 n_clkdiv=12 n_clkdiv2=0 verdict=ok wall=27.0s errs=[]
+20:19:29 RUN clkdiv16 n_clkdiv=16 n_clkdiv2=0 verdict=ok wall=27.6s errs=[]
+20:20:03 RUN clkdiv20 n_clkdiv=20 n_clkdiv2=0 verdict=ok wall=34.1s errs=[]
+20:20:43 RUN clkdiv24 n_clkdiv=24 n_clkdiv2=0 verdict=ok wall=40.5s errs=[]
+20:20:47 RUN clkdiv25 n_clkdiv=25 n_clkdiv2=0 verdict=refused wall=3.4s errs=['ERROR  (PA2017) : The number(25) of CLKDIV in the design exceeds the resource limit(24) of current device', 'NOTE  (PA0005) : Processing netlist completed with errors']
+20:20:49 RUN clkdiv2_24 n_clkdiv=0 n_clkdiv2=24 verdict=refused wall=2.2s errs=["ERROR (CK2060) : The connection between instance 'ce0' and instance 'dout_d_s4' is incorrect"]
+20:20:52 RUN clkdiv2_25 n_clkdiv=0 n_clkdiv2=25 verdict=refused wall=2.4s errs=["ERROR (CK2060) : The connection between instance 'ce0' and instance 'dout_d_s6' is incorrect"]
+20:20:54 RUN both24 n_clkdiv=24 n_clkdiv2=24 verdict=refused wall=2.4s errs=["ERROR (CK2060) : The connection between instance 'ce0' and instance 'dout_d_s5' is incorrect"]
+20:20:54 DIFF loading chipdb
+20:21:23 DIFF clkdiv01 tiles=21 top=[(107, 55, 77), (108, 64, 20), (108, 56, 8), (81, 93, 7), (108, 55, 6), (108, 93, 5), (81, 94, 4), (82, 93, 4), (107, 91, 4), (108, 63, 4), (108, 91, 4), (100, 54, 2)]
+20:21:38 DIFF clkdiv04 tiles=28 top=[(107, 64, 82), (107, 55, 77), (108, 64, 71), (81, 88, 35), (81, 87, 16), (107, 63, 11), (107, 88, 10), (107, 91, 8), (108, 56, 8), (107, 65, 7), (107, 87, 6), (108, 55, 6)]
+20:21:51 DIFF clkdiv08 tiles=102 top=[(53, 91, 136), (108, 64, 79), (107, 55, 77), (27, 181, 62), (27, 88, 59), (27, 94, 30), (27, 93, 15), (27, 89, 13), (27, 92, 13), (54, 88, 13), (27, 180, 8), (53, 90, 8)]
+20:22:04 DIFF clkdiv12 tiles=136 top=[(80, 180, 159), (28, 180, 88), (107, 64, 82), (108, 64, 79), (107, 55, 77), (81, 181, 70), (27, 181, 62), (54, 89, 47), (81, 89, 47), (81, 88, 37), (81, 180, 23), (27, 180, 13)]
+20:22:21 DIFF clkdiv16 tiles=135 top=[(100, 117, 93), (82, 180, 89), (54, 89, 86), (107, 117, 86), (108, 64, 81), (107, 55, 77), (81, 181, 70), (108, 117, 70), (27, 181, 62), (81, 92, 41), (81, 94, 35), (81, 89, 28)]
+20:22:43 DIFF clkdiv20 tiles=223 top=[(100, 109, 160), (82, 117, 88), (82, 180, 88), (82, 1, 81), (108, 64, 81), (107, 55, 77), (27, 181, 70), (81, 181, 70), (108, 117, 70), (81, 0, 64), (81, 88, 57), (81, 92, 56)]
+20:22:55 DIFF clkdiv24 tiles=256 top=[(80, 180, 91), (73, 1, 90), (82, 54, 88), (80, 117, 84), (81, 181, 84), (108, 64, 81), (107, 55, 77), (108, 117, 70), (27, 181, 68), (81, 0, 66), (27, 0, 64), (81, 88, 58)]
+20:22:55 BATCH_COMPLETE p1-hclk-probe runs=12 ok=8 diff=0 aborted=4
