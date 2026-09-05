@@ -1,0 +1,2 @@
+01:10:19 WATCHDOG_ARMED batch=p1-pll-attrmap stall=6min poll=120s (independent process)
+01:17:33 WATCHDOG_COMPLETE batch=p1-pll-attrmap saw BATCH_COMPLETE (clean exit)

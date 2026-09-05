@@ -1,0 +1,33 @@
+23:10:19 BATCH_START batch=p1-pll-attrmap shape=clocking_pll_attrmap level=E1 pid=29885 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/attrmap
+23:11:46 BATCH_HEAD selftest --inject-one-fuse: ok
+23:12:13 BATCH_HEAD selftest --unpacker-completeness: ok
+23:12:14 BATCH_HEAD selftest --probe-mask-classes: ok
+23:12:15 BATCH_HEAD gw_sh pre-flight: ok
+23:12:15 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 12 run ids)
+23:12:15 BATCH_RESUME batch=p1-pll-attrmap planned=12 already_terminal=0
+23:12:15 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0000 sweep='p00_baseline'
+23:12:43 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0000 verdict=aborted
+23:12:43 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0001 sweep='p01_idiv3'
+23:13:06 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0001 verdict=aborted
+23:13:06 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0002 sweep='p02_idiv4'
+23:13:34 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0002 verdict=aborted
+23:13:34 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0003 sweep='p03_fbdiv1'
+23:14:00 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0003 verdict=aborted
+23:14:00 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0004 sweep='p04_mdiv7'
+23:14:26 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0004 verdict=aborted
+23:14:26 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0005 sweep='p05_mdiv10'
+23:14:50 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0005 verdict=aborted
+23:14:50 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0006 sweep='p06_odiv0_4'
+23:15:15 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0006 verdict=aborted
+23:15:15 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0007 sweep='p07_odiv0_16'
+23:15:43 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0007 verdict=aborted
+23:15:43 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0008 sweep='p08_odiv0_64'
+23:16:11 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0008 verdict=aborted
+23:16:11 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0009 sweep='p09_dyn_idiv'
+23:16:38 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0009 verdict=aborted
+23:16:38 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0010 sweep='p10_dyn_odiv0'
+23:17:07 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0010 verdict=aborted
+23:17:07 RUN_START p1-pll-attrmap-clocking_pll_attrmap-0011 sweep='p11_clkout1_en'
+23:17:33 RUN_DONE p1-pll-attrmap-clocking_pll_attrmap-0011 verdict=aborted
+23:17:33 BATCH_SKIPPED batch=p1-pll-attrmap n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-attrmap.rows.jsonl
+BATCH_COMPLETE p1-pll-attrmap runs=12 ok=0 diff=0 aborted=12

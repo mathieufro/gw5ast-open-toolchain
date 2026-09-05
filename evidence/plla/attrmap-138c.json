@@ -1,0 +1,4890 @@
+{
+  "attributable_points": 9,
+  "batch_id": "p1-pll-attrmap",
+  "census": {
+    "device": "GW5AST-138C",
+    "fse_attr_ids": 192,
+    "fse_id_with_no_name": [
+      107,
+      108,
+      124,
+      125,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      141,
+      144,
+      147,
+      150,
+      205,
+      206,
+      210,
+      211
+    ],
+    "in_both": 172,
+    "name_with_no_fse_id": [
+      "GMCGAIN",
+      "GMCMODE",
+      "GMCVREF",
+      "ICPSEL",
+      "IDIV",
+      "IDIVSEL",
+      "INSEL",
+      "IRSTEN",
+      "LPR",
+      "ODIV",
+      "ODIVSEL",
+      "OPDLY",
+      "OSDLY",
+      "PASEL",
+      "PHASE",
+      "PSDLY",
+      "RSTEN",
+      "SDIV",
+      "SFTDLY",
+      "SRSTEN"
+    ],
+    "named_attr_ids": 192,
+    "table_rows": 2531
+  },
+  "device": "GW5AST-138C",
+  "runs": [
+    {
+      "attrvals": [],
+      "expected_attr": null,
+      "moved": {},
+      "moved_bits": 0,
+      "names": [],
+      "param": null,
+      "point": "p00_baseline",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0000",
+      "value": null,
+      "verified": false
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 109,
+          "attrval": 109,
+          "name": "A_IDIV_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 109,
+          "attrval": 110,
+          "name": "A_IDIV_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 109,
+          "attrval": 111,
+          "name": "A_IDIV_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 109,
+          "attrval": 113,
+          "name": "A_IDIV_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 109,
+          "attrval": 114,
+          "name": "A_IDIV_SEL",
+          "value": 6
+        },
+        {
+          "attr_id": 109,
+          "attrval": 115,
+          "name": "A_IDIV_SEL",
+          "value": 7
+        },
+        {
+          "attr_id": 109,
+          "attrval": 117,
+          "name": "A_IDIV_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 109,
+          "attrval": 118,
+          "name": "A_IDIV_SEL",
+          "value": 10
+        },
+        {
+          "attr_id": 109,
+          "attrval": 119,
+          "name": "A_IDIV_SEL",
+          "value": 11
+        },
+        {
+          "attr_id": 109,
+          "attrval": 121,
+          "name": "A_IDIV_SEL",
+          "value": 13
+        },
+        {
+          "attr_id": 109,
+          "attrval": 122,
+          "name": "A_IDIV_SEL",
+          "value": 14
+        },
+        {
+          "attr_id": 109,
+          "attrval": 123,
+          "name": "A_IDIV_SEL",
+          "value": 15
+        },
+        {
+          "attr_id": 109,
+          "attrval": 125,
+          "name": "A_IDIV_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 109,
+          "attrval": 126,
+          "name": "A_IDIV_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 109,
+          "attrval": 127,
+          "name": "A_IDIV_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 109,
+          "attrval": 129,
+          "name": "A_IDIV_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 109,
+          "attrval": 130,
+          "name": "A_IDIV_SEL",
+          "value": 22
+        },
+        {
+          "attr_id": 109,
+          "attrval": 131,
+          "name": "A_IDIV_SEL",
+          "value": 23
+        },
+        {
+          "attr_id": 109,
+          "attrval": 133,
+          "name": "A_IDIV_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 109,
+          "attrval": 134,
+          "name": "A_IDIV_SEL",
+          "value": 26
+        },
+        {
+          "attr_id": 109,
+          "attrval": 135,
+          "name": "A_IDIV_SEL",
+          "value": 27
+        },
+        {
+          "attr_id": 109,
+          "attrval": 137,
+          "name": "A_IDIV_SEL",
+          "value": 29
+        },
+        {
+          "attr_id": 109,
+          "attrval": 138,
+          "name": "A_IDIV_SEL",
+          "value": 30
+        },
+        {
+          "attr_id": 109,
+          "attrval": 139,
+          "name": "A_IDIV_SEL",
+          "value": 31
+        },
+        {
+          "attr_id": 109,
+          "attrval": 141,
+          "name": "A_IDIV_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 109,
+          "attrval": 142,
+          "name": "A_IDIV_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 109,
+          "attrval": 143,
+          "name": "A_IDIV_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 109,
+          "attrval": 145,
+          "name": "A_IDIV_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 109,
+          "attrval": 146,
+          "name": "A_IDIV_SEL",
+          "value": 38
+        },
+        {
+          "attr_id": 109,
+          "attrval": 147,
+          "name": "A_IDIV_SEL",
+          "value": 39
+        },
+        {
+          "attr_id": 109,
+          "attrval": 149,
+          "name": "A_IDIV_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 109,
+          "attrval": 150,
+          "name": "A_IDIV_SEL",
+          "value": 42
+        },
+        {
+          "attr_id": 109,
+          "attrval": 151,
+          "name": "A_IDIV_SEL",
+          "value": 43
+        },
+        {
+          "attr_id": 109,
+          "attrval": 153,
+          "name": "A_IDIV_SEL",
+          "value": 45
+        },
+        {
+          "attr_id": 109,
+          "attrval": 154,
+          "name": "A_IDIV_SEL",
+          "value": 46
+        },
+        {
+          "attr_id": 109,
+          "attrval": 155,
+          "name": "A_IDIV_SEL",
+          "value": 47
+        },
+        {
+          "attr_id": 109,
+          "attrval": 157,
+          "name": "A_IDIV_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 109,
+          "attrval": 158,
+          "name": "A_IDIV_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 109,
+          "attrval": 159,
+          "name": "A_IDIV_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 109,
+          "attrval": 161,
+          "name": "A_IDIV_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 109,
+          "attrval": 162,
+          "name": "A_IDIV_SEL",
+          "value": 54
+        },
+        {
+          "attr_id": 109,
+          "attrval": 163,
+          "name": "A_IDIV_SEL",
+          "value": 55
+        },
+        {
+          "attr_id": 109,
+          "attrval": 165,
+          "name": "A_IDIV_SEL",
+          "value": 57
+        },
+        {
+          "attr_id": 109,
+          "attrval": 166,
+          "name": "A_IDIV_SEL",
+          "value": 58
+        },
+        {
+          "attr_id": 109,
+          "attrval": 167,
+          "name": "A_IDIV_SEL",
+          "value": 59
+        },
+        {
+          "attr_id": 109,
+          "attrval": 169,
+          "name": "A_IDIV_SEL",
+          "value": 61
+        },
+        {
+          "attr_id": 109,
+          "attrval": 170,
+          "name": "A_IDIV_SEL",
+          "value": 62
+        },
+        {
+          "attr_id": 109,
+          "attrval": 171,
+          "name": "A_IDIV_SEL",
+          "value": 63
+        }
+      ],
+      "expected_attr": "A_IDIV_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,14"
+          ],
+          "set": [
+            "20,13"
+          ]
+        }
+      },
+      "moved_bits": 2,
+      "names": [
+        "A_IDIV_SEL"
+      ],
+      "param": "IDIV_SEL",
+      "point": "p01_idiv3",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0001",
+      "value": 3,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 16,
+          "attrval": 16,
+          "name": "FLDCOUNT",
+          "value": 16
+        },
+        {
+          "attr_id": 16,
+          "attrval": 18,
+          "name": "FLDCOUNT",
+          "value": 48
+        },
+        {
+          "attr_id": 16,
+          "attrval": 20,
+          "name": "FLDCOUNT",
+          "value": 80
+        },
+        {
+          "attr_id": 16,
+          "attrval": 22,
+          "name": "FLDCOUNT",
+          "value": 112
+        },
+        {
+          "attr_id": 16,
+          "attrval": 24,
+          "name": "FLDCOUNT",
+          "value": 144
+        },
+        {
+          "attr_id": 16,
+          "attrval": 26,
+          "name": "FLDCOUNT",
+          "value": 176
+        },
+        {
+          "attr_id": 16,
+          "attrval": 28,
+          "name": "FLDCOUNT",
+          "value": 208
+        },
+        {
+          "attr_id": 16,
+          "attrval": 30,
+          "name": "FLDCOUNT",
+          "value": 240
+        },
+        {
+          "attr_id": 109,
+          "attrval": 109,
+          "name": "A_IDIV_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 109,
+          "attrval": 110,
+          "name": "A_IDIV_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 109,
+          "attrval": 113,
+          "name": "A_IDIV_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 109,
+          "attrval": 114,
+          "name": "A_IDIV_SEL",
+          "value": 6
+        },
+        {
+          "attr_id": 109,
+          "attrval": 117,
+          "name": "A_IDIV_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 109,
+          "attrval": 118,
+          "name": "A_IDIV_SEL",
+          "value": 10
+        },
+        {
+          "attr_id": 109,
+          "attrval": 121,
+          "name": "A_IDIV_SEL",
+          "value": 13
+        },
+        {
+          "attr_id": 109,
+          "attrval": 122,
+          "name": "A_IDIV_SEL",
+          "value": 14
+        },
+        {
+          "attr_id": 109,
+          "attrval": 125,
+          "name": "A_IDIV_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 109,
+          "attrval": 126,
+          "name": "A_IDIV_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 109,
+          "attrval": 129,
+          "name": "A_IDIV_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 109,
+          "attrval": 130,
+          "name": "A_IDIV_SEL",
+          "value": 22
+        },
+        {
+          "attr_id": 109,
+          "attrval": 133,
+          "name": "A_IDIV_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 109,
+          "attrval": 134,
+          "name": "A_IDIV_SEL",
+          "value": 26
+        },
+        {
+          "attr_id": 109,
+          "attrval": 137,
+          "name": "A_IDIV_SEL",
+          "value": 29
+        },
+        {
+          "attr_id": 109,
+          "attrval": 138,
+          "name": "A_IDIV_SEL",
+          "value": 30
+        },
+        {
+          "attr_id": 109,
+          "attrval": 141,
+          "name": "A_IDIV_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 109,
+          "attrval": 142,
+          "name": "A_IDIV_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 109,
+          "attrval": 145,
+          "name": "A_IDIV_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 109,
+          "attrval": 146,
+          "name": "A_IDIV_SEL",
+          "value": 38
+        },
+        {
+          "attr_id": 109,
+          "attrval": 149,
+          "name": "A_IDIV_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 109,
+          "attrval": 150,
+          "name": "A_IDIV_SEL",
+          "value": 42
+        },
+        {
+          "attr_id": 109,
+          "attrval": 153,
+          "name": "A_IDIV_SEL",
+          "value": 45
+        },
+        {
+          "attr_id": 109,
+          "attrval": 154,
+          "name": "A_IDIV_SEL",
+          "value": 46
+        },
+        {
+          "attr_id": 109,
+          "attrval": 157,
+          "name": "A_IDIV_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 109,
+          "attrval": 158,
+          "name": "A_IDIV_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 109,
+          "attrval": 161,
+          "name": "A_IDIV_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 109,
+          "attrval": 162,
+          "name": "A_IDIV_SEL",
+          "value": 54
+        },
+        {
+          "attr_id": 109,
+          "attrval": 165,
+          "name": "A_IDIV_SEL",
+          "value": 57
+        },
+        {
+          "attr_id": 109,
+          "attrval": 166,
+          "name": "A_IDIV_SEL",
+          "value": 58
+        },
+        {
+          "attr_id": 109,
+          "attrval": 169,
+          "name": "A_IDIV_SEL",
+          "value": 61
+        },
+        {
+          "attr_id": 109,
+          "attrval": 170,
+          "name": "A_IDIV_SEL",
+          "value": 62
+        }
+      ],
+      "expected_attr": "A_IDIV_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,14"
+          ],
+          "set": [
+            "20,32"
+          ]
+        }
+      },
+      "moved_bits": 2,
+      "names": [
+        "A_IDIV_SEL",
+        "FLDCOUNT"
+      ],
+      "param": "IDIV_SEL",
+      "point": "p02_idiv4",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0002",
+      "value": 4,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 110,
+          "attrval": 172,
+          "name": "A_FBDIV_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 110,
+          "attrval": 174,
+          "name": "A_FBDIV_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 110,
+          "attrval": 176,
+          "name": "A_FBDIV_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 110,
+          "attrval": 178,
+          "name": "A_FBDIV_SEL",
+          "value": 7
+        },
+        {
+          "attr_id": 110,
+          "attrval": 180,
+          "name": "A_FBDIV_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 110,
+          "attrval": 182,
+          "name": "A_FBDIV_SEL",
+          "value": 11
+        },
+        {
+          "attr_id": 110,
+          "attrval": 184,
+          "name": "A_FBDIV_SEL",
+          "value": 13
+        },
+        {
+          "attr_id": 110,
+          "attrval": 186,
+          "name": "A_FBDIV_SEL",
+          "value": 15
+        },
+        {
+          "attr_id": 110,
+          "attrval": 188,
+          "name": "A_FBDIV_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 110,
+          "attrval": 190,
+          "name": "A_FBDIV_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 110,
+          "attrval": 192,
+          "name": "A_FBDIV_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 110,
+          "attrval": 194,
+          "name": "A_FBDIV_SEL",
+          "value": 23
+        },
+        {
+          "attr_id": 110,
+          "attrval": 196,
+          "name": "A_FBDIV_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 110,
+          "attrval": 198,
+          "name": "A_FBDIV_SEL",
+          "value": 27
+        },
+        {
+          "attr_id": 110,
+          "attrval": 200,
+          "name": "A_FBDIV_SEL",
+          "value": 29
+        },
+        {
+          "attr_id": 110,
+          "attrval": 202,
+          "name": "A_FBDIV_SEL",
+          "value": 31
+        },
+        {
+          "attr_id": 110,
+          "attrval": 204,
+          "name": "A_FBDIV_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 110,
+          "attrval": 206,
+          "name": "A_FBDIV_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 110,
+          "attrval": 208,
+          "name": "A_FBDIV_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 110,
+          "attrval": 210,
+          "name": "A_FBDIV_SEL",
+          "value": 39
+        },
+        {
+          "attr_id": 110,
+          "attrval": 212,
+          "name": "A_FBDIV_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 110,
+          "attrval": 214,
+          "name": "A_FBDIV_SEL",
+          "value": 43
+        },
+        {
+          "attr_id": 110,
+          "attrval": 216,
+          "name": "A_FBDIV_SEL",
+          "value": 45
+        },
+        {
+          "attr_id": 110,
+          "attrval": 218,
+          "name": "A_FBDIV_SEL",
+          "value": 47
+        },
+        {
+          "attr_id": 110,
+          "attrval": 220,
+          "name": "A_FBDIV_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 110,
+          "attrval": 222,
+          "name": "A_FBDIV_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 110,
+          "attrval": 224,
+          "name": "A_FBDIV_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 110,
+          "attrval": 226,
+          "name": "A_FBDIV_SEL",
+          "value": 55
+        },
+        {
+          "attr_id": 110,
+          "attrval": 228,
+          "name": "A_FBDIV_SEL",
+          "value": 57
+        },
+        {
+          "attr_id": 110,
+          "attrval": 230,
+          "name": "A_FBDIV_SEL",
+          "value": 59
+        },
+        {
+          "attr_id": 110,
+          "attrval": 232,
+          "name": "A_FBDIV_SEL",
+          "value": 61
+        },
+        {
+          "attr_id": 110,
+          "attrval": 234,
+          "name": "A_FBDIV_SEL",
+          "value": 63
+        },
+        {
+          "attr_id": 111,
+          "attrval": 235,
+          "name": "A_ICP_SEL",
+          "value": 20
+        },
+        {
+          "attr_id": 111,
+          "attrval": 237,
+          "name": "A_ICP_SEL",
+          "value": 40
+        },
+        {
+          "attr_id": 111,
+          "attrval": 239,
+          "name": "A_ICP_SEL",
+          "value": 60
+        },
+        {
+          "attr_id": 111,
+          "attrval": 241,
+          "name": "A_ICP_SEL",
+          "value": 80
+        },
+        {
+          "attr_id": 111,
+          "attrval": 242,
+          "name": "A_ICP_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 111,
+          "attrval": 243,
+          "name": "A_ICP_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 111,
+          "attrval": 244,
+          "name": "A_ICP_SEL",
+          "value": 110
+        },
+        {
+          "attr_id": 111,
+          "attrval": 245,
+          "name": "A_ICP_SEL",
+          "value": 120
+        },
+        {
+          "attr_id": 111,
+          "attrval": 246,
+          "name": "A_ICP_SEL",
+          "value": 130
+        },
+        {
+          "attr_id": 111,
+          "attrval": 247,
+          "name": "A_ICP_SEL",
+          "value": 140
+        },
+        {
+          "attr_id": 111,
+          "attrval": 248,
+          "name": "A_ICP_SEL",
+          "value": 150
+        },
+        {
+          "attr_id": 111,
+          "attrval": 249,
+          "name": "A_ICP_SEL",
+          "value": 160
+        },
+        {
+          "attr_id": 111,
+          "attrval": 250,
+          "name": "A_ICP_SEL",
+          "value": 170
+        },
+        {
+          "attr_id": 111,
+          "attrval": 251,
+          "name": "A_ICP_SEL",
+          "value": 180
+        },
+        {
+          "attr_id": 111,
+          "attrval": 252,
+          "name": "A_ICP_SEL",
+          "value": 190
+        },
+        {
+          "attr_id": 111,
+          "attrval": 253,
+          "name": "A_ICP_SEL",
+          "value": 200
+        },
+        {
+          "attr_id": 111,
+          "attrval": 254,
+          "name": "A_ICP_SEL",
+          "value": 210
+        },
+        {
+          "attr_id": 111,
+          "attrval": 255,
+          "name": "A_ICP_SEL",
+          "value": 220
+        },
+        {
+          "attr_id": 111,
+          "attrval": 256,
+          "name": "A_ICP_SEL",
+          "value": 230
+        },
+        {
+          "attr_id": 111,
+          "attrval": 257,
+          "name": "A_ICP_SEL",
+          "value": 240
+        },
+        {
+          "attr_id": 111,
+          "attrval": 258,
+          "name": "A_ICP_SEL",
+          "value": 250
+        },
+        {
+          "attr_id": 111,
+          "attrval": 259,
+          "name": "A_ICP_SEL",
+          "value": 260
+        },
+        {
+          "attr_id": 111,
+          "attrval": 260,
+          "name": "A_ICP_SEL",
+          "value": 270
+        },
+        {
+          "attr_id": 111,
+          "attrval": 261,
+          "name": "A_ICP_SEL",
+          "value": 280
+        },
+        {
+          "attr_id": 111,
+          "attrval": 262,
+          "name": "A_ICP_SEL",
+          "value": 290
+        },
+        {
+          "attr_id": 111,
+          "attrval": 263,
+          "name": "A_ICP_SEL",
+          "value": 300
+        },
+        {
+          "attr_id": 111,
+          "attrval": 264,
+          "name": "A_ICP_SEL",
+          "value": 310
+        },
+        {
+          "attr_id": 111,
+          "attrval": 265,
+          "name": "A_ICP_SEL",
+          "value": 320
+        },
+        {
+          "attr_id": 111,
+          "attrval": 267,
+          "name": "A_ICP_SEL",
+          "value": 340
+        },
+        {
+          "attr_id": 111,
+          "attrval": 269,
+          "name": "A_ICP_SEL",
+          "value": 360
+        },
+        {
+          "attr_id": 111,
+          "attrval": 271,
+          "name": "A_ICP_SEL",
+          "value": 380
+        },
+        {
+          "attr_id": 111,
+          "attrval": 273,
+          "name": "A_ICP_SEL",
+          "value": 400
+        },
+        {
+          "attr_id": 111,
+          "attrval": 274,
+          "name": "A_ICP_SEL",
+          "value": 410
+        },
+        {
+          "attr_id": 111,
+          "attrval": 275,
+          "name": "A_ICP_SEL",
+          "value": 420
+        },
+        {
+          "attr_id": 111,
+          "attrval": 276,
+          "name": "A_ICP_SEL",
+          "value": 430
+        },
+        {
+          "attr_id": 111,
+          "attrval": 277,
+          "name": "A_ICP_SEL",
+          "value": 440
+        },
+        {
+          "attr_id": 111,
+          "attrval": 278,
+          "name": "A_ICP_SEL",
+          "value": 450
+        },
+        {
+          "attr_id": 111,
+          "attrval": 279,
+          "name": "A_ICP_SEL",
+          "value": 460
+        },
+        {
+          "attr_id": 111,
+          "attrval": 280,
+          "name": "A_ICP_SEL",
+          "value": 470
+        },
+        {
+          "attr_id": 111,
+          "attrval": 281,
+          "name": "A_ICP_SEL",
+          "value": 480
+        },
+        {
+          "attr_id": 111,
+          "attrval": 282,
+          "name": "A_ICP_SEL",
+          "value": 490
+        },
+        {
+          "attr_id": 111,
+          "attrval": 283,
+          "name": "A_ICP_SEL",
+          "value": 500
+        },
+        {
+          "attr_id": 111,
+          "attrval": 284,
+          "name": "A_ICP_SEL",
+          "value": 510
+        },
+        {
+          "attr_id": 111,
+          "attrval": 285,
+          "name": "A_ICP_SEL",
+          "value": 520
+        },
+        {
+          "attr_id": 111,
+          "attrval": 286,
+          "name": "A_ICP_SEL",
+          "value": 530
+        },
+        {
+          "attr_id": 111,
+          "attrval": 287,
+          "name": "A_ICP_SEL",
+          "value": 540
+        },
+        {
+          "attr_id": 111,
+          "attrval": 288,
+          "name": "A_ICP_SEL",
+          "value": 550
+        },
+        {
+          "attr_id": 111,
+          "attrval": 289,
+          "name": "A_ICP_SEL",
+          "value": 560
+        },
+        {
+          "attr_id": 111,
+          "attrval": 290,
+          "name": "A_ICP_SEL",
+          "value": 570
+        },
+        {
+          "attr_id": 111,
+          "attrval": 291,
+          "name": "A_ICP_SEL",
+          "value": 580
+        },
+        {
+          "attr_id": 111,
+          "attrval": 292,
+          "name": "A_ICP_SEL",
+          "value": 590
+        },
+        {
+          "attr_id": 111,
+          "attrval": 293,
+          "name": "A_ICP_SEL",
+          "value": 600
+        },
+        {
+          "attr_id": 111,
+          "attrval": 294,
+          "name": "A_ICP_SEL",
+          "value": 610
+        },
+        {
+          "attr_id": 111,
+          "attrval": 295,
+          "name": "A_ICP_SEL",
+          "value": 620
+        },
+        {
+          "attr_id": 111,
+          "attrval": 296,
+          "name": "A_ICP_SEL",
+          "value": 630
+        },
+        {
+          "attr_id": 111,
+          "attrval": 297,
+          "name": "A_ICP_SEL",
+          "value": 640
+        }
+      ],
+      "expected_attr": "A_FBDIV_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,41",
+            "20,45"
+          ],
+          "set": [
+            "20,23",
+            "20,44"
+          ]
+        }
+      },
+      "moved_bits": 4,
+      "names": [
+        "A_FBDIV_SEL",
+        "A_ICP_SEL"
+      ],
+      "param": "FBDIV_SEL",
+      "point": "p03_fbdiv1",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0003",
+      "value": 1,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 111,
+          "attrval": 242,
+          "name": "A_ICP_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 111,
+          "attrval": 243,
+          "name": "A_ICP_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 111,
+          "attrval": 244,
+          "name": "A_ICP_SEL",
+          "value": 110
+        },
+        {
+          "attr_id": 111,
+          "attrval": 245,
+          "name": "A_ICP_SEL",
+          "value": 120
+        },
+        {
+          "attr_id": 111,
+          "attrval": 246,
+          "name": "A_ICP_SEL",
+          "value": 130
+        },
+        {
+          "attr_id": 111,
+          "attrval": 247,
+          "name": "A_ICP_SEL",
+          "value": 140
+        },
+        {
+          "attr_id": 111,
+          "attrval": 248,
+          "name": "A_ICP_SEL",
+          "value": 150
+        },
+        {
+          "attr_id": 111,
+          "attrval": 249,
+          "name": "A_ICP_SEL",
+          "value": 160
+        },
+        {
+          "attr_id": 111,
+          "attrval": 250,
+          "name": "A_ICP_SEL",
+          "value": 170
+        },
+        {
+          "attr_id": 111,
+          "attrval": 251,
+          "name": "A_ICP_SEL",
+          "value": 180
+        },
+        {
+          "attr_id": 111,
+          "attrval": 252,
+          "name": "A_ICP_SEL",
+          "value": 190
+        },
+        {
+          "attr_id": 111,
+          "attrval": 253,
+          "name": "A_ICP_SEL",
+          "value": 200
+        },
+        {
+          "attr_id": 111,
+          "attrval": 254,
+          "name": "A_ICP_SEL",
+          "value": 210
+        },
+        {
+          "attr_id": 111,
+          "attrval": 255,
+          "name": "A_ICP_SEL",
+          "value": 220
+        },
+        {
+          "attr_id": 111,
+          "attrval": 256,
+          "name": "A_ICP_SEL",
+          "value": 230
+        },
+        {
+          "attr_id": 111,
+          "attrval": 257,
+          "name": "A_ICP_SEL",
+          "value": 240
+        },
+        {
+          "attr_id": 111,
+          "attrval": 258,
+          "name": "A_ICP_SEL",
+          "value": 250
+        },
+        {
+          "attr_id": 111,
+          "attrval": 259,
+          "name": "A_ICP_SEL",
+          "value": 260
+        },
+        {
+          "attr_id": 111,
+          "attrval": 260,
+          "name": "A_ICP_SEL",
+          "value": 270
+        },
+        {
+          "attr_id": 111,
+          "attrval": 261,
+          "name": "A_ICP_SEL",
+          "value": 280
+        },
+        {
+          "attr_id": 111,
+          "attrval": 262,
+          "name": "A_ICP_SEL",
+          "value": 290
+        },
+        {
+          "attr_id": 111,
+          "attrval": 263,
+          "name": "A_ICP_SEL",
+          "value": 300
+        },
+        {
+          "attr_id": 111,
+          "attrval": 264,
+          "name": "A_ICP_SEL",
+          "value": 310
+        },
+        {
+          "attr_id": 111,
+          "attrval": 265,
+          "name": "A_ICP_SEL",
+          "value": 320
+        },
+        {
+          "attr_id": 111,
+          "attrval": 274,
+          "name": "A_ICP_SEL",
+          "value": 410
+        },
+        {
+          "attr_id": 111,
+          "attrval": 275,
+          "name": "A_ICP_SEL",
+          "value": 420
+        },
+        {
+          "attr_id": 111,
+          "attrval": 276,
+          "name": "A_ICP_SEL",
+          "value": 430
+        },
+        {
+          "attr_id": 111,
+          "attrval": 277,
+          "name": "A_ICP_SEL",
+          "value": 440
+        },
+        {
+          "attr_id": 111,
+          "attrval": 278,
+          "name": "A_ICP_SEL",
+          "value": 450
+        },
+        {
+          "attr_id": 111,
+          "attrval": 279,
+          "name": "A_ICP_SEL",
+          "value": 460
+        },
+        {
+          "attr_id": 111,
+          "attrval": 280,
+          "name": "A_ICP_SEL",
+          "value": 470
+        },
+        {
+          "attr_id": 111,
+          "attrval": 281,
+          "name": "A_ICP_SEL",
+          "value": 480
+        },
+        {
+          "attr_id": 111,
+          "attrval": 282,
+          "name": "A_ICP_SEL",
+          "value": 490
+        },
+        {
+          "attr_id": 111,
+          "attrval": 283,
+          "name": "A_ICP_SEL",
+          "value": 500
+        },
+        {
+          "attr_id": 111,
+          "attrval": 284,
+          "name": "A_ICP_SEL",
+          "value": 510
+        },
+        {
+          "attr_id": 111,
+          "attrval": 285,
+          "name": "A_ICP_SEL",
+          "value": 520
+        },
+        {
+          "attr_id": 111,
+          "attrval": 286,
+          "name": "A_ICP_SEL",
+          "value": 530
+        },
+        {
+          "attr_id": 111,
+          "attrval": 287,
+          "name": "A_ICP_SEL",
+          "value": 540
+        },
+        {
+          "attr_id": 111,
+          "attrval": 288,
+          "name": "A_ICP_SEL",
+          "value": 550
+        },
+        {
+          "attr_id": 111,
+          "attrval": 289,
+          "name": "A_ICP_SEL",
+          "value": 560
+        },
+        {
+          "attr_id": 111,
+          "attrval": 290,
+          "name": "A_ICP_SEL",
+          "value": 570
+        },
+        {
+          "attr_id": 111,
+          "attrval": 291,
+          "name": "A_ICP_SEL",
+          "value": 580
+        },
+        {
+          "attr_id": 111,
+          "attrval": 292,
+          "name": "A_ICP_SEL",
+          "value": 590
+        },
+        {
+          "attr_id": 111,
+          "attrval": 293,
+          "name": "A_ICP_SEL",
+          "value": 600
+        },
+        {
+          "attr_id": 111,
+          "attrval": 294,
+          "name": "A_ICP_SEL",
+          "value": 610
+        },
+        {
+          "attr_id": 111,
+          "attrval": 295,
+          "name": "A_ICP_SEL",
+          "value": 620
+        },
+        {
+          "attr_id": 111,
+          "attrval": 296,
+          "name": "A_ICP_SEL",
+          "value": 630
+        },
+        {
+          "attr_id": 111,
+          "attrval": 297,
+          "name": "A_ICP_SEL",
+          "value": 640
+        },
+        {
+          "attr_id": 113,
+          "attrval": 305,
+          "name": "A_MDIV_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 113,
+          "attrval": 306,
+          "name": "A_MDIV_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 113,
+          "attrval": 307,
+          "name": "A_MDIV_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 113,
+          "attrval": 308,
+          "name": "A_MDIV_SEL",
+          "value": 4
+        },
+        {
+          "attr_id": 113,
+          "attrval": 309,
+          "name": "A_MDIV_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 113,
+          "attrval": 310,
+          "name": "A_MDIV_SEL",
+          "value": 6
+        },
+        {
+          "attr_id": 113,
+          "attrval": 311,
+          "name": "A_MDIV_SEL",
+          "value": 7
+        },
+        {
+          "attr_id": 113,
+          "attrval": 312,
+          "name": "A_MDIV_SEL",
+          "value": 8
+        },
+        {
+          "attr_id": 113,
+          "attrval": 313,
+          "name": "A_MDIV_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 113,
+          "attrval": 314,
+          "name": "A_MDIV_SEL",
+          "value": 10
+        },
+        {
+          "attr_id": 113,
+          "attrval": 317,
+          "name": "A_MDIV_SEL",
+          "value": 13
+        },
+        {
+          "attr_id": 113,
+          "attrval": 318,
+          "name": "A_MDIV_SEL",
+          "value": 14
+        },
+        {
+          "attr_id": 113,
+          "attrval": 321,
+          "name": "A_MDIV_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 113,
+          "attrval": 322,
+          "name": "A_MDIV_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 113,
+          "attrval": 323,
+          "name": "A_MDIV_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 113,
+          "attrval": 324,
+          "name": "A_MDIV_SEL",
+          "value": 20
+        },
+        {
+          "attr_id": 113,
+          "attrval": 325,
+          "name": "A_MDIV_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 113,
+          "attrval": 326,
+          "name": "A_MDIV_SEL",
+          "value": 22
+        },
+        {
+          "attr_id": 113,
+          "attrval": 327,
+          "name": "A_MDIV_SEL",
+          "value": 23
+        },
+        {
+          "attr_id": 113,
+          "attrval": 328,
+          "name": "A_MDIV_SEL",
+          "value": 24
+        },
+        {
+          "attr_id": 113,
+          "attrval": 329,
+          "name": "A_MDIV_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 113,
+          "attrval": 330,
+          "name": "A_MDIV_SEL",
+          "value": 26
+        },
+        {
+          "attr_id": 113,
+          "attrval": 333,
+          "name": "A_MDIV_SEL",
+          "value": 29
+        },
+        {
+          "attr_id": 113,
+          "attrval": 334,
+          "name": "A_MDIV_SEL",
+          "value": 30
+        },
+        {
+          "attr_id": 113,
+          "attrval": 337,
+          "name": "A_MDIV_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 113,
+          "attrval": 338,
+          "name": "A_MDIV_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 113,
+          "attrval": 339,
+          "name": "A_MDIV_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 113,
+          "attrval": 340,
+          "name": "A_MDIV_SEL",
+          "value": 36
+        },
+        {
+          "attr_id": 113,
+          "attrval": 341,
+          "name": "A_MDIV_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 113,
+          "attrval": 342,
+          "name": "A_MDIV_SEL",
+          "value": 38
+        },
+        {
+          "attr_id": 113,
+          "attrval": 343,
+          "name": "A_MDIV_SEL",
+          "value": 39
+        },
+        {
+          "attr_id": 113,
+          "attrval": 344,
+          "name": "A_MDIV_SEL",
+          "value": 40
+        },
+        {
+          "attr_id": 113,
+          "attrval": 345,
+          "name": "A_MDIV_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 113,
+          "attrval": 346,
+          "name": "A_MDIV_SEL",
+          "value": 42
+        },
+        {
+          "attr_id": 113,
+          "attrval": 349,
+          "name": "A_MDIV_SEL",
+          "value": 45
+        },
+        {
+          "attr_id": 113,
+          "attrval": 350,
+          "name": "A_MDIV_SEL",
+          "value": 46
+        },
+        {
+          "attr_id": 113,
+          "attrval": 353,
+          "name": "A_MDIV_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 113,
+          "attrval": 354,
+          "name": "A_MDIV_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 113,
+          "attrval": 355,
+          "name": "A_MDIV_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 113,
+          "attrval": 356,
+          "name": "A_MDIV_SEL",
+          "value": 52
+        },
+        {
+          "attr_id": 113,
+          "attrval": 357,
+          "name": "A_MDIV_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 113,
+          "attrval": 358,
+          "name": "A_MDIV_SEL",
+          "value": 54
+        },
+        {
+          "attr_id": 113,
+          "attrval": 359,
+          "name": "A_MDIV_SEL",
+          "value": 55
+        },
+        {
+          "attr_id": 113,
+          "attrval": 360,
+          "name": "A_MDIV_SEL",
+          "value": 56
+        },
+        {
+          "attr_id": 113,
+          "attrval": 361,
+          "name": "A_MDIV_SEL",
+          "value": 57
+        },
+        {
+          "attr_id": 113,
+          "attrval": 362,
+          "name": "A_MDIV_SEL",
+          "value": 58
+        },
+        {
+          "attr_id": 113,
+          "attrval": 365,
+          "name": "A_MDIV_SEL",
+          "value": 61
+        },
+        {
+          "attr_id": 113,
+          "attrval": 366,
+          "name": "A_MDIV_SEL",
+          "value": 62
+        },
+        {
+          "attr_id": 113,
+          "attrval": 369,
+          "name": "A_MDIV_SEL",
+          "value": 65
+        },
+        {
+          "attr_id": 113,
+          "attrval": 370,
+          "name": "A_MDIV_SEL",
+          "value": 66
+        },
+        {
+          "attr_id": 113,
+          "attrval": 371,
+          "name": "A_MDIV_SEL",
+          "value": 67
+        },
+        {
+          "attr_id": 113,
+          "attrval": 372,
+          "name": "A_MDIV_SEL",
+          "value": 68
+        },
+        {
+          "attr_id": 113,
+          "attrval": 373,
+          "name": "A_MDIV_SEL",
+          "value": 69
+        },
+        {
+          "attr_id": 113,
+          "attrval": 374,
+          "name": "A_MDIV_SEL",
+          "value": 70
+        },
+        {
+          "attr_id": 113,
+          "attrval": 375,
+          "name": "A_MDIV_SEL",
+          "value": 71
+        },
+        {
+          "attr_id": 113,
+          "attrval": 376,
+          "name": "A_MDIV_SEL",
+          "value": 72
+        },
+        {
+          "attr_id": 113,
+          "attrval": 377,
+          "name": "A_MDIV_SEL",
+          "value": 73
+        },
+        {
+          "attr_id": 113,
+          "attrval": 378,
+          "name": "A_MDIV_SEL",
+          "value": 74
+        },
+        {
+          "attr_id": 113,
+          "attrval": 381,
+          "name": "A_MDIV_SEL",
+          "value": 77
+        },
+        {
+          "attr_id": 113,
+          "attrval": 382,
+          "name": "A_MDIV_SEL",
+          "value": 78
+        },
+        {
+          "attr_id": 113,
+          "attrval": 385,
+          "name": "A_MDIV_SEL",
+          "value": 81
+        },
+        {
+          "attr_id": 113,
+          "attrval": 386,
+          "name": "A_MDIV_SEL",
+          "value": 82
+        },
+        {
+          "attr_id": 113,
+          "attrval": 387,
+          "name": "A_MDIV_SEL",
+          "value": 83
+        },
+        {
+          "attr_id": 113,
+          "attrval": 388,
+          "name": "A_MDIV_SEL",
+          "value": 84
+        },
+        {
+          "attr_id": 113,
+          "attrval": 389,
+          "name": "A_MDIV_SEL",
+          "value": 85
+        },
+        {
+          "attr_id": 113,
+          "attrval": 390,
+          "name": "A_MDIV_SEL",
+          "value": 86
+        },
+        {
+          "attr_id": 113,
+          "attrval": 391,
+          "name": "A_MDIV_SEL",
+          "value": 87
+        },
+        {
+          "attr_id": 113,
+          "attrval": 392,
+          "name": "A_MDIV_SEL",
+          "value": 88
+        },
+        {
+          "attr_id": 113,
+          "attrval": 393,
+          "name": "A_MDIV_SEL",
+          "value": 89
+        },
+        {
+          "attr_id": 113,
+          "attrval": 394,
+          "name": "A_MDIV_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 113,
+          "attrval": 397,
+          "name": "A_MDIV_SEL",
+          "value": 93
+        },
+        {
+          "attr_id": 113,
+          "attrval": 398,
+          "name": "A_MDIV_SEL",
+          "value": 94
+        },
+        {
+          "attr_id": 113,
+          "attrval": 401,
+          "name": "A_MDIV_SEL",
+          "value": 97
+        },
+        {
+          "attr_id": 113,
+          "attrval": 402,
+          "name": "A_MDIV_SEL",
+          "value": 98
+        },
+        {
+          "attr_id": 113,
+          "attrval": 403,
+          "name": "A_MDIV_SEL",
+          "value": 99
+        },
+        {
+          "attr_id": 113,
+          "attrval": 404,
+          "name": "A_MDIV_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 113,
+          "attrval": 405,
+          "name": "A_MDIV_SEL",
+          "value": 101
+        },
+        {
+          "attr_id": 113,
+          "attrval": 406,
+          "name": "A_MDIV_SEL",
+          "value": 102
+        },
+        {
+          "attr_id": 113,
+          "attrval": 407,
+          "name": "A_MDIV_SEL",
+          "value": 103
+        },
+        {
+          "attr_id": 113,
+          "attrval": 408,
+          "name": "A_MDIV_SEL",
+          "value": 104
+        },
+        {
+          "attr_id": 113,
+          "attrval": 409,
+          "name": "A_MDIV_SEL",
+          "value": 105
+        },
+        {
+          "attr_id": 113,
+          "attrval": 410,
+          "name": "A_MDIV_SEL",
+          "value": 106
+        },
+        {
+          "attr_id": 113,
+          "attrval": 413,
+          "name": "A_MDIV_SEL",
+          "value": 109
+        },
+        {
+          "attr_id": 113,
+          "attrval": 414,
+          "name": "A_MDIV_SEL",
+          "value": 110
+        },
+        {
+          "attr_id": 113,
+          "attrval": 417,
+          "name": "A_MDIV_SEL",
+          "value": 113
+        },
+        {
+          "attr_id": 113,
+          "attrval": 418,
+          "name": "A_MDIV_SEL",
+          "value": 114
+        },
+        {
+          "attr_id": 113,
+          "attrval": 419,
+          "name": "A_MDIV_SEL",
+          "value": 115
+        },
+        {
+          "attr_id": 113,
+          "attrval": 420,
+          "name": "A_MDIV_SEL",
+          "value": 116
+        },
+        {
+          "attr_id": 113,
+          "attrval": 421,
+          "name": "A_MDIV_SEL",
+          "value": 117
+        },
+        {
+          "attr_id": 113,
+          "attrval": 422,
+          "name": "A_MDIV_SEL",
+          "value": 118
+        },
+        {
+          "attr_id": 113,
+          "attrval": 423,
+          "name": "A_MDIV_SEL",
+          "value": 119
+        },
+        {
+          "attr_id": 113,
+          "attrval": 424,
+          "name": "A_MDIV_SEL",
+          "value": 120
+        },
+        {
+          "attr_id": 113,
+          "attrval": 425,
+          "name": "A_MDIV_SEL",
+          "value": 121
+        },
+        {
+          "attr_id": 113,
+          "attrval": 426,
+          "name": "A_MDIV_SEL",
+          "value": 122
+        },
+        {
+          "attr_id": 113,
+          "attrval": 429,
+          "name": "A_MDIV_SEL",
+          "value": 125
+        },
+        {
+          "attr_id": 113,
+          "attrval": 430,
+          "name": "A_MDIV_SEL",
+          "value": 126
+        }
+      ],
+      "expected_attr": "A_MDIV_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,45",
+            "20,81"
+          ],
+          "set": [
+            "20,44",
+            "20,83"
+          ]
+        }
+      },
+      "moved_bits": 4,
+      "names": [
+        "A_ICP_SEL",
+        "A_MDIV_SEL"
+      ],
+      "param": "MDIV_SEL",
+      "point": "p04_mdiv7",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0004",
+      "value": 7,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 111,
+          "attrval": 238,
+          "name": "A_ICP_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 111,
+          "attrval": 239,
+          "name": "A_ICP_SEL",
+          "value": 60
+        },
+        {
+          "attr_id": 111,
+          "attrval": 240,
+          "name": "A_ICP_SEL",
+          "value": 70
+        },
+        {
+          "attr_id": 111,
+          "attrval": 241,
+          "name": "A_ICP_SEL",
+          "value": 80
+        },
+        {
+          "attr_id": 111,
+          "attrval": 242,
+          "name": "A_ICP_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 111,
+          "attrval": 243,
+          "name": "A_ICP_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 111,
+          "attrval": 244,
+          "name": "A_ICP_SEL",
+          "value": 110
+        },
+        {
+          "attr_id": 111,
+          "attrval": 245,
+          "name": "A_ICP_SEL",
+          "value": 120
+        },
+        {
+          "attr_id": 111,
+          "attrval": 246,
+          "name": "A_ICP_SEL",
+          "value": 130
+        },
+        {
+          "attr_id": 111,
+          "attrval": 247,
+          "name": "A_ICP_SEL",
+          "value": 140
+        },
+        {
+          "attr_id": 111,
+          "attrval": 248,
+          "name": "A_ICP_SEL",
+          "value": 150
+        },
+        {
+          "attr_id": 111,
+          "attrval": 249,
+          "name": "A_ICP_SEL",
+          "value": 160
+        },
+        {
+          "attr_id": 111,
+          "attrval": 250,
+          "name": "A_ICP_SEL",
+          "value": 170
+        },
+        {
+          "attr_id": 111,
+          "attrval": 251,
+          "name": "A_ICP_SEL",
+          "value": 180
+        },
+        {
+          "attr_id": 111,
+          "attrval": 252,
+          "name": "A_ICP_SEL",
+          "value": 190
+        },
+        {
+          "attr_id": 111,
+          "attrval": 253,
+          "name": "A_ICP_SEL",
+          "value": 200
+        },
+        {
+          "attr_id": 111,
+          "attrval": 254,
+          "name": "A_ICP_SEL",
+          "value": 210
+        },
+        {
+          "attr_id": 111,
+          "attrval": 255,
+          "name": "A_ICP_SEL",
+          "value": 220
+        },
+        {
+          "attr_id": 111,
+          "attrval": 256,
+          "name": "A_ICP_SEL",
+          "value": 230
+        },
+        {
+          "attr_id": 111,
+          "attrval": 257,
+          "name": "A_ICP_SEL",
+          "value": 240
+        },
+        {
+          "attr_id": 111,
+          "attrval": 258,
+          "name": "A_ICP_SEL",
+          "value": 250
+        },
+        {
+          "attr_id": 111,
+          "attrval": 259,
+          "name": "A_ICP_SEL",
+          "value": 260
+        },
+        {
+          "attr_id": 111,
+          "attrval": 260,
+          "name": "A_ICP_SEL",
+          "value": 270
+        },
+        {
+          "attr_id": 111,
+          "attrval": 261,
+          "name": "A_ICP_SEL",
+          "value": 280
+        },
+        {
+          "attr_id": 111,
+          "attrval": 262,
+          "name": "A_ICP_SEL",
+          "value": 290
+        },
+        {
+          "attr_id": 111,
+          "attrval": 263,
+          "name": "A_ICP_SEL",
+          "value": 300
+        },
+        {
+          "attr_id": 111,
+          "attrval": 264,
+          "name": "A_ICP_SEL",
+          "value": 310
+        },
+        {
+          "attr_id": 111,
+          "attrval": 265,
+          "name": "A_ICP_SEL",
+          "value": 320
+        },
+        {
+          "attr_id": 111,
+          "attrval": 270,
+          "name": "A_ICP_SEL",
+          "value": 370
+        },
+        {
+          "attr_id": 111,
+          "attrval": 271,
+          "name": "A_ICP_SEL",
+          "value": 380
+        },
+        {
+          "attr_id": 111,
+          "attrval": 272,
+          "name": "A_ICP_SEL",
+          "value": 390
+        },
+        {
+          "attr_id": 111,
+          "attrval": 273,
+          "name": "A_ICP_SEL",
+          "value": 400
+        },
+        {
+          "attr_id": 111,
+          "attrval": 274,
+          "name": "A_ICP_SEL",
+          "value": 410
+        },
+        {
+          "attr_id": 111,
+          "attrval": 275,
+          "name": "A_ICP_SEL",
+          "value": 420
+        },
+        {
+          "attr_id": 111,
+          "attrval": 276,
+          "name": "A_ICP_SEL",
+          "value": 430
+        },
+        {
+          "attr_id": 111,
+          "attrval": 277,
+          "name": "A_ICP_SEL",
+          "value": 440
+        },
+        {
+          "attr_id": 111,
+          "attrval": 278,
+          "name": "A_ICP_SEL",
+          "value": 450
+        },
+        {
+          "attr_id": 111,
+          "attrval": 279,
+          "name": "A_ICP_SEL",
+          "value": 460
+        },
+        {
+          "attr_id": 111,
+          "attrval": 280,
+          "name": "A_ICP_SEL",
+          "value": 470
+        },
+        {
+          "attr_id": 111,
+          "attrval": 281,
+          "name": "A_ICP_SEL",
+          "value": 480
+        },
+        {
+          "attr_id": 111,
+          "attrval": 282,
+          "name": "A_ICP_SEL",
+          "value": 490
+        },
+        {
+          "attr_id": 111,
+          "attrval": 283,
+          "name": "A_ICP_SEL",
+          "value": 500
+        },
+        {
+          "attr_id": 111,
+          "attrval": 284,
+          "name": "A_ICP_SEL",
+          "value": 510
+        },
+        {
+          "attr_id": 111,
+          "attrval": 285,
+          "name": "A_ICP_SEL",
+          "value": 520
+        },
+        {
+          "attr_id": 111,
+          "attrval": 286,
+          "name": "A_ICP_SEL",
+          "value": 530
+        },
+        {
+          "attr_id": 111,
+          "attrval": 287,
+          "name": "A_ICP_SEL",
+          "value": 540
+        },
+        {
+          "attr_id": 111,
+          "attrval": 288,
+          "name": "A_ICP_SEL",
+          "value": 550
+        },
+        {
+          "attr_id": 111,
+          "attrval": 289,
+          "name": "A_ICP_SEL",
+          "value": 560
+        },
+        {
+          "attr_id": 111,
+          "attrval": 290,
+          "name": "A_ICP_SEL",
+          "value": 570
+        },
+        {
+          "attr_id": 111,
+          "attrval": 291,
+          "name": "A_ICP_SEL",
+          "value": 580
+        },
+        {
+          "attr_id": 111,
+          "attrval": 292,
+          "name": "A_ICP_SEL",
+          "value": 590
+        },
+        {
+          "attr_id": 111,
+          "attrval": 293,
+          "name": "A_ICP_SEL",
+          "value": 600
+        },
+        {
+          "attr_id": 111,
+          "attrval": 294,
+          "name": "A_ICP_SEL",
+          "value": 610
+        },
+        {
+          "attr_id": 111,
+          "attrval": 295,
+          "name": "A_ICP_SEL",
+          "value": 620
+        },
+        {
+          "attr_id": 111,
+          "attrval": 296,
+          "name": "A_ICP_SEL",
+          "value": 630
+        },
+        {
+          "attr_id": 111,
+          "attrval": 297,
+          "name": "A_ICP_SEL",
+          "value": 640
+        },
+        {
+          "attr_id": 113,
+          "attrval": 305,
+          "name": "A_MDIV_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 113,
+          "attrval": 306,
+          "name": "A_MDIV_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 113,
+          "attrval": 307,
+          "name": "A_MDIV_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 113,
+          "attrval": 308,
+          "name": "A_MDIV_SEL",
+          "value": 4
+        },
+        {
+          "attr_id": 113,
+          "attrval": 309,
+          "name": "A_MDIV_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 113,
+          "attrval": 311,
+          "name": "A_MDIV_SEL",
+          "value": 7
+        },
+        {
+          "attr_id": 113,
+          "attrval": 313,
+          "name": "A_MDIV_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 113,
+          "attrval": 314,
+          "name": "A_MDIV_SEL",
+          "value": 10
+        },
+        {
+          "attr_id": 113,
+          "attrval": 315,
+          "name": "A_MDIV_SEL",
+          "value": 11
+        },
+        {
+          "attr_id": 113,
+          "attrval": 316,
+          "name": "A_MDIV_SEL",
+          "value": 12
+        },
+        {
+          "attr_id": 113,
+          "attrval": 317,
+          "name": "A_MDIV_SEL",
+          "value": 13
+        },
+        {
+          "attr_id": 113,
+          "attrval": 319,
+          "name": "A_MDIV_SEL",
+          "value": 15
+        },
+        {
+          "attr_id": 113,
+          "attrval": 321,
+          "name": "A_MDIV_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 113,
+          "attrval": 322,
+          "name": "A_MDIV_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 113,
+          "attrval": 323,
+          "name": "A_MDIV_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 113,
+          "attrval": 324,
+          "name": "A_MDIV_SEL",
+          "value": 20
+        },
+        {
+          "attr_id": 113,
+          "attrval": 325,
+          "name": "A_MDIV_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 113,
+          "attrval": 327,
+          "name": "A_MDIV_SEL",
+          "value": 23
+        },
+        {
+          "attr_id": 113,
+          "attrval": 329,
+          "name": "A_MDIV_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 113,
+          "attrval": 330,
+          "name": "A_MDIV_SEL",
+          "value": 26
+        },
+        {
+          "attr_id": 113,
+          "attrval": 331,
+          "name": "A_MDIV_SEL",
+          "value": 27
+        },
+        {
+          "attr_id": 113,
+          "attrval": 332,
+          "name": "A_MDIV_SEL",
+          "value": 28
+        },
+        {
+          "attr_id": 113,
+          "attrval": 333,
+          "name": "A_MDIV_SEL",
+          "value": 29
+        },
+        {
+          "attr_id": 113,
+          "attrval": 335,
+          "name": "A_MDIV_SEL",
+          "value": 31
+        },
+        {
+          "attr_id": 113,
+          "attrval": 337,
+          "name": "A_MDIV_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 113,
+          "attrval": 338,
+          "name": "A_MDIV_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 113,
+          "attrval": 339,
+          "name": "A_MDIV_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 113,
+          "attrval": 340,
+          "name": "A_MDIV_SEL",
+          "value": 36
+        },
+        {
+          "attr_id": 113,
+          "attrval": 341,
+          "name": "A_MDIV_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 113,
+          "attrval": 343,
+          "name": "A_MDIV_SEL",
+          "value": 39
+        },
+        {
+          "attr_id": 113,
+          "attrval": 345,
+          "name": "A_MDIV_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 113,
+          "attrval": 346,
+          "name": "A_MDIV_SEL",
+          "value": 42
+        },
+        {
+          "attr_id": 113,
+          "attrval": 347,
+          "name": "A_MDIV_SEL",
+          "value": 43
+        },
+        {
+          "attr_id": 113,
+          "attrval": 348,
+          "name": "A_MDIV_SEL",
+          "value": 44
+        },
+        {
+          "attr_id": 113,
+          "attrval": 349,
+          "name": "A_MDIV_SEL",
+          "value": 45
+        },
+        {
+          "attr_id": 113,
+          "attrval": 351,
+          "name": "A_MDIV_SEL",
+          "value": 47
+        },
+        {
+          "attr_id": 113,
+          "attrval": 353,
+          "name": "A_MDIV_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 113,
+          "attrval": 354,
+          "name": "A_MDIV_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 113,
+          "attrval": 355,
+          "name": "A_MDIV_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 113,
+          "attrval": 356,
+          "name": "A_MDIV_SEL",
+          "value": 52
+        },
+        {
+          "attr_id": 113,
+          "attrval": 357,
+          "name": "A_MDIV_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 113,
+          "attrval": 359,
+          "name": "A_MDIV_SEL",
+          "value": 55
+        },
+        {
+          "attr_id": 113,
+          "attrval": 361,
+          "name": "A_MDIV_SEL",
+          "value": 57
+        },
+        {
+          "attr_id": 113,
+          "attrval": 362,
+          "name": "A_MDIV_SEL",
+          "value": 58
+        },
+        {
+          "attr_id": 113,
+          "attrval": 363,
+          "name": "A_MDIV_SEL",
+          "value": 59
+        },
+        {
+          "attr_id": 113,
+          "attrval": 364,
+          "name": "A_MDIV_SEL",
+          "value": 60
+        },
+        {
+          "attr_id": 113,
+          "attrval": 365,
+          "name": "A_MDIV_SEL",
+          "value": 61
+        },
+        {
+          "attr_id": 113,
+          "attrval": 367,
+          "name": "A_MDIV_SEL",
+          "value": 63
+        },
+        {
+          "attr_id": 113,
+          "attrval": 369,
+          "name": "A_MDIV_SEL",
+          "value": 65
+        },
+        {
+          "attr_id": 113,
+          "attrval": 370,
+          "name": "A_MDIV_SEL",
+          "value": 66
+        },
+        {
+          "attr_id": 113,
+          "attrval": 371,
+          "name": "A_MDIV_SEL",
+          "value": 67
+        },
+        {
+          "attr_id": 113,
+          "attrval": 372,
+          "name": "A_MDIV_SEL",
+          "value": 68
+        },
+        {
+          "attr_id": 113,
+          "attrval": 373,
+          "name": "A_MDIV_SEL",
+          "value": 69
+        },
+        {
+          "attr_id": 113,
+          "attrval": 375,
+          "name": "A_MDIV_SEL",
+          "value": 71
+        },
+        {
+          "attr_id": 113,
+          "attrval": 377,
+          "name": "A_MDIV_SEL",
+          "value": 73
+        },
+        {
+          "attr_id": 113,
+          "attrval": 378,
+          "name": "A_MDIV_SEL",
+          "value": 74
+        },
+        {
+          "attr_id": 113,
+          "attrval": 379,
+          "name": "A_MDIV_SEL",
+          "value": 75
+        },
+        {
+          "attr_id": 113,
+          "attrval": 380,
+          "name": "A_MDIV_SEL",
+          "value": 76
+        },
+        {
+          "attr_id": 113,
+          "attrval": 381,
+          "name": "A_MDIV_SEL",
+          "value": 77
+        },
+        {
+          "attr_id": 113,
+          "attrval": 383,
+          "name": "A_MDIV_SEL",
+          "value": 79
+        },
+        {
+          "attr_id": 113,
+          "attrval": 385,
+          "name": "A_MDIV_SEL",
+          "value": 81
+        },
+        {
+          "attr_id": 113,
+          "attrval": 386,
+          "name": "A_MDIV_SEL",
+          "value": 82
+        },
+        {
+          "attr_id": 113,
+          "attrval": 387,
+          "name": "A_MDIV_SEL",
+          "value": 83
+        },
+        {
+          "attr_id": 113,
+          "attrval": 388,
+          "name": "A_MDIV_SEL",
+          "value": 84
+        },
+        {
+          "attr_id": 113,
+          "attrval": 389,
+          "name": "A_MDIV_SEL",
+          "value": 85
+        },
+        {
+          "attr_id": 113,
+          "attrval": 391,
+          "name": "A_MDIV_SEL",
+          "value": 87
+        },
+        {
+          "attr_id": 113,
+          "attrval": 393,
+          "name": "A_MDIV_SEL",
+          "value": 89
+        },
+        {
+          "attr_id": 113,
+          "attrval": 394,
+          "name": "A_MDIV_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 113,
+          "attrval": 395,
+          "name": "A_MDIV_SEL",
+          "value": 91
+        },
+        {
+          "attr_id": 113,
+          "attrval": 396,
+          "name": "A_MDIV_SEL",
+          "value": 92
+        },
+        {
+          "attr_id": 113,
+          "attrval": 397,
+          "name": "A_MDIV_SEL",
+          "value": 93
+        },
+        {
+          "attr_id": 113,
+          "attrval": 399,
+          "name": "A_MDIV_SEL",
+          "value": 95
+        },
+        {
+          "attr_id": 113,
+          "attrval": 401,
+          "name": "A_MDIV_SEL",
+          "value": 97
+        },
+        {
+          "attr_id": 113,
+          "attrval": 402,
+          "name": "A_MDIV_SEL",
+          "value": 98
+        },
+        {
+          "attr_id": 113,
+          "attrval": 403,
+          "name": "A_MDIV_SEL",
+          "value": 99
+        },
+        {
+          "attr_id": 113,
+          "attrval": 404,
+          "name": "A_MDIV_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 113,
+          "attrval": 405,
+          "name": "A_MDIV_SEL",
+          "value": 101
+        },
+        {
+          "attr_id": 113,
+          "attrval": 407,
+          "name": "A_MDIV_SEL",
+          "value": 103
+        },
+        {
+          "attr_id": 113,
+          "attrval": 409,
+          "name": "A_MDIV_SEL",
+          "value": 105
+        },
+        {
+          "attr_id": 113,
+          "attrval": 410,
+          "name": "A_MDIV_SEL",
+          "value": 106
+        },
+        {
+          "attr_id": 113,
+          "attrval": 411,
+          "name": "A_MDIV_SEL",
+          "value": 107
+        },
+        {
+          "attr_id": 113,
+          "attrval": 412,
+          "name": "A_MDIV_SEL",
+          "value": 108
+        },
+        {
+          "attr_id": 113,
+          "attrval": 413,
+          "name": "A_MDIV_SEL",
+          "value": 109
+        },
+        {
+          "attr_id": 113,
+          "attrval": 415,
+          "name": "A_MDIV_SEL",
+          "value": 111
+        },
+        {
+          "attr_id": 113,
+          "attrval": 417,
+          "name": "A_MDIV_SEL",
+          "value": 113
+        },
+        {
+          "attr_id": 113,
+          "attrval": 418,
+          "name": "A_MDIV_SEL",
+          "value": 114
+        },
+        {
+          "attr_id": 113,
+          "attrval": 419,
+          "name": "A_MDIV_SEL",
+          "value": 115
+        },
+        {
+          "attr_id": 113,
+          "attrval": 420,
+          "name": "A_MDIV_SEL",
+          "value": 116
+        },
+        {
+          "attr_id": 113,
+          "attrval": 421,
+          "name": "A_MDIV_SEL",
+          "value": 117
+        },
+        {
+          "attr_id": 113,
+          "attrval": 423,
+          "name": "A_MDIV_SEL",
+          "value": 119
+        },
+        {
+          "attr_id": 113,
+          "attrval": 425,
+          "name": "A_MDIV_SEL",
+          "value": 121
+        },
+        {
+          "attr_id": 113,
+          "attrval": 426,
+          "name": "A_MDIV_SEL",
+          "value": 122
+        },
+        {
+          "attr_id": 113,
+          "attrval": 427,
+          "name": "A_MDIV_SEL",
+          "value": 123
+        },
+        {
+          "attr_id": 113,
+          "attrval": 428,
+          "name": "A_MDIV_SEL",
+          "value": 124
+        },
+        {
+          "attr_id": 113,
+          "attrval": 429,
+          "name": "A_MDIV_SEL",
+          "value": 125
+        },
+        {
+          "attr_id": 113,
+          "attrval": 431,
+          "name": "A_MDIV_SEL",
+          "value": 127
+        }
+      ],
+      "expected_attr": "A_MDIV_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,45",
+            "20,80"
+          ],
+          "set": [
+            "20,43",
+            "20,44",
+            "20,82"
+          ]
+        }
+      },
+      "moved_bits": 5,
+      "names": [
+        "A_ICP_SEL",
+        "A_MDIV_SEL"
+      ],
+      "param": "MDIV_SEL",
+      "point": "p05_mdiv10",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0005",
+      "value": 10,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 114,
+          "attrval": 432,
+          "name": "A_ODIV0_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 114,
+          "attrval": 433,
+          "name": "A_ODIV0_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 114,
+          "attrval": 434,
+          "name": "A_ODIV0_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 114,
+          "attrval": 435,
+          "name": "A_ODIV0_SEL",
+          "value": 4
+        },
+        {
+          "attr_id": 114,
+          "attrval": 440,
+          "name": "A_ODIV0_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 114,
+          "attrval": 441,
+          "name": "A_ODIV0_SEL",
+          "value": 10
+        },
+        {
+          "attr_id": 114,
+          "attrval": 442,
+          "name": "A_ODIV0_SEL",
+          "value": 11
+        },
+        {
+          "attr_id": 114,
+          "attrval": 443,
+          "name": "A_ODIV0_SEL",
+          "value": 12
+        },
+        {
+          "attr_id": 114,
+          "attrval": 448,
+          "name": "A_ODIV0_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 114,
+          "attrval": 449,
+          "name": "A_ODIV0_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 114,
+          "attrval": 450,
+          "name": "A_ODIV0_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 114,
+          "attrval": 451,
+          "name": "A_ODIV0_SEL",
+          "value": 20
+        },
+        {
+          "attr_id": 114,
+          "attrval": 456,
+          "name": "A_ODIV0_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 114,
+          "attrval": 457,
+          "name": "A_ODIV0_SEL",
+          "value": 26
+        },
+        {
+          "attr_id": 114,
+          "attrval": 458,
+          "name": "A_ODIV0_SEL",
+          "value": 27
+        },
+        {
+          "attr_id": 114,
+          "attrval": 459,
+          "name": "A_ODIV0_SEL",
+          "value": 28
+        },
+        {
+          "attr_id": 114,
+          "attrval": 464,
+          "name": "A_ODIV0_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 114,
+          "attrval": 465,
+          "name": "A_ODIV0_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 114,
+          "attrval": 466,
+          "name": "A_ODIV0_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 114,
+          "attrval": 467,
+          "name": "A_ODIV0_SEL",
+          "value": 36
+        },
+        {
+          "attr_id": 114,
+          "attrval": 472,
+          "name": "A_ODIV0_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 114,
+          "attrval": 473,
+          "name": "A_ODIV0_SEL",
+          "value": 42
+        },
+        {
+          "attr_id": 114,
+          "attrval": 474,
+          "name": "A_ODIV0_SEL",
+          "value": 43
+        },
+        {
+          "attr_id": 114,
+          "attrval": 475,
+          "name": "A_ODIV0_SEL",
+          "value": 44
+        },
+        {
+          "attr_id": 114,
+          "attrval": 480,
+          "name": "A_ODIV0_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 114,
+          "attrval": 481,
+          "name": "A_ODIV0_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 114,
+          "attrval": 482,
+          "name": "A_ODIV0_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 114,
+          "attrval": 483,
+          "name": "A_ODIV0_SEL",
+          "value": 52
+        },
+        {
+          "attr_id": 114,
+          "attrval": 488,
+          "name": "A_ODIV0_SEL",
+          "value": 57
+        },
+        {
+          "attr_id": 114,
+          "attrval": 489,
+          "name": "A_ODIV0_SEL",
+          "value": 58
+        },
+        {
+          "attr_id": 114,
+          "attrval": 490,
+          "name": "A_ODIV0_SEL",
+          "value": 59
+        },
+        {
+          "attr_id": 114,
+          "attrval": 491,
+          "name": "A_ODIV0_SEL",
+          "value": 60
+        },
+        {
+          "attr_id": 114,
+          "attrval": 496,
+          "name": "A_ODIV0_SEL",
+          "value": 65
+        },
+        {
+          "attr_id": 114,
+          "attrval": 497,
+          "name": "A_ODIV0_SEL",
+          "value": 66
+        },
+        {
+          "attr_id": 114,
+          "attrval": 498,
+          "name": "A_ODIV0_SEL",
+          "value": 67
+        },
+        {
+          "attr_id": 114,
+          "attrval": 499,
+          "name": "A_ODIV0_SEL",
+          "value": 68
+        },
+        {
+          "attr_id": 114,
+          "attrval": 504,
+          "name": "A_ODIV0_SEL",
+          "value": 73
+        },
+        {
+          "attr_id": 114,
+          "attrval": 505,
+          "name": "A_ODIV0_SEL",
+          "value": 74
+        },
+        {
+          "attr_id": 114,
+          "attrval": 506,
+          "name": "A_ODIV0_SEL",
+          "value": 75
+        },
+        {
+          "attr_id": 114,
+          "attrval": 507,
+          "name": "A_ODIV0_SEL",
+          "value": 76
+        },
+        {
+          "attr_id": 114,
+          "attrval": 512,
+          "name": "A_ODIV0_SEL",
+          "value": 81
+        },
+        {
+          "attr_id": 114,
+          "attrval": 513,
+          "name": "A_ODIV0_SEL",
+          "value": 82
+        },
+        {
+          "attr_id": 114,
+          "attrval": 514,
+          "name": "A_ODIV0_SEL",
+          "value": 83
+        },
+        {
+          "attr_id": 114,
+          "attrval": 515,
+          "name": "A_ODIV0_SEL",
+          "value": 84
+        },
+        {
+          "attr_id": 114,
+          "attrval": 520,
+          "name": "A_ODIV0_SEL",
+          "value": 89
+        },
+        {
+          "attr_id": 114,
+          "attrval": 521,
+          "name": "A_ODIV0_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 114,
+          "attrval": 522,
+          "name": "A_ODIV0_SEL",
+          "value": 91
+        },
+        {
+          "attr_id": 114,
+          "attrval": 523,
+          "name": "A_ODIV0_SEL",
+          "value": 92
+        },
+        {
+          "attr_id": 114,
+          "attrval": 528,
+          "name": "A_ODIV0_SEL",
+          "value": 97
+        },
+        {
+          "attr_id": 114,
+          "attrval": 529,
+          "name": "A_ODIV0_SEL",
+          "value": 98
+        },
+        {
+          "attr_id": 114,
+          "attrval": 530,
+          "name": "A_ODIV0_SEL",
+          "value": 99
+        },
+        {
+          "attr_id": 114,
+          "attrval": 531,
+          "name": "A_ODIV0_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 114,
+          "attrval": 536,
+          "name": "A_ODIV0_SEL",
+          "value": 105
+        },
+        {
+          "attr_id": 114,
+          "attrval": 537,
+          "name": "A_ODIV0_SEL",
+          "value": 106
+        },
+        {
+          "attr_id": 114,
+          "attrval": 538,
+          "name": "A_ODIV0_SEL",
+          "value": 107
+        },
+        {
+          "attr_id": 114,
+          "attrval": 539,
+          "name": "A_ODIV0_SEL",
+          "value": 108
+        },
+        {
+          "attr_id": 114,
+          "attrval": 544,
+          "name": "A_ODIV0_SEL",
+          "value": 113
+        },
+        {
+          "attr_id": 114,
+          "attrval": 545,
+          "name": "A_ODIV0_SEL",
+          "value": 114
+        },
+        {
+          "attr_id": 114,
+          "attrval": 546,
+          "name": "A_ODIV0_SEL",
+          "value": 115
+        },
+        {
+          "attr_id": 114,
+          "attrval": 547,
+          "name": "A_ODIV0_SEL",
+          "value": 116
+        },
+        {
+          "attr_id": 114,
+          "attrval": 552,
+          "name": "A_ODIV0_SEL",
+          "value": 121
+        },
+        {
+          "attr_id": 114,
+          "attrval": 553,
+          "name": "A_ODIV0_SEL",
+          "value": 122
+        },
+        {
+          "attr_id": 114,
+          "attrval": 554,
+          "name": "A_ODIV0_SEL",
+          "value": 123
+        },
+        {
+          "attr_id": 114,
+          "attrval": 555,
+          "name": "A_ODIV0_SEL",
+          "value": 124
+        }
+      ],
+      "expected_attr": "A_ODIV0_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [],
+          "set": [
+            "20,92"
+          ]
+        }
+      },
+      "moved_bits": 1,
+      "names": [
+        "A_ODIV0_SEL"
+      ],
+      "param": "ODIV0_SEL",
+      "point": "p06_odiv0_4",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0006",
+      "value": 4,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 114,
+          "attrval": 432,
+          "name": "A_ODIV0_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 114,
+          "attrval": 433,
+          "name": "A_ODIV0_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 114,
+          "attrval": 434,
+          "name": "A_ODIV0_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 114,
+          "attrval": 435,
+          "name": "A_ODIV0_SEL",
+          "value": 4
+        },
+        {
+          "attr_id": 114,
+          "attrval": 436,
+          "name": "A_ODIV0_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 114,
+          "attrval": 437,
+          "name": "A_ODIV0_SEL",
+          "value": 6
+        },
+        {
+          "attr_id": 114,
+          "attrval": 438,
+          "name": "A_ODIV0_SEL",
+          "value": 7
+        },
+        {
+          "attr_id": 114,
+          "attrval": 439,
+          "name": "A_ODIV0_SEL",
+          "value": 8
+        },
+        {
+          "attr_id": 114,
+          "attrval": 448,
+          "name": "A_ODIV0_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 114,
+          "attrval": 449,
+          "name": "A_ODIV0_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 114,
+          "attrval": 450,
+          "name": "A_ODIV0_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 114,
+          "attrval": 451,
+          "name": "A_ODIV0_SEL",
+          "value": 20
+        },
+        {
+          "attr_id": 114,
+          "attrval": 452,
+          "name": "A_ODIV0_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 114,
+          "attrval": 453,
+          "name": "A_ODIV0_SEL",
+          "value": 22
+        },
+        {
+          "attr_id": 114,
+          "attrval": 454,
+          "name": "A_ODIV0_SEL",
+          "value": 23
+        },
+        {
+          "attr_id": 114,
+          "attrval": 455,
+          "name": "A_ODIV0_SEL",
+          "value": 24
+        },
+        {
+          "attr_id": 114,
+          "attrval": 464,
+          "name": "A_ODIV0_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 114,
+          "attrval": 465,
+          "name": "A_ODIV0_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 114,
+          "attrval": 466,
+          "name": "A_ODIV0_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 114,
+          "attrval": 467,
+          "name": "A_ODIV0_SEL",
+          "value": 36
+        },
+        {
+          "attr_id": 114,
+          "attrval": 468,
+          "name": "A_ODIV0_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 114,
+          "attrval": 469,
+          "name": "A_ODIV0_SEL",
+          "value": 38
+        },
+        {
+          "attr_id": 114,
+          "attrval": 470,
+          "name": "A_ODIV0_SEL",
+          "value": 39
+        },
+        {
+          "attr_id": 114,
+          "attrval": 471,
+          "name": "A_ODIV0_SEL",
+          "value": 40
+        },
+        {
+          "attr_id": 114,
+          "attrval": 480,
+          "name": "A_ODIV0_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 114,
+          "attrval": 481,
+          "name": "A_ODIV0_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 114,
+          "attrval": 482,
+          "name": "A_ODIV0_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 114,
+          "attrval": 483,
+          "name": "A_ODIV0_SEL",
+          "value": 52
+        },
+        {
+          "attr_id": 114,
+          "attrval": 484,
+          "name": "A_ODIV0_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 114,
+          "attrval": 485,
+          "name": "A_ODIV0_SEL",
+          "value": 54
+        },
+        {
+          "attr_id": 114,
+          "attrval": 486,
+          "name": "A_ODIV0_SEL",
+          "value": 55
+        },
+        {
+          "attr_id": 114,
+          "attrval": 487,
+          "name": "A_ODIV0_SEL",
+          "value": 56
+        },
+        {
+          "attr_id": 114,
+          "attrval": 496,
+          "name": "A_ODIV0_SEL",
+          "value": 65
+        },
+        {
+          "attr_id": 114,
+          "attrval": 497,
+          "name": "A_ODIV0_SEL",
+          "value": 66
+        },
+        {
+          "attr_id": 114,
+          "attrval": 498,
+          "name": "A_ODIV0_SEL",
+          "value": 67
+        },
+        {
+          "attr_id": 114,
+          "attrval": 499,
+          "name": "A_ODIV0_SEL",
+          "value": 68
+        },
+        {
+          "attr_id": 114,
+          "attrval": 500,
+          "name": "A_ODIV0_SEL",
+          "value": 69
+        },
+        {
+          "attr_id": 114,
+          "attrval": 501,
+          "name": "A_ODIV0_SEL",
+          "value": 70
+        },
+        {
+          "attr_id": 114,
+          "attrval": 502,
+          "name": "A_ODIV0_SEL",
+          "value": 71
+        },
+        {
+          "attr_id": 114,
+          "attrval": 503,
+          "name": "A_ODIV0_SEL",
+          "value": 72
+        },
+        {
+          "attr_id": 114,
+          "attrval": 512,
+          "name": "A_ODIV0_SEL",
+          "value": 81
+        },
+        {
+          "attr_id": 114,
+          "attrval": 513,
+          "name": "A_ODIV0_SEL",
+          "value": 82
+        },
+        {
+          "attr_id": 114,
+          "attrval": 514,
+          "name": "A_ODIV0_SEL",
+          "value": 83
+        },
+        {
+          "attr_id": 114,
+          "attrval": 515,
+          "name": "A_ODIV0_SEL",
+          "value": 84
+        },
+        {
+          "attr_id": 114,
+          "attrval": 516,
+          "name": "A_ODIV0_SEL",
+          "value": 85
+        },
+        {
+          "attr_id": 114,
+          "attrval": 517,
+          "name": "A_ODIV0_SEL",
+          "value": 86
+        },
+        {
+          "attr_id": 114,
+          "attrval": 518,
+          "name": "A_ODIV0_SEL",
+          "value": 87
+        },
+        {
+          "attr_id": 114,
+          "attrval": 519,
+          "name": "A_ODIV0_SEL",
+          "value": 88
+        },
+        {
+          "attr_id": 114,
+          "attrval": 528,
+          "name": "A_ODIV0_SEL",
+          "value": 97
+        },
+        {
+          "attr_id": 114,
+          "attrval": 529,
+          "name": "A_ODIV0_SEL",
+          "value": 98
+        },
+        {
+          "attr_id": 114,
+          "attrval": 530,
+          "name": "A_ODIV0_SEL",
+          "value": 99
+        },
+        {
+          "attr_id": 114,
+          "attrval": 531,
+          "name": "A_ODIV0_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 114,
+          "attrval": 532,
+          "name": "A_ODIV0_SEL",
+          "value": 101
+        },
+        {
+          "attr_id": 114,
+          "attrval": 533,
+          "name": "A_ODIV0_SEL",
+          "value": 102
+        },
+        {
+          "attr_id": 114,
+          "attrval": 534,
+          "name": "A_ODIV0_SEL",
+          "value": 103
+        },
+        {
+          "attr_id": 114,
+          "attrval": 535,
+          "name": "A_ODIV0_SEL",
+          "value": 104
+        },
+        {
+          "attr_id": 114,
+          "attrval": 544,
+          "name": "A_ODIV0_SEL",
+          "value": 113
+        },
+        {
+          "attr_id": 114,
+          "attrval": 545,
+          "name": "A_ODIV0_SEL",
+          "value": 114
+        },
+        {
+          "attr_id": 114,
+          "attrval": 546,
+          "name": "A_ODIV0_SEL",
+          "value": 115
+        },
+        {
+          "attr_id": 114,
+          "attrval": 547,
+          "name": "A_ODIV0_SEL",
+          "value": 116
+        },
+        {
+          "attr_id": 114,
+          "attrval": 548,
+          "name": "A_ODIV0_SEL",
+          "value": 117
+        },
+        {
+          "attr_id": 114,
+          "attrval": 549,
+          "name": "A_ODIV0_SEL",
+          "value": 118
+        },
+        {
+          "attr_id": 114,
+          "attrval": 550,
+          "name": "A_ODIV0_SEL",
+          "value": 119
+        },
+        {
+          "attr_id": 114,
+          "attrval": 551,
+          "name": "A_ODIV0_SEL",
+          "value": 120
+        }
+      ],
+      "expected_attr": "A_ODIV0_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,93"
+          ],
+          "set": []
+        }
+      },
+      "moved_bits": 1,
+      "names": [
+        "A_ODIV0_SEL"
+      ],
+      "param": "ODIV0_SEL",
+      "point": "p07_odiv0_16",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0007",
+      "value": 16,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 114,
+          "attrval": 432,
+          "name": "A_ODIV0_SEL",
+          "value": 1
+        },
+        {
+          "attr_id": 114,
+          "attrval": 433,
+          "name": "A_ODIV0_SEL",
+          "value": 2
+        },
+        {
+          "attr_id": 114,
+          "attrval": 434,
+          "name": "A_ODIV0_SEL",
+          "value": 3
+        },
+        {
+          "attr_id": 114,
+          "attrval": 435,
+          "name": "A_ODIV0_SEL",
+          "value": 4
+        },
+        {
+          "attr_id": 114,
+          "attrval": 436,
+          "name": "A_ODIV0_SEL",
+          "value": 5
+        },
+        {
+          "attr_id": 114,
+          "attrval": 437,
+          "name": "A_ODIV0_SEL",
+          "value": 6
+        },
+        {
+          "attr_id": 114,
+          "attrval": 438,
+          "name": "A_ODIV0_SEL",
+          "value": 7
+        },
+        {
+          "attr_id": 114,
+          "attrval": 439,
+          "name": "A_ODIV0_SEL",
+          "value": 8
+        },
+        {
+          "attr_id": 114,
+          "attrval": 440,
+          "name": "A_ODIV0_SEL",
+          "value": 9
+        },
+        {
+          "attr_id": 114,
+          "attrval": 441,
+          "name": "A_ODIV0_SEL",
+          "value": 10
+        },
+        {
+          "attr_id": 114,
+          "attrval": 442,
+          "name": "A_ODIV0_SEL",
+          "value": 11
+        },
+        {
+          "attr_id": 114,
+          "attrval": 443,
+          "name": "A_ODIV0_SEL",
+          "value": 12
+        },
+        {
+          "attr_id": 114,
+          "attrval": 444,
+          "name": "A_ODIV0_SEL",
+          "value": 13
+        },
+        {
+          "attr_id": 114,
+          "attrval": 445,
+          "name": "A_ODIV0_SEL",
+          "value": 14
+        },
+        {
+          "attr_id": 114,
+          "attrval": 446,
+          "name": "A_ODIV0_SEL",
+          "value": 15
+        },
+        {
+          "attr_id": 114,
+          "attrval": 447,
+          "name": "A_ODIV0_SEL",
+          "value": 16
+        },
+        {
+          "attr_id": 114,
+          "attrval": 448,
+          "name": "A_ODIV0_SEL",
+          "value": 17
+        },
+        {
+          "attr_id": 114,
+          "attrval": 449,
+          "name": "A_ODIV0_SEL",
+          "value": 18
+        },
+        {
+          "attr_id": 114,
+          "attrval": 450,
+          "name": "A_ODIV0_SEL",
+          "value": 19
+        },
+        {
+          "attr_id": 114,
+          "attrval": 451,
+          "name": "A_ODIV0_SEL",
+          "value": 20
+        },
+        {
+          "attr_id": 114,
+          "attrval": 452,
+          "name": "A_ODIV0_SEL",
+          "value": 21
+        },
+        {
+          "attr_id": 114,
+          "attrval": 453,
+          "name": "A_ODIV0_SEL",
+          "value": 22
+        },
+        {
+          "attr_id": 114,
+          "attrval": 454,
+          "name": "A_ODIV0_SEL",
+          "value": 23
+        },
+        {
+          "attr_id": 114,
+          "attrval": 455,
+          "name": "A_ODIV0_SEL",
+          "value": 24
+        },
+        {
+          "attr_id": 114,
+          "attrval": 456,
+          "name": "A_ODIV0_SEL",
+          "value": 25
+        },
+        {
+          "attr_id": 114,
+          "attrval": 457,
+          "name": "A_ODIV0_SEL",
+          "value": 26
+        },
+        {
+          "attr_id": 114,
+          "attrval": 458,
+          "name": "A_ODIV0_SEL",
+          "value": 27
+        },
+        {
+          "attr_id": 114,
+          "attrval": 459,
+          "name": "A_ODIV0_SEL",
+          "value": 28
+        },
+        {
+          "attr_id": 114,
+          "attrval": 460,
+          "name": "A_ODIV0_SEL",
+          "value": 29
+        },
+        {
+          "attr_id": 114,
+          "attrval": 461,
+          "name": "A_ODIV0_SEL",
+          "value": 30
+        },
+        {
+          "attr_id": 114,
+          "attrval": 462,
+          "name": "A_ODIV0_SEL",
+          "value": 31
+        },
+        {
+          "attr_id": 114,
+          "attrval": 463,
+          "name": "A_ODIV0_SEL",
+          "value": 32
+        },
+        {
+          "attr_id": 114,
+          "attrval": 464,
+          "name": "A_ODIV0_SEL",
+          "value": 33
+        },
+        {
+          "attr_id": 114,
+          "attrval": 465,
+          "name": "A_ODIV0_SEL",
+          "value": 34
+        },
+        {
+          "attr_id": 114,
+          "attrval": 466,
+          "name": "A_ODIV0_SEL",
+          "value": 35
+        },
+        {
+          "attr_id": 114,
+          "attrval": 467,
+          "name": "A_ODIV0_SEL",
+          "value": 36
+        },
+        {
+          "attr_id": 114,
+          "attrval": 468,
+          "name": "A_ODIV0_SEL",
+          "value": 37
+        },
+        {
+          "attr_id": 114,
+          "attrval": 469,
+          "name": "A_ODIV0_SEL",
+          "value": 38
+        },
+        {
+          "attr_id": 114,
+          "attrval": 470,
+          "name": "A_ODIV0_SEL",
+          "value": 39
+        },
+        {
+          "attr_id": 114,
+          "attrval": 471,
+          "name": "A_ODIV0_SEL",
+          "value": 40
+        },
+        {
+          "attr_id": 114,
+          "attrval": 472,
+          "name": "A_ODIV0_SEL",
+          "value": 41
+        },
+        {
+          "attr_id": 114,
+          "attrval": 473,
+          "name": "A_ODIV0_SEL",
+          "value": 42
+        },
+        {
+          "attr_id": 114,
+          "attrval": 474,
+          "name": "A_ODIV0_SEL",
+          "value": 43
+        },
+        {
+          "attr_id": 114,
+          "attrval": 475,
+          "name": "A_ODIV0_SEL",
+          "value": 44
+        },
+        {
+          "attr_id": 114,
+          "attrval": 476,
+          "name": "A_ODIV0_SEL",
+          "value": 45
+        },
+        {
+          "attr_id": 114,
+          "attrval": 477,
+          "name": "A_ODIV0_SEL",
+          "value": 46
+        },
+        {
+          "attr_id": 114,
+          "attrval": 478,
+          "name": "A_ODIV0_SEL",
+          "value": 47
+        },
+        {
+          "attr_id": 114,
+          "attrval": 479,
+          "name": "A_ODIV0_SEL",
+          "value": 48
+        },
+        {
+          "attr_id": 114,
+          "attrval": 480,
+          "name": "A_ODIV0_SEL",
+          "value": 49
+        },
+        {
+          "attr_id": 114,
+          "attrval": 481,
+          "name": "A_ODIV0_SEL",
+          "value": 50
+        },
+        {
+          "attr_id": 114,
+          "attrval": 482,
+          "name": "A_ODIV0_SEL",
+          "value": 51
+        },
+        {
+          "attr_id": 114,
+          "attrval": 483,
+          "name": "A_ODIV0_SEL",
+          "value": 52
+        },
+        {
+          "attr_id": 114,
+          "attrval": 484,
+          "name": "A_ODIV0_SEL",
+          "value": 53
+        },
+        {
+          "attr_id": 114,
+          "attrval": 485,
+          "name": "A_ODIV0_SEL",
+          "value": 54
+        },
+        {
+          "attr_id": 114,
+          "attrval": 486,
+          "name": "A_ODIV0_SEL",
+          "value": 55
+        },
+        {
+          "attr_id": 114,
+          "attrval": 487,
+          "name": "A_ODIV0_SEL",
+          "value": 56
+        },
+        {
+          "attr_id": 114,
+          "attrval": 496,
+          "name": "A_ODIV0_SEL",
+          "value": 65
+        },
+        {
+          "attr_id": 114,
+          "attrval": 497,
+          "name": "A_ODIV0_SEL",
+          "value": 66
+        },
+        {
+          "attr_id": 114,
+          "attrval": 498,
+          "name": "A_ODIV0_SEL",
+          "value": 67
+        },
+        {
+          "attr_id": 114,
+          "attrval": 499,
+          "name": "A_ODIV0_SEL",
+          "value": 68
+        },
+        {
+          "attr_id": 114,
+          "attrval": 500,
+          "name": "A_ODIV0_SEL",
+          "value": 69
+        },
+        {
+          "attr_id": 114,
+          "attrval": 501,
+          "name": "A_ODIV0_SEL",
+          "value": 70
+        },
+        {
+          "attr_id": 114,
+          "attrval": 502,
+          "name": "A_ODIV0_SEL",
+          "value": 71
+        },
+        {
+          "attr_id": 114,
+          "attrval": 503,
+          "name": "A_ODIV0_SEL",
+          "value": 72
+        },
+        {
+          "attr_id": 114,
+          "attrval": 504,
+          "name": "A_ODIV0_SEL",
+          "value": 73
+        },
+        {
+          "attr_id": 114,
+          "attrval": 505,
+          "name": "A_ODIV0_SEL",
+          "value": 74
+        },
+        {
+          "attr_id": 114,
+          "attrval": 506,
+          "name": "A_ODIV0_SEL",
+          "value": 75
+        },
+        {
+          "attr_id": 114,
+          "attrval": 507,
+          "name": "A_ODIV0_SEL",
+          "value": 76
+        },
+        {
+          "attr_id": 114,
+          "attrval": 508,
+          "name": "A_ODIV0_SEL",
+          "value": 77
+        },
+        {
+          "attr_id": 114,
+          "attrval": 509,
+          "name": "A_ODIV0_SEL",
+          "value": 78
+        },
+        {
+          "attr_id": 114,
+          "attrval": 510,
+          "name": "A_ODIV0_SEL",
+          "value": 79
+        },
+        {
+          "attr_id": 114,
+          "attrval": 511,
+          "name": "A_ODIV0_SEL",
+          "value": 80
+        },
+        {
+          "attr_id": 114,
+          "attrval": 512,
+          "name": "A_ODIV0_SEL",
+          "value": 81
+        },
+        {
+          "attr_id": 114,
+          "attrval": 513,
+          "name": "A_ODIV0_SEL",
+          "value": 82
+        },
+        {
+          "attr_id": 114,
+          "attrval": 514,
+          "name": "A_ODIV0_SEL",
+          "value": 83
+        },
+        {
+          "attr_id": 114,
+          "attrval": 515,
+          "name": "A_ODIV0_SEL",
+          "value": 84
+        },
+        {
+          "attr_id": 114,
+          "attrval": 516,
+          "name": "A_ODIV0_SEL",
+          "value": 85
+        },
+        {
+          "attr_id": 114,
+          "attrval": 517,
+          "name": "A_ODIV0_SEL",
+          "value": 86
+        },
+        {
+          "attr_id": 114,
+          "attrval": 518,
+          "name": "A_ODIV0_SEL",
+          "value": 87
+        },
+        {
+          "attr_id": 114,
+          "attrval": 519,
+          "name": "A_ODIV0_SEL",
+          "value": 88
+        },
+        {
+          "attr_id": 114,
+          "attrval": 520,
+          "name": "A_ODIV0_SEL",
+          "value": 89
+        },
+        {
+          "attr_id": 114,
+          "attrval": 521,
+          "name": "A_ODIV0_SEL",
+          "value": 90
+        },
+        {
+          "attr_id": 114,
+          "attrval": 522,
+          "name": "A_ODIV0_SEL",
+          "value": 91
+        },
+        {
+          "attr_id": 114,
+          "attrval": 523,
+          "name": "A_ODIV0_SEL",
+          "value": 92
+        },
+        {
+          "attr_id": 114,
+          "attrval": 524,
+          "name": "A_ODIV0_SEL",
+          "value": 93
+        },
+        {
+          "attr_id": 114,
+          "attrval": 525,
+          "name": "A_ODIV0_SEL",
+          "value": 94
+        },
+        {
+          "attr_id": 114,
+          "attrval": 526,
+          "name": "A_ODIV0_SEL",
+          "value": 95
+        },
+        {
+          "attr_id": 114,
+          "attrval": 527,
+          "name": "A_ODIV0_SEL",
+          "value": 96
+        },
+        {
+          "attr_id": 114,
+          "attrval": 528,
+          "name": "A_ODIV0_SEL",
+          "value": 97
+        },
+        {
+          "attr_id": 114,
+          "attrval": 529,
+          "name": "A_ODIV0_SEL",
+          "value": 98
+        },
+        {
+          "attr_id": 114,
+          "attrval": 530,
+          "name": "A_ODIV0_SEL",
+          "value": 99
+        },
+        {
+          "attr_id": 114,
+          "attrval": 531,
+          "name": "A_ODIV0_SEL",
+          "value": 100
+        },
+        {
+          "attr_id": 114,
+          "attrval": 532,
+          "name": "A_ODIV0_SEL",
+          "value": 101
+        },
+        {
+          "attr_id": 114,
+          "attrval": 533,
+          "name": "A_ODIV0_SEL",
+          "value": 102
+        },
+        {
+          "attr_id": 114,
+          "attrval": 534,
+          "name": "A_ODIV0_SEL",
+          "value": 103
+        },
+        {
+          "attr_id": 114,
+          "attrval": 535,
+          "name": "A_ODIV0_SEL",
+          "value": 104
+        },
+        {
+          "attr_id": 114,
+          "attrval": 536,
+          "name": "A_ODIV0_SEL",
+          "value": 105
+        },
+        {
+          "attr_id": 114,
+          "attrval": 537,
+          "name": "A_ODIV0_SEL",
+          "value": 106
+        },
+        {
+          "attr_id": 114,
+          "attrval": 538,
+          "name": "A_ODIV0_SEL",
+          "value": 107
+        },
+        {
+          "attr_id": 114,
+          "attrval": 539,
+          "name": "A_ODIV0_SEL",
+          "value": 108
+        },
+        {
+          "attr_id": 114,
+          "attrval": 540,
+          "name": "A_ODIV0_SEL",
+          "value": 109
+        },
+        {
+          "attr_id": 114,
+          "attrval": 541,
+          "name": "A_ODIV0_SEL",
+          "value": 110
+        },
+        {
+          "attr_id": 114,
+          "attrval": 542,
+          "name": "A_ODIV0_SEL",
+          "value": 111
+        },
+        {
+          "attr_id": 114,
+          "attrval": 543,
+          "name": "A_ODIV0_SEL",
+          "value": 112
+        },
+        {
+          "attr_id": 114,
+          "attrval": 544,
+          "name": "A_ODIV0_SEL",
+          "value": 113
+        },
+        {
+          "attr_id": 114,
+          "attrval": 545,
+          "name": "A_ODIV0_SEL",
+          "value": 114
+        },
+        {
+          "attr_id": 114,
+          "attrval": 546,
+          "name": "A_ODIV0_SEL",
+          "value": 115
+        },
+        {
+          "attr_id": 114,
+          "attrval": 547,
+          "name": "A_ODIV0_SEL",
+          "value": 116
+        },
+        {
+          "attr_id": 114,
+          "attrval": 548,
+          "name": "A_ODIV0_SEL",
+          "value": 117
+        },
+        {
+          "attr_id": 114,
+          "attrval": 549,
+          "name": "A_ODIV0_SEL",
+          "value": 118
+        },
+        {
+          "attr_id": 114,
+          "attrval": 550,
+          "name": "A_ODIV0_SEL",
+          "value": 119
+        },
+        {
+          "attr_id": 114,
+          "attrval": 551,
+          "name": "A_ODIV0_SEL",
+          "value": 120
+        }
+      ],
+      "expected_attr": "A_ODIV0_SEL",
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "20,93",
+            "20,94",
+            "20,95"
+          ],
+          "set": []
+        }
+      },
+      "moved_bits": 3,
+      "names": [
+        "A_ODIV0_SEL"
+      ],
+      "param": "ODIV0_SEL",
+      "point": "p08_odiv0_64",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0008",
+      "value": 64,
+      "verified": true
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 125,
+          "attrval": 1325,
+          "name": null,
+          "value": 50
+        }
+      ],
+      "expected_attr": null,
+      "moved": {
+        "27,1": {
+          "cleared": [
+            "8,55",
+            "8,57",
+            "9,53",
+            "9,54"
+          ],
+          "set": [
+            "20,8",
+            "4,64",
+            "4,65",
+            "4,66",
+            "5,64",
+            "5,65",
+            "5,66",
+            "5,71",
+            "5,72",
+            "6,38",
+            "6,84",
+            "6,85",
+            "6,86",
+            "6,90",
+            "7,32",
+            "7,33",
+            "7,34",
+            "7,84",
+            "7,85",
+            "7,86",
+            "7,94",
+            "8,11",
+            "8,12",
+            "9,13",
+            "9,15"
+          ]
+        },
+        "27,2": {
+          "cleared": [
+            "2,50",
+            "2,51",
+            "2,52",
+            "2,57",
+            "2,60",
+            "3,50",
+            "3,51",
+            "3,57",
+            "4,0",
+            "4,112",
+            "4,22",
+            "4,25",
+            "4,3",
+            "4,30",
+            "4,31",
+            "4,47",
+            "4,6",
+            "4,69",
+            "4,84",
+            "4,87",
+            "4,90",
+            "5,0",
+            "5,10",
+            "5,112",
+            "5,22",
+            "5,25",
+            "5,3",
+            "5,47",
+            "5,69",
+            "5,84",
+            "5,87",
+            "5,94",
+            "6,0",
+            "6,3",
+            "6,47",
+            "6,6",
+            "6,69",
+            "6,89",
+            "7,0",
+            "7,10",
+            "7,3",
+            "7,47",
+            "7,69",
+            "7,89",
+            "8,69",
+            "8,89",
+            "9,69",
+            "9,89"
+          ],
+          "set": [
+            "2,61",
+            "2,62",
+            "2,63",
+            "2,69",
+            "2,71",
+            "3,61",
+            "3,62",
+            "3,69",
+            "4,111",
+            "4,28",
+            "4,46",
+            "4,68",
+            "4,7",
+            "4,91",
+            "5,111",
+            "5,28",
+            "5,46",
+            "5,68",
+            "5,7",
+            "5,91",
+            "6,21",
+            "6,22",
+            "6,46",
+            "6,68",
+            "6,7",
+            "6,88",
+            "7,21",
+            "7,22",
+            "7,46",
+            "7,68",
+            "7,7",
+            "7,88",
+            "8,0",
+            "8,1",
+            "8,10",
+            "8,42",
+            "8,51",
+            "8,68",
+            "8,7",
+            "8,88",
+            "8,9",
+            "9,0",
+            "9,1",
+            "9,68",
+            "9,7",
+            "9,88"
+          ]
+        },
+        "27,3": {
+          "cleared": [
+            "2,50",
+            "2,51",
+            "2,52",
+            "2,56",
+            "2,60",
+            "3,50",
+            "3,51",
+            "3,56",
+            "4,0",
+            "4,10",
+            "4,112",
+            "4,21",
+            "4,22",
+            "4,47",
+            "4,69",
+            "4,84",
+            "4,9",
+            "4,93",
+            "4,94",
+            "5,0",
+            "5,112",
+            "5,21",
+            "5,22",
+            "5,47",
+            "5,69",
+            "5,84",
+            "6,0",
+            "6,10",
+            "6,28",
+            "6,47",
+            "6,69",
+            "6,89",
+            "6,9",
+            "7,0",
+            "7,28",
+            "7,47",
+            "7,69",
+            "7,89",
+            "8,28",
+            "8,49",
+            "8,69",
+            "8,7",
+            "8,89",
+            "9,28",
+            "9,49",
+            "9,69",
+            "9,7",
+            "9,89"
+          ],
+          "set": [
+            "2,61",
+            "2,62",
+            "2,63",
+            "2,68",
+            "2,71",
+            "3,61",
+            "3,62",
+            "3,68",
+            "4,1",
+            "4,111",
+            "4,23",
+            "4,28",
+            "4,46",
+            "4,68",
+            "4,7",
+            "4,85",
+            "4,91",
+            "5,1",
+            "5,111",
+            "5,23",
+            "5,28",
+            "5,46",
+            "5,68",
+            "5,7",
+            "5,85",
+            "5,91",
+            "6,1",
+            "6,21",
+            "6,22",
+            "6,29",
+            "6,46",
+            "6,68",
+            "6,7",
+            "6,88",
+            "7,1",
+            "7,21",
+            "7,22",
+            "7,31",
+            "7,46",
+            "7,68",
+            "7,7",
+            "7,88",
+            "8,0",
+            "8,10",
+            "8,21",
+            "8,22",
+            "8,29",
+            "8,42",
+            "8,50",
+            "8,51",
+            "8,52",
+            "8,68",
+            "8,8",
+            "8,88",
+            "8,9",
+            "9,0",
+            "9,21",
+            "9,22",
+            "9,31",
+            "9,42",
+            "9,50",
+            "9,68",
+            "9,8",
+            "9,88"
+          ]
+        }
+      },
+      "moved_bits": 235,
+      "names": [],
+      "param": "DYN_IDIV_SEL",
+      "point": "p09_dyn_idiv",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0009",
+      "value": "TRUE",
+      "verified": false
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 132,
+          "attrval": 1332,
+          "name": null,
+          "value": 50
+        }
+      ],
+      "expected_attr": null,
+      "moved": {
+        "27,1": {
+          "cleared": [],
+          "set": [
+            "20,71"
+          ]
+        }
+      },
+      "moved_bits": 1,
+      "names": [],
+      "param": "DYN_ODIV0_SEL",
+      "point": "p10_dyn_odiv0",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0010",
+      "value": "TRUE",
+      "verified": false
+    },
+    {
+      "attrvals": [
+        {
+          "attr_id": 154,
+          "attrval": 1382,
+          "name": "A_CLKOUT1_EN",
+          "value": 50
+        }
+      ],
+      "expected_attr": "A_CLKOUT1_EN",
+      "moved": {
+        "27,2": {
+          "cleared": [],
+          "set": [
+            "20,61"
+          ]
+        }
+      },
+      "moved_bits": 1,
+      "names": [
+        "A_CLKOUT1_EN"
+      ],
+      "param": "CLKOUT1_EN",
+      "point": "p11_clkout1_en",
+      "run_dir": "p1-pll-attrmap-clocking_pll_attrmap-0011",
+      "value": "TRUE",
+      "verified": true
+    }
+  ],
+  "site": "PLL_L[0]",
+  "site_tiles": [
+    [
+      27,
+      1
+    ],
+    [
+      27,
+      2
+    ],
+    [
+      27,
+      3
+    ]
+  ],
+  "site_ttyps": [
+    74,
+    75,
+    76
+  ],
+  "task": "P1.T22",
+  "verified_count": 9
+}

@@ -50,6 +50,18 @@
 # site-name -> anchor bijection in sites-138c.md section 8.
 !plla/gen_trace_138c.py
 !plla/runs/trace-138c.json
+# the P1.T22 PLL attribute map: the analyser that reconciles the shipped
+# .fse's logicinfo['PLL'] against attrids.py and attributes each oracle run's
+# moved bits to an attribute, and its output -- the per-run moved-bit lists
+# attrmap-138c.md's tables are read from. Same named-exception pattern as
+# above; .json/.py are not covered by "*.md".
+!plla/gen_attrmap_138c.py
+!plla/attrmap-138c.json
+# the batch resume ledger: one evidence row per executed run, the file
+# `harness/README.md` names as `<batch_id>.rows.jsonl`. `!runs.jsonl` above
+# matches that exact basename only, so the per-batch ledgers under _runs/
+# were silently untracked.
+!_runs/*.rows.jsonl
 # the P1.T25 DHCEN control-pin trace: the campaign driver, the deterministic
 # reduction from its raw output to the committed table, and that output itself.
 # Same named-exception pattern as plla/ above -- .json/.jsonl/.py are not

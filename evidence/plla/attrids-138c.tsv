@@ -36,3 +36,36 @@ GW5AST-138C	11	B	108	150	182	35	804	804	16	2529
 GW5AST-138C	11	B	108	151	183	35	968	944	813	1804
 GW5AST-138C	11	B	108	152	184	35	685	685	1805	2489
 GW5A-25A	-	slot	-	-	1024	35	2440	2416	16	2512
+
+# P1.T22 reconciliation, GW5AST-138C logicinfo['PLL'] vs apycula/attrids.py pll_attrids
+# (counts are AFTER this task appended the two MEASURED names below)
+metric	value
+in_both	174
+fse_id_with_no_name	18
+name_with_no_fse_id	20
+
+# P1.T22 appended to pll_attrids, MEASURED (batch p1-pll-attrmap, site PLL_L[0])
+attr_id	value	name	derivation
+125	50	A_DYN_IDIV_SEL	DYN_IDIV_SEL="TRUE" moves 235 bits in the site; every moved bit is in a shortval[35] row keyed by (125, 50); pll_attrvals['TRUE']==50
+132	50	A_DYN_ODIV0_SEL	DYN_ODIV0_SEL="TRUE" moves 1 bit in the site, in a shortval[35] row keyed by (132, 50)
+
+# P1.T22 .fse attribute ids still carrying no name in pll_attrids
+attr_id	values_in_fse	on_gw5a_25a	reason
+107	0	yes	unnamed on BOTH GW5A parts: a pre-existing pll_attrids gap, not 138C-specific; no run of this batch moved it
+108	0	yes	as 107
+206	3	yes	as 107
+210	1..7	yes	as 107, 7 distinct values
+211	1..3	yes	as 107, 3 distinct values
+124	50	no	138C-only, single boolean value 50 (TRUE); UNMEASURED. Neighbour of the measured 125/132 pair, so the DYN_*_SEL family the 25A PLLA has no ports for (D96) is the hypothesis, not a measurement
+131	50	no	as 124
+133	50	no	as 124
+134	50	no	as 124
+135	50	no	as 124
+136	50	no	as 124
+137	50	no	as 124
+138	50	no	as 124
+141	50	no	as 124
+144	50	no	as 124
+147	50	no	as 124
+150	50	no	as 124
+205	49	no	138C-only, single value 49; UNMEASURED, no hypothesis offered

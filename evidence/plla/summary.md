@@ -1,9 +1,18 @@
-# `evidence/plla/` — GW5AST-138C PLL sites (`P1.T17`, `P1.T18`, `P1.T19`, `P1.T20`)
+# `evidence/plla/` — GW5AST-138C PLL sites and attribute map
+(`P1.T17`, `P1.T18`, `P1.T19`, `P1.T20`, `P1.T21`, `P1.T22`)
 
 ## Row
 
-12 rows in `runs.jsonl` — one vendor run per PLL site, batch `pll-trace-pilot2`,
-shape `clocking_pll_trace`, level `E1`. Every row's **vendor** half completed
+**24** rows in `runs.jsonl`: 12 from `P1.T19` (batch `pll-trace-pilot2`)
+and 12 from `P1.T22` (batch `p1-pll-attrmap`, shape
+`clocking_pll_attrmap`, one `PLL` parameter varied per run at `PLL_L[0]`).
+The `P1.T19` dozen are described below; the `P1.T22` dozen are described in
+`attrmap-138c.md`.
+
+### `P1.T19`
+
+One vendor run per PLL site, batch `pll-trace-pilot2`, shape
+`clocking_pll_trace`, level `E1`. Every row's **vendor** half completed
 and produced `run/impl/pnr/run.fs`; every row's verdict is `aborted` because
 the **open** half has no PLL bel in the installed nextpnr `.bin` yet. The
 measurement this slug owes is on the vendor side, and it is complete.
@@ -46,14 +55,18 @@ does not exist on this device.
 |---|---|
 | `sites-138c.md` | the site table; §8 is the `P1.T19` trace |
 | `sites-138c.json` | machine-readable form of §3 |
-| `attrids-138c.tsv` | 37-row attribute-id census |
+| `attrids-138c.tsv` | 37-row per-tile id census + the `P1.T22` reconciliation sections |
 | `gen_sites_138c.py` | `P1.T17` enumerator (`.fse`/`.dat`) |
 | `gen_trace_138c.py` | `P1.T19` analyser (`.fs` -> per-tile bits -> site) |
 | `runs/trace-138c.json` | its output: per-run bit counts for all twelve groups |
-| `runs.jsonl` | the 12 evidence rows |
+| `attrmap-138c.md` | `P1.T22`: the attrid/attrval map, census + attribution |
+| `attrmap-138c.json` | its machine-readable form, incl. per-tile moved-bit lists |
+| `gen_attrmap_138c.py` | the `P1.T22` analyser |
+| `runs.jsonl` | the 24 evidence rows |
 
-Oracle runs charged to `D62`: **13** (1 refused `PLLA` probe + 12 `PLL` sites);
-see `evidence/_budget/clocking-runs.tsv`.
+Oracle runs charged to `D62`: **25** — 13 for `P1.T17`-`T20` (1 refused
+`PLLA` probe + 12 `PLL` sites) and 12 for `P1.T22`;
+see `evidence/_budget/clocking-runs.tsv` (cumulative 57 of 290).
 
 ## Chipdb built from these tasks (`apicula clocking/plla-138c`)
 
@@ -64,3 +77,21 @@ see `evidence/_budget/clocking-runs.tsv`.
 
 Built in the task's own worktree only; nothing was installed into `$DATASTORE`
 (the HCLK branch owns the datastore regeneration).
+
+
+## `P1.T21` (apicula issue #427) and `P1.T22` (the attribute map)
+
+`P1.T21` is a code fix with no oracle run of its own; it is recorded in
+`apicula clocking/plla-138c`. Root cause: `gowin_pll.py`'s `GW5A-25 ES`
+entry declared `pll_name: rPLL`, so a PLLA part was served by rPLL divider
+algebra — minus-one-encoded dividers, no `MDIV` stage at all, and
+`VCO = CLKOUT*ODIV` on a part where `CLKOUT = VCO/ODIV`. Fixed by naming the
+two formulas apart (`plla_freqs`/`rpll_freqs`, `solve_plla`/`solve_rpll`);
+the rPLL half is byte-identical on 27 (device, fin, fout) combinations.
+The 138C VCO band check (`S7`) that did not exist is now
+`GW5AST_138C.check_pll_fvco`, inclusive on `[650.0, 1300.0]`.
+
+`P1.T22` is `attrmap-138c.md`: 12 oracle runs, 11 of 11 non-baseline points
+attributed, two MEASURED names appended to `attrids.py`
+(`A_DYN_IDIV_SEL` 125, `A_DYN_ODIV0_SEL` 132), 18 `.fse` ids still nameless
+and each listed with a reason in `attrids-138c.tsv`.
