@@ -118,6 +118,12 @@ class TestStdoutContract(CheckEvidenceTestCase):
         lines = proc.stdout.strip("\n").split("\n")
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertEqual(lines, [
+            # D90/G6: one RUNS line per discovered runs.jsonl, then the
+            # roll-up, then the two contract lines.
+            "RUNS dcs/runs.jsonl: 1 rows, 1 valid",
+            "RUNS hclk/runs.jsonl: 1 rows, 1 valid",
+            "RUNS plla/runs.jsonl: 1 rows, 1 valid",
+            "RUNS: 3 files, 3 rows, 3 valid",
             "EVIDENCE ok: 3 rows, 0 pending, 0 blank, 0 missing artifacts",
             "0 admissibility findings",
         ])
@@ -170,8 +176,9 @@ class TestSlugScoping(CheckEvidenceTestCase):
 
         def n_of(proc):
             self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
-            first = proc.stdout.split("\n", 1)[0]
-            return int(first.split("EVIDENCE ok: ")[1].split(" rows")[0])
+            line = [l for l in proc.stdout.split("\n")
+                    if l.startswith("EVIDENCE ok: ")][0]
+            return int(line.split("EVIDENCE ok: ")[1].split(" rows")[0])
 
         self.assertEqual(n_of(only_a), 1)
         self.assertEqual(n_of(a_and_b), 2)
@@ -226,11 +233,117 @@ class TestTolerartesPartialSpec(CheckEvidenceTestCase):
 
         proc = run_tool([self.spec_path, self.evidence_dir])
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
-        first_line = proc.stdout.split("\n", 1)[0]
-        self.assertEqual(
-            first_line,
-            "EVIDENCE ok: 1 rows, 4 pending, 0 blank, 0 missing artifacts")
+        self.assertIn(
+            "EVIDENCE ok: 1 rows, 4 pending, 0 blank, 0 missing artifacts",
+            proc.stdout.split("\n"))
 
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# --------------------------------------------------------------------------
+# `D90` (gestalt `G6`): the sweep over every `runs.jsonl` in the tree, which
+# the `spec-primitives.md` walk above cannot reach while the table is partial.
+# These are `pytest` functions on purpose: they use `tmp_path`, and nothing in
+# them names an absolute path outside it.
+# --------------------------------------------------------------------------
+import pytest  # noqa: E402
+
+
+def _skip_without_apicula():
+    if APICULA_ROOT is None:
+        pytest.skip("no apicula checkout found (set $FL_APICULA); the §6 "
+                    "evidence-row schema lives there and is never re-declared")
+
+
+def _d90_tree(tmp_path):
+    """A spec table naming **no** slug, so only the D90 sweep can see rows."""
+    spec = tmp_path / "spec-primitives.md"
+    write_spec_primitives(str(spec), [])
+    evidence = tmp_path / "evidence"
+    evidence.mkdir()
+    return str(spec), str(evidence)
+
+
+def test_check_evidence_validates_runs_jsonl(tmp_path):
+    """A slug no `spec-primitives.md` row names is still opened and counted."""
+    _skip_without_apicula()
+    spec, evidence = _d90_tree(tmp_path)
+    write_runs(evidence, "unnamed-slug", [
+        good_row("unnamed-A-0001", "PLLA"),
+        good_row("unnamed-A-0002", "PLLA"),
+    ])
+    write_runs(evidence, "nested/deeper", [good_row("deep-A-0001", "HCLK")])
+
+    proc = run_tool([spec, evidence])
+
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "RUNS unnamed-slug/runs.jsonl: 2 rows, 2 valid" in proc.stdout
+    assert os.path.join("nested", "deeper", "runs.jsonl") in proc.stdout
+    assert "RUNS: 2 files, 3 rows, 3 valid" in proc.stdout
+    # The old vacuous verdict: 0 rows matched from the table, and yet green.
+    assert "EVIDENCE ok: 0 rows" in proc.stdout
+
+
+def test_check_evidence_rejects_malformed_row(tmp_path):
+    """Negative control: one bad row anywhere in the tree fails the run."""
+    _skip_without_apicula()
+    spec, evidence = _d90_tree(tmp_path)
+    write_runs(evidence, "good-slug", [good_row("good-A-0001", "PLLA")])
+
+    bad = good_row("bad-A-0001", "PLLA")
+    bad["verdict"] = "probably-fine"          # not a §6 verdict
+    write_runs(evidence, "bad-slug", [good_row("bad-A-0000", "PLLA"), bad])
+    # ...and a line that is not JSON at all.
+    with open(os.path.join(evidence, "bad-slug", "runs.jsonl"), "a") as fh:
+        fh.write("{not json at all\n")
+
+    proc = run_tool([spec, evidence])
+
+    assert proc.returncode != 0, proc.stdout
+    assert "bad-A-0001" in proc.stdout
+    assert "probably-fine" in proc.stdout
+    assert "not valid JSON Lines" in proc.stdout
+
+
+def test_check_evidence_rejects_empty_runs_jsonl(tmp_path):
+    """Negative control: a `runs.jsonl` that exists and carries no row."""
+    _skip_without_apicula()
+    spec, evidence = _d90_tree(tmp_path)
+    write_runs(evidence, "empty-slug", [])
+
+    proc = run_tool([spec, evidence])
+
+    assert proc.returncode != 0, proc.stdout
+    assert "RUNS empty-slug/runs.jsonl: 0 rows, 0 valid" in proc.stdout
+    assert "0 valid evidence rows" in proc.stdout
+
+
+def test_check_evidence_bookkeeping_row_is_not_a_run_row(tmp_path):
+    """A row with no equivalence result answers to the bookkeeping floor.
+
+    `spec-harness.md` §6 describes the (primitive, shape, sweep) run row; the
+    chipdb build log and the `D26` budget rows are a different kind and are
+    not judged against a schema they never claimed -- but they are still
+    validated, and an unreadable one still fails.
+    """
+    _skip_without_apicula()
+    spec, evidence = _d90_tree(tmp_path)
+    write_runs(evidence, "chipdb-like", [
+        {"task": "P0.T12", "device": "GW5AST-138C", "outcome": "ok",
+         "sha256": "0" * 64, "bytes": 1234},
+    ])
+    ok_proc = run_tool([spec, evidence])
+    assert ok_proc.returncode == 0, ok_proc.stdout + ok_proc.stderr
+    assert "RUNS chipdb-like/runs.jsonl: 1 rows, 1 valid" in ok_proc.stdout
+
+    # Negative control: a bookkeeping row using a verdict outside §6's own
+    # vocabulary, and one that records nothing at all.
+    write_runs(evidence, "chipdb-like", [
+        {"task": "P0.T12", "verdict": "sort-of-ok"},
+        {"task": "P0.T13"},
+    ])
+    bad_proc = run_tool([spec, evidence])
+    assert bad_proc.returncode != 0, bad_proc.stdout
+    assert "sort-of-ok" in bad_proc.stdout

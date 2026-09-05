@@ -23,10 +23,23 @@ Call shape (`spec.md` F2 reconciliation, `blueprints/P0-foundation.md` P0.T30)::
 - `--exclude-slug <name>` is repeatable and removes named slugs from
   whichever set `--slug` (or its absence) produced -- `spec.md` F2.
 
-Stdout contract, exact, two lines on a clean tree, identical in every mode::
+Stdout contract, on a clean tree, identical in every mode -- one `RUNS` line
+per discovered `runs.jsonl`, then the roll-up, then the two contract lines::
 
+    RUNS <slug>/runs.jsonl: <r> rows, <v> valid
+    RUNS: <f> files, <r> rows, <v> valid
     EVIDENCE ok: <n> rows, <p> pending, 0 blank, 0 missing artifacts
     0 admissibility findings
+
+**`D90` (gestalt `G6`).** The `spec-primitives.md` walk below can only reach
+rows the (still partial) table names, which is how this checker came to pass
+vacuously on a tree carrying 24 evidence rows.  So it *also* sweeps **every**
+`runs.jsonl` found anywhere under the evidence root -- slugs are discovered by
+walking the tree, never listed -- and validates every row against the same
+`§6` schema (`fuzz.gw5ast138c.harness.evidence.validate_row`, with the `A12`
+additive-field allowance for the `calibration` slug applied by
+`validate_row_for_slug`).  A malformed row, a schema-violating row, or a
+`runs.jsonl` that exists and yields **zero** valid rows is a failure.
 
 `<n>` counts evidence rows matched to a `spec-primitives.md` primitive within
 the active slug scope. `<p>` (`PENDING`) counts primitive rows whose evidence
@@ -179,6 +192,155 @@ def parse_spec_primitives(path):
 
 
 _BLOCKED_RE = re.compile(r"\bblocked:\S+")
+
+RUNS_NAME = "runs.jsonl"
+
+#: `spec-harness.md` §6 `A12`: the `calibration` slug's rows carry the §6
+#: fields **plus** the ones the calibration blueprint's own tests require --
+#: additive, never a violation, and only for that slug.  The harness's
+#: `validate_row` has no slug parameter, so the allowance is applied here by
+#: dropping the additive keys before delegating: every other rule (missing
+#: field, bad enum, `E0` without notes, ...) is still the harness's own.
+A12_ADDITIVE_SLUG = "calibration"
+
+
+#: The fields that make a row a `§6` **run row**: an equivalence result.  A
+#: row carrying these is held to the whole `§6` contract.  A row carrying
+#: none of them is a *bookkeeping* row -- the chipdb build log, the `D26`
+#: budget measurements, an oracle preflight -- which `§6` never described and
+#: which must not be judged against a schema it does not claim.
+RUN_ROW_MARKERS = ("diff_count", "decode_check")
+
+#: The floor a bookkeeping row must still clear: it is a real, readable
+#: record, and it does not *half* claim an equivalence result.
+BOOKKEEPING_MIN_FIELDS = 2
+
+
+def row_kind(row):
+    """`"run"` or `"bookkeeping"` -- derived from the row, not the slug."""
+    if not isinstance(row, dict):
+        return "run"  # not a dict: let the schema say so, loudly
+    return "run" if all(k in row for k in RUN_ROW_MARKERS) else "bookkeeping"
+
+
+def validate_bookkeeping_row(row, schema):
+    """The contract for a non-`§6` row (`D90`): readable, honest, falsifiable.
+
+    Not a second schema -- there is no second field list.  A bookkeeping row
+    must be a JSON object with at least `BOOKKEEPING_MIN_FIELDS` fields, and
+    every `§6` field it *does* carry is held to `§6`'s own vocabulary, taken
+    from the schema module rather than restated here.  A row that carries the
+    whole equivalence result (`RUN_ROW_MARKERS`) is never routed here: it is
+    a run row and answers to the whole of `§6`.
+    """
+    if not isinstance(row, dict):
+        raise schema.EvidenceSchemaError(
+            f"evidence row must be a dict, got {type(row)}")
+    if len(row) < BOOKKEEPING_MIN_FIELDS:
+        raise schema.EvidenceSchemaError(
+            f"a bookkeeping row carries {len(row)} field(s); at least "
+            f"{BOOKKEEPING_MIN_FIELDS} are needed for it to record anything")
+    decode = row.get("decode_check")
+    if decode:
+        bad = sorted(set(decode) - set(schema.DECODE_KEYS))
+        if bad:
+            raise schema.EvidenceSchemaError(
+                f"decode_check has non-schema key(s): {', '.join(bad)}")
+    if "level" in row and row["level"] not in schema.LEVELS:
+        raise schema.EvidenceSchemaError(
+            f"level {row['level']!r} is not one of {'|'.join(schema.LEVELS)}")
+    if "verdict" in row and row["verdict"] not in schema.VERDICTS:
+        raise schema.EvidenceSchemaError(
+            f"verdict {row['verdict']!r} is not one of "
+            f"{'|'.join(schema.VERDICTS)}")
+    return row
+
+
+def validate_row_for_slug(row, slug, schema):
+    """Validate one row against the schema its **kind** actually declares.
+
+    A `§6` run row goes to `schema.validate_row` -- the one schema, never
+    re-implemented -- with `spec-harness.md` §6 `A12`'s additive-field
+    allowance applied for the `calibration` slug.  A bookkeeping row goes to
+    `validate_bookkeeping_row`.  Neither path is a warning: both raise.
+    """
+    if row_kind(row) == "bookkeeping":
+        return validate_bookkeeping_row(row, schema)
+    if slug == A12_ADDITIVE_SLUG and isinstance(row, dict):
+        row = {k: v for k, v in row.items() if k in schema.REQUIRED_FIELDS}
+    return schema.validate_row(row)
+
+
+def discover_runs_files(evidence_dir):
+    """Every `runs.jsonl` anywhere under `evidence_dir`, deepest path last.
+
+    Slugs are **discovered**, never listed: a new evidence directory is
+    covered by this checker the moment it carries a `runs.jsonl` (`D90`).
+    Returns a sorted list of `(relpath, abspath, slug)`, where `slug` is the
+    first path component under the evidence root (the file's own directory
+    name for a nested layout is kept in `relpath`).
+    """
+    out = []
+    if not evidence_dir or not os.path.isdir(evidence_dir):
+        return out
+    for dirpath, _dirnames, filenames in os.walk(evidence_dir):
+        if RUNS_NAME not in filenames:
+            continue
+        abspath = os.path.join(dirpath, RUNS_NAME)
+        relpath = os.path.relpath(abspath, evidence_dir)
+        slug = relpath.split(os.sep)[0]
+        out.append((relpath, abspath, slug))
+    return sorted(out)
+
+
+def check_runs_files(evidence_dir, slugs, exclude_slugs, schema):
+    """Validate **every** discovered `runs.jsonl`, row by row (`D90`, `G6`).
+
+    Returns `(counts, findings)` where `counts` is a list of
+    `(relpath, n_rows, n_valid)`, one entry per file, in path order.  A file
+    that exists and yields zero valid rows is a finding: an empty evidence
+    file is never evidence.
+    """
+    include = set(slugs) if slugs else None
+    exclude = set(exclude_slugs)
+
+    counts = []
+    findings = []
+    for relpath, abspath, slug in discover_runs_files(evidence_dir):
+        if slug in exclude:
+            continue
+        if include is not None and slug not in include:
+            continue
+
+        n_rows = 0
+        n_valid = 0
+        with open(abspath, encoding="utf-8") as fh:
+            for lineno, line in enumerate(fh, 1):
+                if not line.strip():
+                    continue
+                n_rows += 1
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError as exc:
+                    findings.append(
+                        f"{relpath}:{lineno}: not valid JSON Lines: {exc}")
+                    continue
+                try:
+                    validate_row_for_slug(row, slug, schema)
+                except schema.EvidenceSchemaError as exc:
+                    run_id = (row.get("run_id") if isinstance(row, dict)
+                              else None) or "<no run_id>"
+                    findings.append(f"{relpath}:{lineno} {run_id}: {exc}")
+                    continue
+                n_valid += 1
+
+        counts.append((relpath, n_rows, n_valid))
+        if n_valid == 0:
+            findings.append(
+                f"{relpath}: 0 valid evidence rows in a runs.jsonl that "
+                f"exists ({n_rows} row(s) read) -- an empty or wholly "
+                f"unschema'd evidence file is not evidence (D90)")
+    return counts, findings
 
 
 # --------------------------------------------------------------------------
@@ -407,6 +569,18 @@ def main(argv=None):
 
     n_rows, n_pending, n_blank, n_missing, findings = check(
         spec_path, evidence_dir, args.slug, args.exclude_slug, schema, apicula_root)
+
+    # `D90`/`G6`: the sweep over the tree's own `runs.jsonl` files, which the
+    # `spec-primitives.md` walk above cannot reach while the table is partial.
+    runs_counts, runs_findings = check_runs_files(
+        evidence_dir, args.slug, args.exclude_slug, schema)
+    findings = findings + runs_findings
+
+    for relpath, n_file_rows, n_file_valid in runs_counts:
+        print(f"RUNS {relpath}: {n_file_rows} rows, {n_file_valid} valid")
+    print(f"RUNS: {len(runs_counts)} files, "
+          f"{sum(c[1] for c in runs_counts)} rows, "
+          f"{sum(c[2] for c in runs_counts)} valid")
 
     status = "ok" if not findings else "FAIL"
     print(f"EVIDENCE {status}: {n_rows} rows, {n_pending} pending, "
