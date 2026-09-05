@@ -198,6 +198,47 @@ class TestFailsOnBlockedStatus(CheckEvidenceTestCase):
         self.assertIn("PLLA", proc.stdout)
 
 
+class TestAcceptsPrunedArtifact(CheckEvidenceTestCase):
+    def test_check_evidence_accepts_pruned(self):
+        """`D99`: a row whose artefacts were pruned from the datastore is
+        admissible when it carries `artefact_pruned: true` and each pruned
+        artefact's `path` is `sha256:<hex>` (or `sha256:unknown`) instead of
+        a live path -- no disk resolution is attempted for those entries.
+        """
+        write_spec_primitives(self.spec_path, [("PLL", "pll")])
+        row = good_row("pll-A-0001", "PLL")
+        row["artefact_pruned"] = True
+        row["oracle_log"] = "sha256:" + "a" * 64
+        row["open_log"] = ["sha256:" + "b" * 64, "sha256:unknown"]
+        row["vendor_fs"] = [{"path": "sha256:" + "c" * 64, "bytes": 123,
+                             "sha256": "c" * 64}]
+        row["sdf"] = [{"path": "sha256:unknown"}]
+        row["tr"] = [{"path": "sha256:" + "d" * 64, "sha256": "d" * 64}]
+        write_runs(self.evidence_dir, "pll", [row])
+
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn(
+            "EVIDENCE ok: 1 rows, 0 pending, 0 blank, 0 missing artifacts",
+            proc.stdout.split("\n"))
+        self.assertIn("0 admissibility findings", proc.stdout)
+
+    def test_check_evidence_still_flags_pruned_marker_without_the_flag(self):
+        """Negative control: the `sha256:` marker alone, without
+        `artefact_pruned: true` on the row, is just a path that does not
+        resolve on disk -- the flag is what makes a pruned artefact
+        admissible, not the marker shape by itself.
+        """
+        write_spec_primitives(self.spec_path, [("PLL", "pll")])
+        row = good_row("pll-A-0001", "PLL")
+        row["oracle_log"] = "sha256:" + "a" * 64
+        write_runs(self.evidence_dir, "pll", [row])
+
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        self.assertNotEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("oracle_log artefact does not resolve on disk", proc.stdout)
+
+
 class TestFailsOnMaskMismatch(CheckEvidenceTestCase):
     def test_check_evidence_fails_on_mask_mismatch(self):
         if not _mask_available():

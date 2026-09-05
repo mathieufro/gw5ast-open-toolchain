@@ -394,6 +394,14 @@ def _as_path_entries(value):
 
 ARTIFACT_FIELDS = ("oracle_log", "open_log", "vendor_fs", "open_fs", "sdf", "tr")
 
+#: `D99`: an artefact pruned from the datastore is admissible when its row
+#: carries `artefact_pruned: true` and the artefact's `path` was rewritten to
+#: `sha256:<hex>` (or `sha256:unknown` when no hash was ever recorded) rather
+#: than left pointing at a live filesystem path. This is the single
+#: definition of that marker shape; `evidence.py`'s own
+#: `PRUNED_ARTIFACT_RE` says the same thing for the schema side.
+PRUNED_ARTIFACT_RE = re.compile(r"^sha256:([0-9a-f]{64}|unknown)$")
+
 
 def _is_justified(item):
     """One `unexplained_bits` entry counts as enumerated only if justified."""
@@ -533,10 +541,17 @@ def check(spec_path, evidence_dir, slugs, exclude_slugs, schema, apicula_root):
                     f"{prow.id}/{run_id}: unexplained_bits is non-empty and "
                     f"not fully enumerated/justified (D35)")
 
+            row_pruned = bool(row.get("artefact_pruned"))
             for field in ARTIFACT_FIELDS:
                 for entry in _as_path_entries(row.get(field)):
                     path = entry.get("path")
                     if not path:
+                        continue
+                    if row_pruned and PRUNED_ARTIFACT_RE.match(path):
+                        # D99: admissible -- the artefact was pruned from the
+                        # datastore and the row records its sha256 (or
+                        # "unknown") instead of a live path. Nothing to
+                        # resolve on disk and no sha256 to re-check.
                         continue
                     resolved = path if os.path.isabs(path) else os.path.join(slug_dir, path)
                     if not os.path.isfile(resolved):
