@@ -13,21 +13,40 @@ apicula fork (`fuzz/gw5ast138c/`); nextpnr changes live in the nextpnr fork.
 Pipeline documents (spec, roadmap, blueprints, ledger) are NOT here: they live in
 `fine-line/.atelier/pipelines/2026-09-03-open-toolchain-gw5ast-7e84/`.
 
-## Local blocking gate (C8, S23b)
+## Local gate (C12, D94-D95; supersedes C8/S23b's blocking pre-commit shape)
 
-This repo has a local blocking gate, mirroring the one in the `apicula` and
-`nextpnr` checkouts: `.githooks/pre-commit` and `.githooks/pre-push` both run
-`make gate` in the foreground and refuse the commit/push on any failing
-check. `pre-push` gates at `GATE_SCOPE=all` when pushing to `main` or
-`integration`, `full` otherwise. `gate.env` carries the `GOWINHOME`/`DYLD_*`
-defaults; the gate's own Python interpreter is derived from the checkout
-location (no hardcoded path) in the `Makefile`.
+Owner ruling: "ci should only run on big branch push like main or dev, not
+on every push, we don't have time for this (and also it should be
+detached)". There is **no `pre-commit` hook**. `.githooks/pre-push` is the
+only hook, mirroring the one in the `apicula` and `nextpnr` checkouts (and
+the umbrella): it reads the pushed refs once and, unless one targets `main`,
+`dev`, `integration/*` or `epic/*`, exits 0 immediately -- a task-branch push
+gets zero gate. Otherwise it spawns `make gate GATE_SCOPE=branch` **detached**
+(nohup, logged to `evidence/_gates/<repo>-<branch>-<sha>.log`, watched by an
+out-of-process stall watchdog, `tools/gate_watchdog.sh`) and still exits 0
+right away -- **a push is never blocked**. The gate writes
+`<same-stem>.result` (`PASS`/`FAIL`) as its last action.
 
-The hooks only run once `core.hooksPath` is pointed at `.githooks` --
+`GATE_SCOPE=fast` is unit tests only (no bitstream, no evidence tools,
+target < 30 s); `GATE_SCOPE=branch` is fast plus the evidence/criteria tools
+run for real (`check_evidence.py`, `check_criteria.py --phase <n>`);
+`GATE_SCOPE=full` is everything including heavy checks and is
+orchestrator-only, run in the foreground at phase close / pre-merge, never
+from a hook. `gate.env` carries the `GOWINHOME`/`DYLD_*` defaults; the
+gate's own Python interpreter is derived from the checkout location (no
+hardcoded path) in the `Makefile`.
+
+Run `tools/gate_status.py` to list every gate marker under
+`evidence/_gates/` (PASS/FAIL/RUNNING with age); it exits non-zero if any
+gate FAILed or a RUNNING gate is stale (> 30 min) -- the orchestrator checks
+this (or runs `GATE_SCOPE=full make gate` itself) before any merge.
+
+The hook only runs once `core.hooksPath` is pointed at `.githooks` --
 this is a local (not versioned) git config, set once per checkout:
 
 ```
 git config core.hooksPath .githooks
 ```
 
-Run `make gate` by hand at any time to check the tree without committing.
+Run `make gate GATE_SCOPE=<fast|branch|full>` by hand at any time to check
+the tree without pushing.
