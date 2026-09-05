@@ -1,0 +1,109 @@
+Info: Using uarch 'gowin' for device 'GW5AST-LV138PG484AC1/I0'
+
+Info: Reading constraints...
+Info: Create constant nets...
+Info: Modify LUTs...
+Info: Pack IOBs...
+Info: Pack I3C IOs...
+Info: Pack MIPI IOs...
+Info: Pack diff IOBs...
+Info: Pack FFs into IO cells...
+Info: Pack IODELAY...
+Info: Pack Input Edge Monitors...
+Info: Pack IO logic...
+Info: Pack DESER16 logic...
+Info: Pack GSR...
+Info: Pack PINCFG...
+Info: Pack HCLK cells...
+Info: Pack DLLDLYs...
+Info: Pack wide LUTs...
+Info: Packed MUX2_LUT8:0, MUX2_LU7:0, MUX2_LUT6:0, MUX2_LUT5:1
+Info: Pack ALUs...
+Info: Pack SSRAMs...
+Info: Constrained 0 LUTFF pairs.
+Info: Pack PLL...
+Info: Pack ADC...
+Info: Pack BSRAMs...
+Info: Pack DSP...
+Info: Pack INV...
+Info: Pack buffered nets...
+Info: Pack EMCU and UserFlash cells...
+Info: Pack UserFlash cells...
+Info: Pack DQCE cells...
+Info: Pack DCS cells...
+Info: Checksum: 0xaf2b7a3e
+
+Info: Device utilisation:
+Info: 	                 VCC:       1/      1   100%
+Info: 	                 IOB:       4/    324     1%
+Info: 	                LUT4:       2/ 138240     0%
+Info: 	            IOLOGICI:       0/    326     0%
+Info: 	            IOLOGICO:       0/    326     0%
+Info: 	           MUX2_LUT5:       1/  69120     0%
+Info: 	           MUX2_LUT6:       0/  34560     0%
+Info: 	           MUX2_LUT7:       0/  17280     0%
+Info: 	           MUX2_LUT8:       0/  17280     0%
+Info: 	                 ALU:       0/ 103680     0%
+Info: 	                 GND:       1/      1   100%
+Info: 	                 DFF:       0/ 138240     0%
+Info: 	           RAM16SDP4:       0/  17280     0%
+Info: 	               BSRAM:       0/    340     0%
+Info: 	           MULT12X12:       0/    596     0%
+Info: 	        MULTALU27X18:       0/    298     0%
+Info: 	     MULTADDALU12X12:       0/    298     0%
+Info: 	                 GSR:       1/      1   100%
+Info: 	              PINCFG:       1/      1   100%
+Info: 	                BUFG:       0/      1     0%
+Info: 	               DHCEN:       0/     24     0%
+Info: 	              CLKDIV:       4/     24    16%
+Info: 	             CLKDIV2:       0/     24     0%
+
+Info: Running custom HCLK placer...
+Info: Placed 0 cells based on constraints.
+Info: Creating initial analytic placement for 5 cells, random placement wirelen = 1771.
+Info:     at initial placer iter 0, wirelen = 624
+Info:     at initial placer iter 1, wirelen = 596
+Info:     at initial placer iter 2, wirelen = 593
+Info:     at initial placer iter 3, wirelen = 593
+Info: Running main analytical placer, max placement attempts per cell = 10000.
+Info:     at iteration #1, type ALL: wirelen solved = 593, spread = 841, legal = 965; time = 0.08s
+Info:     at iteration #2, type ALL: wirelen solved = 592, spread = 841, legal = 894; time = 0.04s
+Info:     at iteration #3, type ALL: wirelen solved = 590, spread = 841, legal = 965; time = 0.05s
+Info:     at iteration #4, type ALL: wirelen solved = 594, spread = 841, legal = 965; time = 0.01s
+Info:     at iteration #5, type ALL: wirelen solved = 606, spread = 843, legal = 965; time = 0.02s
+Info:     at iteration #6, type ALL: wirelen solved = 626, spread = 824, legal = 859; time = 0.02s
+Info:     at iteration #7, type ALL: wirelen solved = 658, spread = 796, legal = 859; time = 0.02s
+Info:     at iteration #8, type ALL: wirelen solved = 686, spread = 797, legal = 859; time = 0.02s
+Info:     at iteration #9, type ALL: wirelen solved = 728, spread = 728, legal = 861; time = 0.01s
+Info: HeAP Placer Time: 1.16s
+Info:   of which solving equations: 0.00s
+Info:   of which spreading cells: 0.12s
+Info:   of which strict legalisation: 0.03s
+
+Info: Running simulated annealing placer for refinement.
+Info:   at iteration #1: temp = 0.000000, timing cost = 0, wirelen = 859
+Info:   at iteration #5: temp = 0.000000, timing cost = 0, wirelen = 638
+Info:   at iteration #10: temp = 0.000000, timing cost = 0, wirelen = 638
+Info:   at iteration #12: temp = 0.000000, timing cost = 0, wirelen = 638 
+Info: SA placement time 0.00s
+
+Info: No Fmax available; no interior timing paths found in design.
+Info: Checksum: 0x7b512287
+Info: Routing globals...
+Warning: Failed to route net 'div[3]' from X64Y108/CLKDIV_O40 to X55Y107/A0 using dedicated routing.
+Warning: Failed to route net 'div[3]' from X64Y108/CLKDIV_O40 to X55Y107/A1 using dedicated routing.
+Warning: Failed to route net 'div[2]' from X64Y108/CLKDIV_O42 to X55Y107/B0 using dedicated routing.
+Warning: Failed to route net 'div[2]' from X64Y108/CLKDIV_O42 to X55Y107/B1 using dedicated routing.
+Warning: Failed to route net 'div[1]' from X64Y108/CLKDIV_O41 to X55Y107/C0 using dedicated routing.
+Warning: Failed to route net 'div[1]' from X64Y108/CLKDIV_O41 to X55Y107/C1 using dedicated routing.
+Warning: Failed to route net 'div[0]' from X64Y108/CLKDIV_O43 to X55Y107/D0 using dedicated routing.
+Warning: Failed to route net 'div[0]' from X64Y108/CLKDIV_O43 to X55Y107/D1 using dedicated routing.
+
+Info: Routing..
+Info: Setting up routing queue.
+Info: Routing 30 arcs.
+Info:            |   (re-)routed arcs  |   delta    | remaining|       time spent     |
+Info:    IterCnt |  w/ripup   wo/ripup |  w/r  wo/r |      arcs| batch(sec) total(sec)|
+Warning: Failed to find a route for arc 1 of net div[3].
+ERROR: Routing design failed.
+9 warnings, 1 error

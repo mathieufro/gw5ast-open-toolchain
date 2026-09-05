@@ -1,0 +1,896 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.63 (git sha1 70a11c6bf0e8dd669f56c7da3587f78b405138e2, clang++ 17.0.0 -fPIC -O3)
+
+-- Running command `read_verilog top.v; synth_gowin -family gw5a -setundef -json top.json' --
+
+1. Executing Verilog-2005 frontend: top.v
+Parsing Verilog input from `top.v' to AST representation.
+Generating RTLIL representation for module `\top'.
+Successfully finished Verilog frontend.
+
+2. Executing SYNTH_GOWIN pass.
+
+2.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/cells_sim.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/cells_sim.v' to AST representation.
+Generating RTLIL representation for module `\LUT1'.
+Generating RTLIL representation for module `\LUT2'.
+Generating RTLIL representation for module `\LUT3'.
+Generating RTLIL representation for module `\LUT4'.
+Generating RTLIL representation for module `\__APICULA_LUT5'.
+Generating RTLIL representation for module `\__APICULA_LUT6'.
+Generating RTLIL representation for module `\__APICULA_LUT7'.
+Generating RTLIL representation for module `\__APICULA_LUT8'.
+Generating RTLIL representation for module `\MUX2'.
+Generating RTLIL representation for module `\MUX2_LUT5'.
+Generating RTLIL representation for module `\MUX2_LUT6'.
+Generating RTLIL representation for module `\MUX2_LUT7'.
+Generating RTLIL representation for module `\MUX2_LUT8'.
+Generating RTLIL representation for module `\DFF'.
+Generating RTLIL representation for module `\DFFE'.
+Generating RTLIL representation for module `\DFFS'.
+Generating RTLIL representation for module `\DFFSE'.
+Generating RTLIL representation for module `\DFFR'.
+Generating RTLIL representation for module `\DFFRE'.
+Generating RTLIL representation for module `\DFFP'.
+Generating RTLIL representation for module `\DFFPE'.
+Generating RTLIL representation for module `\DFFC'.
+Generating RTLIL representation for module `\DFFCE'.
+Generating RTLIL representation for module `\DFFN'.
+Generating RTLIL representation for module `\DFFNE'.
+Generating RTLIL representation for module `\DFFNS'.
+Generating RTLIL representation for module `\DFFNSE'.
+Generating RTLIL representation for module `\DFFNR'.
+Generating RTLIL representation for module `\DFFNRE'.
+Generating RTLIL representation for module `\DFFNP'.
+Generating RTLIL representation for module `\DFFNPE'.
+Generating RTLIL representation for module `\DFFNC'.
+Generating RTLIL representation for module `\DFFNCE'.
+Generating RTLIL representation for module `\VCC'.
+Generating RTLIL representation for module `\GND'.
+Generating RTLIL representation for module `\IBUF'.
+Generating RTLIL representation for module `\OBUF'.
+Generating RTLIL representation for module `\TBUF'.
+Generating RTLIL representation for module `\IOBUF'.
+Generating RTLIL representation for module `\ELVDS_OBUF'.
+Generating RTLIL representation for module `\TLVDS_OBUF'.
+Generating RTLIL representation for module `\OSER4'.
+Generating RTLIL representation for module `\OSER4_MEM'.
+Generating RTLIL representation for module `\OSER8'.
+Generating RTLIL representation for module `\OSER10'.
+Generating RTLIL representation for module `\OVIDEO'.
+Generating RTLIL representation for module `\OSER16'.
+Generating RTLIL representation for module `\IDES4'.
+Generating RTLIL representation for module `\IDES4_MEM'.
+Generating RTLIL representation for module `\IDES8'.
+Generating RTLIL representation for module `\IDES10'.
+Generating RTLIL representation for module `\IVIDEO'.
+Generating RTLIL representation for module `\IDES16'.
+Generating RTLIL representation for module `\IDDR'.
+Generating RTLIL representation for module `\IDDRC'.
+Generating RTLIL representation for module `\DQS'.
+Generating RTLIL representation for module `\ODDR'.
+Generating RTLIL representation for module `\ODDRC'.
+Generating RTLIL representation for module `\GSR'.
+Generating RTLIL representation for module `\BANDGAP'.
+Generating RTLIL representation for module `\ALU'.
+Generating RTLIL representation for module `\RAM16S1'.
+Generating RTLIL representation for module `\RAM16S2'.
+Generating RTLIL representation for module `\RAM16S4'.
+Generating RTLIL representation for module `\RAM16SDP1'.
+Generating RTLIL representation for module `\RAM16SDP2'.
+Generating RTLIL representation for module `\RAM16SDP4'.
+Generating RTLIL representation for module `\SP'.
+Generating RTLIL representation for module `\SPX9'.
+Generating RTLIL representation for module `\SDP'.
+Generating RTLIL representation for module `\SDPX9'.
+Generating RTLIL representation for module `\DP'.
+Generating RTLIL representation for module `\DPX9'.
+Generating RTLIL representation for module `\rPLL'.
+Generating RTLIL representation for module `\PLLVR'.
+Generating RTLIL representation for module `\OSC'.
+Generating RTLIL representation for module `\OSCZ'.
+Generating RTLIL representation for module `\OSCF'.
+Generating RTLIL representation for module `\OSCH'.
+Generating RTLIL representation for module `\OSCW'.
+Generating RTLIL representation for module `\OSCO'.
+Generating RTLIL representation for module `\EMCU'.
+Successfully finished Verilog frontend.
+
+2.2. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/cells_xtra_gw5a.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/cells_xtra_gw5a.v' to AST representation.
+Generating RTLIL representation for module `\LUT5'.
+Generating RTLIL representation for module `\LUT6'.
+Generating RTLIL representation for module `\LUT7'.
+Generating RTLIL representation for module `\LUT8'.
+Generating RTLIL representation for module `\ROM16'.
+Generating RTLIL representation for module `\INV'.
+Generating RTLIL representation for module `\TLVDS_IBUF'.
+Generating RTLIL representation for module `\TLVDS_TBUF'.
+Generating RTLIL representation for module `\TLVDS_IOBUF'.
+Generating RTLIL representation for module `\ELVDS_TBUF'.
+Generating RTLIL representation for module `\ELVDS_IOBUF'.
+Generating RTLIL representation for module `\MIPI_IBUF'.
+Generating RTLIL representation for module `\MIPI_OBUF_A'.
+Generating RTLIL representation for module `\ELVDS_IOBUF_R'.
+Generating RTLIL representation for module `\I3C_IOBUF'.
+Generating RTLIL representation for module `\TLVDS_IBUF_ADC'.
+Generating RTLIL representation for module `\MIPI_CPHY_IBUF'.
+Generating RTLIL representation for module `\MIPI_CPHY_OBUF'.
+Generating RTLIL representation for module `\SDPB'.
+Generating RTLIL representation for module `\SDPX9B'.
+Generating RTLIL representation for module `\DPB'.
+Generating RTLIL representation for module `\DPX9B'.
+Generating RTLIL representation for module `\pROM'.
+Generating RTLIL representation for module `\pROMX9'.
+Generating RTLIL representation for module `\SDP36KE'.
+Generating RTLIL representation for module `\SDP136K'.
+Generating RTLIL representation for module `\MULTADDALU12X12'.
+Generating RTLIL representation for module `\MULTALU27X18'.
+Generating RTLIL representation for module `\MULT12X12'.
+Generating RTLIL representation for module `\MULT27X36'.
+Generating RTLIL representation for module `\MULTACC'.
+Generating RTLIL representation for module `\IDDR_MEM'.
+Generating RTLIL representation for module `\ODDR_MEM'.
+Replacing existing blackbox module `\IDES4_MEM' at /opt/homebrew/bin/../share/yosys/gowin/cells_xtra_gw5a.v:1033.1-1038.10.
+Generating RTLIL representation for module `\IDES4_MEM'.
+Generating RTLIL representation for module `\IDES8_MEM'.
+Generating RTLIL representation for module `\IDES14'.
+Generating RTLIL representation for module `\IDES32'.
+Replacing existing blackbox module `\OSER4_MEM' at /opt/homebrew/bin/../share/yosys/gowin/cells_xtra_gw5a.v:1062.1-1070.10.
+Generating RTLIL representation for module `\OSER4_MEM'.
+Generating RTLIL representation for module `\OSER8_MEM'.
+Generating RTLIL representation for module `\OSER14'.
+Generating RTLIL representation for module `\IODELAY'.
+Generating RTLIL representation for module `\OSIDES32'.
+Generating RTLIL representation for module `\OSIDES64'.
+Generating RTLIL representation for module `\DCE'.
+Generating RTLIL representation for module `\DCS'.
+Generating RTLIL representation for module `\DDRDLL'.
+Generating RTLIL representation for module `\DLLDLY'.
+Generating RTLIL representation for module `\CLKDIV'.
+Generating RTLIL representation for module `\CLKDIV2'.
+Generating RTLIL representation for module `\DHCE'.
+Generating RTLIL representation for module `\OSCA'.
+Generating RTLIL representation for module `\OSCB'.
+Generating RTLIL representation for module `\PLL'.
+Generating RTLIL representation for module `\PLLA'.
+Generating RTLIL representation for module `\AE350_SOC'.
+Generating RTLIL representation for module `\AE350_RAM'.
+Generating RTLIL representation for module `\SAMB'.
+Generating RTLIL representation for module `\OTP'.
+Generating RTLIL representation for module `\CMSER'.
+Generating RTLIL representation for module `\CMSERA'.
+Generating RTLIL representation for module `\CMSERB'.
+Generating RTLIL representation for module `\SAMBA'.
+Generating RTLIL representation for module `\LICD'.
+Generating RTLIL representation for module `\MIPI_DPHY'.
+Generating RTLIL representation for module `\MIPI_DPHYA'.
+Generating RTLIL representation for module `\MIPI_CPHY'.
+Generating RTLIL representation for module `\GTR12_QUAD'.
+Generating RTLIL representation for module `\GTR12_UPAR'.
+Generating RTLIL representation for module `\GTR12_PMAC'.
+Generating RTLIL representation for module `\GTR12_QUADA'.
+Generating RTLIL representation for module `\GTR12_UPARA'.
+Generating RTLIL representation for module `\GTR12_PMACA'.
+Generating RTLIL representation for module `\GTR12_QUADB'.
+Replacing existing blackbox module `\DQS' at /opt/homebrew/bin/../share/yosys/gowin/cells_xtra_gw5a.v:2512.1-2527.10.
+Generating RTLIL representation for module `\DQS'.
+Generating RTLIL representation for module `\ADCLRC'.
+Generating RTLIL representation for module `\ADCULC'.
+Generating RTLIL representation for module `\ADC'.
+Generating RTLIL representation for module `\ADC_SAR'.
+Generating RTLIL representation for module `\ADCA'.
+Successfully finished Verilog frontend.
+
+2.3. Executing HIERARCHY pass (managing design hierarchy).
+
+2.3.1. Finding top of design hierarchy..
+root of   1 design levels: top                 
+Automatically selected top as design top module.
+
+2.3.2. Analyzing design hierarchy..
+Top module:  \top
+
+2.3.3. Analyzing design hierarchy..
+Top module:  \top
+Removed 0 unused modules.
+
+2.4. Executing PROC pass (convert processes to netlists).
+
+2.4.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.4.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+2.4.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+2.4.4. Executing PROC_INIT pass (extract init attributes).
+
+2.4.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.4.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+2.4.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+2.4.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.4.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.4.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.4.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.4.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.5. Executing FLATTEN pass (flatten design).
+
+2.6. Executing TRIBUF pass.
+
+2.7. Executing DEMINOUT pass (demote inout ports to input or output).
+
+2.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+2.10. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+2.11. Executing OPT pass (performing simple optimizations).
+
+2.11.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.11.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.11.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.11.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.11.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.11.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.11.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.11.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.11.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.12. Executing FSM pass (extract and optimize FSM).
+
+2.12.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+2.12.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+2.12.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+2.12.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.12.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+2.12.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+2.12.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+2.12.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+2.13. Executing OPT pass (performing simple optimizations).
+
+2.13.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.13.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.13.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.13.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.13.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.13.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.13.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.13.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.13.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.14. Executing WREDUCE pass (reducing word size of cells).
+
+2.15. Executing PEEPOPT pass (run peephole optimizers).
+
+2.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.17. Executing SHARE pass (SAT-based resource sharing).
+
+2.18. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module top:
+  created 0 $alu and 0 $macc cells.
+
+2.19. Executing OPT pass (performing simple optimizations).
+
+2.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.19.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.19.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.19.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.19.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.20. Executing MEMORY pass.
+
+2.20.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+2.20.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+2.20.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+2.20.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+2.20.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+2.20.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.20.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+2.20.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+2.20.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.20.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.22. Executing MEMORY_LIBMAP pass (mapping memories to cells).
+
+2.23. Executing TECHMAP pass (map to technology primitives).
+
+2.23.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/lutrams_map.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/lutrams_map.v' to AST representation.
+Generating RTLIL representation for module `$__GOWIN_LUTRAM_'.
+Successfully finished Verilog frontend.
+
+2.23.2. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/brams_map_gw5a.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/brams_map_gw5a.v' to AST representation.
+Generating RTLIL representation for module `$__GOWIN_SP_'.
+Generating RTLIL representation for module `$__GOWIN_DP_'.
+Generating RTLIL representation for module `$__GOWIN_SDP_'.
+Successfully finished Verilog frontend.
+
+2.23.3. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~6 debug messages>
+
+2.24. Executing OPT pass (performing simple optimizations).
+
+2.24.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.24.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.24.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.24.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.24.5. Finished fast OPT passes.
+
+2.25. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+2.26. Executing OPT pass (performing simple optimizations).
+
+2.26.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.26.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.26.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+2.26.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \top.
+Performed a total of 0 changes.
+
+2.26.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 7 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.26.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.26.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+
+2.26.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.26.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.27. Executing TECHMAP pass (map to technology primitives).
+
+2.27.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+2.27.2. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/arith_map.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/arith_map.v' to AST representation.
+Generating RTLIL representation for module `\_80_gw1n_alu'.
+Successfully finished Verilog frontend.
+
+2.27.3. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $reduce_xor.
+Using extmapper simplemap for cells of type $xor.
+No more expansions possible.
+<suppressed ~79 debug messages>
+
+2.28. Executing OPT pass (performing simple optimizations).
+
+2.28.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.28.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\top'.
+Computing hashes of 9 cells of `\top'.
+Finding duplicate cells in `\top'.
+Removed a total of 0 cells.
+
+2.28.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.28.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+2.28.5. Finished fast OPT passes.
+
+2.29. Executing IOPADMAP pass (mapping inputs/outputs to IO-PAD cells).
+Mapping port top.dout using OBUF.
+Mapping port top.cen using IBUF.
+Mapping port top.rst_n using IBUF.
+Mapping port top.clk using IBUF.
+
+2.30. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \top..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+2.31. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+
+2.32. Executing TECHMAP pass (map to technology primitives).
+
+2.32.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/cells_map.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/cells_map.v' to AST representation.
+Generating RTLIL representation for module `$_DFF_N_'.
+Generating RTLIL representation for module `$_DFF_P_'.
+Generating RTLIL representation for module `$_DFFE_PP_'.
+Generating RTLIL representation for module `$_DFFE_NP_'.
+Generating RTLIL representation for module `$_SDFF_PP0_'.
+Generating RTLIL representation for module `$_SDFF_NP0_'.
+Generating RTLIL representation for module `$_SDFFE_PP0P_'.
+Generating RTLIL representation for module `$_SDFFE_NP0P_'.
+Generating RTLIL representation for module `$_SDFF_PP1_'.
+Generating RTLIL representation for module `$_SDFF_NP1_'.
+Generating RTLIL representation for module `$_SDFFE_PP1P_'.
+Generating RTLIL representation for module `$_SDFFE_NP1P_'.
+Generating RTLIL representation for module `$_DFF_PP1_'.
+Generating RTLIL representation for module `$_DFF_NP1_'.
+Generating RTLIL representation for module `$_DFF_PP0_'.
+Generating RTLIL representation for module `$_DFF_NP0_'.
+Generating RTLIL representation for module `$_DFFE_PP1P_'.
+Generating RTLIL representation for module `$_DFFE_NP1P_'.
+Generating RTLIL representation for module `$_DFFE_PP0P_'.
+Generating RTLIL representation for module `$_DFFE_NP0P_'.
+Generating RTLIL representation for module `$lut'.
+Successfully finished Verilog frontend.
+
+2.32.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~23 debug messages>
+
+2.33. Executing OPT_EXPR pass (perform const folding).
+Optimizing module top.
+
+2.34. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+2.35. Executing SORT pass.
+
+2.36. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/abc9_model.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/abc9_model.v' to AST representation.
+Generating RTLIL representation for module `$__ABC9_DELAY'.
+Generating RTLIL representation for module `$__ABC9_SCC_BREAKER'.
+Generating RTLIL representation for module `$__DFF_N__$abc9_flop'.
+Generating RTLIL representation for module `$__DFF_P__$abc9_flop'.
+Successfully finished Verilog frontend.
+
+2.37. Executing ABC9 pass.
+
+2.37.1. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.2. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.3. Executing SCC pass (detecting logic loops).
+Found 0 SCCs in module top.
+Found 0 SCCs.
+
+2.37.4. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.5. Executing TECHMAP pass (map to technology primitives).
+
+2.37.5.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+2.37.5.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~240 debug messages>
+
+2.37.6. Executing OPT pass (performing simple optimizations).
+
+2.37.6.1. Executing OPT_EXPR pass (perform const folding).
+
+2.37.6.2. Executing OPT_MERGE pass (detect identical cells).
+Removed a total of 0 cells.
+
+2.37.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Removed 0 multiplexer ports.
+
+2.37.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+Performed a total of 0 changes.
+
+2.37.6.5. Executing OPT_MERGE pass (detect identical cells).
+Removed a total of 0 cells.
+
+2.37.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.37.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+2.37.6.8. Executing OPT_EXPR pass (perform const folding).
+
+2.37.6.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.37.7. Executing TECHMAP pass (map to technology primitives).
+
+2.37.7.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/abc9_map.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/abc9_map.v' to AST representation.
+Successfully finished Verilog frontend.
+
+2.37.7.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~2 debug messages>
+
+2.37.8. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/abc9_model.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/abc9_model.v' to AST representation.
+Replacing existing blackbox module `$__ABC9_DELAY' at /opt/homebrew/bin/../share/yosys/abc9_model.v:2.1-7.10.
+Generating RTLIL representation for module `$__ABC9_DELAY'.
+Replacing existing blackbox module `$__ABC9_SCC_BREAKER' at /opt/homebrew/bin/../share/yosys/abc9_model.v:9.1-11.10.
+Generating RTLIL representation for module `$__ABC9_SCC_BREAKER'.
+Replacing existing module `$__DFF_N__$abc9_flop' at /opt/homebrew/bin/../share/yosys/abc9_model.v:14.1-20.10.
+Generating RTLIL representation for module `$__DFF_N__$abc9_flop'.
+Replacing existing module `$__DFF_P__$abc9_flop' at /opt/homebrew/bin/../share/yosys/abc9_model.v:23.1-29.10.
+Generating RTLIL representation for module `$__DFF_P__$abc9_flop'.
+Successfully finished Verilog frontend.
+
+2.37.9. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.10. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.11. Executing ABC9_OPS pass (helper functions for ABC9).
+<suppressed ~2 debug messages>
+
+2.37.12. Executing AIGMAP pass (map logic to AIG).
+Module top: replaced 4 cells with 28 new cells, skipped 9 cells.
+  replaced 1 cell types:
+       4 $_XOR_
+  not replaced 4 cell types:
+       3 IBUF
+       1 DHCE
+       4 CLKDIV
+       1 OBUF
+
+2.37.12.1. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.12.2. Executing ABC9_OPS pass (helper functions for ABC9).
+
+2.37.12.3. Executing XAIGER backend.
+<suppressed ~5 debug messages>
+Extracted 12 AND gates and 44 wires from module `top' to a netlist network with 12 inputs and 5 outputs.
+
+2.37.12.4. Executing ABC9_EXE pass (technology mapping using ABC9).
+
+2.37.12.5. Executing ABC9.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_lut <abc-temp-dir>/input.lut 
+ABC: + read_box <abc-temp-dir>/input.box 
+ABC: + &read <abc-temp-dir>/input.xaig 
+ABC: + &ps 
+ABC: <abc-temp-dir>/input : i/o =     12/      5  and =      12  lev =    6 (1.20)  mem = 0.00 MB  box = 0  bb = 0
+ABC: + &scorr 
+ABC: Warning: The network is combinational.
+ABC: + &sweep 
+ABC: + &dc2 
+ABC: + &dch -f -r 
+ABC: + &ps 
+ABC: <abc-temp-dir>/input : i/o =     12/      5  and =      30  lev =    6 (1.20)  mem = 0.00 MB  ch =    3  box = 0  bb = 0
+ABC: cst =       0  cls =      3  lit =       3  unused =      36  proof =     0
+ABC: + &if -W 500 -v 
+ABC: K = 8. Memory (bytes): Truth =    0. Cut =   68. Obj =  152. Set =  708. CutMin = no
+ABC: Node =      30.  Ch =     3.  Total mem =    0.01 MB. Peak cut mem =    0.00 MB.
+ABC: P:  Del = 2138.00.  Ar =       2.0.  Edge =        5.  Cut =      321.  T =     0.00 sec
+ABC: P:  Del = 2138.00.  Ar =       2.0.  Edge =        5.  Cut =      321.  T =     0.00 sec
+ABC: P:  Del = 2138.00.  Ar =       2.0.  Edge =        5.  Cut =      331.  T =     0.00 sec
+ABC: F:  Del = 2138.00.  Ar =       2.0.  Edge =        5.  Cut =      329.  T =     0.00 sec
+ABC: A:  Del = 2138.00.  Ar =       2.0.  Edge =        5.  Cut =      329.  T =     0.00 sec
+ABC: A:  Del = 2138.00.  Ar =       2.0.  Edge =        5.  Cut =      329.  T =     0.00 sec
+ABC: Total time =     0.00 sec
+ABC: + &write -n <abc-temp-dir>/output.aig 
+ABC: + &mfs 
+ABC: Timing manager is given but there is no GIA of boxes.
+ABC: Error: Abc_FrameUpdateGia(): Transformation has failed.
+ABC: + &ps -l 
+ABC: <abc-temp-dir>/input : i/o =     12/      5  and =      12  lev =    6 (1.20)  mem = 0.00 MB  box = 0  bb = 0
+ABC: Mapping (K=5)  :  lut =      1  edge =       5  lev =    1 (0.20)  mem = 0.00 MB
+ABC: LUT = 1 : 2=0 0.0 %  3=0 0.0 %  4=0 0.0 %  5=1 100.0 %  Ave = 5.00
+ABC: + &write -n <abc-temp-dir>/output.aig 
+ABC: + &verify 
+ABC: Networks are equivalent.  Time =     0.01 sec
+ABC: + time 
+ABC: elapse: 0.04 seconds, total: 0.04 seconds
+
+2.37.12.6. Executing AIGER frontend.
+<suppressed ~42 debug messages>
+Removed 27 unused cells and 43 unused wires.
+
+2.37.12.7. Executing ABC9_OPS pass (helper functions for ABC9).
+ABC RESULTS:              $lut cells:        1
+ABC RESULTS:           input signals:        5
+ABC RESULTS:          output signals:        4
+Removing temp directory.
+
+2.37.13. Executing TECHMAP pass (map to technology primitives).
+
+2.37.13.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/abc9_unmap.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/abc9_unmap.v' to AST representation.
+Generating RTLIL representation for module `$__DFF_x__$abc9_flop'.
+Generating RTLIL representation for module `$__ABC9_SCC_BREAKER'.
+Successfully finished Verilog frontend.
+
+2.37.13.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~5 debug messages>
+Removed 0 unused cells and 46 unused wires.
+
+2.38. Executing TECHMAP pass (map to technology primitives).
+
+2.38.1. Executing Verilog-2005 frontend: /opt/homebrew/bin/../share/yosys/gowin/cells_map.v
+Parsing Verilog input from `/opt/homebrew/bin/../share/yosys/gowin/cells_map.v' to AST representation.
+Generating RTLIL representation for module `$_DFF_N_'.
+Generating RTLIL representation for module `$_DFF_P_'.
+Generating RTLIL representation for module `$_DFFE_PP_'.
+Generating RTLIL representation for module `$_DFFE_NP_'.
+Generating RTLIL representation for module `$_SDFF_PP0_'.
+Generating RTLIL representation for module `$_SDFF_NP0_'.
+Generating RTLIL representation for module `$_SDFFE_PP0P_'.
+Generating RTLIL representation for module `$_SDFFE_NP0P_'.
+Generating RTLIL representation for module `$_SDFF_PP1_'.
+Generating RTLIL representation for module `$_SDFF_NP1_'.
+Generating RTLIL representation for module `$_SDFFE_PP1P_'.
+Generating RTLIL representation for module `$_SDFFE_NP1P_'.
+Generating RTLIL representation for module `$_DFF_PP1_'.
+Generating RTLIL representation for module `$_DFF_NP1_'.
+Generating RTLIL representation for module `$_DFF_PP0_'.
+Generating RTLIL representation for module `$_DFF_NP0_'.
+Generating RTLIL representation for module `$_DFFE_PP1P_'.
+Generating RTLIL representation for module `$_DFFE_NP1P_'.
+Generating RTLIL representation for module `$_DFFE_PP0P_'.
+Generating RTLIL representation for module `$_DFFE_NP0P_'.
+Generating RTLIL representation for module `$lut'.
+Successfully finished Verilog frontend.
+
+2.38.2. Continuing TECHMAP pass.
+Using template $paramod$f5c97e291c8b48d9f1b4239d871ab7639e5a24ac$lut for cells of type $lut.
+Using template $paramod$8511620ac19936d2cfc7b6c5ad7b35ef8bb8fc70$lut for cells of type $lut.
+Using template $paramod$e8c1c5a527b5dfd56746085998c37b18e6d2f76b$lut for cells of type $lut.
+No more expansions possible.
+<suppressed ~65 debug messages>
+
+2.39. Executing OPT_LUT_INS pass (discard unused LUT inputs).
+Optimizing LUTs in top.
+
+2.40. Executing SETUNDEF pass (replace undef values with defined constants).
+
+2.41. Executing HILOMAP pass (mapping to constant drivers).
+Removed 0 unused cells and 6 unused wires.
+
+2.42. Executing AUTONAME pass.
+Renamed 16 objects in module top (10 iterations).
+<suppressed ~16 debug messages>
+
+2.43. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `top'. Setting top module to top.
+
+2.43.1. Analyzing design hierarchy..
+Top module:  \top
+
+2.43.2. Analyzing design hierarchy..
+Top module:  \top
+Removed 0 unused modules.
+
+2.44. Printing statistics.
+
+=== top ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       13 wires
+       23 wire bits
+       13 public wires
+       23 public wire bits
+        4 ports
+        4 port bits
+       14 cells
+        4   CLKDIV
+        1   DHCE
+        1   GND
+        3   IBUF
+        2   LUT4
+        1   MUX2_LUT5
+        1   OBUF
+        1   VCC
+
+2.45. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+2.46. Executing JSON backend.
+
+End of script. Logfile hash: 213f0ae5ea, CPU: user 0.28s system 0.03s, MEM: 35.00 MB peak
+Yosys 0.63 (git sha1 70a11c6bf0e8dd669f56c7da3587f78b405138e2, clang++ 17.0.0 -fPIC -O3)
+Time spent: 40% 19x read_verilog (0 sec), 22% 1x abc9_exe (0 sec), ...

@@ -77,6 +77,9 @@
 !dhcen/trace-result-1620.json
 !dhcen/trace-result-1719.json
 !dhcen/fuse-presence-diff.json
+!dhcen/fuse_probe.py
+!dhcen/build_fuse_table.py
+!dhcen/fuse-138c.json
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo

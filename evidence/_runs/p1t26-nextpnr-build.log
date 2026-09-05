@@ -1,0 +1,104 @@
+[  0%] Built target nextpnr_kernel
+[  1%] Built target oourafft
+[  1%] Building CXX object bba/CMakeFiles/bbasm.dir/main.cc.o
+[  1%] Built target nextpnr_route
+[  1%] Built target nextpnr_place
+[  3%] Building CXX object 3rdparty/json11/CMakeFiles/json11.dir/json11.cpp.o
+[  5%] Linking CXX static library libjson11.a
+[  5%] Built target json11
+[  7%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/main.cc.o
+[  8%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/arch.cc.o
+[ 10%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/himbaechel_helpers.cc.o
+[ 12%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/arch_pybindings.cc.o
+[ 14%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/himbaechel_api.cc.o
+[ 16%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/cst.cc.o
+[ 17%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/globals.cc.o
+[ 19%] Linking CXX executable bbasm
+[ 19%] Built target bbasm
+[ 21%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/gowin.cc.o
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/himbaechel/arch_pybindings.cc:22:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/himbaechel/arch_pybindings.h:25:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/common/kernel/pybindings.h:26:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/3rdparty/pybind11/include/pybind11/embed.h:13:
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/3rdparty/pybind11/include/pybind11/eval.h:136:15: warning: '_Py_fopen_obj' is deprecated [-Wdeprecated-declarations]
+  136 |     FILE *f = _Py_fopen_obj(fname.ptr(), "r");
+      |               ^
+/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14/cpython/fileutils.h:10:1: note: '_Py_fopen_obj' has been explicitly marked deprecated here
+   10 | Py_DEPRECATED(3.14) static inline FILE*
+      | ^
+/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14/pyport.h:281:54: note: expanded from macro 'Py_DEPRECATED'
+  281 | #define Py_DEPRECATED(VERSION_UNUSED) __attribute__((__deprecated__))
+      |                                                      ^
+[ 23%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/gowin_utils.cc.o
+[ 25%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack.cc.o
+[ 26%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_bsram.cc.o
+[ 28%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_dsp.cc.o
+[ 30%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_luts.cc.o
+[ 32%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_io.cc.o
+[ 33%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_iologic.cc.o
+[ 35%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/archcheck.cc.o
+[ 37%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/basectx.cc.o
+[ 39%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/command.cc.o
+[ 41%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/context.cc.o
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/common/kernel/command.cc:26:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/common/kernel/pybindings.h:26:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/3rdparty/pybind11/include/pybind11/embed.h:13:
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/3rdparty/pybind11/include/pybind11/eval.h:136:15: warning: '_Py_fopen_obj' is deprecated [-Wdeprecated-declarations]
+  136 |     FILE *f = _Py_fopen_obj(fname.ptr(), "r");
+      |               ^
+/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14/cpython/fileutils.h:10:1: note: '_Py_fopen_obj' has been explicitly marked deprecated here
+   10 | Py_DEPRECATED(3.14) static inline FILE*
+      | ^
+/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14/pyport.h:281:54: note: expanded from macro 'Py_DEPRECATED'
+  281 | #define Py_DEPRECATED(VERSION_UNUSED) __attribute__((__deprecated__))
+      |                                                      ^
+[ 42%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/design_utils.cc.o
+[ 44%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/embed.cc.o
+[ 46%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/handle_error.cc.o
+[ 48%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/idstring.cc.o
+1 warning generated.
+[ 50%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/idstringlist.cc.o
+[ 51%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/log.cc.o
+[ 53%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/nextpnr_assertions.cc.o
+[ 55%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/nextpnr.cc.o
+[ 57%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/nextpnr_namespaces.cc.o
+[ 58%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/nextpnr_types.cc.o
+[ 60%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/property.cc.o
+[ 62%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/pybindings.cc.o
+[ 64%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/report.cc.o
+[ 66%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/sdc.cc.o
+[ 67%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/sdf.cc.o
+[ 69%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/str_ring_buffer.cc.o
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/common/kernel/pybindings.cc:23:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/common/kernel/pybindings.h:26:
+In file included from /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/3rdparty/pybind11/include/pybind11/embed.h:13:
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/3rdparty/pybind11/include/pybind11/eval.h:136:15: warning: '_Py_fopen_obj' is deprecated [-Wdeprecated-declarations]
+  136 |     FILE *f = _Py_fopen_obj(fname.ptr(), "r");
+      |               ^
+/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14/cpython/fileutils.h:10:1: note: '_Py_fopen_obj' has been explicitly marked deprecated here
+   10 | Py_DEPRECATED(3.14) static inline FILE*
+      | ^
+/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14/pyport.h:281:54: note: expanded from macro 'Py_DEPRECATED'
+  281 | #define Py_DEPRECATED(VERSION_UNUSED) __attribute__((__deprecated__))
+      |                                                      ^
+[ 71%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/svg.cc.o
+[ 73%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/timing.cc.o
+[ 75%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/kernel/timing_log.cc.o
+1 warning generated.
+[ 76%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/frontend/json_frontend.cc.o
+[ 78%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/json/jsonwrite.cc.o
+[ 80%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/detail_place_core.cc.o
+[ 82%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/parallel_refine.cc.o
+[ 83%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/place_common.cc.o
+[ 85%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/placer1.cc.o
+[ 87%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/placer_heap.cc.o
+[ 89%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/placer_static.cc.o
+[ 91%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/place/timing_opt.cc.o
+[ 92%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/route/router1.cc.o
+[ 94%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/common/route/router2.cc.o
+[ 96%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/3rdparty/oourafft/fftsg.cc.o
+[ 98%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/__/3rdparty/oourafft/fftsg2d.cc.o
+1 warning generated.
+[100%] Linking CXX executable ../nextpnr-himbaechel
+[100%] Built target nextpnr-himbaechel
+BUILD_DONE rc=0

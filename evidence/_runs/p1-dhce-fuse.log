@@ -1,0 +1,6 @@
+01:08:36 BATCH_START p1-dhce-fuse runs=4 n_div=4
+01:09:02 RUN fz00_div4 n_dhce=0 verdict=ok wall=25.6s detail=
+01:09:28 RUN fz01_div4 n_dhce=1 verdict=ok wall=25.8s detail=
+01:09:55 RUN fz02_div4 n_dhce=2 verdict=ok wall=27.2s detail=
+01:10:27 RUN fz03_div4 n_dhce=3 verdict=ok wall=31.7s detail=
+BATCH_COMPLETE p1-dhce-fuse runs=4 ok=4 diff=0 aborted=0

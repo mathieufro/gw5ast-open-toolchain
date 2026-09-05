@@ -1,0 +1,295 @@
+{
+ "device": "GW5AST-138C",
+ "task": "P1.T26",
+ "batch": "p1-dhce-fuse",
+ "block": [
+  108,
+  64
+ ],
+ "muxes": [
+  "HCLK_UNK812",
+  "HCLK_UNK813",
+  "HCLK_UNK814",
+  "HCLK_UNK815"
+ ],
+ "gate_fuses": {
+  "HCLK_UNK812": [
+   [
+    20,
+    2
+   ]
+  ],
+  "HCLK_UNK813": [
+   [
+    20,
+    48
+   ]
+  ],
+  "HCLK_UNK814": [
+   [
+    21,
+    32
+   ]
+  ],
+  "HCLK_UNK815": [
+   [
+    20,
+    99
+   ]
+  ]
+ },
+ "steps": [
+  {
+   "n_dhce": 1,
+   "site_idx": 0,
+   "mux": "HCLK_UNK812",
+   "moved_in_block": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     101
+    ],
+    [
+     1,
+     102
+    ],
+    [
+     1,
+     107
+    ],
+    [
+     7,
+     43
+    ],
+    [
+     7,
+     50
+    ],
+    [
+     20,
+     2
+    ]
+   ],
+   "gate_bits_moved": [
+    [
+     20,
+     2
+    ]
+   ],
+   "model_predicts": [
+    [
+     20,
+     2
+    ]
+   ],
+   "agrees": true,
+   "residual_bits": [
+    [
+     0,
+     100
+    ],
+    [
+     0,
+     101
+    ],
+    [
+     1,
+     102
+    ],
+    [
+     1,
+     107
+    ],
+    [
+     7,
+     43
+    ],
+    [
+     7,
+     50
+    ]
+   ],
+   "residual_count": 6,
+   "residual_pip_dests": [
+    "C2",
+    "E130"
+   ],
+   "residual_unattributed": []
+  },
+  {
+   "n_dhce": 2,
+   "site_idx": 1,
+   "mux": "HCLK_UNK813",
+   "moved_in_block": [
+    [
+     2,
+     28
+    ],
+    [
+     2,
+     29
+    ],
+    [
+     2,
+     31
+    ],
+    [
+     3,
+     30
+    ],
+    [
+     6,
+     53
+    ],
+    [
+     6,
+     54
+    ],
+    [
+     7,
+     56
+    ],
+    [
+     7,
+     58
+    ],
+    [
+     8,
+     85
+    ],
+    [
+     8,
+     91
+    ],
+    [
+     20,
+     48
+    ]
+   ],
+   "gate_bits_moved": [
+    [
+     20,
+     48
+    ]
+   ],
+   "model_predicts": [
+    [
+     20,
+     48
+    ]
+   ],
+   "agrees": true,
+   "residual_bits": [
+    [
+     2,
+     28
+    ],
+    [
+     2,
+     29
+    ],
+    [
+     2,
+     31
+    ],
+    [
+     3,
+     30
+    ],
+    [
+     6,
+     53
+    ],
+    [
+     6,
+     54
+    ],
+    [
+     7,
+     56
+    ],
+    [
+     7,
+     58
+    ],
+    [
+     8,
+     85
+    ],
+    [
+     8,
+     91
+    ]
+   ],
+   "residual_count": 10,
+   "residual_pip_dests": [
+    "C5",
+    "S260",
+    "X05"
+   ],
+   "residual_unattributed": []
+  },
+  {
+   "n_dhce": 3,
+   "site_idx": 2,
+   "mux": "HCLK_UNK814",
+   "moved_in_block": [
+    [
+     4,
+     107
+    ],
+    [
+     4,
+     113
+    ],
+    [
+     21,
+     32
+    ]
+   ],
+   "gate_bits_moved": [
+    [
+     21,
+     32
+    ]
+   ],
+   "model_predicts": [
+    [
+     21,
+     32
+    ]
+   ],
+   "agrees": true,
+   "residual_bits": [
+    [
+     4,
+     107
+    ],
+    [
+     4,
+     113
+    ]
+   ],
+   "residual_count": 2,
+   "residual_pip_dests": [
+    "C7"
+   ],
+   "residual_unattributed": []
+  }
+ ],
+ "other_tiles_moved": {
+  "1": [
+   [
+    56,
+    108,
+    4
+   ]
+  ],
+  "2": [],
+  "3": []
+ },
+ "site3_measured": false
+}

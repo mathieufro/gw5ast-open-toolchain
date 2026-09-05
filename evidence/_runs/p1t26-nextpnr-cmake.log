@@ -1,0 +1,94 @@
+-- The CXX compiler identification is AppleClang 17.0.0.17000603
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building with IPO
+-- C++ compiler does NOT support #embed
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAS_Wno-unused-parameter
+-- Performing Test HAS_Wno-unused-parameter - Success
+-- Performing Test HAS_Wno-missing-field-initializers
+-- Performing Test HAS_Wno-missing-field-initializers - Success
+-- Performing Test HAS_Wno-array-bounds
+-- Performing Test HAS_Wno-array-bounds - Success
+-- Performing Test HAS_Wno-format-truncation
+-- Performing Test HAS_Wno-format-truncation - Success
+-- Found Boost: /opt/homebrew/lib/cmake/Boost-1.90.0/BoostConfig.cmake (found version "1.90.0") found components: program_options iostreams thread
+-- Found Python3: /opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14 (found suitable version "3.14.6", minimum required is "3.5") found components: Interpreter Development.Embed
+-- Could NOT find pybind11 (missing: pybind11_DIR)
+-- Using built-in pybind11
+CMake Deprecation Warning at 3rdparty/pybind11/CMakeLists.txt:13 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- pybind11 v2.12.1 
+CMake Deprecation Warning at 3rdparty/pybind11/tools/FindPythonLibsNew.cmake:110 (cmake_policy):
+  The OLD behavior for policy CMP0148 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+Call Stack (most recent call first):
+  3rdparty/pybind11/tools/pybind11Tools.cmake:50 (find_package)
+  3rdparty/pybind11/tools/pybind11Common.cmake:192 (include)
+  3rdparty/pybind11/CMakeLists.txt:248 (include)
+
+
+-- Found PythonInterp: /opt/homebrew/bin/python3 (found suitable version "3.14.6", minimum required is "3.6")
+-- Found PythonLibs: /opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/lib/libpython3.14.dylib
+-- Found Boost: /opt/homebrew/lib/cmake/Boost-1.90.0/BoostConfig.cmake (found version "1.90.0") found components: program_options
+-- Configuring architecture: himbaechel
+-- Configuring Himbächel microarchitecture: gowin
+-- Apycula install prefix: (not set, using Python: /opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14)
+-- Enabled Himbaechel-Gowin devices: 
+-- Configuring done (6.6s)
+-- Generating done (0.2s)
+-- Build files have been written to: /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/build
+-- Building with IPO
+-- C++ compiler does NOT support #embed
+-- Found Boost: /opt/homebrew/lib/cmake/Boost-1.90.0/BoostConfig.cmake (found version "1.90.0") found components: program_options iostreams thread
+-- Could NOT find pybind11 (missing: pybind11_DIR)
+-- Using built-in pybind11
+CMake Deprecation Warning at 3rdparty/pybind11/CMakeLists.txt:13 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- pybind11 v2.12.1 
+CMake Deprecation Warning at 3rdparty/pybind11/tools/FindPythonLibsNew.cmake:110 (cmake_policy):
+  The OLD behavior for policy CMP0148 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+Call Stack (most recent call first):
+  3rdparty/pybind11/tools/pybind11Tools.cmake:50 (find_package)
+  3rdparty/pybind11/tools/pybind11Common.cmake:192 (include)
+  3rdparty/pybind11/CMakeLists.txt:248 (include)
+
+
+-- Found Boost: /opt/homebrew/lib/cmake/Boost-1.90.0/BoostConfig.cmake (found version "1.90.0") found components: program_options
+-- Configuring architecture: himbaechel
+-- Configuring Himbächel microarchitecture: gowin
+-- Apycula install prefix: (not set, using Python: /opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14)
+-- Enabled Himbaechel-Gowin devices: GW5AST-138C
+-- Configuring done (2.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/build

@@ -43,3 +43,28 @@ interbank entries (not 4 sides x 6). No `chipdb.py` change was made — that is
 - Shape: `fuzz/gw5ast138c/shapes/clocking_dhcen_trace.py` on apicula branch
   `clocking/dhcen-gw5a`
 - Gate test: `tools/tests/test_dhcen_ce_wires.py`
+
+---
+
+## P1.T26 — DHCE implemented (`fuse-138c.md`)
+
+`4` further oracle runs (batch `p1-dhce-fuse`, cumulative `45`), all `ok`,
+`aborted=0`. They attribute the **fuse**: a DHCE sets exactly one bit, the
+output-enable of the HCLK input multiplexer it sits on, in its **own block
+cell** — not an `HCLK` shortval attribute (this device's `HCLK` table has no
+`*_HSTOP`/`*_BRGSTOP` entry at all) and not along a whole die edge (this die
+has two blocks per side; an edge sweep would gate the neighbour).
+
+Scoped `E0` — block cell `(108, 64)`, DHCE-attributable bits: **`DIFF_COUNT`
+0** for sites `0`, `1`, `2` (model bit == vendor bit), **`RESIDUAL` 18 bits,
+`0` unattributed** (all of them ordinary CIB pip fuses of the `CEN` net). Site
+`3`'s bit is derived from the same rule, not measured. A whole-design `E0` is
+**not computable**: the open flow cannot route a `CLKDIV` net on this device at
+all (`D98`/`P1.T11`/`P1.T08c`), which the DHCE-free `n=0` control reproduces.
+
+Open flow: `yosys` accepts `DHCE` unchanged (`cells_xtra_gw5a.v` declares it);
+`nextpnr-himbaechel` loads the rebuilt chipdb with `0` errors and reports
+`DHCEN: 25/24` — 24 hardware bels placed in the six HCLK blocks plus the design
+pseudo cell — then stops at the HCLK routing gap above. It also confirms
+`P1.T25`'s open hypothesis: allocation order inside a block **is** the
+multiplexer order.

@@ -1,0 +1,25 @@
+[  0%] Built target oourafft
+[  0%] Built target nextpnr_kernel
+[  0%] Built target nextpnr_route
+[  0%] Built target nextpnr_place
+[  3%] Built target json11
+[  6%] Built target bbasm
+[  8%] Generating chipdb-GW5AST-138C.bba
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/dhce/apycula/chipdb.py:340: UserWarning: Msgspec is not available, performance will be degraded.
+  warnings.warn("Msgspec is not available, performance will be degraded.")
+Traceback (most recent call last):
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/dhce/apycula/chipdb.py", line 320, in <module>
+    import msgspec
+ModuleNotFoundError: No module named 'msgspec'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/nextpnr-wt/dhce/himbaechel/uarch/gowin/gowin_arch_gen.py", line 12, in <module>
+    from apycula import chipdb
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/dhce/apycula/chipdb.py", line 341, in <module>
+    import msgpack
+ModuleNotFoundError: No module named 'msgpack'
+make[2]: *** [himbaechel/uarch/gowin/chipdb-GW5AST-138C.bba] Error 1
+make[1]: *** [himbaechel/uarch/gowin/CMakeFiles/nextpnr-himbaechel-gowin-chipdb.dir/all] Error 2
+make: *** [all] Error 2
