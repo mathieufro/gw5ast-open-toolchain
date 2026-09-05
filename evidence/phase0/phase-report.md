@@ -18,9 +18,9 @@ Roll-up: `evidence/evidence-table.md` (24 rows across the **six** owned slugs
 | entry: Licence Gate / prerequisites | `V0` | **REACHED** — gate **open** (Standard, licensed); every prerequisite line green |
 | `S1` chipdb builds from the installed IDE | `V2` | **REACHED** — 138C builds on both editions, no `FAIL` line |
 | `S2` no opaque parser failures | `V3` | **REACHED** — 12 `fse_version` tests; the error names IDE version, table and expected-vs-found row width |
-| `S3` no family regression (25A / 60B, both installs) | `V2` | **REACHED** — six builds, six sha256s, zero failures |
+| `S3` no family regression (25A / 60B, two **device-file sets**) | `V2` | **REACHED** — six builds, six sha256s, zero failures; **one install**, see §1b |
 | `S4` oracle runs end to end | `V4` | **REACHED** — 0 `Error`, 0 `unknown option:`, four artefact classes |
-| `S5` harness runs unattended and correctly | `V6`, E2E | **REACHED** — `SELFTEST ok: 1 difference reported, 0 spurious`; a real detached batch with an out-of-process watchdog, clean-exit line, and a proven resume |
+| `S5` harness runs unattended and correctly | `V6`, E2E | **NOT REACHED** — machinery reached; the ≥20-run half is owed to Phase 1 — see §1a |
 | `S6` equivalence checker calibrated on a whole-design baseline | `V5` | **REACHED** — three `CALIBRATION ok … 0 unexplained` lines on `big-shift`/`attosoc`/`uart-message`, mask unchanged (`59147bfc…`, six base entries, none added) |
 | `S6b` unpacker is complete enough to be evidence | `V6` | **REACHED** — `COMPLETENESS ok: 0 unattributed tiles, 0 missing cells`; E2E row `decode_check {c1: ok, c2: ok}` |
 | `S17a` C1/I0 de-aliased + derived, `V7` regression passes | `V7`, `V12a` | **REACHED for the de-aliasing half; the L0 ±10% band is NOT met** — see §2 |
@@ -31,6 +31,50 @@ Roll-up: `evidence/evidence-table.md` (24 rows across the **six** owned slugs
 | standing: `D26` measured budgets supersede §8's ASSUMED rows | E2E | **REACHED** — 6/6 rows measured; the batch runner now actually reads them (see §3) |
 | standing: nextpnr `.cst` round-trip seam | `P0.T38` | **REACHED** — `case insloc`; E2E row `constrained=1 matched=1 mismatched=0` |
 | `S23b` the local gate is installed and provably blocking | `V21` | **REACHED** — hooks in all three repos, `GATE_SCOPE=fast` green, a bogus scope rejected, `test_gate_blocks.py` green |
+
+### 1a. `S5` — machinery reached, the ≥20-run half is owed to Phase 1
+
+`S5` is two claims and Phase 0 met one of them.
+
+**Met:** the harness runs unattended and correctly. A real detached batch,
+logging to a file, watched by an **out-of-process** watchdog that fired on
+completion (`WATCHDOG_ARMED` + `WATCHDOG_COMPLETE`), with a proven resume, and
+the head-of-batch self-tests green.
+
+**Not met:** *"a **≥20-run batch** completes detached"* (`spec.md:665`). The
+largest batch anywhere in the evidence tree is `runs=3`
+(`_runs/calib-vendor.log:11 BATCH_COMPLETE calib-vendor runs=3`); the E2E batch
+is `runs=1`, correctly amended from 3 because `shapes/smoke.py` is a
+single-point shape (`sweep_axis="none"`). Row counts confirm it: `e2e-p0` 1,
+`oracle-smoke` 3, `calibration` 7, `timing-l0-cfu` 1.
+
+The ≥20 half is **unreachable in Phase 0** — `smoke` is the only shape this
+phase ships and it is single-point, so there are not 20 distinct points to
+sweep. It is therefore **not** run here and **not** recorded as reached: the
+clause moves to the first phase that ships a swept shape, **Phase 1**, which
+must run it on a real multi-point shape before it closes. Recording `S5` as
+REACHED on the strength of the machinery alone was the false PASS this
+correction removes.
+
+### 1b. `S3` — six builds, one install and one archived device tree
+
+`S3`'s *"three devices × two installs"* is not what was exercised, and the
+report no longer reads as though it were. The Education 1.9.11.03 **install**
+no longer exists (`C9`/`D79`). What the six builds actually cover is three
+devices × **two device-file sets**: the licensed Standard 1.9.12.03 install,
+and the **archived** 1.9.11.03 `IDE/share/device` tree at
+`$DATASTORE/ide-share-device/edu-1.9.11.03`, read directly as a bare
+`<device>/<device>.<ext>` tree with `GOWIN_IDE_VERSION=1.9.11.03` forcing the
+shape set.
+
+No shim root is used and none is built: nothing under `IDE/` other than
+`share/device` was archived, so there is nothing for a symlinked `IDE/` view
+to be honest about. `tests/conftest.py`'s `archived_device_file` fixture and
+`tests/test_dat_gw5a_stuff.py` point the parser at the archived path directly.
+
+The claim that survives is the one that was measured — the parsers tolerate
+both editions' device files. **No second install was exercised**, and the
+phase is stamped `edu-provisional: false` throughout on that basis.
 
 **Not reached, and not claimed by any Phase-0 task:** `S7`–`S16`, `S18`–`S23`,
 `S24`–`S27`.
@@ -48,11 +92,47 @@ vendor SDF (attosoc, Slow 0.873 V 0 °C C1/I0):
 > chunk 0 fits C1/I0 for LUT/BSRAM but not DFF clk→q (1.49x); 825 SDF arcs
 > unmapped (LUT1-3, IO).
 
-Phase 0 keeps the derived `C1/I0` because it is **conservative** (nextpnr
-delays ≥ vendor for 78% of arcs). The grade identification is **CONTESTED** and
-is handed to Phase 6 / `S17b` with the SDF-corpus method (L1). A second, minor
-symptom of the same derivation: `V7`'s fourth `clk_qpos` value is 0.29000
-against the quoted upper bound 0.288 (+0.7%).
+Phase 0 keeps the derived `C1/I0`, and it is **`timing_model=unverified`**:
+it is conservative *in aggregate only* (median ratio 0.787), and it is
+**not** a conservative bound per class. `timing-l0-cfu/l0-cfu-band.md`
+refutes that reading arc class by arc class — `ratio = vendor SDF / nextpnr
+arc`, so `> 1` means the open model is **optimistic**:
+
+| class | arcs | ratio (min / med / max) | conservative? |
+|---|---|---|---|
+| ALL | 7136 | 0.365 / **0.787** / 1.779 | in aggregate only |
+| DFFRE | 532 | **1.190 / 1.190 / 1.190** | **NO — uniformly optimistic** |
+| DFFSE | 12 | **1.190 / 1.190 / 1.190** | **NO — uniformly optimistic** |
+| MUX2_LUT5 | 72 | up to **1.779** | NO at the tail |
+| LUT4 / ALU / SDPB | 6520 | median < 1 | yes |
+
+Every DFF `CLK->Q` arc is `model=0.289 ns` against `sdf=0.344 ns`
+(`dev=-16.0%`) with **zero spread** — a systematic per-group error, not
+sampling noise. On top of that, **825 SDF arcs have no nextpnr model arc at
+all** (LUT3 579, LUT2 234, LUT1 2, OBUF 8, IO): an unmodelled delay
+contributes zero, the most optimistic value there is.
+
+Aggregate pessimism does not compose, because a path is the **sum** of its
+arcs and a register-rich pipeline is mostly the class that is optimistic. So
+every evidence row and every `openflow` `FMAX` line this phase produces
+carries `timing_model=unverified` in its `notes`, and **no Fmax claim may be
+made from these tables**. Phase 6 entry condition: re-identify chunk 0's grade
+against the SDF medians (the `S17b`/L1 method) *before* any Fmax claim, and
+until then apply per-class floors — no `CLK->Q` under the measured 0.344 ns,
+and a **named error**, never a silent zero, for every unmodelled arc class.
+
+The grade identification is **CONTESTED** and is handed to Phase 6 / `S17b`
+with the SDF-corpus method (L1). A second, minor symptom of the same
+derivation: `V7`'s fourth `clk_qpos` value is 0.29000 against the quoted upper
+bound 0.288 (+0.7%).
+
+**Named gaps have no magnitude ceiling yet (`D2`).** `GAP_CATEGORIES`
+(`unmodelled_config_fuse`, `bsram_mode_fuse`, `extra_config_frames`,
+`extra_command_words`) count toward `diffs` and never toward `unexplained`,
+and `unexplained` counts **categories, not bits** — so an arbitrary number of
+differing config fuses keeps `CALIBRATION ok`. That is `D32`-conformant and
+the gaps are printed, but the verdict is insensitive to a gap class's
+*magnitude*. Each phase from 1 on records a per-gap bit ceiling.
 
 ### The `S6` result, quoted (`P0.T33`)
 

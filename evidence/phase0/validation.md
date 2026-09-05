@@ -16,7 +16,7 @@ record: Gowin **Standard 1.9.12.03**, licensed (`gowinhome.selected`,
 | `V3` `S2` no opaque parser failure | **PASS** |
 | `V4` `S4` oracle end to end | **PASS** |
 | `V5` `S6` calibration on three baselines | **PASS** (amended CLI) |
-| `V6` `S5`/`S6b` harness and watchdog | **PASS** (amended `--design-dir`) |
+| `V6` `S5`/`S6b` harness and watchdog | **PASS** for what `V6` measures; `S5` itself is **PARTIALLY REACHED** — see `V6` |
 | `V7` `S17a` timing tables are honest | **PASS** (one value 0.7% over the quoted band — see below) |
 | `V12a --classes cfu` L0 arc band | **PASS on the stated contract; the ±10% band is NOT met** (`P0.T37`) |
 | `V20` storage hygiene | **PASS** (amended repo root) |
@@ -215,7 +215,7 @@ named Phase-3/Phase-4 gap `P0.T33` recorded, not an `S6` failure: `S6b` scopes
 
 ---
 
-## `V6` — `S5`/`S6b`, harness and watchdog — **PASS**
+## `V6` — `S5`/`S6b`, harness and watchdog — **PASS** (`S5` partially reached)
 
 Amendment: `selftest` has a required `--design-dir` (`spec-harness.md` §1 —
 no harness command depends on cwd), which the blueprint's line omits. The
@@ -234,6 +234,17 @@ both exit 0. `tail -5 $OTC/evidence/_runs/watchdog.log`:
 ```
 
 `WATCHDOG_ARMED` plus a terminal line, as required.
+
+**`V6` does not measure all of `S5`.** `spec.md:665` asks for *"a **≥20-run
+batch** … detached, logging to a file, watched by an out-of-process watchdog"*.
+`V6` measures the detached / logged / watchdog half, and that half passes. The
+**≥20-run** half was never run: the largest batch in the evidence tree is
+`runs=3` (`_runs/calib-vendor.log:11 BATCH_COMPLETE calib-vendor runs=3`) and
+the E2E batch is `runs=1`, because `shapes/smoke.py` is a single-point shape.
+It is unreachable in Phase 0 for that reason and is **owed to Phase 1**, the
+first phase that ships a swept shape. `S5` is therefore recorded as
+**machinery reached; ≥20-run half owed to Phase 1**, not as REACHED
+(`evidence/phase0/phase-report.md` §1a).
 
 ---
 
