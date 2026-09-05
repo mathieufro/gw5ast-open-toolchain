@@ -67,3 +67,43 @@ named gaps already owned by later phases — `unmodelled_config_fuse` 18 bits /
    tile `(2,1)` is therefore not reachable for a `DFF` shape on this
    architecture, and the E2E's expected result is amended to `diff=1` with the
    diff attributed to that class — not to a mask entry.
+
+## Re-measured after the §5.3 mask conditions were implemented (2026-09-05)
+
+The recorded `unexplained 0` above was produced by a checker that classified a
+differing fuse by its chipdb **fuse-group name alone**, so neither conditioned
+mask row ever tested its own condition: §5.3 row 5 masks *"the physical route
+of a net whose endpoint set matches"* and row 6 masks the IO default *"only
+when both sides carry a defaulted value"* on *"pins used by neither design"*.
+Both conditions are now implemented (`equiv.refine_group_category`). Re-running
+`residual()` on the same real `.fs` pair, unchanged, with the same mask file:
+
+```
+explained    set_level_diff 41 | vendor_only_fill 33 (unused_tile_fill)
+             net_route 4 (net_route) | io_default_unused_pins 6
+             comment_header 634 B (header_words)
+unexplained  net_route_endpoint_diff 3,871,031
+             io_used_pin_config 333 | io_nondefault_config 309
+             total 3,871,673 bits
+```
+
+**This is the same bitstream pair and the same numbers, re-attributed.** Of the
+3,871,035 bits previously masked as `net_route`, only **4** drive a wire whose
+net has the same endpoint set on both sides; of the 648 masked as
+`io_default_unused_pins`, only **6** are on an IOB site neither design uses and
+outside every `DRIVE`/`PULLMODE` fuse. The rest were never covered by the mask
+rows as those rows are written.
+
+The measurement itself is not in dispute — the vendor side unpacks 138,576
+cells against the open side's 873, so the two bitstreams genuinely do not share
+their routing, and almost none of the routing delta is "one net routed two
+ways". What changes is that the checker no longer reports that as nothing.
+
+**`unexplained 0` therefore does not hold for this pair, and no Phase-0
+criterion may be read as having been closed on it.** What Phase 0 established
+here stands unchanged: the flow runs end to end, the residual is reproducible
+byte for byte, and every bit is attributed to a named class. What it did not
+establish is that the vendor and open bitstreams agree once the mask is held
+to its own conditions. Whether the smoke pair is expected to agree at that
+level, or whether §5.3's rows want re-scoping for a whole-device comparison, is
+a spec question for the orchestrator, recorded here rather than masked away.
