@@ -1,0 +1,524 @@
+{
+  "task": "P1.T17",
+  "device": "GW5AST-138C",
+  "ide_version": "1.9.12.03",
+  "gowinhome": "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA",
+  "generated": "2026-09-05",
+  "datasheet_pll_count": 12,
+  "measured_site_count": 12,
+  "sites": [
+    {
+      "pll_idx": 0,
+      "side": "L",
+      "row": 27,
+      "col": 1,
+      "tiles": [
+        [
+          27,
+          1,
+          74,
+          804
+        ],
+        [
+          27,
+          2,
+          75,
+          968
+        ],
+        [
+          27,
+          3,
+          76,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 1,
+      "side": "R",
+      "row": 27,
+      "col": 177,
+      "tiles": [
+        [
+          27,
+          177,
+          77,
+          804
+        ],
+        [
+          27,
+          178,
+          78,
+          968
+        ],
+        [
+          27,
+          179,
+          79,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 2,
+      "side": "L",
+      "row": 45,
+      "col": 0,
+      "tiles": [
+        [
+          45,
+          0,
+          268,
+          808
+        ],
+        [
+          45,
+          1,
+          75,
+          968
+        ],
+        [
+          45,
+          2,
+          76,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2437,
+      "attr_id_min": 16,
+      "attr_id_max": 2530,
+      "table_rows": 2461
+    },
+    {
+      "pll_idx": 3,
+      "side": "R",
+      "row": 45,
+      "col": 178,
+      "tiles": [
+        [
+          45,
+          178,
+          77,
+          804
+        ],
+        [
+          45,
+          179,
+          78,
+          968
+        ],
+        [
+          45,
+          180,
+          79,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 4,
+      "side": "L",
+      "row": 63,
+      "col": 0,
+      "tiles": [
+        [
+          63,
+          0,
+          270,
+          808
+        ],
+        [
+          63,
+          1,
+          75,
+          968
+        ],
+        [
+          63,
+          2,
+          76,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2437,
+      "attr_id_min": 16,
+      "attr_id_max": 2530,
+      "table_rows": 2461
+    },
+    {
+      "pll_idx": 5,
+      "side": "R",
+      "row": 63,
+      "col": 178,
+      "tiles": [
+        [
+          63,
+          178,
+          77,
+          804
+        ],
+        [
+          63,
+          179,
+          78,
+          968
+        ],
+        [
+          63,
+          180,
+          79,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 6,
+      "side": "L",
+      "row": 81,
+      "col": 1,
+      "tiles": [
+        [
+          81,
+          1,
+          74,
+          804
+        ],
+        [
+          81,
+          2,
+          75,
+          968
+        ],
+        [
+          81,
+          3,
+          76,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 7,
+      "side": "R",
+      "row": 81,
+      "col": 177,
+      "tiles": [
+        [
+          81,
+          177,
+          77,
+          804
+        ],
+        [
+          81,
+          178,
+          78,
+          968
+        ],
+        [
+          81,
+          179,
+          79,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 8,
+      "side": "B",
+      "row": 108,
+      "col": 28,
+      "tiles": [
+        [
+          108,
+          28,
+          182,
+          804
+        ],
+        [
+          108,
+          29,
+          183,
+          968
+        ],
+        [
+          108,
+          30,
+          184,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 9,
+      "side": "B",
+      "row": 108,
+      "col": 32,
+      "tiles": [
+        [
+          108,
+          32,
+          182,
+          804
+        ],
+        [
+          108,
+          33,
+          183,
+          968
+        ],
+        [
+          108,
+          34,
+          184,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 10,
+      "side": "B",
+      "row": 108,
+      "col": 146,
+      "tiles": [
+        [
+          108,
+          146,
+          182,
+          804
+        ],
+        [
+          108,
+          147,
+          183,
+          968
+        ],
+        [
+          108,
+          148,
+          184,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    },
+    {
+      "pll_idx": 11,
+      "side": "B",
+      "row": 108,
+      "col": 150,
+      "tiles": [
+        [
+          108,
+          150,
+          182,
+          804
+        ],
+        [
+          108,
+          151,
+          183,
+          968
+        ],
+        [
+          108,
+          152,
+          184,
+          685
+        ]
+      ],
+      "slot_idx": null,
+      "source": "fse",
+      "ports_source": "dat_old_style_partial",
+      "needs_trace": true,
+      "attr_id_count": 2433,
+      "attr_id_min": 16,
+      "attr_id_max": 2529,
+      "table_rows": 2457
+    }
+  ],
+  "dat": {
+    "named_tables_populated_rows": {
+      "PllLTIns": 0,
+      "PllLTOuts": 0,
+      "PllLBIns": 0,
+      "PllLBOuts": 0,
+      "PllRTIns": 0,
+      "PllRTOuts": 0,
+      "PllRBIns": 0,
+      "PllRBOuts": 0
+    },
+    "old_style_inputs_present": 23,
+    "old_style_inputs_total": 35,
+    "old_style_outputs_present": 8,
+    "old_style_outputs_total": 16,
+    "old_style_inputs_missing": [
+      "MDCLK",
+      "MDOPC0",
+      "MDOPC1",
+      "MDAINC",
+      "MDWDI0",
+      "MDWDI1",
+      "MDWDI2",
+      "MDWDI3",
+      "MDWDI4",
+      "MDWDI5",
+      "MDWDI6",
+      "MDWDI7"
+    ],
+    "old_style_outputs_missing": [
+      "MDRDO0",
+      "MDRDO1",
+      "MDRDO2",
+      "MDRDO3",
+      "MDRDO4",
+      "MDRDO5",
+      "MDRDO6",
+      "MDRDO7"
+    ]
+  },
+  "fse": {
+    "pseudo_ttyps": [],
+    "has_drpfuse": false
+  },
+  "reference_25a": {
+    "pseudo_ttyps": [
+      1024,
+      1025,
+      1026
+    ],
+    "has_drpfuse": true,
+    "named_tables_populated_rows": {
+      "PllLTIns": 36,
+      "PllLTOuts": 32,
+      "PllLBIns": 36,
+      "PllLBOuts": 32,
+      "PllRTIns": 36,
+      "PllRTOuts": 32,
+      "PllRBIns": 36,
+      "PllRBOuts": 32
+    },
+    "old_style_inputs_present": 35,
+    "old_style_outputs_present": 16,
+    "slot_table_rows": 2440,
+    "slot_table_attr_ids": 2416,
+    "chipdb_slots": [
+      [
+        27,
+        0,
+        6,
+        "PllLB"
+      ],
+      [
+        27,
+        91,
+        2,
+        "PllRB"
+      ],
+      [
+        0,
+        0,
+        5,
+        "PllLT"
+      ],
+      [
+        0,
+        91,
+        3,
+        "PllRT"
+      ],
+      [
+        0,
+        45,
+        4,
+        "old_style"
+      ],
+      [
+        36,
+        45,
+        8,
+        "old_style"
+      ]
+    ]
+  },
+  "attrids_py_pll_attrids": 192
+}

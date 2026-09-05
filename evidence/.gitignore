@@ -36,6 +36,14 @@
 # marker is allowed through, so a fresh checkout still has the directory for
 # `.githooks/pre-push` to write into.
 !_gates/.gitkeep
+# the P1.T17 PLL-site enumeration: the machine-readable table P1.T18 reads,
+# the attribute-id census the blueprint names, and the generator that produces
+# both from the shipped .fse/.dat (committed beside its output so the
+# enumeration is reproducible from the vendor files alone). Same named-exception
+# pattern as chipdb-sha256.txt above -- .json/.tsv/.py are not covered by "*.md".
+!plla/sites-138c.json
+!plla/attrids-138c.tsv
+!plla/gen_sites_138c.py
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo
