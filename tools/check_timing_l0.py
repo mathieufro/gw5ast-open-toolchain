@@ -33,11 +33,19 @@ the 1.25 band below is therefore a **derivation regression check**, not a
 measurement of silicon.
 
 Class membership is `D60`'s: **cfu** = LUT / ALU / DFF / SSRAM / BSRAM / wires /
-glbsrc / HCLK. `pll`, `io` and `dsp` have no cells on this die until Phases 1,
-3 and 4, so those classes print `L0 skipped: class <c> has no arcs yet` and
-exit 0 -- the chipdb's `iodelay` group is not the `io` class, whose cells do
-not exist until Phase 3. `--classes all` is Phase 6's union re-assertion and
-aggregates whatever classes are live.
+glbsrc / HCLK. **pll** is Phase 1's (`P1.T33`) and is a *zero-arc* class by
+measurement, not by omission: the `.tm` carries no PLL model for this die (its
+`0x7cc` block is inherited GW2A rPLL data, `apycula/tm_parser.py`), nextpnr
+installs no PLL cell arc, and the vendor's own SDF gives every
+`CLKIN -> CLKOUTn` IOPATH as `0.000`. The `pll` band therefore asserts exactly
+that: every vendor PLL arc is compared against a model delay of `0.0`, so a
+future vendor release that starts publishing a non-zero PLL delay fails this
+check loudly instead of passing unnoticed. `io` and `dsp` still have no cells
+on this die until Phases 3 and 4, so those classes print
+`L0 skipped: class <c> has no arcs yet` and exit 0 -- the chipdb's `iodelay`
+group is not the `io` class, whose cells do not exist until Phase 3.
+`--classes all` is Phase 6's union re-assertion and aggregates whatever classes
+are live.
 """
 import argparse
 import json
@@ -66,14 +74,40 @@ CFU_GROUPS = {
     "hclk": True,
     "fanout": False,
 }
+# `pll` is live but deliberately empty on the chipdb side (`P1.T33`): the group
+# is reported, never required, and the class carries its own band policy below.
+PLL_GROUPS = {
+    "pll": False,   # `parse_pll` publishes nothing -- see PLL_NO_ARCS_NOTE
+}
 CLASS_GROUPS = {
     "cfu": CFU_GROUPS,
-    "pll": {},
+    "pll": PLL_GROUPS,
     "io": {},   # `iodelay` belongs to the IOLOGIC work of Phase 3, not to Phase 0
     "dsp": {},
 }
-LIVE_CLASSES = ("cfu",)          # populated on this die today (`D60`)
+LIVE_CLASSES = ("cfu", "pll")    # populated on this die today (`D60`, `P1.T33`)
 ALL_CLASSES = ("cfu", "pll", "io", "dsp")
+
+# Which SDF cell types belong to each class. `None` == every cell (the `cfu`
+# behaviour `P0.T37` measured; not narrowed, so its numbers stay reproducible).
+CLASS_SDF_CELLS = {
+    "cfu": None,
+    "pll": re.compile(r"^(PLL|PLLA|rPLL|RPLLA|PLLVR)$"),
+    "io": None,
+    "dsp": None,
+}
+# Classes whose model delay for an arc nextpnr does not install is `0.0` rather
+# than "unmapped". Only `pll`, and only because the absence is the measured
+# claim: the vendor models this die's PLL as zero internal delay (`P1.T33`).
+ZERO_MODEL_CLASSES = ("pll",)
+PLL_NO_ARCS_NOTE = (
+    "pll: 0 chipdb arcs and 0 nextpnr arcs BY DESIGN (P1.T33) -- the .tm block at "
+    "offset 0x7cc is 80 bytes of inherited GW2A rPLL data (byte-identical to "
+    "GW2A-18.tm) naming five rPLL outputs this die does not have; UG306E Table 5-2 "
+    "gives the Arora-V PLL CLKOUT0..6/CLKFBOUT/LOCK, and the vendor SDF emits every "
+    "CLKIN->CLKOUTn IOPATH as 0.000. DS1239E Table 3-18 publishes no CLKIN->CLKOUT "
+    "delay at all."
+)
 
 # C1/I0 = 1.25 x C2/I1 by construction (P0.T35). The band is a float-round-trip
 # tolerance on an exact multiplication, not a measurement tolerance.
@@ -301,7 +335,7 @@ def read_sdf(path):
 # --------------------------------------------------------------------------
 # 4. band mode (`--sdf`) -- the V12a stdout contract
 # --------------------------------------------------------------------------
-def band_mode(timing, sdf_path, grade, out):
+def band_mode(timing, sdf_path, grade, out, classes=("cfu",)):
     sdf_arcs, condition, _ts = read_sdf(sdf_path)
     if condition is None:
         print(f"L0 FAIL: no operating-condition line in {sdf_path} header "
@@ -316,13 +350,24 @@ def band_mode(timing, sdf_path, grade, out):
     # nextpnr `DO0` are the same arc)
     norm_model = {(g, c, norm_pin(f), norm_pin(t)): v
                   for (g, c, f, t), v in model.items()}
+    # restrict the SDF to the cells of the classes under test (`D60`). `None`
+    # for a class means "every cell", which is what `cfu` measured in P0.T37.
+    filters = [CLASS_SDF_CELLS.get(c) for c in classes]
+    cell_re = None if any(f is None for f in filters) else filters
+    zero_model = all(c in ZERO_MODEL_CLASSES for c in classes)
+
     compared, exceptions, unmapped = [], [], []
     for cell, inst, frm, to, ns in sdf_arcs:
+        if cell_re is not None and not any(f.match(cell) for f in cell_re):
+            continue
         key = (grade, cell, norm_pin(frm), norm_pin(to))
         if key not in norm_model:
-            unmapped.append(f"{cell}/{inst} {frm}->{to}")
-            continue
-        m = norm_model[key]
+            if not zero_model:
+                unmapped.append(f"{cell}/{inst} {frm}->{to}")
+                continue
+            m = 0.0          # nextpnr installs no arc: the modelled delay is 0
+        else:
+            m = norm_model[key]
         dev = (m - ns) / ns if ns else (0.0 if m == 0 else 1.0)
         compared.append((cell, inst, frm, to, m, ns, dev))
         if abs(dev) > BAND:
@@ -335,6 +380,8 @@ def band_mode(timing, sdf_path, grade, out):
     print(condition, file=out)
     print(f"grade: {grade} -- {GRADE_PROVENANCE.get(grade, 'unknown provenance')}",
           file=out)
+    if any(c in ZERO_MODEL_CLASSES for c in classes):
+        print(PLL_NO_ARCS_NOTE, file=out)
     for cell, inst, frm, to, m, ns, dev in exceptions:
         print(f"exception: {cell}/{inst} {frm}->{to} model={m:.3f}ns "
               f"sdf={ns:.3f}ns dev={dev * 100:+.1f}%", file=out)
@@ -363,6 +410,8 @@ def inventory_mode(timing, classes, chipdb_path, out):
 
     for cls in classes:
         groups = CLASS_GROUPS[cls]
+        if cls in ZERO_MODEL_CLASSES:
+            print(f"{cls:5} {PLL_NO_ARCS_NOTE}", file=out)
         per_group = class_arcs(timing, groups)
         for group, required in groups.items():
             per_grade = per_group.get(group, {})
@@ -395,7 +444,7 @@ def inventory_mode(timing, classes, chipdb_path, out):
     if not ratios:
         print("ratio C1/I0 : C2/I1 -- no comparable arcs (both grades needed)",
               file=out)
-        if any(CLASS_GROUPS[c] for c in classes):
+        if any(r for c in classes for r in CLASS_GROUPS[c].values()):
             failures.append("no C1/I0 : C2/I1 ratio could be computed")
     else:
         vals = [r for r, _ in ratios]
@@ -475,7 +524,7 @@ def main(argv=None, out=None):
 
     timing = load_timing(args.chipdb)
     if args.sdf:
-        return band_mode(timing, args.sdf, args.grade, out)
+        return band_mode(timing, args.sdf, args.grade, out, classes)
     return inventory_mode(timing, classes, args.chipdb, out)
 
 

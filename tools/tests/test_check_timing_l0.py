@@ -7,6 +7,7 @@ The last two tests run against the live GW5AST-138C chipdb.
 """
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -165,7 +166,7 @@ def test_check_timing_l0_uses_max_field_end_to_end(tmp_path):
     assert rc != 0
 
 
-@pytest.mark.parametrize("cls", ["pll", "io", "dsp"])
+@pytest.mark.parametrize("cls", ["io", "dsp"])
 def test_check_timing_l0_skips_unpopulated_classes(tmp_path, cls):
     chipdb = write_timing(tmp_path, synthetic_timing())
     sdf = write_sdf(tmp_path, [1.25] * 10)
@@ -254,3 +255,93 @@ def test_check_timing_l0_matches_bus_indexed_pins(tmp_path):
     assert ctl.norm_pin("CLKB") == "CLKB"
     # different indices must stay different
     assert ctl.norm_pin("DO[0]") != ctl.norm_pin("DO1")
+
+
+# --------------------------------------------------------------------------
+# P1.T33: the PLL slice of the L0 band (`D60`) -- a zero-arc class by
+# measurement.  The `.tm` carries no PLL model for this die (its 0x7cc block is
+# inherited GW2A rPLL data), nextpnr installs no PLL cell arc, and the vendor
+# SDF gives every `CLKIN -> CLKOUTn` IOPATH as `0.000`.  The band therefore
+# compares each vendor PLL arc against a model delay of 0.0.
+# --------------------------------------------------------------------------
+PLL_SDF_ARCS = [("PLL", "dut_pll", "CLKIN", f"CLKOUT{n}") for n in range(7)]
+
+
+def write_pll_sdf(tmp_path, delays, name="pll.sdf", condition=CONDITION_LINE):
+    """A vendor-shaped SDF with one `PLL` cell plus one unrelated `LUT4` cell."""
+    body = []
+    for (cell, inst, frm, to), d in zip(
+            PLL_SDF_ARCS + [("LUT4", "lut_a", "I0", "F")], list(delays) + [1.25]):
+        triple = f"{d:.3f}:{d:.3f}:{d:.3f}"
+        body.append(
+            f'  (CELL (CELLTYPE "{cell}") (INSTANCE {inst})\n'
+            f"    (DELAY (ABSOLUTE\n"
+            f"      (IOPATH {frm} {to} ({triple}) ({triple}))\n"
+            f"    ))\n"
+            f"  )"
+        )
+    text = (
+        "(DELAYFILE\n"
+        '  (SDFVERSION "3.0")\n'
+        '  (DESIGN "top")\n'
+        '  (VENDOR "Gowin")\n'
+        '  (PROGRAM "Gowin SDF Writer")\n'
+        "  (DIVIDER /)\n"
+        f"  {condition}\n"
+        "  (TIMESCALE 1 ns)\n" + "\n".join(body) + "\n)\n"
+    )
+    p = tmp_path / name
+    p.write_text(text)
+    return str(p)
+
+
+def test_v12a_pll_band(tmp_path):
+    """`--classes pll --sdf <pll design>` prints the V12a contract and exits 0."""
+    chipdb = write_timing(tmp_path, synthetic_timing())   # no `pll` group
+    sdf = write_pll_sdf(tmp_path, [0.0] * 7)
+    rc, out, err = run_tool("--classes", "pll", "--sdf", sdf, "--chipdb", chipdb)
+    lines = out.splitlines()
+    assert re.match(
+        r"^L0 ok: \d+/\d+ arcs within ±10%, \d+ exceptions listed$", lines[0]
+    ), lines[0]
+    assert lines[0] == "L0 ok: 7/7 arcs within ±10%, 0 exceptions listed"
+    assert lines[1] == CONDITION_LINE          # the SDF condition line (D49f)
+    assert rc == 0, out + err
+
+
+def test_v12a_pll_band_ignores_non_pll_cells(tmp_path):
+    """The `pll` class compares PLL cells only; the LUT4 in the same SDF is not counted."""
+    chipdb = write_timing(tmp_path, synthetic_timing())
+    sdf = write_pll_sdf(tmp_path, [0.0] * 7)
+    rc, out, _ = run_tool("--classes", "pll", "--sdf", sdf, "--chipdb", chipdb)
+    assert out.splitlines()[0].startswith("L0 ok: 7/7 ")
+    assert "unmapped" not in out
+    assert rc == 0
+
+
+def test_v12a_pll_band_fails_if_vendor_publishes_a_delay(tmp_path):
+    """A future vendor release with a non-zero PLL arc must fail, not pass quietly."""
+    chipdb = write_timing(tmp_path, synthetic_timing())
+    sdf = write_pll_sdf(tmp_path, [0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0])
+    rc, out, _ = run_tool("--classes", "pll", "--sdf", sdf, "--chipdb", chipdb)
+    assert out.splitlines()[0] == "L0 ok: 6/7 arcs within ±10%, 1 exceptions listed"
+    assert "exception: PLL/dut_pll CLKIN->CLKOUT2" in out
+    assert rc != 0
+
+
+def test_pll_inventory_reports_the_zero_arc_class(tmp_path):
+    """Inventory mode reports `pll` with its justification and exits 0."""
+    chipdb = write_timing(tmp_path, synthetic_timing())
+    rc, out, err = run_tool("--classes", "pll", "--chipdb", chipdb)
+    assert rc == 0, out + err
+    assert "BY DESIGN (P1.T33)" in out
+    assert "0x7cc" in out and "GW2A-18.tm" in out
+    assert out.rstrip().splitlines()[-1].startswith("L0 INVENTORY ok: 0/0 ")
+
+
+@pytest.mark.skipif(not os.path.isfile(REAL_CHIPDB), reason="no built chipdb")
+def test_real_chipdb_has_no_pll_timing_group():
+    """`parse_pll` publishes nothing, so no grade carries a `pll` group (P1.T33)."""
+    timing = ctl.load_timing(REAL_CHIPDB)
+    for grade, groups in timing.items():
+        assert "pll" not in groups, f"{grade} gained a pll timing group"
