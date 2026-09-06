@@ -1,0 +1,33 @@
+BATCH_START batch=p1-pll-pump shape=clocking_pll_pump level=E1 pid=85019 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/pump
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p1-pll-pump sha256=2a741df710c33f3c11ebeff5917a1492efc815dec01f3fa1744eea3cb6970740
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 10 run ids)
+BATCH_RESUME batch=p1-pll-pump planned=10 already_terminal=0
+RUN_START p1-pll-pump-clocking_pll_pump-0000 sweep='f19_n35'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0000 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0001 sweep='f19_n68'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0001 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0002 sweep='f20_n50'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0002 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0003 sweep='f40_n17'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0003 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0004 sweep='f40_n32'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0004 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0005 sweep='f50_n13'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0005 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0006 sweep='f50_n26'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0006 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0007 sweep='f65_n10'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0007 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0008 sweep='f65_n20'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0008 verdict=aborted
+RUN_START p1-pll-pump-clocking_pll_pump-0009 sweep='f81_n16'
+RUN_DONE p1-pll-pump-clocking_pll_pump-0009 verdict=aborted
+BATCH_SKIPPED batch=p1-pll-pump n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-pump.rows.jsonl
+BATCH_COMPLETE p1-pll-pump runs=10 ok=0 diff=0 aborted=10

@@ -1,0 +1,30 @@
+17:05:12 BATCH_START batch=p1-pll-pump shape=clocking_pll_pump level=E1 pid=85019 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/pump
+17:06:12 BATCH_HEAD selftest --inject-one-fuse: ok
+17:06:34 BATCH_HEAD selftest --unpacker-completeness: ok
+17:06:35 BATCH_HEAD selftest --probe-mask-classes: ok
+17:06:36 BATCH_HEAD gw_sh pre-flight: ok
+17:06:36 BATCH_CHIPDB batch=p1-pll-pump sha256=2a741df710c33f3c11ebeff5917a1492efc815dec01f3fa1744eea3cb6970740
+17:06:36 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 10 run ids)
+17:06:36 BATCH_RESUME batch=p1-pll-pump planned=10 already_terminal=0
+17:06:36 RUN_START p1-pll-pump-clocking_pll_pump-0000 sweep='f19_n35'
+17:06:57 RUN_DONE p1-pll-pump-clocking_pll_pump-0000 verdict=aborted
+17:06:57 RUN_START p1-pll-pump-clocking_pll_pump-0001 sweep='f19_n68'
+17:07:17 RUN_DONE p1-pll-pump-clocking_pll_pump-0001 verdict=aborted
+17:07:18 RUN_START p1-pll-pump-clocking_pll_pump-0002 sweep='f20_n50'
+17:07:38 RUN_DONE p1-pll-pump-clocking_pll_pump-0002 verdict=aborted
+17:07:39 RUN_START p1-pll-pump-clocking_pll_pump-0003 sweep='f40_n17'
+17:08:04 RUN_DONE p1-pll-pump-clocking_pll_pump-0003 verdict=aborted
+17:08:04 RUN_START p1-pll-pump-clocking_pll_pump-0004 sweep='f40_n32'
+17:08:34 RUN_DONE p1-pll-pump-clocking_pll_pump-0004 verdict=aborted
+17:08:34 RUN_START p1-pll-pump-clocking_pll_pump-0005 sweep='f50_n13'
+17:09:00 RUN_DONE p1-pll-pump-clocking_pll_pump-0005 verdict=aborted
+17:09:00 RUN_START p1-pll-pump-clocking_pll_pump-0006 sweep='f50_n26'
+17:09:24 RUN_DONE p1-pll-pump-clocking_pll_pump-0006 verdict=aborted
+17:09:24 RUN_START p1-pll-pump-clocking_pll_pump-0007 sweep='f65_n10'
+17:09:26 RUN_DONE p1-pll-pump-clocking_pll_pump-0007 verdict=aborted
+17:09:26 RUN_START p1-pll-pump-clocking_pll_pump-0008 sweep='f65_n20'
+17:09:27 RUN_DONE p1-pll-pump-clocking_pll_pump-0008 verdict=aborted
+17:09:28 RUN_START p1-pll-pump-clocking_pll_pump-0009 sweep='f81_n16'
+17:09:29 RUN_DONE p1-pll-pump-clocking_pll_pump-0009 verdict=aborted
+17:09:29 BATCH_SKIPPED batch=p1-pll-pump n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-pump.rows.jsonl
+BATCH_COMPLETE p1-pll-pump runs=10 ok=0 diff=0 aborted=10

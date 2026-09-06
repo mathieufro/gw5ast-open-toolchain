@@ -1,6 +1,11 @@
 # What blocks the open flow from packing a `PLL` on the GW5AST-138C (`P1.T23`)
 
-**Status: MEASURED.** Every claim below is a command that was run and its
+**Status: CLOSED by `P1.T41`** — all four gaps, plus three more the flow only
+exposed once it ran end to end. What closed each one, and the `E1` verdict line
+of the design that proves it, is in **`pump-138c.md`**. The measurement below is
+kept verbatim as the record of what was found; nothing in it has been rewritten.
+
+**Status when written: MEASURED.** Every claim below is a command that was run and its
 exact output, except the three marked SOURCE, which are `file:line` reads with
 no cheap runtime probe.
 

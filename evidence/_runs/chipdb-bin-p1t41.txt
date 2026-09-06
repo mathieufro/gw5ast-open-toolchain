@@ -1,0 +1,14 @@
+# P1.T41 — nextpnr + chipdb pair regenerated together (D101: always a pair)
+#
+# The chipdb format gained a `macro_bels` table (the vendor placement handle of
+# every macro-addressable site), so every older .bin is invalid for this binary.
+
+nextpnr source:  integration/p1-clocking 0b2cd5f1
+apicula source:  integration/p1-clocking ceb6ca4
+
+c52e9e839bd7bf606f07d01edc3f1f29311108dae5f6e9008049d1fe2748d70f  /Users/alex/fine-line-data/open-toolchain-gw5ast/toolchains/nextpnr/bin/nextpnr-himbaechel
+a2d134c3ee8f38e8b53033c9cb2c7953c8dc5b5cd05e9f86e89b0dc4a8e0cac7  /Users/alex/fine-line-data/open-toolchain-gw5ast/chipdb/std/GW5AST-138C.msgpack.xz
+1cb1dc3915e01f7a0bb4dcdd8b75c8c9f2a8a9f6e131a5496219a9d6e50b298c  /Users/alex/fine-line-data/open-toolchain-gw5ast/chipdb/std/chipdb-GW5AST-138C.bin
+1cb1dc3915e01f7a0bb4dcdd8b75c8c9f2a8a9f6e131a5496219a9d6e50b298c  /Users/alex/fine-line-data/open-toolchain-gw5ast/toolchains/nextpnr/share/himbaechel/gowin/chipdb-GW5AST-138C.bin
+
+# Supersedes the pair recorded before this task (msgpack 64c4bfac / .bin 2a741df7).
