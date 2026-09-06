@@ -1,0 +1,47 @@
+BATCH_START batch=p1t14-clkdiv-e1 shape=clocking_clkdiv level=E1 pid=13158 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t14-clkdiv-e1
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 9 run ids)
+BATCH_RESUME batch=p1t14-clkdiv-e1 planned=9 already_terminal=0
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0000 sweep='1'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0000 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0001 sweep='2'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0001 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0002 sweep='3'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0002 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0003 sweep='3.5'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0003 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0004 sweep='4'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0004 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0005 sweep='5'
+BATCH_START batch=p1t14-clkdiv-e1 shape=clocking_clkdiv level=E1 pid=6342 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t14-clkdiv-e1
+BATCH_START batch=p1t14-clkdiv-e1 shape=clocking_clkdiv level=E1 pid=7028 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t14-clkdiv-e1
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 9 run ids)
+BATCH_RESUME batch=p1t14-clkdiv-e1 planned=9 already_terminal=5
+RUN_SKIP p1t14-clkdiv-e1-clocking_clkdiv-0000 (terminal row already present)
+RUN_SKIP p1t14-clkdiv-e1-clocking_clkdiv-0001 (terminal row already present)
+RUN_SKIP p1t14-clkdiv-e1-clocking_clkdiv-0002 (terminal row already present)
+RUN_SKIP p1t14-clkdiv-e1-clocking_clkdiv-0003 (terminal row already present)
+RUN_SKIP p1t14-clkdiv-e1-clocking_clkdiv-0004 (terminal row already present)
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0005 sweep='5'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0005 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0006 sweep='6'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0006 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0007 sweep='7'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0007 verdict=ok
+RUN_START p1t14-clkdiv-e1-clocking_clkdiv-0008 sweep='8'
+RUN_DONE p1t14-clkdiv-e1-clocking_clkdiv-0008 verdict=ok
+BATCH_SKIPPED batch=p1t14-clkdiv-e1 n=5 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t14-clkdiv-e1.rows.jsonl
+BATCH_COMPLETE p1t14-clkdiv-e1 runs=4 ok=4 diff=0 aborted=0

@@ -1,0 +1,14 @@
+BATCH_START batch=p1t14-trial3 shape=clocking_clkdiv level=E1 pid=61030 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t14-trial3
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+BATCH_RESUME batch=p1t14-trial3 planned=1 already_terminal=0
+RUN_START p1t14-trial3-clocking_clkdiv-0000 sweep='1'
+RUN_DONE p1t14-trial3-clocking_clkdiv-0000 verdict=ok
+BATCH_SKIPPED batch=p1t14-trial3 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1t14-trial3.rows.jsonl
+BATCH_COMPLETE p1t14-trial3 runs=1 ok=1 diff=0 aborted=0

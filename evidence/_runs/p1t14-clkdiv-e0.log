@@ -1,0 +1,11 @@
+13:10:38 BATCH_START batch=p1t14-clkdiv-e0 shape=clocking_clkdiv_free level=E0 pid=27425 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t14-clkdiv-e0
+13:11:54 BATCH_HEAD selftest --inject-one-fuse: ok
+13:12:12 BATCH_HEAD selftest --unpacker-completeness: ok
+13:12:13 BATCH_HEAD selftest --probe-mask-classes: ok
+13:12:21 BATCH_HEAD gw_sh pre-flight: ok
+13:12:21 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+13:12:21 BATCH_RESUME batch=p1t14-clkdiv-e0 planned=1 already_terminal=0
+13:12:21 RUN_START p1t14-clkdiv-e0-clocking_clkdiv_free-0000 sweep='free'
+13:14:15 RUN_DONE p1t14-clkdiv-e0-clocking_clkdiv_free-0000 verdict=diff
+13:14:15 BATCH_SKIPPED batch=p1t14-clkdiv-e0 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t14-clkdiv-e0.rows.jsonl
+BATCH_COMPLETE p1t14-clkdiv-e0 runs=1 ok=0 diff=1 aborted=0

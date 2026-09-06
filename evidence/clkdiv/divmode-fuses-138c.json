@@ -1,0 +1,294 @@
+{
+  "device": "GW5AST-138C",
+  "points": [
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "1"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ]
+      ],
+      "attrvals": [
+        14,
+        19
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "1",
+      "packer_predicted": [
+        [
+          21,
+          15
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0000",
+      "set": [
+        "21,15"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [],
+      "attrvals": [],
+      "cleared": [],
+      "div_mode": "2",
+      "packer_predicted": [
+        [
+          21,
+          51
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0001",
+      "set": [],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "3"
+        ]
+      ],
+      "attrvals": [
+        14,
+        20
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "3",
+      "packer_predicted": [
+        [
+          21,
+          49
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0002",
+      "set": [
+        "21,49"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "3.5"
+        ]
+      ],
+      "attrvals": [
+        14,
+        15
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "3.5",
+      "packer_predicted": [
+        [
+          21,
+          13
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0003",
+      "set": [
+        "21,13"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "4"
+        ]
+      ],
+      "attrvals": [
+        14,
+        16
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "4",
+      "packer_predicted": [
+        [
+          21,
+          12
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0004",
+      "set": [
+        "21,12"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "5"
+        ]
+      ],
+      "attrvals": [
+        14,
+        17
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "5",
+      "packer_predicted": [
+        [
+          21,
+          47
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0005",
+      "set": [
+        "21,47"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "6"
+        ]
+      ],
+      "attrvals": [
+        14,
+        21
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "6",
+      "packer_predicted": [
+        [
+          21,
+          11
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0006",
+      "set": [
+        "21,11"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "7"
+        ]
+      ],
+      "attrvals": [
+        14,
+        22
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "7",
+      "packer_predicted": [
+        [
+          21,
+          52
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0007",
+      "set": [
+        "21,52"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    },
+    {
+      "agrees_with_packer": true,
+      "attributed": [
+        [
+          "HCLKDIV0_DIV",
+          "2"
+        ],
+        [
+          "HCLKDIV0_DIV",
+          "8"
+        ]
+      ],
+      "attrvals": [
+        14,
+        18
+      ],
+      "cleared": [
+        "21,51"
+      ],
+      "div_mode": "8",
+      "packer_predicted": [
+        [
+          21,
+          10
+        ]
+      ],
+      "run": "p1t14-clkdiv-e1-clocking_clkdiv-0008",
+      "set": [
+        "21,10"
+      ],
+      "tile_bits": 20,
+      "verified": true
+    }
+  ],
+  "reference_div_mode": "2",
+  "reference_tile_bits": 20,
+  "site_tile": [
+    108,
+    117
+  ],
+  "site_ttyp": 379,
+  "task": "P1.T14"
+}

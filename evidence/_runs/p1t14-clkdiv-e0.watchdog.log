@@ -1,0 +1,2 @@
+15:10:38 WATCHDOG_ARMED batch=p1t14-clkdiv-e0 stall=35min poll=300s (independent process)
+15:14:15 WATCHDOG_COMPLETE batch=p1t14-clkdiv-e0 saw BATCH_COMPLETE (clean exit)

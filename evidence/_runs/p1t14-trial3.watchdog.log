@@ -1,0 +1,3 @@
+11:34:12 WATCHDOG_ARMED batch=p1t14-trial3 stall=5min poll=100s (independent process)
+11:39:19 WATCHDOG_STALL batch=p1t14-trial3 newest=p1t14-trial3.stdout.log age=5min > 5min — batch pid 61030 ALIVE but producing nothing
+11:47:06 WATCHDOG_COMPLETE batch=p1t14-trial3 saw BATCH_COMPLETE (clean exit)

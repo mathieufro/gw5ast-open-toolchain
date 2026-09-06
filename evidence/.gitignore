@@ -110,6 +110,20 @@
 !plla/merge_sweep_rows.py
 !plla/sweep-a-138c.json
 
+# the P1.T14 CLKDIV DIV_MODE sweep: the analyser that differences each run's
+# vendor .fs inside the HCLK block cell, resolves the moved bits through the
+# tile's shortval['HCLK'] table and cross-checks the result against what
+# gowin_pack.GW5A.get_CLKDIV_fuses predicts, its output (the per-point moved-bit
+# lists summary.md's fuse table is generated from), the batch-rows -> slug-rows
+# promotion step and the table renderer summary.md's verdict table comes out of.
+# Same named-exception pattern as plla/ and dhcen/ above -- .json/.py are not
+# covered by "*.md", and summary.md claims its tables are generated rather than
+# retyped, which is only checkable if these are in the tree.
+!clkdiv/gen_divmode_fuses.py
+!clkdiv/divmode-fuses-138c.json
+!clkdiv/promote_rows.py
+!clkdiv/row_table.py
+
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo
