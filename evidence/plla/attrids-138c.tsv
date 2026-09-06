@@ -40,9 +40,14 @@ GW5A-25A	-	slot	-	-	1024	35	2440	2416	16	2512
 # P1.T22 reconciliation, GW5AST-138C logicinfo['PLL'] vs apycula/attrids.py pll_attrids
 # (counts are AFTER this task appended the two MEASURED names below)
 metric	value
-in_both	174
-fse_id_with_no_name	18
+in_both	176
+fse_id_with_no_name	16
 name_with_no_fse_id	20
+
+# P1.T42 appended to pll_attrids, MEASURED (batch p1t42-pll-dyn / sweep C, site PLL_L[0])
+attr_id	value	name	derivation
+124	50	A_DYN_FBDIV_SEL	DYN_FBDIV_SEL="TRUE" moves 319 bits across all three tiles of the site; every moved bit is in a shortval[35] row keyed by (124, 50); pll_attrvals['TRUE']==50 (sweep-c-138c.md finding 2)
+131	50	A_DYN_MDIV_SEL	DYN_MDIV_SEL="TRUE" moves 1 bit in the anchor tile, in a shortval[35] row keyed by (131, 50) (sweep-c-138c.md finding 2)
 
 # P1.T22 appended to pll_attrids, MEASURED (batch p1-pll-attrmap, site PLL_L[0])
 attr_id	value	name	derivation
@@ -56,9 +61,7 @@ attr_id	values_in_fse	on_gw5a_25a	reason
 206	3	yes	as 107
 210	1..7	yes	as 107, 7 distinct values
 211	1..3	yes	as 107, 3 distinct values
-124	50	no	138C-only, single boolean value 50 (TRUE); UNMEASURED. Neighbour of the measured 125/132 pair, so the DYN_*_SEL family the 25A PLLA has no ports for (D96) is the hypothesis, not a measurement
-131	50	no	as 124
-133	50	no	as 124
+133	50	no	138C-only, single boolean value 50 (TRUE); UNMEASURED. Neighbour of the measured 124/125/131/132 DYN_*_SEL family, so the same family is the hypothesis, not a measurement
 134	50	no	as 124
 135	50	no	as 124
 136	50	no	as 124
