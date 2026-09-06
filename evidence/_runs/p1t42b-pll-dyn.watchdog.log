@@ -1,0 +1,2 @@
+23:14:08 WATCHDOG_ARMED batch=p1t42b-pll-dyn stall=5min poll=100s (independent process)
+23:20:43 WATCHDOG_COMPLETE batch=p1t42b-pll-dyn saw BATCH_COMPLETE (clean exit)

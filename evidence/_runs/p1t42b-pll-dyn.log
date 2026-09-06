@@ -1,0 +1,14 @@
+21:14:08 BATCH_START batch=p1t42b-pll-dyn shape=clocking_pll level=E1 pid=85202 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t42b-pll-dyn
+21:15:08 BATCH_HEAD selftest --inject-one-fuse: ok
+21:15:28 BATCH_HEAD selftest --unpacker-completeness: ok
+21:15:29 BATCH_HEAD selftest --probe-mask-classes: ok
+21:15:33 BATCH_HEAD gw_sh pre-flight: ok
+21:15:33 BATCH_CHIPDB batch=p1t42b-pll-dyn sha256=2f613b6743330e4570f5a72f165b781c34bb6ffbc8107eb709564efa1d83a022
+21:15:33 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 2 run ids)
+21:15:33 BATCH_RESUME batch=p1t42b-pll-dyn planned=2 already_terminal=0
+21:15:33 RUN_START p1t42b-pll-dyn-clocking_pll-0000 sweep='dyn_none'
+21:17:55 RUN_DONE p1t42b-pll-dyn-clocking_pll-0000 verdict=ok
+21:17:55 RUN_START p1t42b-pll-dyn-clocking_pll-0001 sweep='dyn_idiv'
+21:20:41 RUN_DONE p1t42b-pll-dyn-clocking_pll-0001 verdict=ok
+21:20:41 BATCH_SKIPPED batch=p1t42b-pll-dyn n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1t42b-pll-dyn.rows.jsonl
+BATCH_COMPLETE p1t42b-pll-dyn runs=2 ok=2 diff=0 aborted=0

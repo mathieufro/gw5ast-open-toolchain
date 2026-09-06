@@ -1,4 +1,66 @@
-# `evidence/clocking/` — the Phase 1 integration E2E on the GW5AST-138C (`P1.T38b`)
+# `evidence/clocking/` — the Phase 1 integration E2E on the GW5AST-138C
+
+Two rows: `P1.T40`, the phase's whole-clock-plane design, and `P1.T38b`, the
+two-lane `CLKDIV` design that was this shape's earlier form. Everything T38b
+proved, T40's design contains.
+
+## `P1.T40` — the whole clock plane in one bitstream
+
+Batch `p1t40-e2e`, **1 oracle run** (campaign cumulative 219), level `E1`,
+pair: nextpnr binary `cfc97099…`, chipdb `.bin` `0a413537…`, apicula msgpack
+`8bb0932e…`.
+
+    clk (V22, board 50 MHz ball)
+      -> DHCE gate0                        (HCLK input-mux enable, P1.T26/T27)
+      -> HCLK block 5 lane 0
+      -> CLKDIV div0  DIV_MODE="4"                              -> ring_a
+      -> DCE dce0     quadrant spine of bridge cell (54, 93)    -> ring_b
+    PLL dut_pll @ PLL_L[0], FCLKIN 50 / IDIV 1 / FBDIV 1 / MDIV 16 / ODIV0 8
+      -> CLKOUT0 100 MHz                                        -> ring_c
+
+```
+BATCH_COMPLETE p1t40-e2e runs=1 ok=1 diff=0 aborted=0
+EQUIV E1 ok: cells 0, attrs 0, conns 0, decode c1 ok / c2 ok, 0 unexplained bits
+c1: 18 of 18 required cells recovered
+```
+
+Placement is pinned on both sides: the vendor by `INS_LOC "dut_pll" PLL_L[0]`
+and `INS_LOC "div0" BOTTOMSIDE[4]`, the open flow by the `PLL_L[0]` macro form
+plus the RTL `BEL` attribute for the divider (nextpnr's `.cst` reader cannot
+parse `SIDE[0~7]`, `P1.T14`).
+
+### What the design does not contain, all MEASURED on this shape's own builds
+
+* **No `DCS`.** Its input multiplexers are unreachable in the model —
+  `evidence/dcs/openflow-gap-138c.md`.
+* **No `PLL` -> HCLK cascade.** nextpnr: `Failed to route net ... from
+  X146Y108/MPLLCLKOUT0 to X117Y108/CLKDIV_I50 using dedicated routing`, with
+  and without the `DHCE` between them, from a bottom-edge site and from
+  `PLL_L[0]` alike. The HCLK lane input multiplexers this die models
+  (`P1.T08d`) carry no `PLL` entry: a `PLL`->HCLK path is a gap in the model,
+  not a phrasing of the design. **Named gap, owner: a later HCLK row.**
+* **`PLL_B[*]` outputs reach no fabric flop.** From `PLL_B[2]` (row 108,
+  col 146) `MPLLCLKOUT0` could not be routed to a fabric flop at all, while
+  `PLL_L[0]` routes; the bottom-edge sites' clock-network entry is a further
+  gap. Every PLL row of the phase measured `PLL_L[0]`, so nothing already
+  landed rests on it.
+* **Four global clock nets at once hit a nextpnr assert.** With the `DCE` on
+  the *board* clock rather than on the divided one — i.e. `clk`, `gated_hclk`,
+  `div_clk`, `dce_clk` and `pll_clkout0` as five distinct nets — the general
+  router aborts with `Assert net_info->wires.count(wire) failed`
+  (`common/route/router1.cc:347`) after the PLL net's dedicated route falls
+  back. Removing any one gate routes cleanly. The design chains the `DCE`
+  behind the divider instead, which is the better shape anyway, and the assert
+  is recorded as an upstream nextpnr bug rather than worked around silently.
+
+### Deviation from the blueprint
+
+`P1.T40` also asks for `examples/gw5a/clocktree_e2e-tangmega138k.v` plus its
+`.cst` and Makefile entries. Not written: the example is documentation, the
+shape is the evidence, and appending to the Makefile touches `P1.T34`'s
+tested-by-diff rule section. Recorded here rather than done silently.
+
+# `P1.T38b` — the two-lane CLKDIV E2E
 
 ## Row
 
