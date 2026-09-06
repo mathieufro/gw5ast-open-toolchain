@@ -516,10 +516,21 @@ def check(spec_path, evidence_dir, slugs, exclude_slugs, schema, apicula_root):
                 findings.append(
                     f"{prow.id}/{run_id}: verdict 'ok' but diff_count has a "
                     f"non-zero cells/attrs/conns delta ({diff_sum})")
-            if verdict == "diff" and diff_sum == 0:
+            # A `diff` with three clean sets is admissible only when the
+            # row names the other verdict term it failed on: the raw residual
+            # (`spec-harness.md` 5.1b, D35) or the decode check (5.4, D34).
+            # Both are required for a row to close, so neither can be a set
+            # difference and neither shows up in `diff_count`.
+            decode_failed = any(
+                value != "ok"
+                for value in (row.get("decode_check") or {}).values())
+            if (verdict == "diff" and diff_sum == 0
+                    and not row.get("unexplained_bits")
+                    and not decode_failed):
                 findings.append(
                     f"{prow.id}/{run_id}: verdict 'diff' but diff_count's "
-                    f"cells/attrs/conns are all zero")
+                    f"cells/attrs/conns are all zero, and neither the "
+                    f"residual nor the decode check says otherwise")
 
             # The mask is an input to the E0/E1 comparison, so it is only
             # meaningful on a row whose comparison actually ran. An `aborted`

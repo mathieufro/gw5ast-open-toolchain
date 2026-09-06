@@ -316,9 +316,6 @@ class TestSkeletonDirectoryIsPending(CheckEvidenceTestCase):
         self.assertIn("BLANK", proc.stdout)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 # --------------------------------------------------------------------------
 # `D90` (gestalt `G6`): the sweep over every `runs.jsonl` in the tree, which
@@ -425,3 +422,42 @@ def test_check_evidence_bookkeeping_row_is_not_a_run_row(tmp_path):
     bad_proc = run_tool([spec, evidence])
     assert bad_proc.returncode != 0, bad_proc.stdout
     assert "sort-of-ok" in bad_proc.stdout
+
+
+class TestDiffWithCleanSets(CheckEvidenceTestCase):
+    """A `diff` with three clean sets must name the term it failed on.
+
+    `spec-harness.md` 5.1b and 5.4 make the raw residual and the decode check
+    verdict terms that never appear in `diff_count`, so a clean-set `diff` is
+    admissible when the row carries one of them -- and a finding when it
+    carries neither.
+    """
+    def _findings(self, row):
+        write_spec_primitives(self.spec_path, [("PLLA", "plla")])
+        write_runs(self.evidence_dir, "plla", [row])
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        return proc.stdout
+
+    def test_clean_set_diff_is_admissible_on_a_decode_mismatch(self):
+        row = good_row("plla-A-0001", "PLLA", verdict="diff",
+                       diff_count={"cells": 0, "attrs": 0, "conns": 0})
+        row["decode_check"] = {"c1": "mismatch", "c2": "ok"}
+        self.assertIn("0 admissibility findings", self._findings(row))
+
+    def test_clean_set_diff_is_admissible_on_an_unexplained_residual(self):
+        row = good_row("plla-A-0001", "PLLA", verdict="diff",
+                       diff_count={"cells": 0, "attrs": 0, "conns": 0},
+                       unexplained_bits=[{"category": "x", "bits": 1,
+                                          "justification": "y"}])
+        self.assertIn("0 admissibility findings", self._findings(row))
+
+    def test_clean_set_diff_with_no_other_term_is_a_finding(self):
+        row = good_row("plla-A-0001", "PLLA", verdict="diff",
+                       diff_count={"cells": 0, "attrs": 0, "conns": 0})
+        out = self._findings(row)
+        self.assertIn("1 admissibility findings", out)
+        self.assertIn("cells/attrs/conns are all zero", out)
+
+
+if __name__ == "__main__":
+    unittest.main()
