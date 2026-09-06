@@ -24,10 +24,21 @@ def _summary_lines():
         return f.read().splitlines()
 
 
-def _row():
+def _rows():
     with open(ROWS, encoding="utf-8") as f:
-        rows = [json.loads(ln) for ln in f if ln.strip()]
-    assert len(rows) == 1, f"expected exactly 1 runs.jsonl row, got {len(rows)}"
+        return [json.loads(ln) for ln in f if ln.strip()]
+
+
+def _row(primitive="L0-cfu-band"):
+    """The one row for `primitive`.
+
+    The slug's `runs.jsonl` holds one row per L0 class band, not one row full
+    stop: `P1.T33` added `L0-pll-band` beside `P0.T37`'s `L0-cfu-band`. These
+    tests assert the CFU measurement, so they select it by primitive rather
+    than by being the only line in the file.
+    """
+    rows = [r for r in _rows() if r["primitive"] == primitive]
+    assert len(rows) == 1, f"expected exactly 1 {primitive} row, got {len(rows)}"
     return rows[0]
 
 
@@ -75,3 +86,16 @@ def test_l0_cfu_chipdb_is_post_dealias():
     row = _row()
     assert sum(1 for s in post_shas if s == row["chipdb_sha256"]) == 1
     assert row["chipdb_sha256"] not in pre_shas
+
+
+# --------------------------------------------------------------------------
+# P1.T33: the PLL class band lives in the same slug (`D60`)
+# --------------------------------------------------------------------------
+def test_l0_pll_row_recorded():
+    """The `L0-pll-band` row records the zero-arc result and its condition line."""
+    row = _row("L0-pll-band")
+    assert row["sweep"]["classes"] == "pll"
+    assert row["verdict"] == "ok"
+    assert row["sdf_condition"], "no SDF condition line recorded (D49f)"
+    assert "7/7 arcs within +/-10%" in row["notes"]
+    assert os.path.isfile(os.path.join(SLUG, "pll-slice.md"))
