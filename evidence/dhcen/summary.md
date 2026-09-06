@@ -68,3 +68,43 @@ Open flow: `yosys` accepts `DHCE` unchanged (`cells_xtra_gw5a.v` declares it);
 pseudo cell — then stops at the HCLK routing gap above. It also confirms
 `P1.T25`'s open hypothesis: allocation order inside a block **is** the
 multiplexer order.
+
+---
+
+## P1.T27 — the gate reaches the bitstream (`lane-138c.md`)
+
+`15` further vendor runs (batches `p1t27-dhce-lane` 5, `p1t27-dhce-e1` 6,
+`p1t27-dhce-e1b` 4; cumulative `149`).
+
+**Site index is lane index.** Six single-DHCE compiles across two blocks
+(block 5 lanes 0-3, block 4 lanes 0 and 2) each set the gate fuse of the input
+multiplexer with the *lane's* index, and the DHCE-free control sets none.
+`P1.T26`'s allocation-order sweep could not separate that from the vendor's
+fill order; it now is.
+
+**The open flow sets the gate.** Root cause of `P1.T38b`'s finding:
+`chipdb` recorded the fuse-bearing multiplexer as the wire nextpnr matches a
+routed clock against, and that wire is unreachable — its sources are dangling
+in table 48. The entry now carries the lane's own entry multiplexer as `pip`
+and the gate multiplexer as `gate`. Batch `p1t27-dhce-e1b`, shape
+`clocking_dhce`, scope the block-5 cell:
+
+**`E1`, `cells = 0`, `attrs = 0`, `conns = 0`, `unexplained_bits` empty,
+`decode_check {c1: ok, c2: ok}` on lanes 0, 1 and 2** — three rows, `0`
+`diff`, `0` refused.
+
+**One refuted assumption, fixed on the spot.** `CLKDIV.RESETN` on this device
+is `D4..D7`, not the `C4..C7` carried over from the GW5A-25A; `C5` and `C7`
+are DHCE `CEN` wires, so the wrong table made nextpnr refuse any design with
+both primitives on those lanes. `CLKDIV.CALIB` (`B6 B7 C0 C1`) is confirmed.
+
+**Lane 3 is a stated gap, not a hole.** Its logic→HCLK entry is the fabric
+wire `LSR2`, so a clock reaches it over fabric — the vendor's own `b5l3`
+bitstream does exactly that — and `route_dhcen_net` refuses a DHCE-managed net
+that is not global end to end. The same design without the `DHCE` routes and
+packs (control `batch/p1t27-nodhce-l3`, exit 0), which is what makes this
+nextpnr policy rather than a missing wire. Lane 3's fuse is measured all the
+same, so the model covers all four lanes.
+
+Of the three UG306E p.19 consumers a DHCE may gate, only `CLKDIV.HCLKIN` is
+exercised here; `DQS.FCLK` and `DDRDLL.CLKIN` wait on Phase 5's DDR3 work.

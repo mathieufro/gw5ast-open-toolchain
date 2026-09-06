@@ -1,0 +1,18 @@
+16:30:18 BATCH_START batch=p1t27-dhce-e1b shape=clocking_dhce level=E1 pid=17489 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t27-e1
+16:31:16 BATCH_HEAD selftest --inject-one-fuse: ok
+16:31:37 BATCH_HEAD selftest --unpacker-completeness: ok
+16:31:38 BATCH_HEAD selftest --probe-mask-classes: ok
+16:31:39 BATCH_HEAD gw_sh pre-flight: ok
+16:31:39 BATCH_CHIPDB batch=p1t27-dhce-e1b sha256=2a741df710c33f3c11ebeff5917a1492efc815dec01f3fa1744eea3cb6970740
+16:31:39 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 4 run ids)
+16:31:39 BATCH_RESUME batch=p1t27-dhce-e1b planned=4 already_terminal=0
+16:31:39 RUN_START p1t27-dhce-e1b-clocking_dhce-0000 sweep='b5l0'
+16:34:16 RUN_DONE p1t27-dhce-e1b-clocking_dhce-0000 verdict=ok
+16:34:16 RUN_START p1t27-dhce-e1b-clocking_dhce-0001 sweep='b5l1'
+16:36:37 RUN_DONE p1t27-dhce-e1b-clocking_dhce-0001 verdict=ok
+16:36:37 RUN_START p1t27-dhce-e1b-clocking_dhce-0002 sweep='b5l2'
+16:38:37 RUN_DONE p1t27-dhce-e1b-clocking_dhce-0002 verdict=ok
+16:38:37 RUN_START p1t27-dhce-e1b-clocking_dhce-0003 sweep='b5l3'
+16:38:57 RUN_DONE p1t27-dhce-e1b-clocking_dhce-0003 verdict=aborted
+16:38:57 BATCH_SKIPPED batch=p1t27-dhce-e1b n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t27-dhce-e1b.rows.jsonl
+BATCH_COMPLETE p1t27-dhce-e1b runs=4 ok=3 diff=0 aborted=1

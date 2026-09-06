@@ -80,6 +80,11 @@
 !dhcen/fuse_probe.py
 !dhcen/build_fuse_table.py
 !dhcen/fuse-138c.json
+# the P1.T27 DHCE lane campaign: the five-run vendor driver whose output
+# lane-138c.md's site-index = lane-index table and the CLKDIV.RESETN
+# measurement are both read off. Same named-exception pattern as the P1.T25/T26
+# drivers above -- a .py is not covered by "*.md".
+!dhcen/gate_probe.py
 # the P1.T08d clock-mux campaign: the vendor-run driver, the two read-only
 # decoders every number in mux38-138c.md comes out of, and the sha256 ledger
 # of the 27 run .fs (D99 -- the .fs themselves are denied below and live in

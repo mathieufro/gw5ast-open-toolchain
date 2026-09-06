@@ -1,0 +1,2 @@
+18:30:18 WATCHDOG_ARMED batch=p1t27-dhce-e1b stall=5min poll=100s (independent process)
+18:38:58 WATCHDOG_COMPLETE batch=p1t27-dhce-e1b saw BATCH_COMPLETE (clean exit)

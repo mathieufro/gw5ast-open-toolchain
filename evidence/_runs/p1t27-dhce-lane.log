@@ -1,0 +1,7 @@
+18:01:13 BATCH_START p1t27-dhce-lane runs=5
+18:01:33 RUN b5l1 block=(108, 117) lane=1 verdict=ok wall=20.3s detail=
+18:01:55 RUN b5l2 block=(108, 117) lane=2 verdict=ok wall=22.1s detail=
+18:02:19 RUN b5l3 block=(108, 117) lane=3 verdict=ok wall=23.9s detail=
+18:02:41 RUN b4l0 block=(108, 64) lane=0 verdict=ok wall=21.6s detail=
+18:03:01 RUN b4l2 block=(108, 64) lane=2 verdict=ok wall=20.1s detail=
+BATCH_COMPLETE p1t27-dhce-lane runs=5 ok=5 diff=0 aborted=0
