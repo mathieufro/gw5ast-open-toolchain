@@ -88,6 +88,18 @@
 !hclk/probe_clkmux.py
 !hclk/e0_hclk_scope.py
 !hclk/p1t08d-fs.sha256
+
+# the P1.T28 DQCE/DCS tile-type re-derivation: the 8-run probe driver, the
+# reduced-diff re-run script (the embedded diff in run_probe.py stalled on
+# 16 incremental presence_diff calls and was killed; this 2-call script
+# reproduces the numbers tiletypes-138c.md quotes), the oracle-run ledger,
+# and the structured JSON both tiletypes-138c.md and tiles-138c.md are
+# generated from. Same named-exception pattern as plla/ and dhcen/ above.
+!dqce/run_probe.py
+!dqce/diff_fast.py
+!dqce/runs/oracle-runs.jsonl
+!dqce/tiletypes-138c.json
+!dcs/tiles-138c.json
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo

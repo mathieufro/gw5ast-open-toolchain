@@ -1,0 +1,19 @@
+23:31:47 BATCH_START p1-dqce-types runs=8
+23:32:23 RUN A1 seq=A n_dqce=1 verdict=ok wall=36.0s errs=[]
+23:32:59 RUN A2 seq=A n_dqce=2 verdict=ok wall=35.4s errs=[]
+23:33:23 RUN A3 seq=A n_dqce=3 verdict=ok wall=23.8s errs=[]
+23:33:41 RUN A4 seq=A n_dqce=4 verdict=ok wall=17.9s errs=[]
+23:33:57 RUN B1 seq=B n_dqce=1 verdict=ok wall=16.5s errs=[]
+23:34:13 RUN B2 seq=B n_dqce=2 verdict=ok wall=16.1s errs=[]
+23:34:29 RUN B3 seq=B n_dqce=3 verdict=ok wall=15.4s errs=[]
+23:34:44 RUN B4 seq=B n_dqce=4 verdict=ok wall=15.7s errs=[]
+23:34:44 DIFF loading chipdb
+08:40:00 NOTE: run_probe.py's embedded diff step does 16 incremental
+08:40:00 presence_diff calls (2 sequences x 4 cumulative instance counts, each
+08:40:00 vs both its predecessor and the shared baseline) and was still running
+08:40:00 past 5 minutes; killed and re-run as a 2-call reduced script (baseline
+08:40:00 vs A4.fs, baseline vs B4.fs only) against the same 8 kept .fs files,
+08:40:00 which completed in 20s -- see tiletypes-138c.md 'Presence-diff'
+08:40:00 section for the numbers. All 8 vendor compiles themselves completed
+08:40:00 with verdict=ok, aborted=0.
+08:40:00 BATCH_COMPLETE p1-dqce-types runs=8 ok=8 diff=0 aborted=0

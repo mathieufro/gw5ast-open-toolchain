@@ -1,0 +1,127 @@
+{
+ "task": "P1.T28",
+ "device": "GW5AST-138C",
+ "part": "GW5AST-LV138PG484AC1/I0",
+ "grid_layer": "fse['header']['grid'][61]",
+ "tile_types_138c": [
+  80,
+  81,
+  84,
+  85
+ ],
+ "cells": [
+  [
+   54,
+   88
+  ],
+  [
+   54,
+   89
+  ],
+  [
+   54,
+   92
+  ],
+  [
+   54,
+   93
+  ]
+ ],
+ "type_to_cell": {
+  "80": [
+   54,
+   88
+  ],
+  "81": [
+   54,
+   89
+  ],
+  "84": [
+   54,
+   92
+  ],
+  "85": [
+   54,
+   93
+  ]
+ },
+ "occurrence_counts": {
+  "80": 1,
+  "81": 1,
+  "84": 1,
+  "85": 1
+ },
+ "comparison_25a": {
+  "tile_types_25a": [
+   80,
+   81,
+   84,
+   85
+  ],
+  "cells_25a": [
+   [
+    18,
+    43
+   ],
+   [
+    18,
+    44
+   ],
+   [
+    18,
+    47
+   ],
+   [
+    18,
+    48
+   ]
+  ],
+  "grid_shape_25a": [
+   37,
+   92
+  ],
+  "grid_shape_138c": [
+   109,
+   182
+  ]
+ },
+ "why_they_differ": "The four numbers 80, 81, 84, 85 are NOT invalid on the 138C .fse -- each occurs, exactly once, at (54, 88), (54, 89), (54, 92), (54, 93) -- so `chipdb.py`'s existing linear search (which stops at the first match) already resolves to a real, unique cell for every one of the four types, on both devices. What differs is the geometry those four cells sit in. On GW5A-25A (37x92 grid, single clock plane) the same four types cluster at the single geometric center row (row 18 = floor(37/2), columns 43/44/47/48, i.e. two adjacent pairs either side of center_col) and that one cluster is provably sufficient, because 25A has one clock plane. On GW5AST-138C (109x182 grid) the four types cluster the same way -- one row (54 = floor(109/2)), four adjacent columns (88/89/92/93) either side of center_col -- but P1.T04 already measured 138C as a two-half topology (top half rows ~0-53, bottom half rows ~54-108, joined by a central bridge, 6 HCLK blocks split 2-top/4-bottom, not a single plane). A single central-row cluster of 4 types can only be the right host for a two-half device if the same 4 physical cells are genuinely shared/muxed between both halves -- an assumption the pre-5A-derived search never had to make and was never verified for 138C. The 8-run oracle probe below (fuzz.gw5ast138c.shapes.clocking_dqce_probe, sequences A/B, n_dqce=1..4) answers that empirically by testing whether the vendor toolchain's own DCE placements (see naming note) land inside this same 4-cell cluster or elsewhere.",
+ "naming_note": "MEASURED (this task): the vendor Verilog primitive for Dynamic Clock Enable on the Arora V / GW5A(ST) family is named `DCE`, not `DQCE` -- `DQCE` does not appear anywhere in UG306-1.0.1E (Arora V Clock User Guide; DCE is S3.1, port-identical to DQCE: CLKIN/CE/CLKOUT). Compiling `examples/dqce.v`'s generic (pre-5A) `DQCE` instantiation against GW5AST-138C fails at Gowin's own Verilog elaboration with `EX3937 Instantiating unknown module 'DQCE'`; renaming the instantiated module to `DCE` (same ports) compiles cleanly. apycula's own chipdb.py `extra_func['dqce']` key is an internal dict name unaffected by this -- it is not itself the vendor's instantiable Verilog identifier -- but any GW5A(ST)-targeted design (this probe, or a future user-facing example) must instantiate `DCE`, and this is worth carrying to whichever task authors a GW5A DQCE/DCE user example.",
+ "oracle_runs": {
+  "batch_id": "p1-dqce-types",
+  "count": 8,
+  "shape": "clocking_dqce_probe",
+  "log": "evidence/_runs/p1-dqce-types.log",
+  "ledger": "evidence/dqce/runs/oracle-runs.jsonl",
+  "result": "evidence/dqce/runs/diff-result.json"
+ },
+ "measured_placement": {
+  "method": "presence_diff(baseline=oracle-smoke/top.fs, instance=A4.fs|B4.fs) -- A4/B4 are the n_dqce=4 builds of each CE sequence (8-run batch, p1-dqce-types), reusing the kept .fs from the 8 successful oracle compiles (all verdict=ok, 0 aborted).",
+  "cells_with_measured_diff": {
+   "80@(54,88)": {
+    "A4_bits": 18,
+    "B4_bits": 14,
+    "status": "MEASURED live"
+   },
+   "84@(54,92)": {
+    "A4_bits": 7,
+    "B4_bits": 7,
+    "status": "MEASURED live"
+   },
+   "85@(54,93)": {
+    "A4_bits": 9,
+    "B4_bits": 9,
+    "status": "MEASURED live"
+   },
+   "81@(54,89)": {
+    "A4_bits": 0,
+    "B4_bits": 0,
+    "status": "ASSUMED -- 0 fuse bits moved in either build; a 4-instance test does not rule this cell out (apycula's own model gives each quadrant cell 6 dqce[j] sub-slots, `chipdb.py:2895-2911`, so 4 combinational-CE instances may simply not have needed a 4th distinct physical host). Confirming or refuting 81@(54,89) as a real DCE host needs >=6 simultaneous, spine-distinct instances -- out of this task's 8-run budget; left for P1.T29/T30 (which build the real 24-instance, 4-quadrant design anyway)."
+   }
+  },
+  "unrelated_diff_tiles_seen": {
+   "note": "(55,86) [224/230 bits] and (55,85) [54/46 bits] are the largest diffs in both builds but track the *combinational CE logic* (the LUTs implementing `key & rst_n` etc.), not clock infrastructure -- they are one tile row south of the (54,*) DCE cluster and their bit counts change with the CE expressions (sequence A vs B), consistent with ordinary logic placement, not a clock primitive.",
+   "(52,88)": "10 bits in B4 only, 2 bits in A4 -- an unexplained residual, noted for a follow-up task, not chased further here."
+  }
+ }
+}

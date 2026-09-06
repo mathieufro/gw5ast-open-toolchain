@@ -1,25 +1,19 @@
-# `evidence/dcs/` — P1 clocking evidence skeleton (`P1.T03`)
+# `evidence/dcs/` — P1.T28 summary (DCS half)
+
+**This row is the tile-type cross-reference, not the full DCS sweep** (that
+is P1.T31/T32). See `tiles-138c.md` + `tiles-138c.json`.
 
 ## Row
 
-_No oracle runs recorded yet. This is the pre-measurement evidence skeleton
-(`P1.T03`); rows land here as `runs.jsonl` entries appended by the
-harness (`fuzz.gw5ast138c.harness.evidence.append_row`), one per
-(primitive, shape, sweep point), per `spec-harness.md` §6. `runs.jsonl`
-itself is created lazily on the first appended row, exactly as
-`append_row` already does elsewhere in this tree — an empty `runs.jsonl`
-is deliberately never committed (`D90`: "an empty ... evidence file is not
-evidence")._
-
-## Sweep
-
-_Filled in once the owning task's first batch runs; see
-`blueprints/P1-clocking.md` for this slug's sweep plan._
+No separate oracle campaign — derived from the DQCE 8-run probe
+(`evidence/dqce/`), since DCS searches the identical 4 grid values.
 
 ## Verdict
 
-_Pending._
+Same 4 cells as DQCE: 3 confirmed live (80, 84, 85), 1
+unconfirmed-but-unrefuted (81). DCS's own port-table trace and quadrant
+allow-list fix are P1.T31's job, not this task's.
 
 ## Artefacts
 
-_None yet._
+`tiles-138c.md`, `tiles-138c.json`.

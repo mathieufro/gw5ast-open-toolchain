@@ -1,0 +1,15 @@
+{
+  "task": "P1.T28",
+  "device": "GW5AST-138C",
+  "part": "GW5AST-LV138PG484AC1/I0",
+  "derivation": "Same fse['header']['grid'][61] search as evidence/dqce/tiletypes-138c.json -- chipdb.py's DCS loop (`chipdb.py:2790`, `for q, types in enumerate([(85, 84), (80, 81), (80, 81), (85, 84)])`) searches the identical four values 80/81/84/85, just paired two-per-quadrant instead of one-per-quadrant. No separate oracle campaign was run for DCS: the physical cells are, by construction, the same 4 cells the DQCE probe already measured. DCS itself needed no primitive-name fix (unlike DQCE/DCE) -- `DCS` is documented for Arora V unchanged (UG306-1.0.1E S3.2, CLKIN0-3/CLKSEL/SELFORCE/CLKOUT) and `examples/gw5a/dcs.v` already instantiates it under that name.",
+  "tile_types_138c": [80, 81, 84, 85],
+  "cells": [[54, 88], [54, 89], [54, 92], [54, 93]],
+  "quadrant_pairs": [[85, 84], [80, 81], [80, 81], [85, 84]],
+  "quadrant_pair_note": "chipdb.py's literal DCS type-pair list; q=0 and q=3 share (85,84), q=1 and q=2 share (80,81) -- each quadrant q's j=0/j=1 DCS instance resolves to whichever of the pair's two cells the search finds, so all 4 DCS quadrants ultimately route through the same 4-cell cluster the DQCE builder uses, on both 25A and 138C.",
+  "current_gap": "138C's allow-list (`chipdb.py:2825-2832`) admits only q>=2 for devices outside {GW1N-9, GW1N-9C, GW2A-18, GW2A-18C, GW5A-25A} -- so 138C today builds 2 of 4 DCS quadrants (q=2,3), the same shortfall as DQCE before P1.T29, and where it does run it falls into the pre-5A generic port-name branch rather than a 138C-traced `gw5_dcs_inputs_138c` table (P1.T31's job, not this task's).",
+  "comparison_25a": {
+    "tile_types_25a": [80, 81, 84, 85],
+    "cells_25a": [[18, 43], [18, 44], [18, 47], [18, 48]]
+  }
+}
