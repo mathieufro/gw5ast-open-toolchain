@@ -1,0 +1,1122 @@
+{
+  "batch_id": "p1-pll-sweep-d",
+  "device": "GW5AST-138C",
+  "e1_ok": 12,
+  "operating_point": {
+    "FBDIV_SEL": "1",
+    "FCLKIN": "\"50.0\"",
+    "IDIV_SEL": "1",
+    "MDIV_SEL": "16",
+    "ODIV0_SEL": "8"
+  },
+  "reference_site": "PLL_L[0]",
+  "sites": [
+    {
+      "anchor": [
+        27,
+        1
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2014392
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_l0",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0000",
+      "same_as_reference": true,
+      "site": "PLL_L[0]",
+      "tiles": [
+        [
+          27,
+          1
+        ],
+        [
+          27,
+          2
+        ],
+        [
+          27,
+          3
+        ]
+      ],
+      "ttyps": [
+        74,
+        75,
+        76
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        27,
+        177
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2012520
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_r0",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0001",
+      "same_as_reference": true,
+      "site": "PLL_R[0]",
+      "tiles": [
+        [
+          27,
+          177
+        ],
+        [
+          27,
+          178
+        ],
+        [
+          27,
+          179
+        ]
+      ],
+      "ttyps": [
+        77,
+        78,
+        79
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        45,
+        0
+      ],
+      "attr_count": 46,
+      "attr_delta": {
+        "A_VR_EN": [
+          null,
+          2
+        ]
+      },
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "A_VR_EN": 2,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2015796
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_l1",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0002",
+      "same_as_reference": false,
+      "site": "PLL_L[1]",
+      "tiles": [
+        [
+          45,
+          0
+        ],
+        [
+          45,
+          1
+        ],
+        [
+          45,
+          2
+        ]
+      ],
+      "ttyps": [
+        268,
+        75,
+        76
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        45,
+        178
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2016030
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_r1",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0003",
+      "same_as_reference": true,
+      "site": "PLL_R[1]",
+      "tiles": [
+        [
+          45,
+          178
+        ],
+        [
+          45,
+          179
+        ],
+        [
+          45,
+          180
+        ]
+      ],
+      "ttyps": [
+        77,
+        78,
+        79
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        63,
+        0
+      ],
+      "attr_count": 46,
+      "attr_delta": {
+        "A_VR_EN": [
+          null,
+          2
+        ]
+      },
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "A_VR_EN": 2,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2015559
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_l2",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0004",
+      "same_as_reference": false,
+      "site": "PLL_L[2]",
+      "tiles": [
+        [
+          63,
+          0
+        ],
+        [
+          63,
+          1
+        ],
+        [
+          63,
+          2
+        ]
+      ],
+      "ttyps": [
+        270,
+        75,
+        76
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        63,
+        178
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2014038
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_r2",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0005",
+      "same_as_reference": true,
+      "site": "PLL_R[2]",
+      "tiles": [
+        [
+          63,
+          178
+        ],
+        [
+          63,
+          179
+        ],
+        [
+          63,
+          180
+        ]
+      ],
+      "ttyps": [
+        77,
+        78,
+        79
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        81,
+        1
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2016261
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_l3",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0006",
+      "same_as_reference": true,
+      "site": "PLL_L[3]",
+      "tiles": [
+        [
+          81,
+          1
+        ],
+        [
+          81,
+          2
+        ],
+        [
+          81,
+          3
+        ]
+      ],
+      "ttyps": [
+        74,
+        75,
+        76
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        81,
+        177
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2013336
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_r3",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0007",
+      "same_as_reference": true,
+      "site": "PLL_R[3]",
+      "tiles": [
+        [
+          81,
+          177
+        ],
+        [
+          81,
+          178
+        ],
+        [
+          81,
+          179
+        ]
+      ],
+      "ttyps": [
+        77,
+        78,
+        79
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        108,
+        28
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2019069
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_b0",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0008",
+      "same_as_reference": true,
+      "site": "PLL_B[0]",
+      "tiles": [
+        [
+          108,
+          28
+        ],
+        [
+          108,
+          29
+        ],
+        [
+          108,
+          30
+        ]
+      ],
+      "ttyps": [
+        182,
+        183,
+        184
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        108,
+        32
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2019888
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_b1",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0009",
+      "same_as_reference": true,
+      "site": "PLL_B[1]",
+      "tiles": [
+        [
+          108,
+          32
+        ],
+        [
+          108,
+          33
+        ],
+        [
+          108,
+          34
+        ]
+      ],
+      "ttyps": [
+        182,
+        183,
+        184
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        108,
+        146
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2018835
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_b2",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0010",
+      "same_as_reference": true,
+      "site": "PLL_B[2]",
+      "tiles": [
+        [
+          108,
+          146
+        ],
+        [
+          108,
+          147
+        ],
+        [
+          108,
+          148
+        ]
+      ],
+      "ttyps": [
+        182,
+        183,
+        184
+      ],
+      "verdict": "ok"
+    },
+    {
+      "anchor": [
+        108,
+        150
+      ],
+      "attr_count": 45,
+      "attr_delta": {},
+      "attrs": {
+        "A_CLKFBOUT_PE_COARSE": 126,
+        "A_CLKFBOUT_PE_FINE": 6,
+        "A_CLKFB_SEL": 14,
+        "A_CLKIN_SEL": 53,
+        "A_CLKOUT0_DT_DIR": 1,
+        "A_CLKOUT0_DT_STEP": 4,
+        "A_CLKOUT0_EN": 50,
+        "A_CLKOUT0_PE_COARSE": 126,
+        "A_CLKOUT0_PE_FINE": 6,
+        "A_CLKOUT1_DT_DIR": 1,
+        "A_CLKOUT1_DT_STEP": 4,
+        "A_CLKOUT1_PE_COARSE": 126,
+        "A_CLKOUT1_PE_FINE": 6,
+        "A_CLKOUT2_DT_DIR": 1,
+        "A_CLKOUT2_DT_STEP": 4,
+        "A_CLKOUT2_PE_COARSE": 126,
+        "A_CLKOUT2_PE_FINE": 6,
+        "A_CLKOUT3_DT_DIR": 1,
+        "A_CLKOUT3_DT_STEP": 4,
+        "A_CLKOUT3_PE_COARSE": 126,
+        "A_CLKOUT3_PE_FINE": 6,
+        "A_CLKOUT4_PE_COARSE": 126,
+        "A_CLKOUT4_PE_FINE": 6,
+        "A_CLKOUT5_PE_COARSE": 126,
+        "A_CLKOUT5_PE_FINE": 6,
+        "A_CLKOUT6_PE_COARSE": 126,
+        "A_CLKOUT6_PE_FINE": 6,
+        "A_FBDIV_SEL": 63,
+        "A_GMC_SEL": 15,
+        "A_ICP_SEL": 110,
+        "A_IDIV_SEL": 63,
+        "A_LPF_RES_SEL": 26,
+        "A_MDIV_FRAC_SEL": 6,
+        "A_MDIV_SEL": 112,
+        "A_ODIV0_FRAC_SEL": 6,
+        "A_ODIV0_SEL": 120,
+        "A_RESET_EN": 50,
+        "FLDCOUNT": 224,
+        "FLOCK": 3,
+        "FLTOP": 3,
+        "KVCO": 7,
+        "PDN": 3,
+        "PLOCK": 3,
+        "PWDEN": 3,
+        "attr211": 2
+      },
+      "decode_check": {
+        "c1": "ok",
+        "c2": "ok"
+      },
+      "diff_count": {
+        "attrs": 0,
+        "cells": 0,
+        "conns": 0,
+        "pips": 2018484
+      },
+      "level": "E1",
+      "open_fs": true,
+      "point": "site_pll_b3",
+      "run_id": "p1-pll-sweep-d-clocking_pll-0011",
+      "same_as_reference": true,
+      "site": "PLL_B[3]",
+      "tiles": [
+        [
+          108,
+          150
+        ],
+        [
+          108,
+          151
+        ],
+        [
+          108,
+          152
+        ]
+      ],
+      "ttyps": [
+        182,
+        183,
+        184
+      ],
+      "verdict": "ok"
+    }
+  ],
+  "sites_decoded": 12,
+  "sites_matching_reference": 10,
+  "task": "P1.T43"
+}

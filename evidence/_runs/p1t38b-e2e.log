@@ -1,0 +1,12 @@
+15:29:12 BATCH_START batch=p1t38b-e2e shape=clocking_e2e level=E1 pid=68678 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t38b/e2e
+15:30:50 BATCH_HEAD selftest --inject-one-fuse: ok
+15:31:23 BATCH_HEAD selftest --unpacker-completeness: ok
+15:31:24 BATCH_HEAD selftest --probe-mask-classes: ok
+15:31:33 BATCH_HEAD gw_sh pre-flight: ok
+15:31:34 BATCH_CHIPDB batch=p1t38b-e2e sha256=986d698919480d3de39668162084ea36824727aac1afb43b2779a45bb91a645c
+15:31:34 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+15:31:34 BATCH_RESUME batch=p1t38b-e2e planned=1 already_terminal=0
+15:31:34 RUN_START p1t38b-e2e-clocking_e2e-0000 sweep='dhce+clkdiv4'
+15:34:37 RUN_DONE p1t38b-e2e-clocking_e2e-0000 verdict=diff
+15:34:37 BATCH_SKIPPED batch=p1t38b-e2e n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t38b-e2e.rows.jsonl
+BATCH_COMPLETE p1t38b-e2e runs=1 ok=0 diff=1 aborted=0

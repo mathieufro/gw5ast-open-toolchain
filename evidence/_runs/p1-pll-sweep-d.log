@@ -1,0 +1,34 @@
+20:37:05 BATCH_START batch=p1-pll-sweep-d shape=clocking_pll level=E1 pid=38703 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/sweep-d
+20:38:29 BATCH_HEAD selftest --inject-one-fuse: ok
+20:38:59 BATCH_HEAD selftest --unpacker-completeness: ok
+20:39:00 BATCH_HEAD selftest --probe-mask-classes: ok
+20:39:01 BATCH_HEAD gw_sh pre-flight: ok
+20:39:01 BATCH_CHIPDB batch=p1-pll-sweep-d sha256=2f613b6743330e4570f5a72f165b781c34bb6ffbc8107eb709564efa1d83a022
+20:39:01 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 12 run ids)
+20:39:01 BATCH_RESUME batch=p1-pll-sweep-d planned=12 already_terminal=0
+20:39:01 RUN_START p1-pll-sweep-d-clocking_pll-0000 sweep='site_pll_l0'
+20:40:58 RUN_DONE p1-pll-sweep-d-clocking_pll-0000 verdict=ok
+20:40:58 RUN_START p1-pll-sweep-d-clocking_pll-0001 sweep='site_pll_r0'
+20:43:30 RUN_DONE p1-pll-sweep-d-clocking_pll-0001 verdict=ok
+20:43:30 RUN_START p1-pll-sweep-d-clocking_pll-0002 sweep='site_pll_l1'
+20:45:23 RUN_DONE p1-pll-sweep-d-clocking_pll-0002 verdict=ok
+20:45:23 RUN_START p1-pll-sweep-d-clocking_pll-0003 sweep='site_pll_r1'
+20:46:53 RUN_DONE p1-pll-sweep-d-clocking_pll-0003 verdict=ok
+20:46:53 RUN_START p1-pll-sweep-d-clocking_pll-0004 sweep='site_pll_l2'
+20:48:35 RUN_DONE p1-pll-sweep-d-clocking_pll-0004 verdict=ok
+20:48:36 RUN_START p1-pll-sweep-d-clocking_pll-0005 sweep='site_pll_r2'
+20:50:46 RUN_DONE p1-pll-sweep-d-clocking_pll-0005 verdict=ok
+20:50:46 RUN_START p1-pll-sweep-d-clocking_pll-0006 sweep='site_pll_l3'
+20:52:39 RUN_DONE p1-pll-sweep-d-clocking_pll-0006 verdict=ok
+20:52:39 RUN_START p1-pll-sweep-d-clocking_pll-0007 sweep='site_pll_r3'
+20:54:25 RUN_DONE p1-pll-sweep-d-clocking_pll-0007 verdict=ok
+20:54:25 RUN_START p1-pll-sweep-d-clocking_pll-0008 sweep='site_pll_b0'
+20:56:01 RUN_DONE p1-pll-sweep-d-clocking_pll-0008 verdict=ok
+20:56:02 RUN_START p1-pll-sweep-d-clocking_pll-0009 sweep='site_pll_b1'
+20:57:37 RUN_DONE p1-pll-sweep-d-clocking_pll-0009 verdict=ok
+20:57:37 RUN_START p1-pll-sweep-d-clocking_pll-0010 sweep='site_pll_b2'
+20:59:28 RUN_DONE p1-pll-sweep-d-clocking_pll-0010 verdict=ok
+20:59:28 RUN_START p1-pll-sweep-d-clocking_pll-0011 sweep='site_pll_b3'
+21:01:39 RUN_DONE p1-pll-sweep-d-clocking_pll-0011 verdict=ok
+21:01:39 BATCH_SKIPPED batch=p1-pll-sweep-d n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-sweep-d.rows.jsonl
+BATCH_COMPLETE p1-pll-sweep-d runs=12 ok=12 diff=0 aborted=0

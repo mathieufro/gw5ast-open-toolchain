@@ -141,3 +141,73 @@ resolves to, including `FLDCOUNT` (16) and `A_ICP_SEL` (111).
 
 Steps 1-3 are mechanical once §4 exists; §4 is the one that needs oracle runs,
 so it should be sequenced first.
+
+---
+
+## Gap 5 (`P1.T42`, batch C) — the open flow builds every `PLL` as static
+
+`P1.T41` closed gaps 1-4, so a `PLL` design now completes both halves and
+closes `E1`. Batch C's `dyn` axis shows the next one, which `E1` structurally
+cannot: `gowin_pack.py`'s `GW5A.get_pll_attrvals` (the `PLLA` attribute
+builder the 138C reaches through `rename_plla_attrs`) carries a
+`# XXX only static` block that
+
+* hardcodes `A_DYN_DPA_EN`, `A_DYN_ICP_SEL` and `A_DYN_LPF_SEL` to `FALSE`
+  regardless of the cell, and
+* never reads `A_DYN_IDIV_SEL`, `A_DYN_FBDIV_SEL`, `A_DYN_MDIV_SEL` or
+  `A_DYN_ODIV0_SEL` at all.
+
+So a `PLL` whose divider is driven from `IDSEL`/`FBDSEL`/`MDSEL`/`ODSEL0`
+loses its dynamic mode in the open bitstream and silently becomes the static
+design. `E1` compares cells, attributes and placement, never bits, so all
+twelve batch-C rows are `ok` with this defect present — the gap is visible
+only by decoding the two bitstreams, which `sweep-c-138c.md` §3.4 does.
+
+Two of the four selects also have no name to write: batch C measured
+`DYN_FBDIV_SEL "TRUE"` → attribute id **124** value 50 (319 bits, all three
+site tiles) and `DYN_MDIV_SEL "TRUE"` → id **131** value 50 (one bit, the
+anchor tile), and `pll_attrids` names neither.
+
+### MEASURED, all five `DYN` points
+
+Decoding both bitstreams of each point through `shortval[35]` (the site's
+three tiles, an entry active when every fuse of its key is set) gives, per
+point, vendor 46 attributes and open 50:
+
+| point | in the vendor, missing from the open |
+|---|---|
+| `dyn_idiv` | `A_DYN_IDIV_SEL` (125) = 50 |
+| `dyn_fbdiv` | attr **124** = 50 |
+| `dyn_mdiv` | attr **131** = 50 |
+| `dyn_odiv0` | `A_DYN_ODIV0_SEL` (132) = 50 |
+| `dyn_dpa` | `A_DYN_DPA_EN` (190) = 50 |
+
+so the mode is lost in exactly the way the source predicts. The same decode
+also shows two deltas that are **constant across all five points** and
+therefore invisible to the batch's own axis-relative attribution:
+
+* the open flow writes `A_ODIV1_SEL` … `A_ODIV6_SEL` = 120 on outputs the
+  design leaves disabled; the vendor writes none of them;
+* the vendor writes attribute id **211** = 2 (unnamed in `pll_attrids`); the
+  open flow writes nothing there.
+
+Both belong in the same follow-up: they are per-design constants today, but
+they are real disagreements with the oracle and would move under an `E2`-style
+or bit-level term.
+
+### Recommended shape of the follow-up task
+
+1. `apycula/attrids.py`: add `'A_DYN_FBDIV_SEL': 124` and
+   `'A_DYN_MDIV_SEL': 131` to `pll_attrids`, in the style of the two ids
+   `P1.T22` named, citing this file.
+2. `apycula/gowin_pack.py` `GW5A.get_pll_attrvals`: replace the
+   `# XXX only static` block with a read of the four `A_DYN_*_SEL` parameters
+   and `A_DYN_DPA_EN` from the cell, defaulting to `FALSE`.
+3. Decide the two constant deltas above (disabled-output `A_ODIVn_SEL`,
+   attribute 211), then re-run the open half of batch C's five `DYN` points
+   (no oracle run, so no run-budget charge) and assert the site's decoded
+   `{attribute: value}` map agrees with the vendor's on all five.
+
+`P1.T42` may not make the change itself — `apycula/*.py` is on that task's
+*Must NOT change* list — so it is recorded here with the measurement that
+grounds it.

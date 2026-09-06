@@ -1,0 +1,15 @@
+BATCH_START batch=p1t38b-e2e2 shape=clocking_e2e level=E1 pid=87789 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t38b/e2e2
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p1t38b-e2e2 sha256=986d698919480d3de39668162084ea36824727aac1afb43b2779a45bb91a645c
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+BATCH_RESUME batch=p1t38b-e2e2 planned=1 already_terminal=0
+RUN_START p1t38b-e2e2-clocking_e2e-0000 sweep='two-lane-clkdiv'
+RUN_DONE p1t38b-e2e2-clocking_e2e-0000 verdict=ok
+BATCH_SKIPPED batch=p1t38b-e2e2 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t38b-e2e2.rows.jsonl
+BATCH_COMPLETE p1t38b-e2e2 runs=1 ok=1 diff=0 aborted=0

@@ -137,3 +137,28 @@
 *.fse
 *.dat
 *.tm
+
+# the P1.T41 PLL sweep batch B and the charge-pump campaign: the batch-B
+# analyser and its output, the pump fitter and the fit itself, and the
+# attribute decoder. sweep-b-138c.md and pump-138c.md both claim their tables
+# are generated from these rather than retyped, and
+# tests/test_gw5ast138c_plla.py::test_pll_pump_reproduces_every_measured_point
+# reads pump-138c.json -- none of which holds on a fresh checkout while they
+# are denied by the leading `*`. Untracked since P1.T41; fixed on the spot.
+!plla/gen_sweep_b_138c.py
+!plla/sweep-b-138c.json
+!plla/gen_pump_138c.py
+!plla/pump-138c.json
+!plla/decode_pll_attrs_138c.py
+
+# the P1.T42 PLL sweep batch C (the DYN modes and the loaded-CLKOUT1 ODIV1
+# axis) and the P1.T43 twelve-site sweep: the analyser that attributes each
+# batch-C point's moved fuses, the decoder that reads each site's attribute
+# map out of its own bitstream, and both outputs -- the tables in
+# sweep-c-138c.md and sites-e1-138c.md are read off these, and
+# test_plla_sites_decode_identically_except_the_two_left_edge_sites asserts
+# against sites-e1-138c.json. Same named-exception pattern as plla/ above.
+!plla/gen_sweep_c_138c.py
+!plla/sweep-c-138c.json
+!plla/gen_sites_e1_138c.py
+!plla/sites-e1-138c.json

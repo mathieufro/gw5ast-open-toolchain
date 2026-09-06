@@ -1,0 +1,2 @@
+21:09:37 WATCHDOG_ARMED batch=p1t31-dcs stall=5min poll=60s (independent process)
+21:10:05 WATCHDOG_DEAD batch=p1t31-dcs exited WITHOUT BATCH_COMPLETE (batch pid 62889 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

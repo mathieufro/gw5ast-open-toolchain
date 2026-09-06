@@ -1,0 +1,4 @@
+21:27:17 WATCHDOG_ARMED batch=p1t29-nextpnr-build stall=5min poll=60s (independent process)
+21:27:33 WATCHDOG_DEAD batch=p1t29-nextpnr-build exited WITHOUT BATCH_COMPLETE (batch pid 77636 exited) — resume with the identical batch command (run ids with a terminal row are skipped)
+21:28:06 WATCHDOG_ARMED batch=p1t29-nextpnr-build stall=5min poll=60s (independent process)
+21:30:11 WATCHDOG_DEAD batch=p1t29-nextpnr-build exited WITHOUT BATCH_COMPLETE (batch pid 79518 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

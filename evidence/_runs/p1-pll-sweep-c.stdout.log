@@ -1,0 +1,51 @@
+BATCH_START batch=p1-pll-sweep-c shape=clocking_pll level=E1 pid=22519 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/sweep-c
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p1-pll-sweep-c sha256=2f613b6743330e4570f5a72f165b781c34bb6ffbc8107eb709564efa1d83a022
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 12 run ids)
+BATCH_RESUME batch=p1-pll-sweep-c planned=12 already_terminal=0
+RUN_START p1-pll-sweep-c-clocking_pll-0000 sweep='dyn_none'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0000 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0001 sweep='dyn_idiv'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0001 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0002 sweep='dyn_fbdiv'
+Unknown attr name for table: PLL code:124
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0002 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0003 sweep='dyn_mdiv'
+Unknown attr name for table: PLL code:131
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0003 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0004 sweep='dyn_odiv0'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0004 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0005 sweep='dyn_dpa'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0005 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0006 sweep='odiv1l_008'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0006 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0007 sweep='odiv1l_002'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0007 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0008 sweep='odiv1l_004'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0008 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0009 sweep='odiv1l_016'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0009 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0010 sweep='odiv1l_032'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0010 verdict=ok
+RUN_START p1-pll-sweep-c-clocking_pll-0011 sweep='odiv1l_064'
+Unknown attr name for table: PLL code:211
+RUN_DONE p1-pll-sweep-c-clocking_pll-0011 verdict=ok
+BATCH_SKIPPED batch=p1-pll-sweep-c n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-sweep-c.rows.jsonl
+BATCH_COMPLETE p1-pll-sweep-c runs=12 ok=12 diff=0 aborted=0

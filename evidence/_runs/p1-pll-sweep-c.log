@@ -1,0 +1,34 @@
+20:10:05 BATCH_START batch=p1-pll-sweep-c shape=clocking_pll level=E1 pid=22519 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/sweep-c
+20:11:10 BATCH_HEAD selftest --inject-one-fuse: ok
+20:11:33 BATCH_HEAD selftest --unpacker-completeness: ok
+20:11:34 BATCH_HEAD selftest --probe-mask-classes: ok
+20:11:35 BATCH_HEAD gw_sh pre-flight: ok
+20:11:35 BATCH_CHIPDB batch=p1-pll-sweep-c sha256=2f613b6743330e4570f5a72f165b781c34bb6ffbc8107eb709564efa1d83a022
+20:11:35 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 12 run ids)
+20:11:35 BATCH_RESUME batch=p1-pll-sweep-c planned=12 already_terminal=0
+20:11:35 RUN_START p1-pll-sweep-c-clocking_pll-0000 sweep='dyn_none'
+20:13:47 RUN_DONE p1-pll-sweep-c-clocking_pll-0000 verdict=ok
+20:13:47 RUN_START p1-pll-sweep-c-clocking_pll-0001 sweep='dyn_idiv'
+20:15:40 RUN_DONE p1-pll-sweep-c-clocking_pll-0001 verdict=ok
+20:15:40 RUN_START p1-pll-sweep-c-clocking_pll-0002 sweep='dyn_fbdiv'
+20:18:00 RUN_DONE p1-pll-sweep-c-clocking_pll-0002 verdict=ok
+20:18:00 RUN_START p1-pll-sweep-c-clocking_pll-0003 sweep='dyn_mdiv'
+20:20:17 RUN_DONE p1-pll-sweep-c-clocking_pll-0003 verdict=ok
+20:20:17 RUN_START p1-pll-sweep-c-clocking_pll-0004 sweep='dyn_odiv0'
+20:22:28 RUN_DONE p1-pll-sweep-c-clocking_pll-0004 verdict=ok
+20:22:28 RUN_START p1-pll-sweep-c-clocking_pll-0005 sweep='dyn_dpa'
+20:24:39 RUN_DONE p1-pll-sweep-c-clocking_pll-0005 verdict=ok
+20:24:39 RUN_START p1-pll-sweep-c-clocking_pll-0006 sweep='odiv1l_008'
+20:26:50 RUN_DONE p1-pll-sweep-c-clocking_pll-0006 verdict=ok
+20:26:50 RUN_START p1-pll-sweep-c-clocking_pll-0007 sweep='odiv1l_002'
+20:28:47 RUN_DONE p1-pll-sweep-c-clocking_pll-0007 verdict=ok
+20:28:47 RUN_START p1-pll-sweep-c-clocking_pll-0008 sweep='odiv1l_004'
+20:30:50 RUN_DONE p1-pll-sweep-c-clocking_pll-0008 verdict=ok
+20:30:50 RUN_START p1-pll-sweep-c-clocking_pll-0009 sweep='odiv1l_016'
+20:33:01 RUN_DONE p1-pll-sweep-c-clocking_pll-0009 verdict=ok
+20:33:01 RUN_START p1-pll-sweep-c-clocking_pll-0010 sweep='odiv1l_032'
+20:34:47 RUN_DONE p1-pll-sweep-c-clocking_pll-0010 verdict=ok
+20:34:47 RUN_START p1-pll-sweep-c-clocking_pll-0011 sweep='odiv1l_064'
+20:36:41 RUN_DONE p1-pll-sweep-c-clocking_pll-0011 verdict=ok
+20:36:41 BATCH_SKIPPED batch=p1-pll-sweep-c n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-sweep-c.rows.jsonl
+BATCH_COMPLETE p1-pll-sweep-c runs=12 ok=12 diff=0 aborted=0
