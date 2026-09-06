@@ -12,10 +12,16 @@ whether the evidence directory (`$OTC/evidence/`) proves DONE-STD
         -- disabled before Phase 7 (`D65`); see `--enable-clause-d`
     (e) the evidence directory is populated
 
-A row whose evidence shows `verdict: refused` is exempt from clauses (b)
-and (d) by construction (`spec-primitives.md`, "Clauses (b) and (d) do not
-apply..."): it only needs the exact error text recorded (clause a/c's
-"definitive result") and a populated evidence directory (clause e).
+A row **declared** `refused:<error>` in its `138C status` cell is exempt
+from clauses (b) and (d) by construction (`spec-primitives.md`, "Clauses (b)
+and (d) do not apply to a row closing as `refused:<error>`"): it only needs
+the exact error text recorded (clause a/c's "definitive result") and a
+populated evidence directory (clause e).  The exemption is a property of the
+declared status, never of an individual evidence row's verdict -- a refusal
+is an ordinary measurement, and a sweep that contains one buys nothing.
+Symmetrically, a row declared at an equivalence level is satisfied only by
+evidence rows **at that level or stronger**: a row declaring `E1` is not
+proven by its own `E0` rows.
 
 Stdout contract (exact): `CRITERIA ok: <n>/<n>`.
 
@@ -65,16 +71,32 @@ REFUSED = "refused"
 OK = "ok"
 E_LEVELS_FULL = ("E1", "E2")
 
+#: Equivalence levels in ascending strength.  A row declared at one level is
+#: satisfied by an evidence row at that level or a stronger one, never by a
+#: weaker one -- that is clause (b) read as the table declares it.
+E_LEVEL_ORDER = ("E0", "E1", "E2")
+
+#: The declared-status vocabulary of `spec-primitives.md` ("Status vocabulary
+#: for the filled-in table"), longest spelling first so `E0+hw-pending` is not
+#: read as `E0`.
+_STATUS_TOKEN_RE = re.compile(
+    r"^[\s*`]*(E0\+hw-pending|E0\+hw|E0|E1|E2|refused|blocked|open)\b",
+    re.IGNORECASE)
+
 
 # --------------------------------------------------------------------------
 # 1. spec-primitives.md parsing
 # --------------------------------------------------------------------------
 class Row:
-    __slots__ = ("id", "phase", "evidence_slug", "raw")
+    __slots__ = ("id", "phase", "status", "evidence_slug", "raw")
 
-    def __init__(self, id_, phase, evidence_slug, raw):
+    def __init__(self, id_, phase, status, evidence_slug, raw):
         self.id = id_
         self.phase = phase
+        #: the primitive's DECLARED status, from the `138C status` column
+        #: (`E1`, `E0+hw-pending`, `refused:<error>`, ...).  DONE-STD is
+        #: keyed on this, never on an individual evidence row's verdict.
+        self.status = status
         self.evidence_slug = evidence_slug
         self.raw = raw
 
@@ -103,6 +125,29 @@ def _clean_id(cell):
     # Drop a trailing parenthetical, e.g. "OSC (on-chip oscillator)".
     text = re.sub(r"\s*\(.*\)\s*$", "", text).strip()
     return text
+
+
+def _clean_status(cell):
+    """The declared status token of a `138C status` cell, lowercased.
+
+    `` `E0+hw-pending` -- (rows...) `` -> `e0+hw-pending`; a prose cell
+    (`not present`, `untriaged`) has no token and returns None, which means
+    "this row declares no level" rather than "E0".
+    """
+    m = _STATUS_TOKEN_RE.match(cell or "")
+    return m.group(1).lower() if m else None
+
+
+def declared_level(status):
+    """The equivalence level a declared status commits to, or None."""
+    if not status:
+        return None
+    head = status.split("+", 1)[0].upper()
+    return head if head in E_LEVEL_ORDER else None
+
+
+def _levels_at_or_above(level):
+    return E_LEVEL_ORDER[E_LEVEL_ORDER.index(level):]
 
 
 def _clean_slug(cell):
@@ -143,14 +188,17 @@ def parse_spec_primitives(path):
         if not row_id or row_id in ("-", "—"):
             continue
         phase = None
+        status = None
         evidence_slug = None
         by_col = dict(zip(header, cells))
         for key, value in by_col.items():
             if key == "phase":
                 phase = value.strip() or None
+            if key.endswith("status") and not key.startswith(("25a", "family")):
+                status = _clean_status(value)
             if "evidence" in key:
                 evidence_slug = _clean_slug(value)
-        rows.append(Row(row_id, phase, evidence_slug, by_col))
+        rows.append(Row(row_id, phase, status, evidence_slug, by_col))
     return rows
 
 
@@ -237,22 +285,37 @@ def evaluate_row(row, evidence_rows, evidence_dir, enable_clause_d):
     if not populated:
         return False, "evidence directory not populated (clause e)", False
 
+    # DONE-STD is keyed on the primitive's DECLARED status, never on an
+    # individual evidence row's verdict: the `refused` exemption belongs to a
+    # primitive that *closes* as `refused:<error>`, and a primitive declared at
+    # a level is proven only by rows at that level or stronger.  A sweep that
+    # merely happens to contain one refused oracle run buys no exemption.
+    status = row.status or ""
+    is_declared_refused = status.startswith(REFUSED)
+    want_level = declared_level(status)
+    admissible = _levels_at_or_above(want_level) if want_level else None
+
     for evrow in matches:
         verdict = evrow.get("verdict")
         notes = str(evrow.get("notes") or "")
 
         if verdict == REFUSED:
             # (b), (d) exempted by construction; (a)/(c) reduce to "the
-            # refusal itself is the definitive, recorded result".
-            if notes.strip():
+            # refusal itself is the definitive, recorded result" -- but only
+            # for a row that declares itself refused.
+            if is_declared_refused and notes.strip():
                 return True, "refused (exempt from b, d)", False
             continue
 
         if verdict != OK:
             continue  # diff/aborted rows are not a satisfying result
 
-        level_ok = evrow.get("level") in E_LEVELS_FULL
-        if not level_ok and evrow.get("level") == "E0":
+        level = evrow.get("level")
+        if admissible is not None and level not in admissible:
+            continue  # clause (b), against the level the table declares
+
+        level_ok = level in E_LEVELS_FULL
+        if not level_ok and level == "E0":
             # E0 + recorded reason is an accepted clause-(b) alternative.
             level_ok = bool(notes.strip())
         if not level_ok:
@@ -269,6 +332,11 @@ def evaluate_row(row, evidence_rows, evidence_dir, enable_clause_d):
 
         return True, "ok", not marker_present
 
+    if is_declared_refused:
+        return False, "declared refused, but no refused row records the error", False
+    if want_level:
+        return False, (f"no {want_level} evidence row satisfies DONE-STD for "
+                       f"this scope"), False
     return False, "no evidence row satisfies DONE-STD for this scope", False
 
 

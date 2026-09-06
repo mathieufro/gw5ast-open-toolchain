@@ -24,15 +24,15 @@ TABLE_HEADER = (
 )
 
 
-def _table_row(id_, phase, evidence_slug):
+def _table_row(id_, phase, evidence_slug, status="full"):
     return (
-        f"| **{id_}** | {phase} | full | full | one shape, 4 runs | "
+        f"| **{id_}** | {phase} | full | {status} | one shape, 4 runs | "
         f"DONE-STD | `evidence/{evidence_slug}/` |\n"
     )
 
 
 def write_spec_primitives(tmp_path, rows):
-    """`rows`: list of `(id, phase, evidence_slug)`. Returns the file path."""
+    """`rows`: list of `(id, phase, evidence_slug[, status])`. Returns the path."""
     path = tmp_path / "spec-primitives.md"
     text = (
         "# Spec satellite — per-primitive table\n\n"
@@ -294,3 +294,70 @@ def test_check_criteria_vacuous_phase_report_is_examined(tmp_path, capsys):
     assert "PHASE-REPORT" in out
     assert "vacuous assertion" not in out   # it examined 1 criterion
     assert "unbacked REACHED: S1" in out
+
+
+# --------------------------------------------------------------------------
+# The `refused` exemption is keyed on the DECLARED status (gestalt P1 B2)
+# --------------------------------------------------------------------------
+def test_declared_e1_row_is_not_exempted_by_a_refused_evidence_row(
+        tmp_path, capsys):
+    """A refusal is a measurement, not a free pass for the whole primitive.
+
+    `R1` declares `E1`; its sweep holds one `refused` run and one `diff` run
+    and no passing `E1` row. Before the fix the refused row returned
+    "refused (exempt from b, d)" on the spot and the row was reported
+    satisfied without any other row being inspected.
+    """
+    rows = [("R1", "1", "r1", "`E1` — (`p1-r1-0000`, 4 rows)")]
+    spec = write_spec_primitives(tmp_path, rows)
+    evidence = write_evidence(tmp_path, {"r1": [
+        _evidence_row("R1", verdict="refused", level="E1",
+                      c1="n/a", c2="n/a",
+                      notes="vendor refused: PA2078"),
+        _evidence_row("R1", verdict="diff", level="E1",
+                      notes="the open flow differs"),
+    ]})
+
+    exit_code = cc.main([spec, evidence, "--rows", "R1"])
+
+    out = capsys.readouterr().out
+    assert exit_code == 1
+    assert "CRITERIA FAIL: unmet rows: R1" in out
+
+
+def test_declared_refused_row_is_exempted_by_its_refused_row(tmp_path, capsys):
+    """The exemption still applies where the table declares the refusal."""
+    rows = [("R1", "1", "r1", "`refused:PA2078` — no buildable example")]
+    spec = write_spec_primitives(tmp_path, rows)
+    evidence = write_evidence(tmp_path, {"r1": [
+        _evidence_row("R1", verdict="refused", level="E1",
+                      c1="n/a", c2="n/a",
+                      notes="vendor refused: PA2078"),
+    ]})
+
+    assert cc.main([spec, evidence, "--rows", "R1"]) == 0
+    assert "CRITERIA ok: 1/1" in capsys.readouterr().out
+
+
+def test_declared_e1_row_is_not_satisfied_by_an_e0_row(tmp_path, capsys):
+    """Clause (b) is read against the level the table declares."""
+    rows = [("R1", "1", "r1", "`E1` — (`p1-r1-0000`)")]
+    spec = write_spec_primitives(tmp_path, rows)
+    evidence = write_evidence(tmp_path, {"r1": [
+        _evidence_row("R1", level="E0", notes="E0 with the reason recorded"),
+    ]})
+
+    exit_code = cc.main([spec, evidence, "--rows", "R1"])
+
+    assert exit_code == 1
+    assert "CRITERIA FAIL: unmet rows: R1" in capsys.readouterr().out
+
+
+def test_declared_e0_row_is_satisfied_by_an_e1_row(tmp_path, capsys):
+    """A stronger level than the declared one still proves the row."""
+    rows = [("R1", "1", "r1", "`E0+hw-pending` — (`p1-r1-0000`)")]
+    spec = write_spec_primitives(tmp_path, rows)
+    evidence = write_evidence(tmp_path, {"r1": [_evidence_row("R1", level="E1")]})
+
+    assert cc.main([spec, evidence, "--rows", "R1"]) == 0
+    assert "CRITERIA ok: 1/1" in capsys.readouterr().out

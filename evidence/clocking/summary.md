@@ -4,6 +4,13 @@ Two rows: `P1.T40`, the phase's whole-clock-plane design, and `P1.T38b`, the
 two-lane `CLKDIV` design that was this shape's earlier form. Everything T38b
 proved, T40's design contains.
 
+**Both rows are filed under `../hclk/runs.jsonl`, not here** (`P1.F1`, gestalt
+`B1a`). `spec-harness.md` §6 files a row under the slug of the primitive its
+`primitive` field names, and both name `HCLK block`; keeping a second copy
+here is what hid them from `check_criteria.py`, whose `HCLK block` row names
+`evidence/hclk/`. This slug keeps the design's own artefacts -- the topology
+probe, its oracle log and the write-ups -- and carries no `runs.jsonl`.
+
 ## `P1.T40` — the whole clock plane in one bitstream
 
 Batch `p1t40-e2e`, **1 oracle run** (campaign cumulative 219), level `E1`,

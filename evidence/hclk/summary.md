@@ -30,7 +30,11 @@ HCLK->FCLK half until they are taken.
 ## Artefacts
 
 - `port-138c.md` — the verification write-up (verdicts, hashes, findings)
-- `runs.jsonl` — the row
+- `runs.jsonl` — the rows, including the two E2E rows whose `primitive` is
+  `HCLK block` (`p1t40-e2e-clocking_e2e-0000`, `p1t38b-e2e2-clocking_e2e-0000`).
+  They were produced by the `clocking_e2e` shape and are filed here, under the
+  primitive's own slug, per `spec-harness.md` §6 — `evidence/clocking/` keeps
+  the design's artefacts and no `runs.jsonl` (`P1.F1`, gestalt `B1a`)
 - `../_runs/hclk-port-138c-openflow.log` — the openflow smoke log
 - `$DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin`
   sha256 `0227f0914c615cf6858c8cb4e0e1e17afbe7d2c399d705a9c01dd12bc5ac14b3`, 63,860,996 B
