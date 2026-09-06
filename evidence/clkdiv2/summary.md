@@ -56,14 +56,14 @@ and 2 exercise the node path, lanes 1 and 3 the pip path.
 
 | sweep point | level | verdict | cells | attrs | conns | unexplained residual | decode c1/c2 |
 |---|---|---|---|---|---|---|---|
-| `lane 0 (HCLK_BUF_BO), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 1 (CLKDIV2_I), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 2 (HCLK_BUF_BO), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 3 (CLKDIV2_I), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 0 (HCLK_BUF_BO), RESETN=tied` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 1 (CLKDIV2_I), RESETN=tied` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 2 (HCLK_BUF_BO), RESETN=tied` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `placement=free` | E0 | **diff** | 2 | 3 | 0 | 0 | mismatch/ok |
+| `lane 0 (HCLK_BUF_BO), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `lane 1 (CLKDIV2_I), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `lane 2 (HCLK_BUF_BO), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `lane 3 (CLKDIV2_I), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `lane 0 (HCLK_BUF_BO), RESETN=tied` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `lane 1 (CLKDIV2_I), RESETN=tied` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `lane 2 (HCLK_BUF_BO), RESETN=tied` | E0 | **ok** | 0 | 0 | 0 | 0 | ok/ok |
+| `placement=free` | E0 | **diff** | 2 | 3 | 0 | 0 | ok/ok |
 
 pips (whole-device statistic, never a verdict term, `D32`): 2021063, 2021180,
 2021063, 2021181, 2020478, 2020829, 2020946, 2020829.
@@ -103,42 +103,39 @@ harness's own masked comparison leaves `0` unexplained bits on every row.
 
 ## Verdict
 
-**Verdict re-derived (2026-09-06).** The §5.4 decode check is a verdict term,
-and `equiv.evidence_fields` used to drop it (defect 1 below, since fixed).
-Re-deriving these rows from the fields they already carry — no re-run — turns
-all **7** pinned points from `ok` to `diff`, on the `c1` mismatch alone; the
-control was already `diff`. `tools/rederive_verdicts.py` did it and each row's
-`notes` records that it was re-derived.
+**Verdict re-derived twice, both times from the fields the rows already carry
+— no re-run.** First on 2026-09-06, when `equiv.evidence_fields` was fixed to
+treat the §5.4 decode check as a verdict term (defect 1 below): that turned
+all **7** pinned points from `ok` to `diff` on the `c1` mismatch alone. Then
+again under **`D103`**, the owner decision this row asked for: `CLKDIV2` is
+now listed in the harness's `NON_FUSE_BACKED_BELS`, so `c1` no longer asks the
+decode for a cell the bitstream cannot carry. It asks instead for the chained
+`CLKDIV` on the same lane at `DIV_MODE = 2` — recovered on all 7 points — and
+the pinned rows close `ok`. The control stays `diff` by construction.
 
 **Set-level `E0` holds on all 8 rows — `cells = 0`, `attrs = 0`, `conns = 0`
 and no unexplained residual bit on all 7 pinned points, `0` refused, `0`
-aborted — but no row closes, because `c1` is `mismatch` on every one of them,
-and `E1` is NOT attainable for this primitive on this device.**
+aborted — and `E1` is NOT attainable for this primitive on this device.**
 
-That is the row's real result, and it is a property of the silicon, not of
-the flow. `E1` here would be the `P1.T14` HCLK-bel check: compare the bel
-nextpnr placed on against the cell the **vendor's bitstream** decodes to (the
-vendor's text reports never name a CLKDIV/CLKDIV2 at all — MEASURED,
-`P1.T11`). A CLKDIV2 leaves no fuse anywhere, so `gowin_unpack` cannot
-recover it: every row's `e1` half reports `EC9/HCLK: ... 'div2' at
-X117Y108/CLKDIV2_0 — CLKDIV at the same site`, and the `c1` decode check
-reports the same one missing cell (`c1_recovered_cells = 15` of `16`). The
+That last part is a property of the silicon, not of the flow. `E1` here would
+be the `P1.T14` HCLK-bel check: compare the bel nextpnr placed on against the
+cell the **vendor's bitstream** decodes to (the vendor's text reports never
+name a CLKDIV/CLKDIV2 at all — MEASURED, `P1.T11`). A CLKDIV2 leaves no fuse
+anywhere, so `gowin_unpack` cannot recover it: every row's `e1` half reports
+`EC9/HCLK: ... 'div2' at X117Y108/CLKDIV2_0 — CLKDIV at the same site`. The
 chained `CLKDIV` at the same site **is** recovered and does match, on all 7
 points, which is what bounds the claim: the placement of the pair is
 confirmed, the CLKDIV2's own occupancy of its lane is inferred from the
 absent alpha-mux select bit above, not decoded.
 
-DEL-b status for the `spec-primitives.md` §1 `CLKDIV2` row: **`E0` NOT
-closed** — the set-level comparison is clean, but every row is `diff` on the
-`c1` decode check, and nothing short of hardware can raise the row, because
-the bitstream carries no bit that names a CLKDIV2. `c1` requires the decode to
-recover every *fuse-backed* placed cell; a CLKDIV2 leaves no fuse anywhere
-(`GW5A.get_CLKDIV2_fuses() == []`, measured `P1.T04`), so on the evidence here
-it belongs in the harness's `NON_FUSE_BACKED_BELS`, exactly as `PINCFG` does.
-That reclassification is a claim about the device's bitstream format, not a row
-edit, and it is left for the owner to price rather than made here — until it is
-made, this row stands at `diff`, and the previously recorded `E0+hw-pending`
-was reached only because the dropped decode verdict hid it.
+DEL-b status for the `spec-primitives.md` §1 `CLKDIV2` row: **`E0+hw-pending`**
+— the set-level comparison is clean, the decode check passes on the terms the
+bitstream can answer, and nothing short of hardware can raise the row, because
+the bitstream carries no bit that names a CLKDIV2. The reclassification that
+got it here is a claim about the device's bitstream format, priced by the owner
+as `D103` and narrow by construction: the exemption holds only while a
+`CLKDIV` at `DIV_MODE = 2` decodes on the same lane, and
+`tests/test_clkdiv2_non_fuse_backed.py` fails if that guard is widened.
 
 Two further results, each measured:
 
