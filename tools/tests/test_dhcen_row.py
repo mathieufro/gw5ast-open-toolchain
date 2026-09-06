@@ -47,7 +47,10 @@ PIPE = os.environ.get(
     "PIPE",
     "/Users/alex/fine-line/.atelier/pipelines/"
     "2026-09-03-open-toolchain-gw5ast-7e84")
-STATUS_RE = re.compile(r"^(E1|E0\+hw-pending|refused:.+)$")
+#: A status cell opens with the level reached and may then cite the evidence
+#: rows behind it, after an em dash: "`E1` — (`p1t27-…`) …".
+STATUS_RE = re.compile(r"^`?(E1|E0|E0\+hw-pending|refused:.+?|blocked:.+?)`?"
+                       r"( —.*)?$", re.S)
 
 
 def _rows():
