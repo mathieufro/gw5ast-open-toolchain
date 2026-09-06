@@ -4,11 +4,7 @@
 the slice is **empty by design on both sides**, and the band asserts exactly
 that rather than skipping it.
 
-`NO-DATA: the GW5AST-138C .tm publishes no PLL timing group. Every 15552-byte
-chunk the parser reads (chunks 0, 1, 2 — `tm_parser.py:344` breaks at
-`if i >= 3 and device in {…'GW5AST-138C'}`, so chunks 3+ are never parsed)
-carries at offset 0x7cc an 80-byte block that is byte-identical to
-`GW2A-18.tm`'s and names five rPLL outputs this die does not have.`
+NO-DATA: the GW5AST-138C .tm publishes no PLL timing group. Only chunks 0, 1 and 2 are parsed at all -- each is 15552 bytes and `tm_parser.py:344` breaks on `if i >= 3 and device in {...'GW5AST-138C'}` -- and at offset 0x7cc each carries an 80-byte, five-path block byte-identical to `GW2A-18.tm`'s, naming five rPLL outputs (CLKOUT/LOCK/CLKOUTP/CLKOUTD/CLKOUTD3) this die does not have. UG306E Table 5-2 gives the Arora-V PLL CLKOUT0..6/CLKFBOUT/LOCK, DS1239E Table 3-18 publishes no CLKIN->CLKOUT delay, and the vendor SDF emits all seven CLKIN->CLKOUTn IOPATHs as 0.000 -- so the PLL slice of the L0 band is "no arcs by design", asserted as 7/7 rather than skipped.
 
 ## 1. What the `.tm` actually holds at the PLL offset
 
