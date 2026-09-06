@@ -89,6 +89,19 @@ Full detail: `divmode-fuses-138c.json`.
 **`E1` on every one of the ten rows, `cells = 0`, `attrs = 0`, `conns = 0`, no
 unexplained residual bit, `c1`/`c2` decode `ok`, `0` refused and `0` aborted.**
 
+**Verdict re-derived (2026-09-06)** with `tools/rederive_verdicts.py` after
+`equiv.evidence_fields` was fixed to treat the §5.4 decode check as a verdict
+term: **0 of the 10 rows change** — `c1` and `c2` are `ok` on every one, so the
+`E1` claim above rests on the decode check as well as on the three sets, not
+merely beside it.
+
+The batch's `chipdb_sha256` is **not** constant across these rows — runs
+0000-0004 ran against `3e1e39ea…`, 0005-0008 and the baseline against
+`986d6989…` (the branch's chipdb was rebuilt mid-batch). Both halves give
+identical verdict terms here, and `run_batch` now pins one chipdb per batch and
+refuses to continue on a change, so this cannot recur; these rows are left as
+measured rather than backfilled, which would need a re-run.
+
 `E1` here is not the CLS-bel check: a `CLKDIV` has no CLS address, and MEASURED
 on the `P1.T11` vendor run the vendor's own text reports (`run.tr`, `run.rpt.txt`,
 `run.p`, `run.pr`, `run.log`) do not contain the string `CLKDIV` anywhere — only

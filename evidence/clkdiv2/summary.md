@@ -56,13 +56,13 @@ and 2 exercise the node path, lanes 1 and 3 the pip path.
 
 | sweep point | level | verdict | cells | attrs | conns | unexplained residual | decode c1/c2 |
 |---|---|---|---|---|---|---|---|
-| `lane 0 (HCLK_BUF_BO), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 1 (CLKDIV2_I), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 2 (HCLK_BUF_BO), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 3 (CLKDIV2_I), RESETN=pin` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 0 (HCLK_BUF_BO), RESETN=tied` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 1 (CLKDIV2_I), RESETN=tied` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
-| `lane 2 (HCLK_BUF_BO), RESETN=tied` | E0 | **ok** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 0 (HCLK_BUF_BO), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 1 (CLKDIV2_I), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 2 (HCLK_BUF_BO), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 3 (CLKDIV2_I), RESETN=pin` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 0 (HCLK_BUF_BO), RESETN=tied` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 1 (CLKDIV2_I), RESETN=tied` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
+| `lane 2 (HCLK_BUF_BO), RESETN=tied` | E0 | **diff** | 0 | 0 | 0 | 0 | mismatch/ok |
 | `placement=free` | E0 | **diff** | 2 | 3 | 0 | 0 | mismatch/ok |
 
 pips (whole-device statistic, never a verdict term, `D32`): 2021063, 2021180,
@@ -103,8 +103,16 @@ harness's own masked comparison leaves `0` unexplained bits on every row.
 
 ## Verdict
 
-**`E0` on all 8 rows — `cells = 0`, `attrs = 0`, `conns = 0` and no
-unexplained residual bit on all 7 pinned points, `0` refused, `0` aborted —
+**Verdict re-derived (2026-09-06).** The §5.4 decode check is a verdict term,
+and `equiv.evidence_fields` used to drop it (defect 1 below, since fixed).
+Re-deriving these rows from the fields they already carry — no re-run — turns
+all **7** pinned points from `ok` to `diff`, on the `c1` mismatch alone; the
+control was already `diff`. `tools/rederive_verdicts.py` did it and each row's
+`notes` records that it was re-derived.
+
+**Set-level `E0` holds on all 8 rows — `cells = 0`, `attrs = 0`, `conns = 0`
+and no unexplained residual bit on all 7 pinned points, `0` refused, `0`
+aborted — but no row closes, because `c1` is `mismatch` on every one of them,
 and `E1` is NOT attainable for this primitive on this device.**
 
 That is the row's real result, and it is a property of the silicon, not of
@@ -120,9 +128,17 @@ points, which is what bounds the claim: the placement of the pair is
 confirmed, the CLKDIV2's own occupancy of its lane is inferred from the
 absent alpha-mux select bit above, not decoded.
 
-DEL-b status for the `spec-primitives.md` §1 `CLKDIV2` row: **`E0+hw-pending`**
-— `E0` closed, and nothing short of hardware can raise it, because the
-bitstream carries no bit that names a CLKDIV2.
+DEL-b status for the `spec-primitives.md` §1 `CLKDIV2` row: **`E0` NOT
+closed** — the set-level comparison is clean, but every row is `diff` on the
+`c1` decode check, and nothing short of hardware can raise the row, because
+the bitstream carries no bit that names a CLKDIV2. `c1` requires the decode to
+recover every *fuse-backed* placed cell; a CLKDIV2 leaves no fuse anywhere
+(`GW5A.get_CLKDIV2_fuses() == []`, measured `P1.T04`), so on the evidence here
+it belongs in the harness's `NON_FUSE_BACKED_BELS`, exactly as `PINCFG` does.
+That reclassification is a claim about the device's bitstream format, not a row
+edit, and it is left for the owner to price rather than made here — until it is
+made, this row stands at `diff`, and the previously recorded `E0+hw-pending`
+was reached only because the dropped decode verdict hid it.
 
 Two further results, each measured:
 
@@ -136,21 +152,26 @@ Two further results, each measured:
   configuration** on every lane (identical `active_hclk_pips`, identical
   attributed fuses): `RESETN` is a routed signal, not a configuration bit.
 
-Two defects found while closing this row, both outside this task's
-`Must NOT change` list and therefore reported rather than fixed here:
+Two defects found while closing this row, both since **fixed** in the harness
+(apicula `epic/gw5ast138c`, guarded by
+`tests/test_equiv_decode_check_verdict.py`):
 
-1. **`equiv.evidence_fields` drops the §5.4 decode-check verdict.**
+1. **`equiv.evidence_fields` drops the §5.4 decode-check verdict.** FIXED —
+   `c1`/`c2` are verdict terms; these rows were re-derived above.
    `compare_design` sets `result.verdict = "DIFF"` when `c1`/`c2` fail, but
    the schema `verdict` is recomputed from set diffs and residual alone, so
    these rows say `verdict: ok` while their own `notes` say the decode check
    failed. Here the mismatch is expected and explained (above), but the field
-   would hide a real one. Harness change — `P1.T15` may not touch it.
+   would hide a real one.
 2. **`chipdb_sha256` is not constant across this batch**: runs 0000-0004 ran
    against `3e1e39ea…`, runs 0005-0006 and the control against `986d6989…`
    (the branch's chipdb was rebuilt mid-batch). `P1.T14`'s ten rows split
    5/5 across the same two shas. Both halves give identical verdict terms
-   here, but a batch should pin one chipdb; the batch runner, not this row,
-   is where that belongs.
+   here, but a batch should pin one chipdb. FIXED — `run_batch` now records
+   the chipdb sha256 at batch start (`BATCH_CHIPDB`), re-checks it before
+   every run and after every row, and refuses to continue on a change
+   (`BATCH_CHIPDB_CHANGED`); the mixed shas on these rows are historical and
+   are not backfilled, because that would need a re-run.
 
 ## Artefacts
 

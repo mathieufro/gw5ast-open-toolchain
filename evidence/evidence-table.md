@@ -11,7 +11,7 @@ rows=130
 | calibration | 7 | 4 | 3 | 0 | 0 | 0 |
 | chipdb | 13 | 0 | 0 | 0 | 1 | 12 |
 | clkdiv | 10 | 10 | 0 | 0 | 0 | 0 |
-| clkdiv2 | 8 | 7 | 1 | 0 | 0 | 0 |
+| clkdiv2 | 8 | 0 | 8 | 0 | 0 | 0 |
 | dhcen | 32 | 30 | 0 | 0 | 2 | 0 |
 | e2e-p0 | 1 | 0 | 1 | 0 | 0 | 0 |
 | harness-selftest | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -29,8 +29,7 @@ rows=130
 | CLKDIV | E0 | ok | 1 |
 | CLKDIV | E1 | ok | 11 |
 | CLKDIV2 | E0 | aborted | 1 |
-| CLKDIV2 | E0 | diff | 1 |
-| CLKDIV2 | E0 | ok | 7 |
+| CLKDIV2 | E0 | diff | 8 |
 | DFF | E0 | ok | 6 |
 | DFF | E1 | diff | 1 |
 | DHCE | E0 | ok | 30 |
