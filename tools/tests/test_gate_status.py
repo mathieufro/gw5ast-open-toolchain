@@ -47,18 +47,70 @@ def test_no_gates_dir_at_all(tmp_path, capsys):
     assert "no gates found" in capsys.readouterr().out
 
 
-def test_pass_and_fail(tmp_path, capsys):
+def test_pass_and_fail_in_two_repos(tmp_path, capsys):
     gates_dir = tmp_path / "_gates"
     gates_dir.mkdir()
-    touch(str(gates_dir / "repo-main-abc123.result"), content="PASS")
-    touch(str(gates_dir / "repo-main-def456.result"), content="FAIL")
+    touch(str(gates_dir / "one-main-abc123.result"), content="PASS")
+    touch(str(gates_dir / "two-main-def456.result"), content="FAIL")
 
     rc = gs.main(gates_dir=str(gates_dir))
 
     out = capsys.readouterr().out
     assert rc == 1
-    assert "repo-main-abc123  PASS" in out
-    assert "repo-main-def456  FAIL" in out
+    assert "one-main-abc123  PASS" in out
+    assert "two-main-def456  FAIL" in out
+
+
+def test_newest_marker_of_a_repo_is_the_verdict(tmp_path, capsys):
+    """A red run stays visible but stops counting once a green one follows."""
+    gates_dir = tmp_path / "_gates"
+    gates_dir.mkdir()
+    touch(str(gates_dir / "repo-main-old111.result"), content="FAIL",
+          mtime_minutes_ago=600)
+    touch(str(gates_dir / "repo-main-new222.result"), content="PASS",
+          mtime_minutes_ago=5)
+
+    rc = gs.main(gates_dir=str(gates_dir))
+
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "repo-main-new222  PASS" in out
+    assert "repo-main-old111  SUPERSEDED" in out
+
+
+def test_a_newer_red_run_is_still_a_failure(tmp_path, capsys):
+    gates_dir = tmp_path / "_gates"
+    gates_dir.mkdir()
+    touch(str(gates_dir / "repo-main-old111.result"), content="PASS",
+          mtime_minutes_ago=600)
+    touch(str(gates_dir / "repo-main-new222.result"), content="FAIL",
+          mtime_minutes_ago=5)
+
+    assert gs.main(gates_dir=str(gates_dir)) == 1
+    assert "repo-main-new222  FAIL" in capsys.readouterr().out
+
+
+def test_running_gate_whose_process_is_gone_is_dead(tmp_path, capsys):
+    """A killed gate never writes a result; it must not read as RUNNING."""
+    gates_dir = tmp_path / "_gates"
+    gates_dir.mkdir()
+    touch(str(gates_dir / "repo-main-abc123.log"), mtime_minutes_ago=2)
+    dead_pid = _a_pid_that_is_not_running()
+    touch(str(gates_dir / "repo-main-abc123.pid"), content=str(dead_pid))
+
+    rc = gs.main(gates_dir=str(gates_dir))
+
+    assert rc == 1
+    assert "repo-main-abc123  DEAD" in capsys.readouterr().out
+
+
+def _a_pid_that_is_not_running():
+    """A pid no process holds: fork a child and reap it."""
+    pid = os.fork()
+    if pid == 0:  # pragma: no cover -- the child never returns
+        os._exit(0)
+    os.waitpid(pid, 0)
+    return pid
 
 
 def test_running_gate_under_30_minutes_is_ok(tmp_path, capsys):
@@ -118,7 +170,8 @@ def test_json_flag_shape(tmp_path, capsys):
     assert ids == {"repo-main-abc123", "repo-dev-xyz999"}
     for gate in payload:
         assert set(gate.keys()) == {"id", "status", "age_minutes"}
-        assert gate["status"] in ("PASS", "FAIL", "RUNNING")
+        assert gate["status"] in ("PASS", "FAIL", "RUNNING", "DEAD",
+                                  "SUPERSEDED")
         assert isinstance(gate["age_minutes"], (int, float))
 
 
