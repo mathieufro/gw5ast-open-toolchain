@@ -28,6 +28,17 @@ pre-5A `q // 2` sub-entry key cannot express, so `fse_create_dcs` keys by
 BATCH_COMPLETE p1t31-dcs runs=2 ok=2 diff=0 aborted=0
 ```
 
+### Sweep
+
+| batch | axis | points |
+|---|---|---|
+| `p1t31-dcs` | `n_dcs` simultaneous `DCS` | `1, 4` |
+| `p1t31-dcs-e1` | the open flow on one quadrant | `q1` (`P26*`, `SPINE14`) |
+
+The axis is deliberately short: with four bels on the die the only occupancy
+questions are "one" and "all of them", and the second point is what showed both
+DCS of a quadrant sharing one cell.
+
 ### Verdict
 
 The DCS half does **not** close. The chipdb and `gowin_pack` halves land — the

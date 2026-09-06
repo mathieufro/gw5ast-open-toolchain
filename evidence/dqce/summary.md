@@ -33,6 +33,18 @@ quadrant 1 at cell (54, 93) gating `SPINE8..13` and quadrant 2 at cell
 BATCH_COMPLETE p1t29-dce runs=3 ok=3 diff=0 aborted=0
 ```
 
+### Sweep
+
+| batch | axis | points |
+|---|---|---|
+| `p1-dqce-types` | `n_dqce` simultaneous `DCE`, plus the CE-assignment order | `1, 2, 3, 4` x two CE sequences (8 runs) |
+| `p1t29-dce` | `n_dqce` at and beyond the measured capacity | `1, 12, 13` |
+| `p1t29-dqce-e1c` | quadrant under test | `q1` (the row proper; `q2` is the same cell shape, gating `SPINE16..21`) |
+
+The capacity point `n = 13` is the one that fixes the count: twelve `DCE` place,
+the thirteenth does not, which is how the twelve-DQCE figure above is a
+measurement rather than a reading of the builder.
+
 ### Verdict
 
 The row closes at **E0**, not E1, and the reason is structural. Verbatim, on
