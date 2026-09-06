@@ -1,0 +1,5 @@
+21:07:46 BATCH_START p1t29-dce runs=3
+21:08:06 RUN dce01 n=1 verdict=ok wall=19.8s clk_res={'PRIMARY': (2, 8), 'LW': (0, 8), 'GCLK_PIN': (0, 24), 'DCE': (1, 76)} errs=[]
+21:08:19 RUN dce12 n=12 verdict=ok wall=13.0s clk_res={'PRIMARY': (12, 8), 'LW': (1, 8), 'GCLK_PIN': (0, 24), 'DCE': (12, 76)} errs=[]
+21:08:32 RUN dce13 n=13 verdict=ok wall=12.8s clk_res={'PRIMARY': (13, 8), 'LW': (1, 8), 'GCLK_PIN': (0, 24), 'DCE': (13, 76)} errs=[]
+21:08:32 BATCH_COMPLETE p1t29-dce runs=3 ok=3 diff=0 aborted=0

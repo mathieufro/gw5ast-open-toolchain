@@ -1,0 +1,12 @@
+19:19:20 BATCH_START batch=p1t29-dqce-e1 shape=clocking_dqce level=E1 pid=71031 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t29-dqce-e1
+19:20:02 BATCH_HEAD selftest --inject-one-fuse: ok
+19:20:15 BATCH_HEAD selftest --unpacker-completeness: ok
+19:20:16 BATCH_HEAD selftest --probe-mask-classes: ok
+19:20:16 BATCH_HEAD gw_sh pre-flight: ok
+19:20:16 BATCH_CHIPDB batch=p1t29-dqce-e1 sha256=d1d458e17e997350b088448d5d3c91f725fa64196909169fcd9368260cf8f433
+19:20:16 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+19:20:16 BATCH_RESUME batch=p1t29-dqce-e1 planned=1 already_terminal=0
+19:20:17 RUN_START p1t29-dqce-e1-clocking_dqce-0000 sweep='q1'
+19:20:32 RUN_DONE p1t29-dqce-e1-clocking_dqce-0000 verdict=aborted
+19:20:32 BATCH_SKIPPED batch=p1t29-dqce-e1 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1t29-dqce-e1.rows.jsonl
+BATCH_COMPLETE p1t29-dqce-e1 runs=1 ok=0 diff=0 aborted=1

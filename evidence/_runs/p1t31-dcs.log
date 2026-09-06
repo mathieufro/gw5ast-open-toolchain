@@ -1,0 +1,4 @@
+21:09:37 BATCH_START p1t31-dcs runs=2
+21:09:50 RUN dcs01 n=1 verdict=ok wall=12.9s clk_res={'PRIMARY': (2, 8), 'LW': (0, 8), 'GCLK_PIN': (0, 24), 'DCS': (1, 20)} errs=[]
+21:10:03 RUN dcs04 n=4 verdict=ok wall=12.6s clk_res={'PRIMARY': (5, 8), 'LW': (0, 8), 'GCLK_PIN': (0, 24), 'DCS': (4, 20)} errs=[]
+21:10:03 BATCH_COMPLETE p1t31-dcs runs=2 ok=2 diff=0 aborted=0
