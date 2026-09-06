@@ -1,0 +1,38 @@
+{
+ "rows": [
+  {
+   "run_id": "p1t29-dce-redo-dce12",
+   "shape": "clocking_dqce",
+   "primitive": "DCE",
+   "n": 12,
+   "verdict": "ok",
+   "wall_clock_s": 21.2,
+   "fs": "/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t29-dce/fs/dce12.fs",
+   "detail": "",
+   "errors": [],
+   "clock_resources": {
+    "PRIMARY": [
+     12,
+     8
+    ],
+    "LW": [
+     1,
+     8
+    ],
+    "GCLK_PIN": [
+     0,
+     24
+    ],
+    "DCE": [
+     12,
+     76
+    ]
+   },
+   "task": "P1.T29/T31",
+   "device": "GW5AST-138C",
+   "gowinhome": "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA",
+   "edu_provisional": false,
+   "ts": 1788724714.5772538
+  }
+ ]
+}

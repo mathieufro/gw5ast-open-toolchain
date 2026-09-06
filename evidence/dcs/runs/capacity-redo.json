@@ -1,0 +1,38 @@
+{
+ "rows": [
+  {
+   "run_id": "p1t31-dcs-redo-dcs04",
+   "shape": "clocking_dcs",
+   "primitive": "DCS",
+   "n": 4,
+   "verdict": "ok",
+   "wall_clock_s": 21.2,
+   "fs": "/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t31-dcs/fs/dcs04.fs",
+   "detail": "",
+   "errors": [],
+   "clock_resources": {
+    "PRIMARY": [
+     5,
+     8
+    ],
+    "LW": [
+     0,
+     8
+    ],
+    "GCLK_PIN": [
+     0,
+     24
+    ],
+    "DCS": [
+     4,
+     20
+    ]
+   },
+   "task": "P1.T29/T31",
+   "device": "GW5AST-138C",
+   "gowinhome": "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA",
+   "edu_provisional": false,
+   "ts": 1788724735.937862
+  }
+ ]
+}

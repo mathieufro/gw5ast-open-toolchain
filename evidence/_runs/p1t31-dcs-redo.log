@@ -1,0 +1,3 @@
+21:58:34 BATCH_START p1t31-dcs-redo runs=1
+21:58:55 RUN dcs04 n=4 verdict=ok wall=21.2s clk_res={'PRIMARY': (5, 8), 'LW': (0, 8), 'GCLK_PIN': (0, 24), 'DCS': (4, 20)} errs=[]
+21:58:55 BATCH_COMPLETE p1t31-dcs-redo runs=1 ok=1 diff=0 aborted=0

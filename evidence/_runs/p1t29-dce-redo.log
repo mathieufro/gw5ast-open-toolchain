@@ -1,0 +1,3 @@
+21:58:13 BATCH_START p1t29-dce-redo runs=1
+21:58:34 RUN dce12 n=12 verdict=ok wall=21.2s clk_res={'PRIMARY': (12, 8), 'LW': (1, 8), 'GCLK_PIN': (0, 24), 'DCE': (12, 76)} errs=[]
+21:58:34 BATCH_COMPLETE p1t29-dce-redo runs=1 ok=1 diff=0 aborted=0

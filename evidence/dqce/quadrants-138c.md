@@ -81,3 +81,14 @@ Pre-5A devices are unaffected: `dqce_quadrant_types(device)` reproduces the old
 `enumerate([85,80,81,84])` + `q < 2` skip exactly, and a `GW2A-18` chipdb built
 from the base commit and from this one have **identical** `dqce`/`dcs`
 `extra_func` dicts (4 cells each).
+
+## Artefact bookkeeping (D99)
+
+An over-eager cleanup removed the kept `.fs` of the `p1t29-dce` and `p1t31-dcs`
+batches before their sha256 was recorded. The two decisive builds (`dce12`,
+`dcs04`) were re-run — `p1t29-dce-redo`, `p1t31-dcs-redo`, 2 further oracle
+runs — and reproduced every recorded measurement (`DCE 12/76`, `DCS 4/20`, the
+same twelve spine multiplexers and four port groups); their rows now carry a
+live path and its sha256. The `n = 1` and `n = 13` rows carry
+`artefact_pruned: true` with the reason, as `D99` requires; their content is
+transcribed above.
