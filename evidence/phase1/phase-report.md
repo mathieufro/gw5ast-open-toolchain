@@ -202,11 +202,15 @@ times** and each red was fixed forward, never worked around:
 | nextpnr | `APICULA_ROOT` pointed at a per-task worktree that no longer exists | repointed at the sibling checkout; the marker-label bug behind it (`repo` taken from the checkout directory, so worktree gates were filed as `integ-*`) fixed in all three `pre-push` hooks |
 | open-toolchain | `evidence/dqce/summary.md` and `evidence/dcs/summary.md` lacked the required `## Sweep` heading | both written with the real axes |
 
-Final: apicula `GATE full: ok, 2 checks` (349 passed / 5 skipped / 1 xfail
-fast in 21.7 s; 48 passed / 1 xfail heavy in 416.9 s; 475 s wall), nextpnr
-`GATE full: ok` (5 checks, 38 s), open-toolchain `GATE full: ok, 3 checks`
-(78 tests, `EVIDENCE ok: 156 rows`, `CRITERIA ok: 14/14`, 12 s).
-`tools/gate_status.py` exits 0.
+Final, at the tips this phase closes on: apicula `3c22067`
+`GATE full: ok, 2 checks` (349 passed / 5 skipped / 1 xfail fast in 24.3 s;
+49 passed / 1 xfail heavy in 550.0 s; 629 s wall), nextpnr `7dd337bb`
+`GATE full: ok` (5 checks — the two HCLK checks, arch-gen determinism and the
+three DCS-spine checks — 46 s), open-toolchain `1ebd0f0`
+`GATE full: ok, 3 checks` (78 tool tests,
+`EVIDENCE ok: 159 rows, 34 pending, 0 blank, 0 missing artifacts`,
+`CRITERIA ok: 14/14`, 12 s). `tools/gate_status.py` exits 0 with every
+repo's newest marker `PASS`.
 
 Two tooling defects were found by running the gate and fixed with guards:
 `gate_status.py` judged **every** marker ever written, so one red run from an
