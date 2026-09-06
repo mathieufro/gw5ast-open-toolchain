@@ -1,0 +1,49 @@
+08:59:52 BATCH_START batch=p1-pll-sweep-a shape=clocking_pll level=E1 pid=72614 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/clocking/pll/sweep-a
+09:02:08 BATCH_HEAD selftest --inject-one-fuse: ok
+09:02:28 BATCH_HEAD selftest --unpacker-completeness: ok
+09:02:29 BATCH_HEAD selftest --probe-mask-classes: ok
+09:02:31 BATCH_HEAD gw_sh pre-flight: ok
+09:02:31 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 20 run ids)
+09:02:31 BATCH_RESUME batch=p1-pll-sweep-a planned=20 already_terminal=0
+09:02:31 RUN_START p1-pll-sweep-a-clocking_pll-0000 sweep='idiv_013'
+09:02:47 RUN_DONE p1-pll-sweep-a-clocking_pll-0000 verdict=aborted
+09:02:47 RUN_START p1-pll-sweep-a-clocking_pll-0001 sweep='idiv_012'
+09:03:06 RUN_DONE p1-pll-sweep-a-clocking_pll-0001 verdict=aborted
+09:03:06 RUN_START p1-pll-sweep-a-clocking_pll-0002 sweep='idiv_015'
+09:03:24 RUN_DONE p1-pll-sweep-a-clocking_pll-0002 verdict=aborted
+09:03:24 RUN_START p1-pll-sweep-a-clocking_pll-0003 sweep='idiv_014'
+09:03:39 RUN_DONE p1-pll-sweep-a-clocking_pll-0003 verdict=aborted
+09:03:39 RUN_START p1-pll-sweep-a-clocking_pll-0004 sweep='idiv_010'
+09:03:55 RUN_DONE p1-pll-sweep-a-clocking_pll-0004 verdict=aborted
+09:03:55 RUN_START p1-pll-sweep-a-clocking_pll-0005 sweep='idiv_011'
+09:04:12 RUN_DONE p1-pll-sweep-a-clocking_pll-0005 verdict=aborted
+09:04:12 RUN_START p1-pll-sweep-a-clocking_pll-0006 sweep='idiv_009'
+09:04:31 RUN_DONE p1-pll-sweep-a-clocking_pll-0006 verdict=aborted
+09:04:31 RUN_START p1-pll-sweep-a-clocking_pll-0007 sweep='idiv_017'
+09:04:51 RUN_DONE p1-pll-sweep-a-clocking_pll-0007 verdict=aborted
+09:04:51 RUN_START p1-pll-sweep-a-clocking_pll-0008 sweep='idiv_016'
+09:05:11 RUN_DONE p1-pll-sweep-a-clocking_pll-0008 verdict=aborted
+09:05:11 RUN_START p1-pll-sweep-a-clocking_pll-0009 sweep='fbdiv_018'
+09:05:34 RUN_DONE p1-pll-sweep-a-clocking_pll-0009 verdict=aborted
+09:05:34 RUN_START p1-pll-sweep-a-clocking_pll-0010 sweep='fbdiv_013'
+09:05:57 RUN_DONE p1-pll-sweep-a-clocking_pll-0010 verdict=aborted
+09:05:57 RUN_START p1-pll-sweep-a-clocking_pll-0011 sweep='fbdiv_015'
+09:06:24 RUN_DONE p1-pll-sweep-a-clocking_pll-0011 verdict=aborted
+09:06:24 RUN_START p1-pll-sweep-a-clocking_pll-0012 sweep='fbdiv_014'
+09:06:56 RUN_DONE p1-pll-sweep-a-clocking_pll-0012 verdict=aborted
+09:06:56 RUN_START p1-pll-sweep-a-clocking_pll-0013 sweep='fbdiv_020'
+09:07:23 RUN_DONE p1-pll-sweep-a-clocking_pll-0013 verdict=aborted
+09:07:23 RUN_START p1-pll-sweep-a-clocking_pll-0014 sweep='fbdiv_021'
+09:07:48 RUN_DONE p1-pll-sweep-a-clocking_pll-0014 verdict=aborted
+09:07:48 RUN_START p1-pll-sweep-a-clocking_pll-0015 sweep='fbdiv_023'
+09:08:13 RUN_DONE p1-pll-sweep-a-clocking_pll-0015 verdict=aborted
+09:08:13 RUN_START p1-pll-sweep-a-clocking_pll-0016 sweep='fbdiv_022'
+09:08:44 RUN_DONE p1-pll-sweep-a-clocking_pll-0016 verdict=aborted
+09:08:44 RUN_START p1-pll-sweep-a-clocking_pll-0017 sweep='fbdiv_019'
+09:09:15 RUN_DONE p1-pll-sweep-a-clocking_pll-0017 verdict=aborted
+09:09:15 RUN_START p1-pll-sweep-a-clocking_pll-0018 sweep='fbdiv_017'
+09:09:43 RUN_DONE p1-pll-sweep-a-clocking_pll-0018 verdict=aborted
+09:09:43 RUN_START p1-pll-sweep-a-clocking_pll-0019 sweep='fbdiv_016'
+09:10:09 RUN_DONE p1-pll-sweep-a-clocking_pll-0019 verdict=aborted
+09:10:09 BATCH_SKIPPED batch=p1-pll-sweep-a n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1-pll-sweep-a.rows.jsonl
+BATCH_COMPLETE p1-pll-sweep-a runs=20 ok=0 diff=0 aborted=20

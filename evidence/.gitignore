@@ -100,6 +100,16 @@
 !dqce/runs/oracle-runs.jsonl
 !dqce/tiletypes-138c.json
 !dcs/tiles-138c.json
+# the P1.T23 PLL sweep batch A: the analyser that attributes each point's
+# moved fuses and cross-checks them against P1.T22's attrmap, its output (the
+# per-point moved-bit lists sweep-a-138c.md's table is read from), and the
+# row-merge step P1.T41-T43 reuse to rewrite a batch's `sweep` map into the
+# {axis, <parameter>} form the evidence schema wants. Same named-exception
+# pattern as plla/ above -- .json/.py are not covered by "*.md".
+!plla/gen_sweep_a_138c.py
+!plla/merge_sweep_rows.py
+!plla/sweep-a-138c.json
+
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo
