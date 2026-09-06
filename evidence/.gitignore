@@ -80,6 +80,14 @@
 !dhcen/fuse_probe.py
 !dhcen/build_fuse_table.py
 !dhcen/fuse-138c.json
+# the P1.T08d clock-mux campaign: the vendor-run driver, the two read-only
+# decoders every number in mux38-138c.md comes out of, and the sha256 ledger
+# of the 27 run .fs (D99 -- the .fs themselves are denied below and live in
+# $DATASTORE). Same named-exception pattern as plla/ and dhcen/ above.
+!hclk/staircase_blocks.py
+!hclk/probe_clkmux.py
+!hclk/e0_hclk_scope.py
+!hclk/p1t08d-fs.sha256
 # Explicitly denied, even under an allowed directory (last match wins):
 *.fs
 *.vo

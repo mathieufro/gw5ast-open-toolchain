@@ -1,0 +1,5 @@
+BATCH_START p1t08d-topstair runs=3
+RUN left2 verdict=ok wall=24.6s detail=ok
+RUN left3 verdict=ok wall=23.4s detail=ok
+RUN left4 verdict=ok wall=24.6s detail=ok
+BATCH_COMPLETE p1t08d-topstair runs=3 ok=3 diff=0 aborted=0
