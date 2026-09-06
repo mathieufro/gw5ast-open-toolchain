@@ -25,7 +25,10 @@ gets zero gate. Otherwise it spawns `make gate GATE_SCOPE=branch` **detached**
 (nohup, logged to `evidence/_gates/<repo>-<branch>-<sha>.log`, watched by an
 out-of-process stall watchdog, `tools/gate_watchdog.sh`) and still exits 0
 right away -- **a push is never blocked**. The gate writes
-`<same-stem>.result` (`PASS`/`FAIL`) as its last action.
+`<same-stem>.result` (`PASS`/`FAIL`) as its last action. As of D181
+(2026-09-06) the hook above is a no-op unless `LANDING_GATE=1` is set for that
+push -- no push runs a gate any more; landings are checked by targeted tests,
+full gates run once at phase close.
 
 `GATE_SCOPE=fast` is unit tests only (no bitstream, no evidence tools,
 target < 30 s); `GATE_SCOPE=branch` is fast plus the evidence/criteria tools
