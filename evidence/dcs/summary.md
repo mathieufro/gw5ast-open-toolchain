@@ -8,6 +8,12 @@ is P1.T31/T32). See `tiles-138c.md` + `tiles-138c.json`.
 No separate oracle campaign — derived from the DQCE 8-run probe
 (`evidence/dqce/`), since DCS searches the identical 4 grid values.
 
+## Sweep
+
+No sweep of this row's own: the 4 grid values are read from the DQCE 8-run
+probe recorded in `evidence/dqce/`, so this row varies nothing itself. The
+DCS sweep proper is `P1.T31`/`P1.T32`.
+
 ## Verdict
 
 Same 4 cells as DQCE: 3 confirmed live (80, 84, 85), 1

@@ -1,0 +1,62 @@
+BATCH_START batch=p1t15-clkdiv2-e1 shape=clocking_clkdiv2 level=E1 pid=13516 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t15-clkdiv2-e1
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 7 run ids)
+BATCH_RESUME batch=p1t15-clkdiv2-e1 planned=7 already_terminal=0
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0000 sweep=(0, 'pin')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0000 verdict=ok
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0001 sweep=(1, 'pin')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0001 verdict=ok
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0002 sweep=(2, 'pin')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0002 verdict=ok
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0003 sweep=(3, 'pin')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0003 verdict=ok
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0004 sweep=(0, 'tied')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0004 verdict=ok
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0005 sweep=(1, 'tied')
+BATCH_START batch=p1t15-clkdiv2-e1 shape=clocking_clkdiv2 level=E1 pid=96320 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t15-clkdiv2-e1
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/clkdiv2/apycula/chipdb.py:340: UserWarning: Msgspec is not available, performance will be degraded.
+  warnings.warn("Msgspec is not available, performance will be degraded.")
+BATCH_HEAD selftest --inject-one-fuse: FAILED — ModuleNotFoundError("No module named 'msgpack'")
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/clkdiv2/apycula/chipdb.py:340: UserWarning: Msgspec is not available, performance will be degraded.
+  warnings.warn("Msgspec is not available, performance will be degraded.")
+BATCH_HEAD selftest --unpacker-completeness: FAILED — ModuleNotFoundError("No module named 'msgpack'")
+/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/clkdiv2/apycula/chipdb.py:340: UserWarning: Msgspec is not available, performance will be degraded.
+  warnings.warn("Msgspec is not available, performance will be degraded.")
+BATCH_HEAD selftest --probe-mask-classes: FAILED — ModuleNotFoundError("No module named 'msgpack'")
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_HEAD_BLOCKED batch=p1t15-clkdiv2-e1 — no row is produced by this batch
+BATCH_COMPLETE p1t15-clkdiv2-e1 runs=0 ok=0 diff=0 aborted=0
+BATCH_START batch=p1t15-clkdiv2-e1 shape=clocking_clkdiv2 level=E1 pid=18513 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t15-clkdiv2-e1
+BATCH_HEAD selftest --inject-one-fuse: FAILED — FileNotFoundError(2, 'No such file or directory')
+BATCH_HEAD selftest --unpacker-completeness: FAILED — FileNotFoundError(2, 'No such file or directory')
+BATCH_HEAD selftest --probe-mask-classes: FAILED — FileNotFoundError(2, 'No such file or directory')
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_HEAD_BLOCKED batch=p1t15-clkdiv2-e1 — no row is produced by this batch
+BATCH_COMPLETE p1t15-clkdiv2-e1 runs=0 ok=0 diff=0 aborted=0
+BATCH_START batch=p1t15-clkdiv2-e1 shape=clocking_clkdiv2 level=E1 pid=66453 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t15-clkdiv2-e1
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 7 run ids)
+BATCH_RESUME batch=p1t15-clkdiv2-e1 planned=7 already_terminal=5
+RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0000 (terminal row already present)
+RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0001 (terminal row already present)
+RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0002 (terminal row already present)
+RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0003 (terminal row already present)
+RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0004 (terminal row already present)
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0005 sweep=(1, 'tied')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0005 verdict=ok
+RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0006 sweep=(2, 'tied')
+RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0006 verdict=ok
+BATCH_SKIPPED batch=p1t15-clkdiv2-e1 n=5 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t15-clkdiv2-e1.rows.jsonl
+BATCH_COMPLETE p1t15-clkdiv2-e1 runs=2 ok=2 diff=0 aborted=0

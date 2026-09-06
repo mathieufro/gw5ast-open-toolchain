@@ -1,0 +1,18 @@
+14:10:56 BATCH_START batch=p1t15-clkdiv2-e1 shape=clocking_clkdiv2 level=E1 pid=66453 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t15-clkdiv2-e1
+14:27:52 BATCH_HEAD selftest --inject-one-fuse: ok
+14:32:01 BATCH_HEAD selftest --unpacker-completeness: ok
+14:32:04 BATCH_HEAD selftest --probe-mask-classes: ok
+14:32:13 BATCH_HEAD gw_sh pre-flight: ok
+14:32:13 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 7 run ids)
+14:32:13 BATCH_RESUME batch=p1t15-clkdiv2-e1 planned=7 already_terminal=5
+14:32:13 RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0000 (terminal row already present)
+14:32:13 RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0001 (terminal row already present)
+14:32:13 RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0002 (terminal row already present)
+14:32:13 RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0003 (terminal row already present)
+14:32:13 RUN_SKIP p1t15-clkdiv2-e1-clocking_clkdiv2-0004 (terminal row already present)
+14:32:13 RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0005 sweep=(1, 'tied')
+14:37:12 RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0005 verdict=ok
+14:37:12 RUN_START p1t15-clkdiv2-e1-clocking_clkdiv2-0006 sweep=(2, 'tied')
+14:40:39 RUN_DONE p1t15-clkdiv2-e1-clocking_clkdiv2-0006 verdict=ok
+14:40:39 BATCH_SKIPPED batch=p1t15-clkdiv2-e1 n=5 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p1t15-clkdiv2-e1.rows.jsonl
+BATCH_COMPLETE p1t15-clkdiv2-e1 runs=2 ok=2 diff=0 aborted=0
