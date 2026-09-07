@@ -30,3 +30,10 @@ std GW5AT-60B   615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8
 std GW5AST-138C-run2 fd1d112d0c463d9e7ba918b0651cac0c9b4e90dac392ae36e8cec297bf9ee2bb 816620 1.9.12.03
 # nextpnr chipdb .bin, rebuilt from the msgpack above (P0.T16 procedure)
 bin GW5AST-138C 929efdf8fa276a4d5eb82780c0361e5f9ac63c4c9d816d192fad145681fb139d 63856432 1.9.12.03
+#
+# P1.F2 (2026-09-07): rebuilt after the 138C logic-to-clock gates came from the .dat
+# (chipdb.py get_logic_clock_ins). Built twice, same shell, byte-identical. The nextpnr
+# binary is unchanged (cfc97099...): this task needed no nextpnr source change.
+std GW5AST-138C faa33ef430b528dfb4e9c7f689da2f669815754b56ded389caaa5da9afc1a36c 819816 1.9.12.03
+std GW5AST-138C-run2 faa33ef430b528dfb4e9c7f689da2f669815754b56ded389caaa5da9afc1a36c 819816 1.9.12.03
+bin GW5AST-138C d700cade55494c427b563ee8e5e6e4704a83befca993f1de87028612ae48846c 32909055 1.9.12.03
