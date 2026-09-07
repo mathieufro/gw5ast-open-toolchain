@@ -1,124 +1,136 @@
 # `AE350_SOC` fabric wire map — GW5AST-138C
 
-`P2.T26` re-scope, measurement half. Companion data file:
-`wire-map-138c.json` (the file `fse_create_ae350()` reads).
-Status **PARTIAL / MEASURED**, runs `p2t26-tilewires` and `p2t26-baseline`,
-Gowin IDE Standard 1.9.12.03.
+`P2.T08a`. Companion data file: `wire-map-138c.json` (the file
+`fse_create_ae350()` reads). Status **PARTIAL**: the output half is
+**MEASURED**, the input half is **DAT-DERIVED**. Gowin IDE Standard
+1.9.12.03; runs `p2t26-tilewires` and `p2t26-baseline`, no new vendor run.
 
-## 1. The premise the blueprint was built on is dead
+## 1. The parser defect, and what it actually was
 
-`P2.T06` costed `EC5` discovery at **149 vendor runs** — one presence diff per
-bus — against a cap of 8. That costing assumed one bus can be varied at a time.
-It cannot be the only shape, and it does not have to be: **run
-`p2t26-tilewires` instantiates `AE350_SOC` with all 149 ports (911 bits)
-simultaneously bound to distinct fabric flops, and the vendor synthesises,
-places, routes and generates a bitstream for it.**
+`P2.T26` recorded a transposed call at `dat_parser.py:545-546`. That is half of
+it. The signature is
 
-- `run.rpt.txt` §3: `AE350_SOC | 1/1 | 100%`.
-- Every port is a real timing endpoint in `run.tr` §3.1.1 (`drv_401_s0/Q ->
-  u_ae350/PGEN_CHAIN_I`, `u_ae350/TDO_OUT -> cap_375_s0/D`, …), so nothing was
-  optimised away.
-- Total place-and-route: **15 s**. The per-run cost placeholder of 35 min is
-  wrong for this shape by two orders of magnitude.
-- **No physical constraints file was used** (`<Physical Constraints File>: ---`)
-  and the block still placed: `AE350_SOC` has a **single fixed site**. That
-  matches the reference design, whose `.cst` constrains the two PLLs and never
-  the SoC (`research/ae350-dossier.md` §2).
+```
+read_scaledGrid16(numRows, numCols, rowScaling, colScaling, baseOffset)
+```
 
-## 2. Where the block is — measured, not inferred
+and 72 call sites pass `(numRows, numCols, numCols, RSTable5ATOffset + base, k)`
+— so the base landed in `colScaling`, a small residual landed in `baseOffset`,
+and `_cur` became `row * numCols + col * base * 2 + k`. **The bases at those
+call sites are also u16 word offsets, not byte offsets**, which the earlier note
+missed. Two independent measurements fix the layout:
 
-`p2t26-baseline` is the identical fabric with the `AE350_SOC` instance removed.
-Presence diff of the two bitstreams (`bslib.read_bitstream` +
-`chipdb.tile_bitmap`, the maintainer's method at `chipdb.py:1509-1515`):
+- consecutive tables of this family are exactly `numRows * numCols` **words**
+  apart — `Gtrl12PmacDBIns` → `Gtrl12UparDBIns` is `0x2238` = 2920 × 3 to the
+  word, and `Gtrl12QuadDBOuts1` → `Gtrl12QuadDBOuts2` is 668 × 3 ± 4;
+- read that way, `Ae350SocOuts` lands on real `(row, col, wire)` triples inside
+  the AE350's measured footprint.
 
-| quantity | value |
-|---|---|
-| tiles differing | 1 477 |
-| bits moved | 85 411 |
-| bits moved in **columns 145-181** | **85 401 (99.99 %)** |
-| bits moved anywhere else | **10**, at `(r, 95)` and `(r, 96)` — the clock spine |
-| row span | 0-108 (the full die height) |
-| peak column | **159** |
+The repair is one reader, `Datfile.read_packed_grid16(num_rows, num_cols,
+base_words)`, used at all 72 sites; `rowScaling` was `numCols` at every one of
+them, which is the packed layout and nothing else, so the shape is stated once.
 
-So the `AE350_SOC`'s entire fabric footprint on this die is the **right-hand
-column band 145-181**. Nothing about the block touches the left two thirds.
+Guard: every table of `GW1N-4`, `GW1N-9`, `GW1NZ-1C`, `GW2A-18` and `GW2A-18C`
+decodes **byte-identically** before and after (146 tables each, 0 changed).
+`GW1N-9C` raises `PartType 4 is not supported` before and after — unchanged.
+Those parts never reach `read_5Astuff`, so the repair cannot touch them; the
+5-series parts `GW5A-25A` and `GW5AST-138C` change in 53 tables each, which is
+the point.
 
-Inside that band the chipdb holds two hard-block interface tile types that
-exist nowhere else on the die:
+## 2. Where the port map is
 
-| ttyp | rows | cols | tiles | touched by the diff | moved bits |
+| table | shipped base (words) | base used | slots | live | bits of that direction |
 |---|---|---|---|---|---|
-| **224** | 10, 28, 46 | 145-180 | 108 | 72 | 2 464 |
-| **228** | 64, 82, 100 | 145-180 | 108 | 23 | 119 |
+| `Ae350SocOuts` | `0x8bb0` | `0x8bb1` | 518 | 492 | 495 |
+| `Ae350SocIns` | `0x86a0` (stale) | `0x8314` | 433 | 415 | 416 |
 
-216 interface tiles against 911 port bits is ~4.2 bits per tile — the right
-order for a hard macro's fabric tap rows. Which band carries inputs and which
-outputs is not yet separated.
+The shipped `Outs` base is one word short of the record boundary. The shipped
+`Ins` base is stale the way `CibFabricNode`'s was: it points at a *different*
+block's table, in columns 51-139. The AE350's own input table is at `0x8314`.
+`AE350_SOC_INS_BASES` tries the candidates in order and keeps the one whose
+last tapped column is immediately before a column `Ae350SocOuts` drives — the
+block's own geometry, not a hard-coded number.
 
-## 3. The `.dat` does carry the port map — under a different name
+## 3. What the tables say
 
-`P2.T03`/`P2.T04` measured `McuIns`/`McuOuts` as 637 all-sentinel slots and
-concluded the 138C `.dat` has no AE350 port map. The first half is right and
-the conclusion is wrong: the legacy triple block is dead on GW5, and GW5
-devices carry their hard-block port maps in **`dat.gw5aStuff`** instead
-(`chipdb.py:2489` reads the ADC's ports from `gw5aStuff['Adc25kIns']`, not from
-`compat_dict`). `gw5aStuff` has 120 keys on this device, and two of them are:
+Every live record has row 1, i.e. **die row 0**. The taps are in row 0 of the
+band the presence diff measured:
 
-```
-dat_parser.py:545  ret["Ae350SocIns"]  = self.read_scaledGrid16(0x1b1, 3, 3, RSTable5ATOffset + 0x86a0, 6)
-dat_parser.py:546  ret["Ae350SocOuts"] = self.read_scaledGrid16(0x206, 3, 3, RSTable5ATOffset + 0x8bb0, 10)
-```
+| | columns (0-based) | wires |
+|---|---|---|
+| inputs | 145-155 | `F0`-`F7`, `Q0`-`Q7`, `OF0`-`OF7` — what a tile drives |
+| outputs | 156-180 (plus 22, 23, 87) | `A0`-`D7`, `F*`, `Q*`, `OF*`, `CLK0`-`CLK2`, `LSR1`, `LSR2`, `CE0`-`CE2` |
 
-`0x1b1` = **433** slots and `0x206` = **518** slots, against **416** input bits
-and **495** output bits — the table lengths bracket the port bit counts.
+The two halves are contiguous and disjoint: inputs end at column 155, outputs
+begin at 156. That is one hard block reading the left of its band and driving
+the right, and it reproduces the measured footprint (145-181).
 
-**They decode to garbage today, and that is a parser defect, not empty data.**
-The signature is
+**The row-0 taps are `ttyp` 242 tiles, not 224 or 228.** `ttyp` 224 (rows 10,
+28, 46) and `ttyp` 228 (rows 64, 82, 100) carry the block's *configuration* —
+they are where the presence diff's bits moved — but no port record names them.
+`P2.T26`'s guess that the interface bands carry the ports is wrong.
 
-```
-def read_scaledGrid16(self, numRows, numCols, rowScaling, colScaling, baseOffset)
-```
+## 4. The per-bit map
 
-so the call above puts the base offset into `colScaling` and the row stride into
-`baseOffset`; `self._cur` is then `row*3 + col*(rs+0x86a0)*2 + 6`, which reads
-unrelated bytes. The working entries in the same file use the other order —
-`read_scaledGrid16(216, 3, 6, 1, RSTable5ATOffset + 0x1f38)` for `PllLTIns`,
-`read_scaledGrid16i(25, 3, 6, 1, …)` for `Adc25kIns`. Read contiguously as
-triples at `RSTable5ATOffset + 0x8bb0` (absolute `0x8405c`, with
-`_rs_table_offset` = `0x7b4ac` on this file), the `Outs` base lands **inside a
-255-triple run that is coherent under the `(row, col, wire)` convention** and
-whose wire field indexes real 138C wire names (`A0`-`D7`, `E210`-`W220`,
-`OF3`/`OF4`, `CLK1`). Empty tables do not do that.
+**Rule.** Slot *i* of a direction's table is bit *i* of that direction, counting
+ports in `primitive.xml` declaration order and each bus LSB first. A
+`0xffff/0xffff/0xffff` slot is an unbound bit. Trailing slots past the bit count
+(23 for `Outs`, 17 for `Ins`) are the array's spare capacity.
 
-The same transposition affects **every** entry at `dat_parser.py:525-546` and
-`:601-650` — `MipiIns1/2`, `MipiOuts1/2`, `MipiDPhy*`, `Gtrl12*`, `MDdrDll*`,
-`S0DdrDll*`, `S1DdrDll*`, `Cmsera*`, `AdcLRC*`, `AdcULC*`. Every one of those
-blocks is silently reading noise on this device.
+| | bits | bound | unbound | in footprint | outside |
+|---|---|---|---|---|---|
+| inputs | 416 | 398 | 18 | **256** | 142 |
+| outputs | 495 | 469 | 26 | **466** | 3 |
 
-`dat_parser.py` is **frozen for Phase 2** (Phase 0 and Phase 6 own it), so this
-is recorded here and fixed in its owning task under the standing order, not
-patched from this phase. It is the single highest-value fix in the phase: it
-converts a 149-run discovery campaign into a table read.
+**Slots that do not fit** (`slots_that_do_not_fit` in the JSON):
 
-## 4. What is resolved and what is not
+- `Ae350SocOuts`: 3 — columns 22, 23 and 87. Columns 88, 89, 95 and 96 *do*
+  appear in the presence diff (the clock spine), so these are plausible and
+  simply outside the band.
+- `Ae350SocIns`: 142. The AE350's input table holds only **257 records** before
+  the neighbouring block's table begins, against 416 input bits, so the ordinal
+  rule runs off the end of it at bit 274 and the remaining slots name columns
+  109-114 and 50-51, which are not the AE350's. **Input bits 0-273 are mapped;
+  274-415 are not.** This is the one open class in the map.
 
-**Resolved (2 vendor runs):**
-- the block instantiates, places and routes with all 911 bits connected;
-- its fabric footprint is columns 145-181, 99.99 % of moved bits;
-- the 216 candidate interface tiles (ttyp 224 and 228) and their coordinates;
-- a single fixed site, no `INS_LOC`;
-- the real home of the port map in the shipped data, and the exact defect that
-  hides it.
+**Cross-check against run `p2t26-tilewires`.** For every row-0 tile in the band,
+the pips whose fuses differ between the AE350 bitstream and the baseline were
+decoded (`chipdb.tile_bitmap` + the tile's pip table), and each mapped bit was
+looked up in that tile's changed-wire set:
 
-**Unresolved — 911/911 port bits still lack a named wire:**
-1. **per-bit binding.** A presence diff localises a block; it does not name a
-   wire per port bit. That needs either the `.dat` table (0 runs, after the
-   parser fix) or a differential campaign with pinned endpoints.
-2. **the `Ae350SocIns` base.** The `Ins` delta `0x86a0` reads all-sentinel at
-   every phase tried; `Outs` at `0x8bb0` reads live. One of the two deltas has
-   drifted between IDE releases, exactly as `CIB_FABRIC_NODE_DELTAS`
-   (`dat_parser.py`) documents for `CibFabricNode`. The fix is the same
-   data-driven candidate list.
-3. **band polarity.** Which of ttyp 224 / ttyp 228 is the input side.
+- `Ae350SocOuts`: **437 of 466 checked bits matched** (93.8 %). Those 437 are
+  marked `MEASURED` in the JSON; the rest `DAT-DERIVED`.
+- `Ae350SocIns`: 11 of 256. This is expected and not disconfirming — an input
+  tap is a tile *output* wire (`F`/`Q`/`OF`), which the block reads directly;
+  it is not the destination of a pip, so a presence diff of pip fuses cannot
+  see it. The input half stays `DAT-DERIVED`.
 
-WIRE-MAP-VERDICT: 0/911 port bits bound; footprint cols 145-181 MEASURED over 2 runs; port map located in dat.gw5aStuff['Ae350SocIns'/'Ae350SocOuts'], blocked on a frozen-file parser defect.
+The flop endpoints of run `p2t26-tilewires` were **not** pinned — `top.cst`
+holds four `IO_LOC` lines and nothing else, and `run.p` is encrypted — so a
+per-bit measured map is not available from the banked runs. The pip cross-check
+above is the strongest evidence those two runs can carry.
+
+## 5. Other tables the same repair unlocks
+
+`MipiIns1/2`, `MipiOuts1/2`, `MipiDPhy*` and every `Gtrl12*` entry are inside a
+triple-quoted block at `dat_parser.py:525-546` — **they are not executed at all**
+on any device, so they were never "reading noise"; they are dead source. They
+are repaired in place for whoever un-quotes them.
+
+Live and repaired, but **not** validated by any measurement here:
+
+| table | slots | live on 138C |
+|---|---|---|
+| `MDdrDllIns1`-`7`, `S0DdrDllIns1`-`4`, `S1DdrDllIns1`-`4` | 4 each | 4 each |
+| `MDdrDllOuts1`-`7`, `S0DdrDllOuts1`-`4`, `S1DdrDllOuts1`-`4` | 9 each | 9 each |
+| `CmseraIns` / `CmseraOuts` | 32 / 96 | 32 / 96 |
+| `AdcLRCIns` / `AdcLRCOuts` | 40 / 18 | 40 / 18 |
+| `AdcULCOuts` | 18 | 18 |
+| `AdcLRCCfgvsenctl1`/`2`, `AdcULCCfgvsenctl` | 3 / 36 / 3 | all |
+
+Their decoded records are **not** grid coordinates on this device (columns run
+to 17920), so their bases carry the same kind of drift the `Ins` base did and
+each needs its own anchor before Phase 3 or 5b can use it. No consumer reads
+any of them today (`chipdb.py` references none), so nothing regresses.
+
+WIRE-MAP-VERDICT: 867/911 port bits carry a (row, col, wire); 722 of those sit in the measured footprint; outputs 437/466 cross-checked MEASURED against the run-1 bitstream; input bits 274-415 unmapped (the Ins table holds 257 records).

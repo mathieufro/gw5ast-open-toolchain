@@ -21,9 +21,9 @@ fix it is **0 runs**, because the vendor ships the table.
 
 | task | verdict | why |
 |---|---|---|
-| `P2.T07` `fse_create_ae350()` skeleton | **STANDS, amended** | The `(0,0)` fallback in the HOW is now wrong: the footprint is measured at columns 145-181. Anchor the bel in that band, not at `(0,0)`. |
-| `P2.T08` slice `McuIns`/`McuOuts` into ports | **RE-TARGETED** | Same `make_port` code path, different source: `dat.gw5aStuff['Ae350SocIns'/'Ae350SocOuts']`, triples `(row, col, wire)` 1-based, exactly as `fse_create_adc` (`chipdb.py:2489-2492`) consumes `Adc25kIns`. The task's three tests survive unchanged. |
-| **NEW `P2.T08a`** fix the `read_scaledGrid16` call-site transposition | **BLOCKING PREDECESSOR** | `dat_parser.py` is frozen in Phase 2, so this lands in its owning phase under the standing order. Fixes `Ae350SocIns/Outs` **and** every `Mipi*`, `Gtrl12*`, `*DdrDll*`, `Cmsera*`, `Adc*RC*` entry at `:525-546` and `:601-650`, all of which read noise today. Needs the `CIB_FABRIC_NODE_DELTAS` treatment for the `Ins` delta, which is stale. 0 vendor runs. |
+| `P2.T07` `fse_create_ae350()` skeleton | **STANDS, amended twice** | The `(0,0)` fallback in the HOW is wrong in its column and right in its row: every port record is in **die row 0**, columns 145-181. Anchor the bel at `(0, 145)`. The `ttyp` 224/228 interface bands hold the block's configuration, not its ports — do not anchor on them. |
+| `P2.T08` slice `McuIns`/`McuOuts` into ports | **RE-TARGETED, now trivial** | Same `make_port` code path, different source: `dat.gw5aStuff['Ae350SocIns'/'Ae350SocOuts']`, triples `(row, col, wire)` 1-based, exactly as `fse_create_adc` (`chipdb.py:2489-2492`) consumes `Adc25kIns`. The slot-to-bit rule and the per-bit table are already written out in `wire-map-138c.json`, so the task is a read, not a derivation. The task's three tests survive unchanged. |
+| **NEW `P2.T08a`** fix the `read_scaledGrid16` call-site transposition | **DONE** | Landed on `ae350/dat-scaledgrid-138c`. The defect was the transposition *and* u16-word bases; one reader, `read_packed_grid16`, replaces 72 call sites. The `Ins` base needed the `CIB_FABRIC_NODE_DELTAS` treatment as predicted (`0x86a0` -> `0x8314`). 0 vendor runs. |
 | `P2.T09`-`P2.T13`, `P2.T15` bel / packer / unpacker | **STAND** | Untouched by the source change; `AE350_SOC` sets zero fuses, exactly as EMCU does (`gowin_pack.py:4860`). |
 | `P2.T18`, `P2.T19`, `P2.T21`, `P2.T38` PLL / core clock | **STAND** | Unaffected. Note run `p2t26-tilewires` drove all six clock ports from one ordinary fabric clock and the vendor accepted it, so `PLL_R[0].CLKOUT1` is a *reference-design* convention, not a tool-enforced constraint — `P2.T38` should measure that rather than assume it. |
 | `P2.T20`-`P2.T23` bare `Emb_TCM` E0/E1 | **STAND, cheaper** | The full 149-port vehicle already builds; `Emb_TCM` is a strict subset. |
@@ -46,6 +46,19 @@ fix it is **0 runs**, because the vendor ships the table.
 Ledger: `$OTC/evidence/_budget/ae350-runs.tsv`. The `D50` phase box of 90 is
 untouched; the clocking ledger closed at 269/290 and is not drawn on.
 
+## What `P2.T08a` collapses (2026-09-07)
+
+| task | new verdict |
+|---|---|
+| `P2.T08` | Reduced to a table read; the map is written. |
+| `P2.T09`-`P2.T13`, `P2.T15` bel / packer / unpacker | Unchanged, but `P2.T09`'s port list now comes from `wire-map-138c.json` instead of being discovered. |
+| **`P2.T37'`** validate the table against one vendor bitstream | **VOID, already done, 0 further runs.** The validation `P2.T37'` reserved 2 runs for is in `wire-map-138c.md` §4: 437 of 466 checked output bits name a wire whose pip really changes between `p2t26-tilewires` and `p2t26-baseline`. Nothing is left to buy. `discovered-wires.json` is superseded by `wire-map-138c.json`. |
+| **`P2.T14`/`P2.T16`-`P2.T17`** (whatever remained of `EC5` discovery scaffolding) | Fold into `P2.T08`; there is no campaign to scaffold. |
+| **NEW `P2.T08b`** the unmapped input bits | Input bits 274-415 have no record: the `Ins` table holds 257 records. Either the AE350 leaves them unbound in fabric (they are `VCC`/`GND`-tied in the golden netlist for most of them — check `port-inventory.md`'s `tied_to` column first, 0 runs) or a second table holds them. Cheap, and it is the only open class. |
+
+Run budget after `P2.T08a`: **2 of 8 spent, 6 remaining** — the 2 reserved for
+`P2.T37'` are released.
+
 ## Stop rule
 
 If `P2.T08a` lands and the decoded `Ae350SocIns`/`Ae350SocOuts` triples still do
@@ -54,4 +67,4 @@ closes at `E0` on the reduced port set of option 3 — the six clocks, the two
 resets and the `Emb_TCM` subset — with the remaining buses named as residual.
 An expired box delivers partial evidence, never a blank row.
 
-RESCOPE-VERDICT: 1 task void (P2.T37), 1 task re-targeted (P2.T08), 1 new blocking predecessor (P2.T08a, in dat_parser's owning phase), 1 amended (P2.T07); all others stand. Runs used 2 of 8.
+RESCOPE-VERDICT (rev 2, after P2.T08a): 2 tasks void (P2.T37 and its replacement P2.T37'), 1 re-targeted and reduced to a table read (P2.T08), 1 amended (P2.T07 anchors at row 0 col 145), 1 new cheap task (P2.T08b, the 142 unmapped input bits); all others stand. Runs used 2 of 8, 6 remaining.
