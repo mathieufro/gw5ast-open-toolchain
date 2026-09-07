@@ -1,0 +1,1 @@
+# ADC on GW5AST-138C
