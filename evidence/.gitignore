@@ -205,3 +205,11 @@
 # control, which is what fuse-set-138c.md's table and
 # tests/test_ae350_config_fuses.py both read. Same named exception as above.
 !ae350/band-bits-138c.json
+
+# the P3.T04 IOLOGIC ttyp adjudication: one row per candidate tile type with
+# the verdict and the two criteria behind it, which
+# tests/test_io_iologic_138c.py::test_iologic_ttyp_exclusion_138c_matches_evidence
+# reads to check the literal in `fse_iologic` against the evidence. Same
+# named-exception pattern as _budget/clocking-runs.tsv above -- a .tsv directly
+# under a slug directory is not covered by "*.md".
+!oddr-iddr/ttyp-adjudication.tsv

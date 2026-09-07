@@ -1,0 +1,34 @@
+# P3.T04 - IOLOGIC ttyp adjudication for GW5AST-138C
+# oracle: Gowin Standard 1.9.12.03, GW5AST-LV138PG484AC1/I0, edu-provisional: false
+# apicula: prim/io-iologic-138c
+# tool:    open-toolchain/tools/derive_iologic_ttyps_138c.py (exit 0, no disagreement)
+
+BUDGET-DEVIATION: 0 of the 6 planned vendor runs dispatched.
+  The blueprint plans one gw_sh run per distinct candidate ttyp, "planned 6
+  (upper bound 10 if the grid yields more)", and rules that any excess is
+  escalated BEFORE the runs are spent. The 138C grid yields 47 candidate tile
+  types carrying a shortval 21/22 record (51 before the generic corner gate
+  `ttyp in {48, 49, 50, 51}`), so the per-ttyp probe would cost 47 runs and
+  take the phase to 151 against a 90-112 band ceiling. The probe is also not
+  writable for the rejected tile types: 33 of the 47 sit under no bonded pin of
+  ANY package this die ships in, so there is no `IO_LOC` to place an ODDR on
+  and no design to hand gw_sh. Adjudicated from the device data instead, on two
+  independent criteria that agree on all 47 rows:
+    (1) IOB co-residency after chipdb.fill_GW5A_io_bels;
+    (2) presence in the pinout of PBGA484A / PBGA676A / FCPBGA676A.
+  The accept side is confirmed by placement in P3.T05 and measured by the 12
+  ODDR/IDDR runs P3.T07 already owns; 6 runs stay unspent in the phase budget.
+
+CANDIDATES: 47 tile types carry IOLOGIC before the gate
+ACCEPT: 14 -> {63, 64, 65, 86, 87, 229, 230, 231, 232, 243, 245, 247, 249, 251}
+REJECT: 33 -> {60, 178, 179, 182, 183, 184, 185, 220, 239, 240, 242, 244, 246,
+               248, 250, 252, 253, 254, 255, 274, 278, 279, 280, 281, 282, 283,
+               284, 285, 374, 378, 379, 380, 381}
+DISAGREEMENTS: 0
+
+IOLOGIC bel surface, before the gate: IOLOGICA 534, IOLOGICB 532, total 1066, 47 ttyps
+IOLOGIC bel surface, after  the gate: IOLOGICA 164, IOLOGICB 162, total  326, 14 ttyps
+cells carrying an IOB bel: 168 (4 of them the corner ttyps 48/49/50/51 the
+generic gate already excludes) -> 164 IOLOGICA is exactly the pinned surface.
+
+BATCH_COMPLETE p3-iologic-ttyp runs=0 ok=0 diff=0 aborted=0
