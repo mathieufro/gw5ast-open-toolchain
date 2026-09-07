@@ -57,3 +57,7 @@ std GW5AST-138C-control 100ffd8e9d3901da3701849788c96cb4f027639b5e6f93c3c7e4c55d
 # phase close; `tools/tests/test_evidence_admissibility_guards.py` now fails if two
 # differing copies of one database appear under the share tree again.
 bin GW5AST-138C 85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010 33236725 1.9.12.03
+# Correction, same day: the stale copy's PATH is the one the installed binary probes by
+# default (`bin/../share/nextpnr/himbaechel/gowin/`), so leaving it empty makes a
+# `--chipdb`-less invocation fail to find any database. The current `.bin` is hard-linked
+# there instead: one database, two names, and the guard above still fires if they diverge.
