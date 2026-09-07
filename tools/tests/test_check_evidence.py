@@ -461,3 +461,36 @@ class TestDiffWithCleanSets(CheckEvidenceTestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPrunedPathsIsAListOfPaths(CheckEvidenceTestCase):
+    """A path *string* passed where a list of paths was expected is iterated
+    by Python, so the row records one array element per character.  Nothing
+    raises, the row validates, and a consumer that counts pruned artefacts
+    reads 110 instead of 1 -- so the shape is checked where the row is read.
+    """
+
+    def _row_with_note(self, note):
+        row = good_row("pll-A-0001", "PLL")
+        row["notes"] = "EQUIV E0 ok | " + note
+        return row
+
+    def test_a_path_exploded_into_characters_is_a_finding(self):
+        write_spec_primitives(self.spec_path, [("PLL", "pll")])
+        exploded = json.dumps(list("/data/batch/top.fs"))
+        write_runs(self.evidence_dir, "pll", [
+            self._row_with_note(f"artefact_pruned_paths={exploded}")])
+
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        self.assertNotEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("artefact_pruned_paths holds", proc.stdout)
+
+    def test_a_real_list_of_paths_passes(self):
+        write_spec_primitives(self.spec_path, [("PLL", "pll")])
+        good = json.dumps(["/data/batch/top.fs"])
+        write_runs(self.evidence_dir, "pll", [
+            self._row_with_note(f"artefact_pruned_paths={good}")])
+
+        proc = run_tool([self.spec_path, self.evidence_dir])
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn("0 admissibility findings", proc.stdout)

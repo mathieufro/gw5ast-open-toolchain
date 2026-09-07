@@ -403,6 +403,30 @@ ARTIFACT_FIELDS = ("oracle_log", "open_log", "vendor_fs", "open_fs", "sdf", "tr"
 PRUNED_ARTIFACT_RE = re.compile(r"^sha256:([0-9a-f]{64}|unknown)$")
 
 
+#: A `notes` tail of the shape `<key>=[...]`, JSON-encoded.  Rows carry a few
+#: of these beside `extra={...}`; the one below is checked because a string
+#: passed where a list of paths was expected is not a type error in Python --
+#: it is iterated, and lands in the row as one array element per character.
+NOTE_PATH_LIST_RE = re.compile(r"artefact_pruned_paths=(\[[^\]]*\])")
+
+
+def _pruned_paths_findings(notes):
+    """Why this row's `artefact_pruned_paths` tail is not a list of paths."""
+    match = NOTE_PATH_LIST_RE.search(notes or "")
+    if match is None:
+        return []
+    try:
+        paths = json.loads(match.group(1))
+    except ValueError:
+        return ["artefact_pruned_paths is not valid JSON"]
+    bad = [p for p in paths if not isinstance(p, str) or "/" not in p]
+    if bad:
+        return [f"artefact_pruned_paths holds {len(bad)} entry/entries that "
+                f"are not paths (first {bad[0]!r}) -- a single path string "
+                f"iterated character by character has this shape"]
+    return []
+
+
 def _is_justified(item):
     """One `unexplained_bits` entry counts as enumerated only if justified."""
     if isinstance(item, dict):
@@ -551,6 +575,9 @@ def check(spec_path, evidence_dir, slugs, exclude_slugs, schema, apicula_root):
                 findings.append(
                     f"{prow.id}/{run_id}: unexplained_bits is non-empty and "
                     f"not fully enumerated/justified (D35)")
+
+            for why in _pruned_paths_findings(row.get("notes")):
+                findings.append(f"{prow.id}/{run_id}: {why}")
 
             row_pruned = bool(row.get("artefact_pruned"))
             for field in ARTIFACT_FIELDS:
