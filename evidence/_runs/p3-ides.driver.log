@@ -1,0 +1,25 @@
+BATCH_START batch=p3-ides shape=io_des level=E1 pid=61499 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t14
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p3-ides sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 6 run ids)
+BATCH_RESUME batch=p3-ides planned=6 already_terminal=0
+RUN_START p3-ides-io_des-0000 sweep='ides4-reset-pad'
+RUN_DONE p3-ides-io_des-0000 verdict=diff
+RUN_START p3-ides-io_des-0001 sweep='ides4-reset-tied'
+RUN_DONE p3-ides-io_des-0001 verdict=diff
+RUN_START p3-ides-io_des-0002 sweep='ides8-reset-pad'
+RUN_DONE p3-ides-io_des-0002 verdict=diff
+RUN_START p3-ides-io_des-0003 sweep='ides8-reset-tied'
+RUN_DONE p3-ides-io_des-0003 verdict=diff
+RUN_START p3-ides-io_des-0004 sweep='ides10-reset-pad'
+RUN_DONE p3-ides-io_des-0004 verdict=diff
+RUN_START p3-ides-io_des-0005 sweep='ides10-reset-tied'
+RUN_DONE p3-ides-io_des-0005 verdict=diff
+BATCH_SKIPPED batch=p3-ides n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-ides.rows.jsonl
+BATCH_COMPLETE p3-ides runs=6 ok=0 diff=6 aborted=0

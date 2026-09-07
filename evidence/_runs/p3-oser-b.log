@@ -1,0 +1,22 @@
+14:15:39 BATCH_START batch=p3-oser-b shape=io_ser level=E1 pid=99946 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t13b
+14:16:23 BATCH_HEAD selftest --inject-one-fuse: ok
+14:16:37 BATCH_HEAD selftest --unpacker-completeness: ok
+14:16:38 BATCH_HEAD selftest --probe-mask-classes: ok
+14:16:39 BATCH_HEAD gw_sh pre-flight: ok
+14:16:39 BATCH_CHIPDB batch=p3-oser-b sha256=9cce739de58353640475b07c838b37dceb68ea63c3fc22f0d42e093116c7f33a
+14:16:39 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 6 run ids)
+14:16:39 BATCH_RESUME batch=p3-oser-b planned=6 already_terminal=0
+14:16:39 RUN_START p3-oser-b-io_ser-0000 sweep='oser4-default'
+14:16:54 RUN_DONE p3-oser-b-io_ser-0000 verdict=aborted
+14:16:54 RUN_START p3-oser-b-io_ser-0001 sweep='oser4-txclk-pol'
+14:17:08 RUN_DONE p3-oser-b-io_ser-0001 verdict=aborted
+14:17:08 RUN_START p3-oser-b-io_ser-0002 sweep='oser4-hwl'
+14:17:22 RUN_DONE p3-oser-b-io_ser-0002 verdict=aborted
+14:17:22 RUN_START p3-oser-b-io_ser-0003 sweep='oser8-default'
+14:17:36 RUN_DONE p3-oser-b-io_ser-0003 verdict=aborted
+14:17:36 RUN_START p3-oser-b-io_ser-0004 sweep='oser10-default'
+14:17:51 RUN_DONE p3-oser-b-io_ser-0004 verdict=aborted
+14:17:51 RUN_START p3-oser-b-io_ser-0005 sweep='ovideo-default'
+14:18:05 RUN_DONE p3-oser-b-io_ser-0005 verdict=aborted
+14:18:05 BATCH_SKIPPED batch=p3-oser-b n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-oser-b.rows.jsonl
+BATCH_COMPLETE p3-oser-b runs=6 ok=0 diff=0 aborted=6

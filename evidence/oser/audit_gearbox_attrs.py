@@ -55,57 +55,56 @@ def primitive_of(shape_module, point):
     return shape_module.PRIMITIVE_OF_WIDTH[width]
 
 
-def packed_parms(primitive):
-    """The `parms` `nextpnr`'s `pack_iologic.cc` puts on the packed cell.
+def decode_iologic(fs_path, tile_xy):
+    """`{half: {attr: value}}` for one IOLOGIC tile of one bitstream.
 
-    `pack_iologic.cc:134-205` sets `OUTMODE` per output primitive and
-    `:283-347` `INMODE` per input one; the audit calls the handler with the
-    same parameters the packer would, so what is compared is the handler and
-    not a netlist this script invented.
+    The tile is addressed directly, by the shape's own scope, rather than
+    found by asking `gowin_unpack` which cells it recovered: a mode the
+    decoder cannot *name* still has its attributes in the tile, and this row
+    has to be able to say so (MEASURED, `P3.T13`: an `OVIDEO`'s `OUTMODE`
+    fuses come back as value id 74 and no IOLOGIC cell is recovered at all).
+    Pure function of the file -- no oracle run is spent.
     """
-    return {
-        "OSER4": {"OUTMODE": "ODDRX2"},
-        "OSER8": {"OUTMODE": "ODDRX4"},
-        "OSER10": {"OUTMODE": "ODDRX5"},
-        "OVIDEO": {"OUTMODE": "VIDEOTX"},
-        "IDES4": {"INMODE": "IDDRX2"},
-        "IDES8": {"INMODE": "IDDRX4"},
-        "IDES10": {"INMODE": "IDDRX5"},
-    }[primitive]
+    from apycula import attrids, bslib, chipdb
+    from apycula.gowin_unpack import parse_attrvals
 
-
-def apicula_attrvals(primitive, fclk="UNKNOWN"):
-    """`{attr: val}` `GW5AST_138C` emits for `primitive`, today."""
-    from apycula import gowin_pack
-
-    parms = packed_parms(primitive)
-
-    class _Cell:
-        typ = primitive
-        parms = None
-        attrs = {}
-
-    _Cell.parms = dict(parms)
-    bel = gowin_pack.IologicBelDesc(0, 0, "0", _Cell(), fclk,
-                                    parms.get("OUTMODE"), parms.get("INMODE"))
-    device = object.__new__(gowin_pack.GW5AST_138C)
-    attr_vals = device.common_iologic_handler(bel)
-    if "OUTMODE" in parms:
-        attr_vals += device.get_out_iologic_attrs(bel)
-    else:
-        attr_vals += device.get_in_iologic_attrs(bel)
-    return {av.attr: str(av.val) for av in attr_vals}
+    db = _t11().audit_db()
+    x, y = tile_xy
+    row, col = y, x
+    bitmap = bslib.read_bitstream(fs_path)[0]
+    tile = chipdb.tile_bitmap(db, bitmap)[(row, col)]
+    ttyp = db.grid[row][col]
+    out = {}
+    for half in "AB":
+        table = db.shortval[ttyp].get(f"IOLOGIC{half}")
+        if table is None:
+            continue
+        raw = parse_attrvals(tile, db.rev_logicinfo("IOLOGIC"), table,
+                             attrids.iologic_attrids, "IOLOGIC")
+        if raw:
+            out[half] = {attr: attrids.iologic_num2val.get(val, str(val))
+                         for attr, val in sorted(raw.items())}
+    return out
 
 
 def audit(slug, design_root, batch_id):
-    """One record per sweep point: vendor attrs, apicula attrs, both fuse sets."""
-    t11 = _t11()
+    """One record per sweep point: the vendor's decoded IOLOGIC attributes
+    beside the open flow's, at the shape's own scope tile.
+
+    Both sides are read from the bitstream each flow actually produced, so
+    what the record compares is what shipped -- not a re-invocation of the
+    packer with parameters this script chose.  That distinction matters: the
+    packer's `FCLKSEL*`, `TXCLK_POL` and `HWL` all depend on the placed cell's
+    own parameters and on the HCLK lane `nextpnr` routed to, none of which a
+    stub call can know.
+    """
     import importlib
     from fuzz.gw5ast138c.harness import evidence
 
     cfg = SLUGS[slug]
     shape_module = importlib.import_module(
         "fuzz.gw5ast138c.shapes.%s" % cfg["shape"])
+    tile_xy = shape_module.SCOPE_TILES[0]
     rows_path = os.path.join(evidence.evidence_root(), "_runs",
                              "%s.rows.jsonl" % batch_id)
     batch_rows = [json.loads(l) for l in open(rows_path) if l.strip()]
@@ -115,35 +114,37 @@ def audit(slug, design_root, batch_id):
         point = row["sweep"]["POINT"]
         primitive = primitive_of(shape_module, point)
         fs = row.get("vendor_fs")
-        if isinstance(fs, list) and fs:
-            fs_path = fs[0]["path"]
-        else:
-            fs_path = os.path.join(design_root, row["run_id"], "run", "impl",
-                                   "pnr", "run.fs")
-        if not os.path.exists(fs_path):
+        vendor_fs = (fs[0]["path"] if isinstance(fs, list) and fs
+                     else os.path.join(design_root, row["run_id"], "run",
+                                       "impl", "pnr", "run.fs"))
+        open_fs = os.path.join(design_root, row["run_id"], "top.fs")
+        missing = [p for p in (vendor_fs, open_fs) if not os.path.exists(p)]
+        if missing:
             out.append({"point": point, "primitive": primitive,
-                        "error": "no vendor bitstream at %s" % fs_path})
+                        "error": "no bitstream at %s" % ", ".join(missing)})
             continue
-        cells = t11.vendor_attrvals(fs_path)
-        if not cells:
-            out.append({"point": point, "primitive": primitive,
-                        "error": "no IOLOGIC bel realised in this bitstream"})
-            continue
-        cell = cells[0]
-        apicula = apicula_attrvals(primitive)
-        db = t11.audit_db()
+        vendor = decode_iologic(vendor_fs, tile_xy)
+        opened = decode_iologic(open_fs, tile_xy)
+        halves = sorted(set(vendor) | set(opened))
+        gap = []
+        for half in halves:
+            v, o = vendor.get(half, {}), opened.get(half, {})
+            for attr in sorted(set(v) | set(o)):
+                if v.get(attr) == o.get(attr):
+                    continue
+                gap.append({"half": half, "attr": attr,
+                            "vendor_val": v.get(attr, "-"),
+                            "open_val": o.get(attr, "-"),
+                            "direction": ("value_differs" if attr in v and attr in o
+                                          else "vendor_only" if attr in v
+                                          else "open_only")})
         out.append({
             "point": point,
             "primitive": primitive,
-            "tile": cell["tile"],
-            "ttyp": cell["ttyp"],
-            "idx": cell["idx"],
-            "vendor_attrs": cell["attrs"],
-            "apicula_attrs": apicula,
-            "vendor_fuses": sorted(tuple(b) for b in cell["vendor_bits"]),
-            "apicula_fuses": sorted(
-                t11.fuse_bits(db, cell["ttyp"], cell["idx"], apicula)),
-            "gap": t11.gap_rows(primitive, cell, apicula),
+            "tile": list(tile_xy),
+            "vendor_attrs": vendor,
+            "open_attrs": opened,
+            "gap": gap,
         })
     return out
 
@@ -164,23 +165,18 @@ def main(argv=None):
             print("%-20s %-8s ERROR %s"
                   % (rec["point"], rec["primitive"], rec["error"]))
             continue
-        same = rec["vendor_fuses"] == rec["apicula_fuses"]
-        print("%-20s %-8s tile=%s%s %s vendor=%d apicula=%d %s"
+        print("%-20s %-8s tile=%s %s"
               % (rec["point"], rec["primitive"], tuple(rec["tile"]),
-                 rec["idx"], "ttyp%d" % rec["ttyp"],
-                 len(rec["vendor_fuses"]), len(rec["apicula_fuses"]),
-                 "IDENTICAL" if same else "DIFFER"))
-        if not same:
-            only_v = [b for b in rec["vendor_fuses"]
-                      if b not in rec["apicula_fuses"]]
-            only_a = [b for b in rec["apicula_fuses"]
-                      if b not in rec["vendor_fuses"]]
-            print("    vendor_only=%s apicula_only=%s" % (only_v, only_a))
-            for g in rec["gap"]:
-                if g["direction"] != "agree":
-                    print("    %-18s vendor=%-12s apicula=%-12s %s (%d bits)"
-                          % (g["attr"], g["vendor_val"], g["apicula_val"],
-                             g["direction"], g["bits"]))
+                 "IDENTICAL" if not rec["gap"] else
+                 "DIFFER on %d attribute(s)" % len(rec["gap"])))
+        for half in sorted(rec["vendor_attrs"]):
+            print("    vendor %s: %s" % (half, rec["vendor_attrs"][half]))
+        for half in sorted(rec["open_attrs"]):
+            print("    open   %s: %s" % (half, rec["open_attrs"][half]))
+        for g in rec["gap"]:
+            print("    %-18s half=%s vendor=%-12s open=%-12s %s"
+                  % (g["attr"], g["half"], g["vendor_val"], g["open_val"],
+                     g["direction"]))
 
     if args.write:
         from fuzz.gw5ast138c.harness import evidence
@@ -188,14 +184,15 @@ def main(argv=None):
         os.makedirs(root, exist_ok=True)
         with open(os.path.join(root, "attr-audit.json"), "w") as fh:
             json.dump(records, fh, indent=1, sort_keys=True)
-        gaps = [g for rec in records for g in rec.get("gap", [])]
-        header = ["bits", "primitive", "attr", "vendor_val", "apicula_val",
-                  "direction", "attrid", "tile", "ttyp", "idx", "disposition",
-                  "justification"]
+        header = ["primitive", "point", "half", "attr", "vendor_val",
+                  "open_val", "direction"]
         with open(os.path.join(root, "attr-gap.tsv"), "w") as fh:
             fh.write("\t".join(header) + "\n")
-            for g in gaps:
-                fh.write("\t".join(str(g[k]) for k in header) + "\n")
+            for rec in records:
+                for g in rec.get("gap", []):
+                    line = dict(g, primitive=rec["primitive"],
+                                point=rec["point"])
+                    fh.write("\t".join(str(line[k]) for k in header) + "\n")
         print("wrote attr-audit.json and attr-gap.tsv under %s" % root)
     return 0
 
