@@ -246,3 +246,11 @@
 # bitstreams the batch already measured, so the summary's claim that no
 # further oracle run was spent is checkable.
 !oddr-iddr/recompare_rows.py
+# the P3.T13/P3.T14 gearbox attribute audit: the driver and its two artefacts.
+# It imports P3.T11's decode instrument rather than copying it and spends no
+# oracle run, so the OSER/IDES summaries' vendor attribute and fuse tables are
+# only auditable with these in the tree. Same named-exception pattern as
+# oddr-iddr/audit_oddr_iddr_attrs.py above.
+!oser/audit_gearbox_attrs.py
+!oser/attr-gap.tsv
+!oser/attr-audit.json

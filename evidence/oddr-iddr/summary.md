@@ -316,3 +316,62 @@ the rest. That is six new oracle runs against a `P3.T12` cap of six already
 spent — a budget deviation, which the blueprint requires be priced before it
 is spent, not absorbed. Recorded here for that decision; the packer, the
 decode and the `E1` evidence above stand either way.
+
+## SWEEP, SECOND PASS (`P3.T12` fix, `D105`)
+
+`D105` authorised six more oracle runs to close the `conns` term by driving
+the gearbox from package balls instead of fabric flops. Batch
+Batch log: `evidence/_runs/p3-oddr-iddr-b.log`
+(`BATCH_COMPLETE p3-oddr-iddr-b runs=6 ok=3 diff=3 aborted=0`); designs under
+`$DATASTORE/p3t12b`; rows `runs.jsonl` (overwritten from the batch's own).
+
+### The shape
+
+`shapes/io_basic.py` now renders a design with **no fabric cell at all**.
+`ODDR.D0` and `.D1` come off two package balls and `Q0` drives a third;
+`IDDR.D` comes off its pad and `Q0`/`Q1` drive two balls. Every port is used
+by both points -- a spare input is fed through to its own ball -- so no point
+leaves a top-level port the vendor could prune out from under its `IO_LOC`.
+Two balls were added for that (`T16`, `W16`, `T15`, all bank 5).
+
+### Result, per row
+
+| point | verdict | cells | attrs | conns | c1/c2 | residual |
+|---|---|---|---|---|---|---|
+| `oddr-default` | **ok** | 0 | 0 | **0** | ok/ok | [] |
+| `oddr-txclk-pol` | **ok** | 0 | 0 | **0** | ok/ok | [] |
+| `oddr-init` | **ok** | 0 | 0 | **0** | ok/ok | [] |
+| `iddr-default` | diff | 0 | 0 | 4 | ok/ok | [] |
+| `iddr-q0-init` | diff | 0 | 0 | 4 | ok/ok | [] |
+| `iddr-q1-init` | diff | 0 | 0 | 4 | ok/ok | [] |
+
+**The `ODDR` half is closed.** `conns` went 6 -> 0 and the verdict `diff` ->
+`ok`, which is the whole of what `D105` bought: with no fabric cell in the
+design, every net of the scoped tiles has both endpoints at an `IO_LOC`-pinned
+site and the two flows agree on all of them.
+
+### The IDDR residual is a different defect, and a sharper one
+
+The four remaining `conns` are not free placement. MEASURED on all three
+`IDDR` points, identically:
+
+```
+vendor: IOLOGIC(82,108).Q14 --- IOB(79,108).I     (the pad carrying Q0)
+        IOLOGIC(82,108).Q8  --- IOLOGIC.SETN
+open:   IOLOGIC(82,108).Q8  --- IOB(79,108).I --- IOLOGIC.SETN
+        IOLOGIC(82,108).Q14 --- (its own net)
+```
+
+`Q8` is tile wire `F0` and `Q14` is `F7` (`db.tiles[247].bels['IOLOGICA']
+.portmap`). **Both flows occupy both wires**; they disagree only on which of
+them reaches the pad that the design's `Q0` is constrained to. `nextpnr`
+renames an `IDDR`'s `Q0` to `Q8` and `Q1` to `Q9`
+(`pack_iologic.cc:277-281`), so on the open side the pad carries `Q0`; on the
+vendor side it is `Q14`. One of the two flows has the deserialiser's two
+outputs the wrong way round -- a functional difference, not a placement one.
+
+It is not resolvable from this row's evidence: it needs the vendor's whole
+fabric-wire -> `Q_i` map, which the **IDES** row (`P3.T14`) decodes for free
+from bitstreams it is already paying for, over three widths and ten pads.
+The fix belongs there, with that evidence. `test_oddr_iddr_rows_e1` carries
+the strict `xfail` that fails the day the mapping is corrected.

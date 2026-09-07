@@ -1,0 +1,2 @@
+15:11:45 WATCHDOG_ARMED batch=p3-oser stall=5min poll=100s (independent process)
+15:15:28 WATCHDOG_DEAD batch=p3-oser exited WITHOUT BATCH_COMPLETE (batch pid 82793 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

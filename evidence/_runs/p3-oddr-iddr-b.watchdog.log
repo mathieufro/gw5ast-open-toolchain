@@ -1,0 +1,2 @@
+14:39:04 WATCHDOG_ARMED batch=p3-oddr-iddr-b stall=5min poll=100s (independent process)
+15:00:34 WATCHDOG_COMPLETE batch=p3-oddr-iddr-b saw BATCH_COMPLETE (clean exit)

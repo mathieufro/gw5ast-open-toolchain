@@ -1,0 +1,11 @@
+bits	primitive	attr	vendor_val	apicula_val	direction	attrid	tile	ttyp	idx	disposition	justification
+2	OSER4	CLKODDRMUX_ECLK	-	UNKNOWN	apicula_only	52	181,50	245	A	handler	apicula emits the literal UNKNOWN value, which sets real fuses the vendor leaves clear; the 138C override drops it (G-FCLK-138C: no HCLK->FCLK edge on this die)
+2	OSER4	CLKODDRMUX_WRCLK	-	ECLK0	apicula_only	53	181,50	245	A	handler	gowin_pack emits it and the vendor does not; the over-emission guard (equiv._residual_is_dirty) makes this a DIFF, so the 138C override drops it
+3	OSER4	CLKOMUX	ENABLE	ENABLE	agree	57	181,50	245	A	unexplained-justified	both sides set the same value; nothing to change
+2	OSER4	FCLKSEL1	HCLK2	-	vendor_only	85	181,50	245	A	handler	the vendor sets it and gowin_pack does not emit it; added to GW5AST_138C.common_iologic_handler by P3.T12
+2	OSER4	FCLKSEL2	HCLK2_	-	vendor_only	86	181,50	245	A	handler	the vendor sets it and gowin_pack does not emit it; added to GW5AST_138C.common_iologic_handler by P3.T12
+1	OSER4	LSRIMUX_0	0	0	agree	20	181,50	245	A	unexplained-justified	both sides set the same value; nothing to change
+2	OSER4	LSROMUX_0	-	1	apicula_only	21	181,50	245	A	handler	gowin_pack emits it and the vendor does not; the over-emission guard (equiv._residual_is_dirty) makes this a DIFF, so the 138C override drops it
+5	OSER4	OUTMODE	MODDRX21	ODDRX2	value_differs	1	181,50	245	A	handler	vendor 'MODDRX21' vs gowin_pack 'ODDRX2'
+2	OSER4	TSHX	-	SIG	apicula_only	6	181,50	245	A	handler	gowin_pack emits it and the vendor does not; the over-emission guard (equiv._residual_is_dirty) makes this a DIFF, so the 138C override drops it
+3	OSER4	WRFCLKSEL	UNK102	-	vendor_only	84	181,50	245	A	handler	the vendor sets it and gowin_pack does not emit it; added to GW5AST_138C.common_iologic_handler by P3.T12

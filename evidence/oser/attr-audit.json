@@ -1,0 +1,223 @@
+[
+ {
+  "apicula_attrs": {
+   "CLKODDRMUX_ECLK": "UNKNOWN",
+   "CLKODDRMUX_WRCLK": "ECLK0",
+   "CLKOMUX": "ENABLE",
+   "LSRIMUX_0": "0",
+   "LSROMUX_0": "1",
+   "OUTMODE": "ODDRX2",
+   "TSHX": "SIG"
+  },
+  "apicula_fuses": [
+   [
+    5,
+    129
+   ],
+   [
+    8,
+    127
+   ],
+   [
+    10,
+    120
+   ],
+   [
+    11,
+    133
+   ],
+   [
+    11,
+    134
+   ]
+  ],
+  "gap": [
+   {
+    "apicula_val": "UNKNOWN",
+    "attr": "CLKODDRMUX_ECLK",
+    "attrid": 52,
+    "bits": 2,
+    "direction": "apicula_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "apicula emits the literal UNKNOWN value, which sets real fuses the vendor leaves clear; the 138C override drops it (G-FCLK-138C: no HCLK->FCLK edge on this die)",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "-"
+   },
+   {
+    "apicula_val": "ECLK0",
+    "attr": "CLKODDRMUX_WRCLK",
+    "attrid": 53,
+    "bits": 2,
+    "direction": "apicula_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "gowin_pack emits it and the vendor does not; the over-emission guard (equiv._residual_is_dirty) makes this a DIFF, so the 138C override drops it",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "-"
+   },
+   {
+    "apicula_val": "ENABLE",
+    "attr": "CLKOMUX",
+    "attrid": 57,
+    "bits": 3,
+    "direction": "agree",
+    "disposition": "unexplained-justified",
+    "idx": "A",
+    "justification": "both sides set the same value; nothing to change",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "ENABLE"
+   },
+   {
+    "apicula_val": "-",
+    "attr": "FCLKSEL1",
+    "attrid": 85,
+    "bits": 2,
+    "direction": "vendor_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "the vendor sets it and gowin_pack does not emit it; added to GW5AST_138C.common_iologic_handler by P3.T12",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "HCLK2"
+   },
+   {
+    "apicula_val": "-",
+    "attr": "FCLKSEL2",
+    "attrid": 86,
+    "bits": 2,
+    "direction": "vendor_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "the vendor sets it and gowin_pack does not emit it; added to GW5AST_138C.common_iologic_handler by P3.T12",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "HCLK2_"
+   },
+   {
+    "apicula_val": "0",
+    "attr": "LSRIMUX_0",
+    "attrid": 20,
+    "bits": 1,
+    "direction": "agree",
+    "disposition": "unexplained-justified",
+    "idx": "A",
+    "justification": "both sides set the same value; nothing to change",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "0"
+   },
+   {
+    "apicula_val": "1",
+    "attr": "LSROMUX_0",
+    "attrid": 21,
+    "bits": 2,
+    "direction": "apicula_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "gowin_pack emits it and the vendor does not; the over-emission guard (equiv._residual_is_dirty) makes this a DIFF, so the 138C override drops it",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "-"
+   },
+   {
+    "apicula_val": "ODDRX2",
+    "attr": "OUTMODE",
+    "attrid": 1,
+    "bits": 5,
+    "direction": "value_differs",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "vendor 'MODDRX21' vs gowin_pack 'ODDRX2'",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "MODDRX21"
+   },
+   {
+    "apicula_val": "SIG",
+    "attr": "TSHX",
+    "attrid": 6,
+    "bits": 2,
+    "direction": "apicula_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "gowin_pack emits it and the vendor does not; the over-emission guard (equiv._residual_is_dirty) makes this a DIFF, so the 138C override drops it",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "-"
+   },
+   {
+    "apicula_val": "-",
+    "attr": "WRFCLKSEL",
+    "attrid": 84,
+    "bits": 3,
+    "direction": "vendor_only",
+    "disposition": "handler",
+    "idx": "A",
+    "justification": "the vendor sets it and gowin_pack does not emit it; added to GW5AST_138C.common_iologic_handler by P3.T12",
+    "primitive": "OSER4",
+    "tile": "181,50",
+    "ttyp": 245,
+    "vendor_val": "UNK102"
+   }
+  ],
+  "idx": "A",
+  "point": "oser4-default",
+  "primitive": "OSER4",
+  "tile": [
+   181,
+   50
+  ],
+  "ttyp": 245,
+  "vendor_attrs": {
+   "CLKOMUX": "ENABLE",
+   "FCLKSEL1": "HCLK2",
+   "FCLKSEL2": "HCLK2_",
+   "LSRIMUX_0": "0",
+   "OUTMODE": "MODDRX21",
+   "WRFCLKSEL": "UNK102"
+  },
+  "vendor_fuses": [
+   [
+    0,
+    123
+   ],
+   [
+    3,
+    131
+   ],
+   [
+    5,
+    129
+   ],
+   [
+    8,
+    127
+   ],
+   [
+    10,
+    120
+   ],
+   [
+    11,
+    133
+   ],
+   [
+    11,
+    134
+   ]
+  ]
+ }
+]
