@@ -90,3 +90,36 @@ that two DCS sharing a cell name different wires. A 138C design that drives
 `ports-138c.md`, `tiles-138c.md`, `tiles-138c.json`,
 `runs/capacity-runs.jsonl`, `runs/capacity-result.json`,
 `_runs/p1t31-dcs.log`.
+
+## `P1.F2` — the input side, closed
+
+**Full artefact: `input-side-138c.md`.** The half boundary the section above
+owns was fixed by `P1.T40` (the spine permission set is derived from the
+database); what remained was the **input** side, and it was one hardcoded
+literal: `chipdb.get_logic_clock_ins` returned a single logic-to-clock gate
+for this die (`# XXX for now only one gate: BRMDCLK1`) instead of the 24 per
+half the `.dat` `CMuxTopIns` / `CMuxBotIns` tables describe. With no gate node,
+the bare `*MDCLK*` / `*BDCLK*` wires the DCS input multiplexers select had no
+driver anywhere on the die.
+
+Both halves now come from the tables, and the bare gate name the **central**
+multiplexer uses (fse table 38) is aliased onto the half MEASURED to own it —
+four differential vendor compiles (`p1f2-dcsin` a/b/c/d: fabric net, two DCS,
+four DCS on four clocks, PLL output) plus the `P1.T31` baseline all resolve it
+to the `CMuxBotIns` gate. `nextpnr` needed no source change; it gained the
+gate check that would have caught the hole (16 of 16 DCS input multiplexers
+had no source with a driver before, 0 after).
+
+### Sweep
+
+`clocking_dcs` gained a third point, `sel4`, whose four `CLKIN` carry four
+different clocks so `CLKSEL` selects among distinct sources — the design the
+input side exists for.
+
+### Known gap, narrowed
+
+`SELFORCE` and `CLKSEL[0..3]` stay **UNVERIFIED**: the four-DCS bitstream
+routes no external net into either bridge cell for them either. What would
+close it is named in `input-side-138c.md` §6, together with the `PCLK*` half
+of the input multiplexer, which is still driverless and which no bitstream in
+this campaign selects.

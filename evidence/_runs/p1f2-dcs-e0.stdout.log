@@ -1,0 +1,17 @@
+BATCH_START batch=p1f2-dcs-e0 shape=clocking_dcs level=E0 pid=45167 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1f2-dcs-e0
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p1f2-dcs-e0 sha256=d700cade55494c427b563ee8e5e6e4704a83befca993f1de87028612ae48846c
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 2 run ids)
+BATCH_RESUME batch=p1f2-dcs-e0 planned=2 already_terminal=0
+RUN_START p1f2-dcs-e0-clocking_dcs-0000 sweep='q1'
+RUN_DONE p1f2-dcs-e0-clocking_dcs-0000 verdict=diff
+RUN_START p1f2-dcs-e0-clocking_dcs-0001 sweep='q2'
+RUN_DONE p1f2-dcs-e0-clocking_dcs-0001 verdict=diff
+BATCH_SKIPPED batch=p1f2-dcs-e0 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1f2-dcs-e0.rows.jsonl
+BATCH_COMPLETE p1f2-dcs-e0 runs=2 ok=0 diff=2 aborted=0

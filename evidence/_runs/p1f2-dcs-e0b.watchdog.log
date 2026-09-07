@@ -1,0 +1,3 @@
+01:41:05 WATCHDOG_ARMED batch=p1f2-dcs-e0b stall=5min poll=100s (independent process)
+01:52:52 WATCHDOG_STALL batch=p1f2-dcs-e0b newest=p1f2-dcs-e0b.stdout.log age=5min > 5min — batch pid 96805 ALIVE but producing nothing
+01:52:54 WATCHDOG_COMPLETE batch=p1f2-dcs-e0b saw BATCH_COMPLETE (clean exit)
