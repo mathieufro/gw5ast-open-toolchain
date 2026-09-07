@@ -1,0 +1,8 @@
+02:14:00 BATCH_START p1f3-pll-route runs=6
+02:14:20 RUN a-l0-hclk site=PLL_L[0] div=BOTTOMSIDE[4] verdict=ok wall=20.6s detail=
+02:14:41 RUN a-b0-hclk site=PLL_B[0] div=BOTTOMSIDE[4] verdict=ok wall=20.6s detail=
+02:15:01 RUN b-b0 site=PLL_B[0] div=None verdict=ok wall=20.1s detail=
+02:15:25 RUN b-b1 site=PLL_B[1] div=None verdict=ok wall=23.6s detail=
+02:15:49 RUN b-b2 site=PLL_B[2] div=None verdict=ok wall=24.4s detail=
+02:16:14 RUN b-b3 site=PLL_B[3] div=None verdict=ok wall=25.3s detail=
+BATCH_COMPLETE p1f3-pll-route runs=6 ok=6 diff=0 aborted=0

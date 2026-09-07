@@ -108,3 +108,36 @@ same, so the model covers all four lanes.
 
 Of the three UG306E p.19 consumers a DHCE may gate, only `CLKDIV.HCLKIN` is
 exercised here; `DQS.FCLK` and `DDRDLL.CLKIN` wait on Phase 5's DDR3 work.
+
+## `P1.F3` — lane 3
+
+`P1.T27` left lane 3 `aborted`: its HCLK entry is an ordinary fabric wire and
+`route_dhcen_net` refused a net that is not global end to end. `lane3-138c.md`
+has the change. Four rows added to `runs.jsonl`.
+
+### Sweep
+
+The `P1.T27` axis unchanged: the four lanes of block 5, one `DHCE` gating one
+`CLKDIV` pinned to the lane on both sides.
+
+### Verdict
+
+```
+BATCH_COMPLETE p1f3-d runs=4 ok=4 diff=0 aborted=0
+```
+
+| run | lane | level | verdict | cells/attrs/conns | unexplained | decode |
+|---|---|---|---|---|---|---|
+| `p1f3-d-clocking_dhce-0000` | 0 | `E1` | **ok** | 0/0/0 | **none** | c1 ok (16/16), c2 ok |
+| `p1f3-d-clocking_dhce-0001` | 1 | `E1` | **ok** | 0/0/0 | **none** | c1 ok (16/16), c2 ok |
+| `p1f3-d-clocking_dhce-0002` | 2 | `E1` | **ok** | 0/0/0 | **none** | c1 ok (16/16), c2 ok |
+| `p1f3-d-clocking_dhce-0003` | **3** | `E1` | **ok** | 0/0/0 | **none** | c1 ok (16/16), c2 ok |
+
+All four lanes of a block are now buildable by the open flow. `DHCE` no longer
+has an unreachable lane.
+
+Pair: nextpnr binary `28f4cbeb…`, `chipdb-GW5AST-138C.bin` `0206b922…`,
+`GW5AST-138C.msgpack.xz` `6e95b906…`, installed together. The `apicula_sha`
+and `nextpnr_sha` the rows carry are the commits the working trees were on
+when the batches ran; the change itself is `apicula 4aba1ef` /
+`nextpnr 17610ef3`.

@@ -1,0 +1,18 @@
+01:18:25 BATCH_START batch=p1f3-d shape=clocking_dhce level=E1 pid=89838 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1f3-d
+01:19:04 BATCH_HEAD selftest --inject-one-fuse: ok
+01:19:17 BATCH_HEAD selftest --unpacker-completeness: ok
+01:19:18 BATCH_HEAD selftest --probe-mask-classes: ok
+01:19:18 BATCH_HEAD gw_sh pre-flight: ok
+01:19:18 BATCH_CHIPDB batch=p1f3-d sha256=0206b922d5e08e025eb3ab7728bdfa135930d299faed9986a3f12c93d4d82819
+01:19:18 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 4 run ids)
+01:19:18 BATCH_RESUME batch=p1f3-d planned=4 already_terminal=0
+01:19:18 RUN_START p1f3-d-clocking_dhce-0000 sweep='b5l0'
+01:20:46 RUN_DONE p1f3-d-clocking_dhce-0000 verdict=ok
+01:20:46 RUN_START p1f3-d-clocking_dhce-0001 sweep='b5l1'
+01:22:19 RUN_DONE p1f3-d-clocking_dhce-0001 verdict=ok
+01:22:19 RUN_START p1f3-d-clocking_dhce-0002 sweep='b5l2'
+01:23:49 RUN_DONE p1f3-d-clocking_dhce-0002 verdict=ok
+01:23:49 RUN_START p1f3-d-clocking_dhce-0003 sweep='b5l3'
+01:25:20 RUN_DONE p1f3-d-clocking_dhce-0003 verdict=ok
+01:25:20 BATCH_SKIPPED batch=p1f3-d n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1f3-d.rows.jsonl
+BATCH_COMPLETE p1f3-d runs=4 ok=4 diff=0 aborted=0

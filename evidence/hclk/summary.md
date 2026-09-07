@@ -38,3 +38,38 @@ HCLK->FCLK half until they are taken.
 - `../_runs/hclk-port-138c-openflow.log` — the openflow smoke log
 - `$DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin`
   sha256 `0227f0914c615cf6858c8cb4e0e1e17afbe7d2c399d705a9c01dd12bc5ac14b3`, 63,860,996 B
+
+## `P1.F3` — four independent global clock nets, and the E2E re-run
+
+Two rows added to `runs.jsonl`. The four-global-net defect, its second half
+(a global net left half-bound, which hangs the timing analyser rather than
+failing), and the change are in `../clocking/four-globals-138c.md`.
+
+### Sweep
+
+Single-point on both: `clocking_four_globals` is four buffered clocks plus one
+`CLKDIV` on block 5 lane 0, pinned on both sides so the comparison has a
+fuse-backed scope; `clocking_e2e` is `P1.T40`'s end-to-end clock tree,
+unchanged, re-run through the new pair.
+
+### Verdict
+
+```
+BATCH_COMPLETE p1f3-c runs=1 ok=1 diff=0 aborted=0
+BATCH_COMPLETE p1f3-e2e runs=1 ok=1 diff=0 aborted=0
+```
+
+| run | shape | level | verdict | cells/attrs/conns | unexplained | decode |
+|---|---|---|---|---|---|---|
+| `p1f3-c-clocking_four_globals-0000` | `clocking_four_globals` | `E1` | **ok** | 0/0/0 | **none** | c1 ok (21/21), c2 ok |
+| `p1f3-e2e-clocking_e2e-0000` | `clocking_e2e` | `E1` | **ok** | 0/0/0 | **none** | c1 ok (18/18), c2 ok |
+
+The same `clocking_four_globals` design on the pre-fix pair
+(binary `cfc97099…`, `.bin` `d700cade…`) is `ERROR: Can't route the
+clk0_IBUF_I_O net`, nextpnr exit 125.
+
+Pair: nextpnr binary `28f4cbeb…`, `chipdb-GW5AST-138C.bin` `0206b922…`,
+`GW5AST-138C.msgpack.xz` `6e95b906…`, installed together. The `apicula_sha`
+and `nextpnr_sha` the rows carry are the commits the working trees were on
+when the batches ran; the change itself is `apicula 4aba1ef` /
+`nextpnr 17610ef3`.

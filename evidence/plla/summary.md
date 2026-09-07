@@ -95,3 +95,45 @@ The 138C VCO band check (`S7`) that did not exist is now
 attributed, two MEASURED names appended to `attrids.py`
 (`A_DYN_IDIV_SEL` 125, `A_DYN_ODIV0_SEL` 132), 18 `.fse` ids still nameless
 and each listed with a reason in `attrids-138c.tsv`.
+
+## `P1.F3` — the two `PLL` gaps `P1.T40` carried out of the phase
+
+Two rows added to `runs.jsonl`, plus the six vendor rows of the attribution
+batch in `oracle-runs-f3.jsonl`. The measurement and the change are in
+`hclk-entry-138c.md`; the driver is `route_probe.py`.
+
+### Sweep
+
+The swept axis is the **placement** again, and the sink: `p1f3-pll-route`
+takes one `PLL` at a pinned site into an HCLK lane (`a-*`) or into a fabric
+flop (`b-*`), at the `P1.T39` reference operating point, over `PLL_L[0]` and
+all four bottom-edge sites.
+
+### Verdict
+
+```
+BATCH_COMPLETE p1f3-pll-route runs=6 ok=6 diff=0 aborted=0
+BATCH_COMPLETE p1f3-a runs=1 ok=1 diff=0 aborted=0
+BATCH_COMPLETE p1f3-b runs=1 ok=1 diff=0 aborted=0
+```
+
+| run | shape | level | verdict | cells/attrs/conns | unexplained | decode |
+|---|---|---|---|---|---|---|
+| `p1f3-a-clocking_pll_hclk-0000` | `clocking_pll_hclk` | `E1` | **ok** | 0/0/0 | **none** | c1 ok (15/15), c2 ok |
+| `p1f3-b-clocking_pll_bottom-0000` | `clocking_pll_bottom` | `E1` | **ok** | 0/0/0 | **none** | c1 ok (14/14), c2 ok |
+
+Both carry the `EC9` note — the open placement exported no CLS constraint, so
+`E1` has no placement term to assert beyond the pinned `PLL` and `CLKDIV`, and
+the row is an `E0` in substance for the fabric cells. The `PLL` site and the
+HCLK lane are pinned on both sides.
+
+Still open, and named rather than inferred: eleven of the twelve sites have no
+measured clock-plane wire. They reach the plane through a logic-to-clock gate,
+which `p1f3-pll-route` shows every site can do; their own wires are one vendor
+run each and nobody has spent them.
+
+Pair: nextpnr binary `28f4cbeb…`, `chipdb-GW5AST-138C.bin` `0206b922…`,
+`GW5AST-138C.msgpack.xz` `6e95b906…`, installed together. The `apicula_sha`
+and `nextpnr_sha` the rows carry are the commits the working trees were on
+when the batches ran; the change itself is `apicula 4aba1ef` /
+`nextpnr 17610ef3`.

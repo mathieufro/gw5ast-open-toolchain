@@ -196,3 +196,30 @@ design named keeps its own name and stays required
   vendor `run/` tree was pruned to `run.fs`, `run.tr`, `run.vo`, `run.sdf`
   (`D99`), recorded in the row's `notes`.
 * The merged pair this ran against: `_runs/p1-integration-2.md`.
+
+## `P1.F3` — four independent global clock nets
+
+`four-globals-138c.md` is the measurement and the change; the rows live in
+`../hclk/runs.jsonl` (`primitive = "HCLK block"`), and the verdict table is in
+`../hclk/summary.md`. `decode_route.py` is the shared decoder every `P1.F3`
+attribution used: one `.fs` in, `row col KIND dest <= src` out.
+
+### Sweep
+
+Single-point: four buffered clocks plus one `CLKDIV` on block 5 lane 0.
+
+### Verdict
+
+```
+BATCH_COMPLETE p1f3-c runs=1 ok=1 diff=0 aborted=0
+```
+
+`p1f3-c-clocking_four_globals-0000` `E1` **ok**, 0/0/0, no unexplained bits,
+c1 ok (21/21) and c2 ok — against `ERROR: Can't route the clk0_IBUF_I_O net`,
+exit 125, on the pre-fix pair.
+
+Pair: nextpnr binary `28f4cbeb…`, `chipdb-GW5AST-138C.bin` `0206b922…`,
+`GW5AST-138C.msgpack.xz` `6e95b906…`, installed together. The `apicula_sha`
+and `nextpnr_sha` the rows carry are the commits the working trees were on
+when the batches ran; the change itself is `apicula 4aba1ef` /
+`nextpnr 17610ef3`.

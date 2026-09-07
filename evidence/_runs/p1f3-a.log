@@ -1,0 +1,12 @@
+01:10:08 BATCH_START batch=p1f3-a shape=clocking_pll_hclk level=E1 pid=82214 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1f3-a
+01:10:47 BATCH_HEAD selftest --inject-one-fuse: ok
+01:11:00 BATCH_HEAD selftest --unpacker-completeness: ok
+01:11:01 BATCH_HEAD selftest --probe-mask-classes: ok
+01:11:01 BATCH_HEAD gw_sh pre-flight: ok
+01:11:02 BATCH_CHIPDB batch=p1f3-a sha256=0206b922d5e08e025eb3ab7728bdfa135930d299faed9986a3f12c93d4d82819
+01:11:02 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+01:11:02 BATCH_RESUME batch=p1f3-a planned=1 already_terminal=0
+01:11:02 RUN_START p1f3-a-clocking_pll_hclk-0000 sweep='l0_b5l0'
+01:12:52 RUN_DONE p1f3-a-clocking_pll_hclk-0000 verdict=ok
+01:12:52 BATCH_SKIPPED batch=p1f3-a n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1f3-a.rows.jsonl
+BATCH_COMPLETE p1f3-a runs=1 ok=1 diff=0 aborted=0
