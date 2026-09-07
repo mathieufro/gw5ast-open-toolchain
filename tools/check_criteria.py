@@ -46,17 +46,21 @@ Scoping (mandatory, `F8`):
 `--phase <n>` resolves to the rows `spec-primitives.md`'s own `Phase`
 column attributes to phase `<n>` (values may be bare ints or `5a`/`5b`
 strings) -- so `--phase <n>` is exactly equivalent to passing that same
-row-id set to `--rows`. Until a `Phase` column exists in the table (it is
-an owed amendment, `spec.md` F31/2135), `--phase` resolves to the empty
-set for every value, which is a vacuous (0/0, exit 0) assertion rather
-than an error -- the tool must not crash while the table is still partial.
+row-id set to `--rows`. If the `Phase` column is ever absent from the table,
+`--phase` resolves to the empty set for every value, which is a vacuous
+(0/0, exit 0) assertion rather than an error -- the tool must not crash
+while the table is partial.
 
-Every phase's `V14`/`V18` runs the scoped form (`--phase <n>`): an
-unscoped run cannot assert anything about "this phase is done" because no
-phase closes the whole table (`spec.md` V14).
+Every phase's `V14` runs the scoped form (`--phase <n>`): an unscoped run
+cannot assert anything about "this phase is done" because no phase closes
+the whole table (`spec.md` V14).
 
-There is no `--chipdb` flag: this tool never touches a chipdb, only
-`spec-primitives.md` and the evidence tree.
+`--ae350` (`P2.T32`, `V18`) is the one exception to "never touches a
+chipdb": `S19`'s non-hardware half needs structural chipdb facts
+(`AE350_SOC`'s bel, the `CORE_CLK` tap) that no evidence markdown states as
+a checkable boolean on its own, so `--ae350` takes `--chipdb`/`--evidence`
+directly and does not read `spec-primitives.md` at all -- it is a separate,
+narrower mode, not a widening of the default path.
 """
 import argparse
 import json
@@ -494,6 +498,156 @@ def check_phase_report(report_path, evidence_rows, evidence_dir):
 
 
 # --------------------------------------------------------------------------
+# 3c. `--ae350` (`P2.T32`, `V18` -- `S19`'s non-hardware half)
+# --------------------------------------------------------------------------
+#: `AE350_SOC`'s anchor tile (`evidence/ae350/portmap-138c.md`, `P2.T07`
+#: amended: row 0, column 159 -- not the `(0, 145)` first guess).
+AE350_ANCHOR_TILE = (0, 159)
+
+#: The chipdb node the vendor's dedicated `PLL_R[0]` route bypasses
+#: (`evidence/ae350/e1-138c.md` "Head order"): the ordinary fabric tap the
+#: `.dat` table assigns to `CORE_CLK`, never realised by the vendor because
+#: it takes the PLL output directly instead.
+AE350_CORE_CLK_FABRIC_TAP = (0, 87, "CLK1")
+
+#: Phrases each evidence file must carry for the corresponding `--ae350`
+#: check to count as measured, not merely present.  Matched literally
+#: (case-sensitive), not as regexes -- see `_evidence_confirms`.
+_CORE_CLK_NONROUTABLE_PHRASE = "fixed, non-routable connection"
+_FUSE_SET_RESOLVED_PHRASE = "no bit marks the block's presence"
+_RECONCILIATION_TOKEN = "637"
+
+
+def _import_apycula_chipdb():
+    """`apycula.chipdb`, importing from the sibling `apicula` checkout.
+
+    Mirrors `check_timing_l0.py`'s `load_timing` -- the tool that already
+    reads this same chipdb family -- rather than inventing a second import
+    convention.  Returns `None` (never raises) if the checkout or the
+    module cannot be found, so a chipdb-less environment fails one
+    `--ae350` check cleanly instead of crashing the whole run.
+    """
+    try:
+        from paths import sibling
+        apicula_dir = sibling("apicula", "APICULA_DIR")
+    except Exception:
+        apicula_dir = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "..", "apicula")
+    apicula_dir = os.path.abspath(apicula_dir)
+    if apicula_dir not in sys.path:
+        sys.path.insert(0, apicula_dir)
+    try:
+        from apycula import chipdb  # noqa: E402
+        return chipdb
+    except ImportError:
+        return None
+
+
+def _load_ae350_chipdb(chipdb_path):
+    """`(db, error)`: the loaded `Device`, or `None` plus why not."""
+    if not chipdb_path or not os.path.isfile(chipdb_path):
+        return None, f"chipdb not found: {chipdb_path}"
+    chipdb_mod = _import_apycula_chipdb()
+    if chipdb_mod is None:
+        return None, "apycula.chipdb is not importable (no apicula checkout on sys.path)"
+    try:
+        return chipdb_mod.load_chipdb(chipdb_path), None
+    except Exception as exc:  # noqa: BLE001 -- report, never crash the run
+        return None, f"failed to load {chipdb_path}: {exc}"
+
+
+def _evidence_text(evidence_dir, *relpath):
+    path = os.path.join(evidence_dir or "", *relpath)
+    if not os.path.isfile(path):
+        return None
+    with open(path, encoding="utf-8") as fh:
+        return fh.read()
+
+
+def check_ae350_bel_exists(db):
+    """`(ok, detail)`: `AE350_SOC`'s port map is registered at its anchor tile."""
+    ef = getattr(db, "extra_func", {}) or {}
+    ae350 = ef.get(AE350_ANCHOR_TILE, {}).get("ae350")
+    if not ae350 or not ae350.get("ins") or not ae350.get("outs"):
+        return False, f"no populated extra_func['ae350'] at {AE350_ANCHOR_TILE}"
+    return True, f"{len(ae350['ins'])} in / {len(ae350['outs'])} out bits at {AE350_ANCHOR_TILE}"
+
+
+def check_ae350_core_clk_nonroutable(db, evidence_dir):
+    """`(ok, detail)`: the `CORE_CLK` tap is modelled, and recorded as fixed."""
+    tap_present = any(
+        AE350_CORE_CLK_FABRIC_TAP in wires
+        for name, (_kind, wires) in db.nodes.items()
+        if name.startswith(f"X{AE350_ANCHOR_TILE[1]}Y{AE350_ANCHOR_TILE[0]}/AE350_SOC")
+    )
+    if not tap_present:
+        return False, f"no AE350_SOC node routes to {AE350_CORE_CLK_FABRIC_TAP}"
+    text = _evidence_text(evidence_dir, "ae350", "e1-138c.md") or ""
+    if _CORE_CLK_NONROUTABLE_PHRASE not in text:
+        return False, (
+            "chipdb tap present, but evidence/ae350/e1-138c.md does not "
+            f"record it as a {_CORE_CLK_NONROUTABLE_PHRASE!r}")
+    return True, "modelled tap present; evidence records the fixed PLL_R[0] route"
+
+
+def check_ae350_fuse_set(evidence_dir):
+    """`(ok, detail)`: the fuse set is zero, or the non-zero set is enumerated."""
+    e1 = _evidence_text(evidence_dir, "ae350", "e1-138c.md") or ""
+    if _FUSE_SET_RESOLVED_PHRASE in e1:
+        return True, "e1-138c.md: no bit marks the block's presence (zero, measured)"
+    enumerated = _evidence_text(evidence_dir, "ae350", "config-fuses-138c.md")
+    if enumerated and re.search(r"\b\d+\s+bits?\b", enumerated):
+        return True, "config-fuses-138c.md: non-zero set enumerated"
+    return False, "neither e1-138c.md nor config-fuses-138c.md records a fuse-set result"
+
+
+def check_ae350_reconciliation(evidence_dir):
+    """`(ok, detail)`: the 637-vs-~900 wire reconciliation line is present."""
+    text = _evidence_text(evidence_dir, "ae350", "reconciliation.md")
+    if not text:
+        return False, "evidence/ae350/reconciliation.md is absent or empty"
+    if _RECONCILIATION_TOKEN not in text:
+        return False, f"reconciliation.md does not mention {_RECONCILIATION_TOKEN!r}"
+    return True, "reconciliation.md records the 637-entry reconciliation"
+
+
+def check_ae350(chipdb_path, evidence_dir):
+    """`(satisfied_count, total=4, exit_code, lines)` for `--ae350` (`V18`).
+
+    Four structural facts of `S19`'s non-hardware half, each an independent
+    check so one missing artefact never hides another: (1) the `AE350_SOC`
+    bel/port-map exists; (2) `PLL_R[0].CLKOUT1 -> CORE_CLK` is a modelled,
+    fixed, non-routable tap; (3) the fuse set is zero or enumerated; (4) the
+    637-entry wire reconciliation is recorded. This mode never reads
+    `spec-primitives.md` -- see the module docstring.
+    """
+    lines = []
+    db, load_error = _load_ae350_chipdb(chipdb_path)
+
+    checks = []
+    if db is None:
+        checks.append(("bel exists", False, load_error))
+        checks.append(("CORE_CLK non-routable", False, load_error))
+    else:
+        checks.append(("bel exists", *check_ae350_bel_exists(db)))
+        checks.append(("CORE_CLK non-routable",
+                        *check_ae350_core_clk_nonroutable(db, evidence_dir)))
+    checks.append(("fuse set", *check_ae350_fuse_set(evidence_dir)))
+    checks.append(("reconciliation", *check_ae350_reconciliation(evidence_dir)))
+
+    satisfied = 0
+    for name, ok, detail in checks:
+        satisfied += 1 if ok else 0
+        prefix = "ok" if ok else "AE350 FAIL"
+        lines.append(f"{prefix}: {name}: {detail}")
+
+    total = len(checks)
+    exit_code = 0 if satisfied == total else 1
+    return satisfied, total, exit_code, lines
+
+
+# --------------------------------------------------------------------------
 # 4. Scoping
 # --------------------------------------------------------------------------
 def resolve_rows(all_rows, row_ids=None, phase=None):
@@ -525,10 +679,14 @@ def build_parser():
             "DONE-STD criteria checker (DEL-e first cut, D63/D42). "
             "Unscoped run = survey (always exits 0). "
             "Scoped run (--rows/--phase) = assertion (exits non-zero on an "
-            "unmet row). Every phase's V14/V18 runs the scoped form "
-            "(--phase <n>). There is no --chipdb flag."))
-    p.add_argument("spec_primitives", help="path to spec-primitives.md")
-    p.add_argument("evidence_dir", help="path to the evidence/ directory")
+            "unmet row). Every phase's V14 runs the scoped form "
+            "(--phase <n>). --ae350 (V18) is a separate mode: it takes "
+            "--chipdb/--evidence instead of the positional arguments and "
+            "never reads spec-primitives.md."))
+    p.add_argument("spec_primitives", nargs="?", default=None,
+                    help="path to spec-primitives.md (not used by --ae350)")
+    p.add_argument("evidence_dir", nargs="?", default=None,
+                    help="path to the evidence/ directory (not used by --ae350)")
     p.add_argument("--rows", help="comma-separated row ids to assert")
     p.add_argument("--phase", help="phase value to assert (e.g. 0, 5a, 5b)")
     p.add_argument(
@@ -542,11 +700,37 @@ def build_parser():
             "Enforce DONE-STD clause (d) (the gate example). Off by "
             "default before Phase 7 (D65); the off path prints "
             f"'{CLAUSE_D_DEFERRED_LINE}' once per invocation."))
+    p.add_argument(
+        "--ae350", action="store_true",
+        help=(
+            "Phase 2's own check (P2.T32, V18, S19 non-hardware half): "
+            "assert AE350_SOC's bel, the CORE_CLK non-routable tap, the "
+            "fuse set and the wire reconciliation, against --chipdb/"
+            "--evidence. Prints 'AE350 ok: <k>/4'. Does not read "
+            "spec-primitives.md and ignores --rows/--phase/--phase-report."))
+    p.add_argument("--chipdb", default=None,
+                    help="path to GW5AST-138C.msgpack.xz (--ae350 only)")
+    p.add_argument("--evidence", default=None,
+                    help="path to the evidence/ directory (--ae350 only, "
+                         "an alias for the positional evidence_dir)")
     return p
 
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
+
+    if args.ae350:
+        evidence_dir = args.evidence or args.evidence_dir
+        satisfied, total, exit_code, lines = check_ae350(args.chipdb, evidence_dir)
+        for line in lines:
+            print(line)
+        print(f"AE350 ok: {satisfied}/{total}")
+        return exit_code
+
+    if args.spec_primitives is None or args.evidence_dir is None:
+        print("CRITERIA FAIL: spec_primitives and evidence_dir are required "
+              "unless --ae350 is given", file=sys.stderr)
+        return 2
 
     all_rows = parse_spec_primitives(args.spec_primitives)
     evidence_rows = load_evidence(args.evidence_dir)
