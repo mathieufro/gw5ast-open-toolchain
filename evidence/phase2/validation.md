@@ -634,8 +634,8 @@ One full gate per repository, foreground, at the second-pass tip.
 |---|---|---|---|
 | apicula | `GATE_SCOPE=full make gate` | **8:04** | `GATE full: ok, 2 checks` — 492 passed, 6 skipped, 1 xfailed (fast) + 54 passed, 1 xfailed (heavy) |
 | nextpnr | `GATE_SCOPE=full make gate` | **0:36** | `GATE full: ok, 0 checks` — `hclk-6block` 2/2, `arch-gen-deterministic bba=053c4c70 chipdb=7f3c64c9`, `dcs-spines` 4/4 |
-| open-toolchain | `GATE_SCOPE=full make gate` | *(below)* | |
-| fine-line (umbrella) | `GATE_SCOPE=full make gate` | *(below)* | |
+| open-toolchain | `GATE_SCOPE=full make gate` | **0:11** | `GATE full: ok, 3 checks` — 191 passed; `check_evidence.py`; `check_criteria.py` |
+| fine-line (umbrella) | `GATE_SCOPE=full make gate` | **0:11** | `GATE full: ok, 3 checks` — `CRITERIA ok: 14/14` |
 
 The apicula gate was **red three times** before it was green, and every failure
 was a real defect rather than a flake:
