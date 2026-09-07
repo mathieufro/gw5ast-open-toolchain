@@ -404,3 +404,264 @@ green (`ae350/gate-chipdb-pin-138c`, merged as `ebef8e9`). One re-run, no
 second failure.
 
 PHASE2-GATE: pass
+
+---
+
+# Second pass — after the `P2.F1` gestalt fixes
+
+Re-run in full at the post-`P2.F1` tip: apicula `epic/gw5ast138c` `f6fb541`,
+nextpnr `epic/gw5ast138c` `850912d0`, open-toolchain `main` `b944abd`,
+Standard 1.9.12.03. **Zero vendor runs.** The toolchain pair the phase's rows
+were measured with is the one installed and the one used here:
+
+| artefact | sha256 |
+|---|---|
+| `apycula/GW5AST-138C.msgpack.xz` | `7f3c64c94fcf6ae8…` |
+| `chipdb-GW5AST-138C.bin` (build tree **and** both installed paths) | `4c520c583a387006…` |
+| `nextpnr-himbaechel` | `d400514b6f35fd9d…` |
+
+The msgpack is a build product and is not tracked, so "matches epic" is proved
+by rebuilding it: `chipdb_builder` is deterministic (`P0.T13b`) and the rebuild
+at the second-pass tip reproduces `7f3c64c9…` byte for byte. All three
+installed copies of the `.bin` are one database, so no stale twin can be
+loaded by path.
+
+| step | criterion | exit | verdict |
+|---|---|---|---|
+| 1 | `V18` — `S19` non-hardware half | 0 | **PASS** `AE350 ok: 4/4`, now graded from the database and the packer |
+| 2 | `V14` — this phase's rows (`--phase 2`) | 0 | PASS `CRITERIA ok: 3/3` |
+| 3 | reconciliation verdict present and unique | 0 | PASS (`1`) |
+| 4 | the core clock is not routable | 0 | **RESOLVED** — the fixed edge now exists; key `core_clk`, not `fixed_clk` (`A25`) |
+| 5 | the fuse set is measured, not assumed | 0 | **RESOLVED** — `fuse-set-138c.md` now carries the marker line (`A26`) |
+| 6 | no row blank, "pending" or `blocked:` | 0 | PASS `EVIDENCE ok: 191 rows, 30 pending, 0 blank, 0 missing artifacts`, after one schema fix (`A27`) |
+| 7 | the dual-purpose row has nine `E1` points | 0 | PASS (`9 9`) |
+| 8 | the unit-test suites | 0 | PASS `92 passed` — **6 were red** at the start of this pass and were fixed |
+| 9 | `S3` family regression | 0 | PASS (25A `60f1ba42…`, 60B `615d4d03…`, both byte-identical to the ledger) |
+| 10 | `V20` storage hygiene | 0 | PASS |
+| 11 | budget box (`D50`) | 0 | PASS — 17 rows, 8 vendor runs of 8 authorised |
+| E2E | one design, both flows, one diff | 0 | PASS `EQUIV E1 ok`, 0 vendor runs |
+
+## 1. `V18` grades from data now
+
+```
+ok: bel exists: 416 in / 495 out bits at (0, 159)
+ok: CORE_CLK non-routable: AE350_SOC_CORE_CLK driven only by 2 fuseless dedicated hops (PLL_L[0], PLL_R[0]); fabric tap (0, 87, 'CLK1') recorded, not bound
+ok: fuse set: get_AE350_SOC_fuses returns []: no fuse marks the block
+ok: reconciliation: 0/911 wires covered by 637 McuIns/McuOuts entries
+AE350 ok: 4/4
+```
+
+exit 0. Gestalt `B1` was that the first pass's `4/4` was **self-graded**: the
+checker grepped sentences out of `e1-138c.md`. Every clause above is now read
+out of an artefact the phase cannot edit into agreement — the chipdb's own
+`extra_func`/pips for clause 2, `GW5AST_138C.get_AE350_SOC_fuses` for clause 3,
+the `.dat` tables for clause 4.
+
+## 4. The core clock — the first-pass `FAIL as written` resolves
+
+`P2.F1` modelled the edge the measurement supports: **one fuseless pip per PLL
+site** into a wire that belongs to no fabric line. The blueprint's snippet
+still `KeyError`s, because the descriptor is keyed `core_clk` and not
+`fixed_clk` and carries two sources rather than one tuple (`A25`); the check it
+was written to make is this, and it passes:
+
+```
+CORE-CLK ok: dedicated edge present from 2 PLL sites, 2 fuseless pips,
+0 fabric-routable pips, nodes materialised
+```
+
+`AE350_SOC_CORE_CLK` has exactly one pip entry in exactly one tile type (242);
+its two sources are `AE350_CORE_CLK_PLLL0` and `AE350_CORE_CLK_PLLR0`, both
+with an empty bit set; each is a `PLL_O` node joining the site's
+`MPLLCLKOUT1` — `(27, 1)` and `(27, 177)` — to the anchor tile `(0, 159)`. The
+`.dat`'s `CLK1` fabric tap at `(0, 87)` is recorded as `core_clk['fabric_tap']`
+and is deliberately **not** in the routing graph, so the port has no second,
+fabric entrance the silicon does not use.
+
+## 5. The fuse set — the second first-pass `FAIL as written` resolves
+
+`evidence/ae350/fuse-set-138c.md` is the settled document `P2.F1` wrote
+(`fuse-set.md` never existed, and `A19` withdrew the marker line on the premise
+that a zero answer needs no line). That premise was wrong: a step that reads a
+count off a line cannot be satisfied by prose. The line is now there and the
+count is measured:
+
+```sh
+grep -c '^AE350-FUSE-SET: ' $OTC/evidence/ae350/fuse-set-138c.md   # 1
+grep -E '^AE350-FUSE-SET: ' $OTC/evidence/ae350/fuse-set-138c.md
+```
+
+```
+1
+AE350-FUSE-SET: 0 bits
+```
+
+`tools/tests/test_ae350_fuse_set_marker.py` is the guard the blueprint names as
+`test_fuse_set_rows_match_count`: the marker appears exactly once, the file
+carries as many enumerated bit rows as it claims, and a zero count and the
+prose verdict cannot disagree. `A26` supersedes `A19`.
+
+## 6. The evidence tree, and the 130 rows without an over-emission measurement
+
+Run verbatim, `check_evidence.py` **failed** with 21 admissibility findings:
+`P2.F1` added the symmetric residual's `fuses_over_emitted` to every row it
+wrote — 10 rows — and never declared it in the schema, and one row carried a
+redundant `edu_provisional: false` beside an `ide_version` that already says
+`Standard`. Both fixed at the source rather than in the rows: the field is now
+`OPTIONAL_FIELDS` with a docstring saying what its **absence** means, and the
+redundant key is gone.
+
+```
+RUNS: 15 files, 226 rows, 226 valid
+EVIDENCE ok: 191 rows, 30 pending, 0 blank, 0 missing artifacts
+0 admissibility findings
+```
+
+The over-emission backlog, measured rather than asserted:
+
+```sh
+python tools/rederive_verdicts.py evidence/*/runs.jsonl | grep -c 'over-emission unchecked'
+```
+
+```
+130
+```
+
+**130 verdict-bearing rows carry no over-emission measurement**, and the
+re-derivation tool changes **0** of them: over-emission is a *bitmap*
+difference between the two bitstreams, and nothing in a stored row's fields can
+reconstruct one. Only **7** of the 130 still have both bitstreams on disk
+(`D41` prunes them), and only one of those, `ae350-row-0001`, is this phase's.
+That one has already been re-measured rather than rewritten — the row
+`p2f1-ae350-recheck` is the same vehicle against the same preserved vendor
+bitstream at the fixed tip, with `fuses_over_emitted: []` — which is the honest
+form: a new measurement gets a new row, a banked row is never back-dated.
+
+So **130 rows stay unmeasured for over-emission, 126 of them Phase 0/1's.**
+This blocks no criterion: `V18`, `V14` and `check_evidence.py` are all clean,
+and the field is optional precisely because a row banked before the instrument
+existed cannot grow the measurement retroactively. What it does mean is stated
+in the schema itself — a row without the field *claims no over-emission check*,
+exactly as `decode_check: n/a` claims no decode check — so no reader can mistake
+its absence for a pass. Carried to Phase 8 as a re-measurement backlog for the
+rows whose artefacts survive.
+
+## 8. Six red tests, fixed
+
+The suite was **red** on this pass:
+
+```
+6 failed, 84 passed, 483 deselected
+```
+
+All six had one cause, and it is `P2.F1`'s: binding `CORE_CLK` to the dedicated
+PLL hop made the port's binding depend on the device carrying PLL sites, and
+`tests/test_ae350.py`'s `bare_device()` fixture carries none. So
+`fse_create_ae350` left `CORE_CLK` unbound in the fixture (415 of 416 input
+bits) while the shipped chipdb binds all 416 — the tests were measuring a
+device the 138C is not. Fixed by giving the fixture the two PLL sites the
+device data really names (`PLL_L[0]` at `(27, 1)`, `PLL_R[0]` at `(27, 177)`,
+`CLKOUT1 -> MPLLCLKOUT1`), which is the smaller and truer change than relaxing
+six assertions. Two tests then needed their statement updated rather than their
+numbers, because the model genuinely changed:
+
+- `test_ae350_clock_ports_are_tile_clk` excludes `CORE_CLK`, which is no longer
+  a `TILE_CLK` fabric port, and the new
+  `test_core_clk_takes_a_dedicated_pll_hop_from_every_site` asserts what it is
+  instead: bound to its own wire, one fuseless pip per site, `routable: False`.
+- `test_ae350_binds_the_taps_outside_the_band` skips the `CORE_CLK` spine
+  record, and the new `test_core_clk_fabric_tap_is_recorded_and_left_unbound`
+  asserts the thing that record is now for: `(0, 87, 'CLK1')` is kept as
+  evidence and is **not** in the routing graph.
+
+```
+92 passed, 483 deselected in 5.92s
+```
+
+`GOWINHOME` must be exported for this step: without it 20 of the 92 skip
+silently, and the first pass's `82 passed` was that shape. The skips are
+`GOWINHOME is not set`, not a pass.
+
+## E2E — the `P2.T23` vehicle re-diffed at the second-pass tip, 0 vendor runs
+
+```
+STEP yosys returncode=0 wall_clock_s=0.703
+STEP nextpnr returncode=0 wall_clock_s=5.435
+STEP gowin_pack returncode=0 wall_clock_s=1.905
+BITSTREAM top.fs 34668145 10c4713ad2c7f509f159c862a3356351a5d79c562d45a5b9b8252ed9a65ea796
+PROVENANCE apicula_sha=f6fb5419 nextpnr_sha=850912d0 chipdb_sha256=4c520c58
+```
+
+```
+EQUIV E1 ok
+DIFF_COUNT cells=0 attrs=0 conns=0
+PIPS diff=1977758 (statistic, never a verdict term)
+PER_TILE (none)
+RESIDUAL_OVER_EMITTED entries=0 bits=0
+RESIDUAL_UNEXPLAINED entries=0 bits=0 bytes=0
+E1 placement level=E1 constrained=9 matched=3 mismatched=0 unobserved=6
+DECODE_CHECK c1=ok c2=ok (c1 recovered 1781/1781 placed cells, 5 not fuse-backed; c2 0 differing bytes of 4147478)
+MASK sha256=59147bfc… entries=6
+```
+
+**PASS.** Three empty sets, an empty residual in **both** directions — the
+over-emission half is what gestalt `B2` added, and it is measured, not assumed
+— and `c1` recovering every placed cell, the `AE350_SOC` among them now that
+`parse_ae350` decodes the block from its port-tap pips. Compared with the first
+pass: `c1` is `1781/1781` rather than `1780/1780` and the not-fuse-backed count
+falls from 6 to 5, because `AE350_SOC` left `NON_FUSE_BACKED_BELS`.
+
+## Fixes this second pass forced
+
+1. **`fuses_over_emitted` was undeclared** — `check_evidence.py` refused 21
+   rows. Declared in `evidence.py`'s `OPTIONAL_FIELDS`, with the meaning of its
+   absence written down.
+2. **A redundant `edu_provisional: false`** on `p2f1-ae350-recheck`, beside an
+   `ide_version` that already carries the answer. Dropped.
+3. **Six red apicula tests** (§8) — `P2.F1` landed red, the second time this
+   phase that a fix dispatch did not run the suite it changed the premise of.
+4. **The fuse-set marker line** the validation step reads (§5).
+5. **Two evidence documents still describing `_AE350_SOC_BAND_COLS` as kept**
+   (`e0-138c.md`, `portmap-138c.md`) when the constant was removed and a test
+   now forbids it, and a heading claiming 16 provisional tap directions where
+   15 are provisional and the sixteenth (`CORE_CLK`) is decided elsewhere.
+
+## The gate, second pass
+
+One full gate per repository, foreground, at the second-pass tip.
+
+| repo | command | wall clock | result |
+|---|---|---|---|
+| apicula | `GATE_SCOPE=full make gate` | **8:04** | `GATE full: ok, 2 checks` — 492 passed, 6 skipped, 1 xfailed (fast) + 54 passed, 1 xfailed (heavy) |
+| nextpnr | `GATE_SCOPE=full make gate` | **0:36** | `GATE full: ok, 0 checks` — `hclk-6block` 2/2, `arch-gen-deterministic bba=053c4c70 chipdb=7f3c64c9`, `dcs-spines` 4/4 |
+| open-toolchain | `GATE_SCOPE=full make gate` | *(below)* | |
+| fine-line (umbrella) | `GATE_SCOPE=full make gate` | *(below)* | |
+
+The apicula gate was **red three times** before it was green, and every failure
+was a real defect rather than a flake:
+
+1. `test_openflow_command_shapes` still required `--cpu_as_gpio` on the pack
+   line, which `P2.F1` removed by measurement. The assertion is now the
+   measured truth — no `cpu_as_gpio` at all, and never a `-use_` Tcl spelling.
+2. `test_examples_build` could not find `nextpnr-himbaechel`: the gate had no
+   `PATH` of its own and was silently inheriting the caller's. `gate.env` now
+   carries a complete one — spelled in full, because `gate.env` is `include`d
+   by `gate.mk`, where `$PATH` reads as the make variable `$(P)` followed by
+   `ATH`, which is how the first attempt at this turned four unrelated tests
+   red by removing `/usr/bin` from the gate's `PATH`.
+3. `ae350-emb-tcm-tangmega138k` no longer routed: `Failed to find a route for
+   arc 2 of net clk_IBUF_I_O`. **The example was wrong and the model was
+   right** — it drove `CORE_CLK` from a pad, and after `P2.F1` there is no
+   fabric entrance to drive it through. Fixed by giving the example the
+   topology the silicon has: a `PLL` feeding `CORE_CLK` from `CLKOUT1`, pinned
+   to `PLL_R[0]` by a design-specific constraint file, because the placer
+   otherwise picks a bottom PLL site the dedicated hop does not exist from
+   (`Failed to route net 'core_clk' from X146Y108/MPLLCLKOUT1 to
+   X159Y0/AE350_SOC_CORE_CLK using dedicated routing`). That the example broke
+   is the strongest evidence in this pass that the edge is real: an example
+   that keeps building whatever the database says proves nothing.
+4. `test_calibration_chipdb_pinned` freezes `examples/gw5a` against
+   *uncommitted* change; it went green once the example fix was committed,
+   which is the guard working as designed.
+
+PHASE2-GATE: pass

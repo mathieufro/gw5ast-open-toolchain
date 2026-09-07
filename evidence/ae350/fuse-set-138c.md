@@ -86,3 +86,5 @@ FUSE-SET-VERDICT: **zero, measured**. 0 unmodelled set bits in tile types
 3-bit sets are `shortval:LUT`/`CLS*` fuses of ordinary logic, not block
 configuration; presence is carried by the port-tap pips and decoded by
 `parse_ae350`. 0 vendor runs.
+
+AE350-FUSE-SET: 0 bits

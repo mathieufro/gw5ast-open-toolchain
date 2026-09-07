@@ -90,7 +90,9 @@ not only the block's own taps:
 1476 destination uses against 0 source uses on one side, 740 source uses against
 0 destination uses on the other. No row-0 wire is ever used both ways.
 
-### What the pips do not decide — 16 bits, marked provisional
+### What the pips do not decide — 16 bits, 15 of them provisional
+
+The sixteenth is `CORE_CLK`, which the routing graph cannot decide because it is not a fabric tap at all; it is decided by the vendor timing report instead, and is not provisional.
 
 | bits | why | status |
 |---|---|---|

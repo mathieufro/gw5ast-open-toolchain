@@ -131,10 +131,10 @@ any of them is wrong. **Stated once, so the rest cite this:**
   region; they are fabric like any other CLS tile, just ones this design's
   place-and-route happened to use.
 
-`chipdb.py`'s `_AE350_SOC_ANCHOR`/`_AE350_SOC_BAND_COLS` naming is unchanged
-here (off-limits to this pass — owned by another agent mid-edit); the
-constant-level correction it should carry is one sentence: **rename
-`_AE350_SOC_BAND_COLS` to document that it is the *port-column* span
-(145-181, matching `FOOTPRINT_COLS`), not the bel anchor's own coordinate,
-and drop the current `159-181` value in favour of the measured `145-181`
-unless a citation shows the narrower range is deliberate.**
+`chipdb.py` now carries only `_AE350_SOC_ANCHOR` `(0, 159)`.
+`_AE350_SOC_BAND_COLS` was **removed**, not renamed: it was a single constant
+standing for three different spans, and no code path needed a column bound
+once the builder stopped filtering taps by column.
+`tests/test_ae350_reconciled.py::test_ae350_anchor_is_the_measured_one_and_nothing_filters_by_column`
+asserts both halves — the anchor is the measured one, and the constant does
+not come back.

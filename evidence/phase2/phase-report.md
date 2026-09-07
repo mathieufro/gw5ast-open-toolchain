@@ -229,3 +229,128 @@ Ten further vendor runs were spent on the dual-purpose sweep under its own
 sub-ledger (`ae350-dualpins`, 13 of 10 authorised — three bought the shape:
 a bare-DFF vehicle cannot reach `E1`, because the `.tr` carries no `CLS`
 column without a reg-to-reg path).
+
+---
+
+# Second pass — the phase close after `P2.F1`
+
+Closed on apicula `epic/gw5ast138c` `f6fb541`, nextpnr `epic/gw5ast138c`
+`850912d0`, open-toolchain `main`. **8 vendor runs** of the `ae350` ledger's 8
+authorised and of the `D50` box of 90; the dual-purpose sweep spent **13** of
+its own 10 (`D104`); this pass spent **0**. 17 evidence rows over three slugs.
+Validation: `evidence/phase2/validation.md`, §Second pass.
+
+## S1. `S19` — the verdict, against the criterion as written
+
+> **S19 — AE350.** The `McuIns` 265 + `McuOuts` 372 = **637** table entries are
+> reconciled against the estimated ~900 AE350 fabric wires as the first
+> sub-item, and any shortfall is routed to `EC5`'s differential wire discovery
+> for the uncovered buses only; an `AE350_SOC` bel exists, built from the
+> `.dat` `McuIns`/`McuOuts` tables; a bare `Emb_TCM`-shaped instantiation is
+> **E0**- or **E1**-equivalent to the vendor build of the same design;
+> `PLL_R[0].CLKOUT1 → CORE_CLK` is modelled as a fixed, non-routable
+> connection; the fuse count set for the bel is zero or the non-zero set is
+> enumerated with evidence (EMCU precedent expects zero). At the Hardware
+> Gate, a `BUILD_LOAD` ELF loaded over the separate debug TAP prints on UART2.
+
+| criterion | verdict |
+|---|---|
+| `S19` — AE350 hard core, non-hardware half | **REACHED** (two clauses restated by measurement, `A18`/`A24`/`A25`; hardware half owed to Phase 9) |
+
+Clause by clause, and what changed in this pass:
+
+| sub-clause | first pass | second pass |
+|---|---|---|
+| 637-vs-~900 reconciliation, with a verdict | reached, the other way (`A24`) | unchanged — `RECONCILIATION-VERDICT: 0/911 wires covered` |
+| shortfall routed to `EC5` | zero-run pass | unchanged |
+| `AE350_SOC` bel exists, built from the `.dat` | reached, **self-graded** | reached and **graded from the database**: 416 in / 495 out at `(0, 159)`, 884 of 911 bound, 27 enumerated |
+| bare instantiation `E0`/`E1`-equivalent | `E1`, `c1` 1780/1780 | `E1`, `c1` **1781/1781** — `AE350_SOC` is now decoded, not skipped |
+| `PLL_R[0].CLKOUT1 → CORE_CLK` fixed and non-routable | **NOT reached, and must not be** | **closed in its restated form** (`A18`, refined by `A25`): one fuseless dedicated pip **per PLL site** into `AE350_SOC_CORE_CLK`, 0 fabric-routable pips, the `.dat`'s `CLK1` tap recorded and unbound |
+| fuse set zero, or enumerated | zero, from an empty intersection | **zero, measured** — 0 unmodelled bits in tile types 224/228 over five AE350 bitstreams and a control; the 77-bit set was `shortval:LUT`/`CLS*` of ordinary logic |
+| `S19`(hw) | `E0+hw-pending` | unchanged |
+
+The clause the first pass could not reach is the one `P2.F1` closed: the
+database now carries the fixed edge, so `V18`'s `4/4` is a reading of the
+chipdb and the packer rather than of this phase's own prose.
+
+## S2. The hardware-pending halves — unchanged, both wait on a board
+
+1. **`S19`(hw), `AE350_SOC`** — a `BUILD_LOAD` ELF over the separate user-I/O
+   debug TAP and a UART2 transcript. `E0+hw-pending`; a bitstream comparison
+   cannot show a core executing.
+2. **The `cpu` dual-purpose point** — the vendor moves no bit for
+   `-use_cpu_as_gpio`. `P2.F1` stopped apicula emitting `CPU_AS_GPIO_0/1` and
+   took `--cpu_as_gpio` off the 138C examples, so the symmetric difference is
+   now `{}` and the two flows agree; what remains for Phase 9 is only whether
+   the pins *behave* as GPIO on silicon.
+
+## S3. Named gaps carried out of this phase
+
+| gap | size | owner |
+|---|---|---|
+| **Used-pin IO configuration** — `IOBA`/`IOBB` longval fuses of pins a side instantiates, plus `DRIVE`/`PULLMODE` values. Never masked: a used pin's IO config is the PR #423 class. | 333 bits / 167 tiles `io_used_pin_config`, 309 bits / 154 tiles `io_nondefault_config` | **Phase 3 (W-IO)** |
+| `sspi` moves **20 further used-pin IOB bits** apicula does not emit — same class. | 20 bits | **Phase 3 (W-IO)** |
+| **`-use_mode_as_gpio` has no apicula counterpart.** `gw_sh` has the option, `gowin_pack` has no flag, so the sweep could not reach the point at all. A named absence. | 1 option | **Phase 3 or 8** |
+| **27 unmapped port bits** of 911, all outputs — 26 `.dat` sentinel slots and one bit past the end of `Ae350SocIns`. Each gets an unroutable placeholder wire, so a design that drives one fails naming the port. | 27 of 911 | recorded; no owner unless a design needs them |
+| **15 provisional tap directions** of the 884 bound. The vehicle sets no pip on 13 unexercised `OF` outputs and two tiles are absent from its bitmap entirely, so those directions rest on the class rule (decided elsewhere in the same run with 740 uses and no counterexample) rather than on a pip of their own. A sixteenth bit the pips cannot decide, `CORE_CLK`, is decided by the vendor timing report and is not provisional. | 15 of 884 | **Phase 3**, with a vehicle that exercises them |
+| **Four of seven clock taps stay ordinal** — `CORE_CLK` and `APB_CLK` are resolved by the net's own source; the other four are driven through a global buffer that decodes to no cell. | 4 of 7 | **Phase 3** |
+| **130 banked evidence rows carry no over-emission measurement** — the symmetric residual did not exist when they were written and cannot be reconstructed from a stored row. Only 7 still have both bitstreams on disk; 126 are Phase 0/1's. Blocks no criterion; a row without the field claims no check, and the schema says so. | 130 of 226 | **Phase 8** (re-measure the survivors) |
+| **91-file narration backlog** — Phase 0/1 source files still carrying process narration the code-quality rule forbids. This phase cleaned only the 8 files it touched. | 91 files / 422 matches | **Phase 8** |
+| **Per-design AE350 interface-band bits** — 77 + 3 bits, retracted as evidence about the block; they are two designs' LUT/CLS configuration. | — | recorded, closed |
+
+## S4. Amendments owed to `spec.md`, continuing from `A24`
+
+- **`A25` — the fixed core-clock edge exists, and its descriptor is
+  `extra_func['ae350']['core_clk']`, not `fixed_clk`.** `A18` recorded that the
+  model was *silent* about the PLL edge and owed one edge per site; `P2.F1`
+  paid that debt, so the `S19` clause is now reached rather than restated-away.
+  The blueprint's `§5` snippet reads `['fixed_clk']['CORE_CLK']` as a 4-tuple
+  ending in a node name and `KeyError`s; the shipped descriptor is
+  `{'wire', 'sources', 'fabric_tap', 'routable'}`, with one `sources` entry per
+  PLL site, because the measurement found two legal sites and a single tuple
+  cannot carry two. Applied to `S19`, `V18` and the validation snippet.
+- **`A26` — the fuse-set marker line is restored, at
+  `evidence/ae350/fuse-set-138c.md`.** `A19` withdrew the
+  `AE350-FUSE-SET: <n> bits` form on the ground that a zero answer needs no
+  line. That was wrong: a validation step that reads a count off a line is not
+  satisfied by prose, and the file is the phase's settled fuse-set document.
+  The line reads `AE350-FUSE-SET: 0 bits`, guarded by
+  `tools/tests/test_ae350_fuse_set_marker.py`. `A26` supersedes `A19`; only the
+  file **name** in the blueprint (`fuse-set.md`) stays amended.
+- **`A27` — `fuses_over_emitted` is an optional evidence-schema field, and its
+  absence is a recorded claim.** The over-emission half of the residual
+  (gestalt `B2`) postdates 130 banked rows. Making it required would either
+  invalidate them or invite a back-dated value, so it is optional and the
+  schema states what a row without it claims: *no over-emission check*, exactly
+  as `decode_check: n/a` claims no decode check. `spec-harness.md` §6's field
+  list gains it as optional.
+
+## S5. What the second pass found and fixed
+
+Five, all in the instruments and the record; none in the phase's measurements.
+Detail in `validation.md` §"Fixes this second pass forced".
+
+1. `fuses_over_emitted` written into rows but never declared — 21 rows refused
+   by `check_evidence.py`.
+2. A redundant `edu_provisional: false` beside an `ide_version` that already
+   says `Standard`.
+3. **Six red apicula tests.** `P2.F1` made `CORE_CLK`'s binding depend on the
+   device carrying PLL sites and the test fixture carried none, so six tests
+   were measuring a device the 138C is not. This is the second fix dispatch in
+   this phase to land red; both were caught by the phase gate, which is the
+   first step that runs the suite. The fixture now carries the two real sites.
+4. The fuse-set marker line (`A26`).
+5. Two evidence documents describing `_AE350_SOC_BAND_COLS` as *kept* when it
+   was removed and a test forbids its return, and a heading claiming 16
+   provisional tap directions where 15 are provisional.
+
+## S6. The runs
+
+| ledger | authorised | spent | note |
+|---|---|---|---|
+| `ae350` | 8 | **8** | `RESCOPE-VERDICT` rev 6 closes it at 8 of 8, 0 remaining |
+| `ae350-dualpins` | 10 | **13** | `D104`: three bought the shape — a bare-DFF vehicle cannot reach `E1`, the `.tr` carries no `CLS` column without a reg-to-reg path |
+| `P2.F1` (gestalt fixes) | — | **0** | every fix re-used a preserved bitstream |
+| second pass (this close) | — | **0** | the `E2E` re-diff rebuilt only the open half |
+
+21 vendor runs in all, against the `D50` box of 90.

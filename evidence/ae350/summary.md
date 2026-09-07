@@ -20,7 +20,8 @@ ae350-runs.tsv` (6 of 8 spent on this line of work).
 | `ae350-route-0001` | `vendor_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.fs` | `2f0c74d259ea8251b280cf11bd1c43eb95a34a384e94da44d7aeccec9ae54441` |
 | `ae350-route-0001` | `open_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-open-e0/top.fs` | `b07b3ed496591f44f3436d45dde5dbf0d2ad47596ba0b96eb53cea3df558e315` |
 | `ae350-row-0001` | `vendor_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-row/batch2/p2t23-ae350-row2-ae350_soc-0000/run/impl/pnr/run.fs` | `1b032a4b61dc8e0062b9fa88d5a52bf412b51e8c643de42f2eb20b8d355a27d5` |
-| `ae350-row-0001` | `open_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-row/batch2/p2t23-ae350-row2-ae350_soc-0000/top.fs` | `6d91d0c816ff01418b20b31432f8c273d237df82404df9e35113a840f729622c` |
+| `ae350-row-0001` | `open_fs` | **pruned** (`D99`) -- `sha256:6d91d0c816ff01418b20b31432f8c273d237df82404df9e35113a840f729622c`; overwritten by the second-pass E2E rebuild and not reproducible, see the row's note | -- |
+| second pass | `open_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/p2-close2/ae350-row2/top.fs` | `10c4713ad2c7f509f159c862a3356351a5d79c562d45a5b9b8252ed9a65ea796` |
 | `ae350-row-0001` | `tr` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-row/batch2/p2t23-ae350-row2-ae350_soc-0000/run/impl/pnr/run.tr` | `f94fd4ce1f15267b54627d5a9c1a4198e33445405e0e429bc1aa57923299b2a7` |
 | `ae350-row-0001` | `sdf` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-row/batch2/p2t23-ae350-row2-ae350_soc-0000/run/impl/pnr/run.sdf` | `9c0d9c3c9989e503db2a0f37d5bf914675c7c2b5bb179179f37fead4ab42c8b7` |
 | `ae350-soc-s19-hw-0001` | -- | none: a bookkeeping row, no oracle run of its own | -- |

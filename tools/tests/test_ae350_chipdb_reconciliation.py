@@ -22,6 +22,10 @@ EVIDENCE = Path(__file__).resolve().parents[2] / "evidence" / "ae350"
 MAP_JSON = EVIDENCE / "wire-map-138c.json"
 DEVICE = "GW5AST-138C"
 
+#: The two top PLL sites `CORE_CLK`'s dedicated hop exists from
+#: (`evidence/ae350/core-clock.md`), as `(row, col)` of the die.
+PLL_SITES = {"PLL_L[0]": (27, 1), "PLL_R[0]": (27, 177)}
+
 
 @pytest.fixture(scope="module")
 def block():
@@ -40,6 +44,12 @@ def block():
     wnames.select_wires(DEVICE)
     grid = [[0] * 182 for _ in range(109)]
     dev = chipdb.Device(grid=grid, tiles={0: chipdb.Tile(1, 1, 0)})
+    # `CORE_CLK` binds through a dedicated hop from a top PLL, so a fixture
+    # without the PLL sites would leave it unbound and reconcile a device the
+    # 138C is not. These are the sites the real device data names.
+    for macro, (row, col) in PLL_SITES.items():
+        dev.extra_func.setdefault((row, col), {})["pll"] = {
+            "macro": macro, "outputs": {"CLKOUT1": "MPLLCLKOUT1"}}
     chipdb.fse_create_ae350(dev, DEVICE, dat_parser.Datfile(dat_path))
     return chipdb, dev, dev.extra_func[chipdb._AE350_SOC_ANCHOR]["ae350"]
 
@@ -48,6 +58,18 @@ def test_chipdb_anchor_is_the_first_column_of_the_measured_band(block):
     """The bel sits at the band the measurement names, row 0 column 159."""
     chipdb, _dev, _entry = block
     assert chipdb._AE350_SOC_ANCHOR == (0, 159)
+
+
+def _fabric_tap(entry):
+    """The `(row, col, wire)` the wire map records for `CORE_CLK`, 0-based.
+
+    `core_clk['fabric_tap']` is the raw `.dat` record -- 1-based coordinates and
+    a wire *index* -- while the map is written in die coordinates and wire
+    names, so the two are compared through the wire table the map used.
+    """
+    from apycula import wirenames as wnames
+    row, col, wire = entry["core_clk"]["fabric_tap"]
+    return [row - 1, col - 1, wnames.wirenames[wire]]
 
 
 def test_chipdb_portmap_matches_the_wire_map_bit_for_bit(block):
@@ -74,6 +96,15 @@ def test_chipdb_portmap_matches_the_wire_map_bit_for_bit(block):
                                        entry["unmapped"][port]))
                 continue
             want = (measured["row"], measured["col"], measured["wire"])
+            if list(want) == _fabric_tap(entry):
+                # `CORE_CLK`: the map records the fabric tap the `.dat` names
+                # for it, and the chipdb deliberately binds the dedicated PLL
+                # wire instead, leaving that tap out of the routing graph
+                # (`core-clock.md`). Reconciling the two means checking that
+                # substitution, not equality.
+                if got != entry["core_clk"]["wire"]:
+                    mismatches.append((direction, port, want, got))
+                continue
             if unmapped:
                 mismatches.append((direction, port, want, got))
                 continue
