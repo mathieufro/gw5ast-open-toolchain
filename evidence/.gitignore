@@ -194,3 +194,14 @@
 # ratified V11 form). A .txt directly under a slug directory, so it needs the
 # same named exception as chipdb-sha256.txt above.
 !ae350/tree-status-raw.txt
+# the AE350 port map of record: the machine-readable half of
+# portmap-reconciled-138c.md, generated from the shipped chipdb by
+# tools/derive_ae350_portmap_reconciled.py, whose --check mode is what keeps
+# the two in step. Same named-exception pattern as ae350/wire-map-138c.json
+# above -- a .json is not covered by "*.md".
+!ae350/portmap-reconciled-138c.json
+# the AE350 band-bit measurement: the two filters of
+# tools/derive_ae350_band_bits.py over five AE350 bitstreams and the AE350-free
+# control, which is what fuse-set-138c.md's table and
+# tests/test_ae350_config_fuses.py both read. Same named exception as above.
+!ae350/band-bits-138c.json

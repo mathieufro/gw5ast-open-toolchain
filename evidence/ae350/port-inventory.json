@@ -1371,8 +1371,8 @@
   }
  },
  "sources": {
-  "vo_demo": "/Users/alex/fine-line/vendor/gowin/ip/ae350/RiscV_AE350_SOC_V1.3/RiscV_AE350_SOC_V1.3/ref_design/FPGA_RefDesign/DK_START_GW5AST138_V1.0/ae350_demo/src/riscv_ae350_soc/riscv_ae350_soc.vo",
-  "vo_golden": "/Users/alex/fine-line/vendor/gowin/ip/ae350/RiscV_AE350_SOC_V1.3/RiscV_AE350_SOC_V1.3/example/DDR3_Shared/ref_design/FPGA_RefDesign/DK_START_GW5AST138_V1.0/ae350_shared_ddr3/src/riscv_ae350_soc/riscv_ae350_soc.vo",
+  "vo_demo": "vendor/gowin/ip/ae350/RiscV_AE350_SOC_V1.3/RiscV_AE350_SOC_V1.3/ref_design/FPGA_RefDesign/DK_START_GW5AST138_V1.0/ae350_demo/src/riscv_ae350_soc/riscv_ae350_soc.vo",
+  "vo_golden": "vendor/gowin/ip/ae350/RiscV_AE350_SOC_V1.3/RiscV_AE350_SOC_V1.3/example/DDR3_Shared/ref_design/FPGA_RefDesign/DK_START_GW5AST138_V1.0/ae350_shared_ddr3/src/riscv_ae350_soc/riscv_ae350_soc.vo",
   "xml": "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA/IDE/bin/prim_syns/gw5a/primitive.xml"
  }
 }

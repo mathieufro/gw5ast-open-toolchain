@@ -7,5 +7,7 @@
  "symdiff": {},
  "level": "E1",
  "verdict": "refused",
- "notes": "vendor refused: configuration that does not support RECONFIG_N (set_option -use_reconfign_as_gpio 1)"
+ "notes": "vendor refused: configuration that does not support RECONFIG_N (set_option -use_reconfign_as_gpio 1)",
+ "vendor_only": {},
+ "packer_only": {}
 }

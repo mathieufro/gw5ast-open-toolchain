@@ -119,3 +119,23 @@ the device does not have, which is the same mistake as adding the bel.
   two tests assert a bel that must not exist. `rescope.md` rev 5 records it.
 * Nothing in the `AE350_SOC` row moves. The `EXTM_*` taps it maps are the
   SoC's, and always were.
+
+## 6. Two named boundaries of this result (gestalt-p2 `D4`, 2026-09-07)
+
+The refusal is the best-evidenced result in the phase, and it is still
+bounded by what was actually run:
+
+* **IDE edition.** Both vendor points (`RP0008` on `soc` and `solo`) were run
+  on **IDE 1.9.12.03 Standard** only. The `.dat` cross-check (`gw5aStuff`, 120
+  keys, no `Ram` match) was separately confirmed on both shipped editions
+  (§2 above), but the vendor's own front-end refusal — the `RP0008` message
+  itself — was not re-run on Education 1.9.11.03. A hypothetical edition-gated
+  resource would not be caught by this row as written.
+* **`.dat` search term.** The 120-key `gw5aStuff` search was for the substring
+  `Ram` (case-sensitive per §2's table). A table under another spelling —
+  e.g. an abbreviation, a different capitalisation, or a name that does not
+  contain `Ram` at all — would not have been seen by this search and would
+  read as "no key matches" regardless of whether it exists.
+
+Neither boundary is worth a vendor run on its own; both are worth stating so
+the refusal is not read as broader than what was measured.

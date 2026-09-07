@@ -14,5 +14,7 @@
  },
  "symdiff": {},
  "level": "E1",
- "verdict": "ok"
+ "verdict": "ok",
+ "vendor_only": {},
+ "packer_only": {}
 }

@@ -15,7 +15,8 @@ import json
 import sys
 
 #: Appended once to every row whose verdict this tool changed.
-NOTE = "verdict re-derived (spec-harness.md 5.4: decode_check is a verdict term)"
+NOTE = ("verdict re-derived (spec-harness.md 5.4: decode_check and the "
+        "symmetric residual are verdict terms)")
 
 
 def rederive(row):
@@ -24,22 +25,50 @@ def rederive(row):
     `aborted` and `refused` are terminal statements about the *build*, not
     about a comparison, so they are never re-derived into `diff`.
     """
-    if row.get("verdict") in ("aborted", "refused"):
+    # `aborted` and `refused` are terminal, and a row with no verdict is not
+    # an equivalence row at all. `diff` is terminal in the other direction:
+    # this tool exists to catch a row published `ok` that its own fields
+    # contradict, and it never argues a recorded difference away.
+    if row.get("verdict") in (None, "aborted", "refused", "diff"):
         return row.get("verdict")
     diff_count = row.get("diff_count") or {}
     set_diffs = sum(int(diff_count.get(k, 0) or 0)
                     for k in ("cells", "attrs", "conns"))
-    unexplained = row.get("unexplained_bits") or []
+    over_emitted = row.get("fuses_over_emitted") or []
+    # `n/a` is what a row that is not an equivalence comparison records -- a
+    # note or a measurement -- and the absence of a check is not its failure.
     decode = row.get("decode_check") or {}
-    decode_failed = any(v != "ok" for v in decode.values())
-    if set_diffs or unexplained or decode_failed:
+    decode_failed = any(v not in ("ok", "n/a") for v in decode.values())
+    # Only §5.1b's enumerated shape is re-derivable. An older writer's
+    # `{tile: count}` summary says a residual exists but not whether it was
+    # enumerated, which is exactly the distinction the verdict turns on.
+    unexplained = row.get("unexplained_bits")
+    if not isinstance(unexplained, list):
+        unexplained = []
+    if set_diffs or unexplained or over_emitted or decode_failed:
         return "diff"
     return "ok"
+
+
+def unguarded(rows):
+    """Run ids whose over-emission the row cannot answer for.
+
+    A row written before the symmetric residual existed carries no
+    `fuses_over_emitted` field, and nothing in it can be re-derived into one:
+    the field is a measurement on two bitstreams, not a function of the other
+    fields. Naming those rows is the honest alternative to letting their `ok`
+    stand as if it had been checked.
+    """
+    return [row.get("run_id") for row in rows
+            if "fuses_over_emitted" not in row
+            and row.get("verdict") not in ("aborted", "refused")]
 
 
 def rederive_file(path, write=False):
     """Returns the rows whose verdict changed, as `(run_id, was, now)`."""
     rows = [json.loads(line) for line in open(path) if line.strip()]
+    for run_id in unguarded(rows):
+        print(f"{run_id}: no fuses_over_emitted field; over-emission unchecked")
     changed = []
     for row in rows:
         now = rederive(row)

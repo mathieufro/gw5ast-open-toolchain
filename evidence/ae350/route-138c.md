@@ -86,11 +86,16 @@ itself and none was made.
 
 ## 5. The pair
 
-| artefact | sha256 |
-|---|---|
-| `GW5AST-138C.msgpack.xz` | `d6e00bdc919cf4e248a98337a4891781b43e25844749f7ff03afda34ded8c367` |
-| `chipdb-GW5AST-138C.bin` | `85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010` |
-| `nextpnr-himbaechel` | `d63e552b31f298dc59225bb48ef321ec8304c906da63a0b0b76ec20ccf35ceb5` |
+| artefact | sha256 (this row) | sha256 (after `P2.F1`) |
+|---|---|---|
+| `GW5AST-138C.msgpack.xz` | `d6e00bdc919cf4e248a98337a4891781b43e25844749f7ff03afda34ded8c367` | `7f3c64c94fcf6ae8f4cfbe4e8a90bf38af83251d4bc0f818fd347636580f506e` |
+| `chipdb-GW5AST-138C.bin` | `85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010` | `4c520c583a387006bf5257fd202843e2ca52757b476c88145b6c9bfe714beaf0` |
+| `nextpnr-himbaechel` | `d63e552b31f298dc59225bb48ef321ec8304c906da63a0b0b76ec20ccf35ceb5` | `d400514b6f35fd9d5449ac7c8e957171b3a94fcf1fa8410f18b9ebf6ec60f1e8` |
+
+The `P2.F1` pair is the same build plus the dedicated `CLKOUT1 -> CORE_CLK`
+edge in `chipdb.py` and the `AE350_SOC`-site guard in `pack.cc`; rebuilding
+this row's `chipdb.py` from `ebef8e9` reproduces `d6e00bdc...` byte for byte,
+which is what makes the two comparable.
 
 Installed to `$DATASTORE/chipdb/{p2t22,std}` and
 `$DATASTORE/toolchains/nextpnr/{bin,share/himbaechel/gowin}`.

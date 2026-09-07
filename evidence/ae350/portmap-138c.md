@@ -3,7 +3,8 @@
 apicula branch `ae350/create-138c`. No vendor run: the map is read from the
 device data, cross-checked against `wire-map-138c.json` (`P2.T08a`).
 
-> **Superseded.** Three of this row's premises were later refuted by
+> **Superseded; the map of record is `portmap-reconciled-138c.md`.** Three
+> of this row's premises were later refuted by
 > measurement: the bel is at `(0, 159)`, not `(0, 145)` (`e0-138c.md` §1); the
 > band filter is gone, so a live record binds wherever it lands; and a tap's
 > direction is its wire's, not its table's (`route-138c.md` §1-3,
@@ -96,3 +97,44 @@ Batch log: `evidence/_runs/p2t07-chipdb.log`,
 `test_ae350_no_port_maps_to_negative_coordinate`,
 `test_ae350_unmapped_bits_get_unroutable_placeholder_wires`,
 `test_ae350_config_tiles_are_marked_as_the_blocks_own`.
+
+## Band, stated once (gestalt-p2 `C2`, 2026-09-07)
+
+The block's "band" has been stated four incompatible ways across this tree
+(`chipdb.py` `_AE350_SOC_ANCHOR (0,159)` / `_AE350_SOC_BAND_COLS 159-181`;
+`dat_parser.py` docstrings saying "160-181"; commit `654f5b4`'s message
+saying "156-180"; `tests/test_dat_packed_grid16.py`'s `FOOTPRINT_COLS =
+range(145,182)`; `AE350_SOC_CONFIG_FUSES` keyed at `x=145` and `156-160`).
+They disagree because they are measuring three different things, not because
+any of them is wrong. **Stated once, so the rest cite this:**
+
+* **Bel anchor**: `(0, 159)` — the die tile `fse_create_ae350()` places the
+  bel at. One coordinate, not a range.
+* **Port columns**: die row 0, columns **145-181** — where the block's fabric
+  ports (`Ae350SocIns`/`Ae350SocOuts`) actually land, measured as the columns
+  holding 99.99% of the bits that move between a bitstream instantiating the
+  block and one that does not (`wire-map-138c.md`). `test_dat_packed_grid16.py`'s
+  `FOOTPRINT_COLS` and `AE350_SOC_CONFIG_FUSES`'s `x=145`/`156-160` keys are
+  both inside this span; they are not a second, disagreeing band, they are
+  points within this one.
+* **Clock-spine taps**: columns 22, 23, 87 also carry AE350 clock-related
+  wires (e.g. the `(0,87,CLK1)` fabric tap `core-clock.md` and `B1` discuss) —
+  outside the 145-181 port-column span, reached over the die's ordinary
+  clock spine rather than the block's own dense column band. These are cited
+  separately, never folded into "the band".
+* **Tile types 224/228 are not a configuration band at all.** They are
+  ordinary CLS logic tiles, at rows 10/28/46/64/82/100, columns 145-180 —
+  the tiles where the presence-marking config bits `config-fuses-138c.md`
+  records happen to live, because the vendor's synthesis places incidental
+  logic for the block's interface there. Calling them "the config band" (as
+  earlier phase prose does) overstates them into a distinct structural
+  region; they are fabric like any other CLS tile, just ones this design's
+  place-and-route happened to use.
+
+`chipdb.py`'s `_AE350_SOC_ANCHOR`/`_AE350_SOC_BAND_COLS` naming is unchanged
+here (off-limits to this pass — owned by another agent mid-edit); the
+constant-level correction it should carry is one sentence: **rename
+`_AE350_SOC_BAND_COLS` to document that it is the *port-column* span
+(145-181, matching `FOOTPRINT_COLS`), not the bel anchor's own coordinate,
+and drop the current `159-181` value in favour of the measured `145-181`
+unless a citation shows the narrower range is deliberate.**

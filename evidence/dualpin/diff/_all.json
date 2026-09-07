@@ -15,7 +15,9 @@
   },
   "symdiff": {},
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "sspi": {
   "options": [
@@ -82,7 +84,34 @@
    ]
   },
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {
+   "166,108": [
+    300,
+    410,
+    411,
+    415,
+    758,
+    806,
+    807,
+    810,
+    872,
+    873,
+    874,
+    924,
+    926,
+    929,
+    930,
+    934
+   ],
+   "167,108": [
+    1034,
+    1035,
+    1160,
+    1163
+   ]
+  },
+  "packer_only": {}
  },
  "mspi": {
   "options": [
@@ -100,7 +129,9 @@
   },
   "symdiff": {},
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "ready": {
   "options": [
@@ -118,7 +149,9 @@
   },
   "symdiff": {},
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "done": {
   "options": [
@@ -136,7 +169,9 @@
   },
   "symdiff": {},
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "reconfign": {
   "options": [
@@ -147,27 +182,21 @@
   "symdiff": {},
   "level": "E1",
   "verdict": "refused",
-  "notes": "vendor refused: configuration that does not support RECONFIG_N (set_option -use_reconfign_as_gpio 1)"
+  "notes": "vendor refused: configuration that does not support RECONFIG_N (set_option -use_reconfign_as_gpio 1)",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "cpu": {
   "options": [
    "cpu"
   ],
   "vendor": {},
-  "packer": {
-   "180,108": [
-    2502,
-    2503
-   ]
-  },
-  "symdiff": {
-   "180,108": [
-    2502,
-    2503
-   ]
-  },
+  "packer": {},
+  "symdiff": {},
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "i2c": {
   "options": [
@@ -178,7 +207,9 @@
   "symdiff": {},
   "level": "E1",
   "verdict": "refused",
-  "notes": "open flow refused: i2c_as_gpio has conflicting settings in nexpnr and gowin_pack."
+  "notes": "open flow refused: i2c_as_gpio has conflicting settings in nexpnr and gowin_pack.",
+  "vendor_only": {},
+  "packer_only": {}
  },
  "ae350_triple": {
   "options": [
@@ -219,9 +250,7 @@
   "packer": {
    "180,108": [
     2491,
-    2492,
-    2502,
-    2503
+    2492
    ]
   },
   "symdiff": {
@@ -248,13 +277,36 @@
     1035,
     1160,
     1163
-   ],
-   "180,108": [
-    2502,
-    2503
    ]
   },
   "level": "E1",
-  "verdict": "ok"
+  "verdict": "ok",
+  "vendor_only": {
+   "166,108": [
+    300,
+    410,
+    411,
+    415,
+    758,
+    806,
+    807,
+    810,
+    872,
+    873,
+    874,
+    924,
+    926,
+    929,
+    930,
+    934
+   ],
+   "167,108": [
+    1034,
+    1035,
+    1160,
+    1163
+   ]
+  },
+  "packer_only": {}
  }
 }

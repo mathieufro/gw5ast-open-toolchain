@@ -7,5 +7,7 @@
  "symdiff": {},
  "level": "E1",
  "verdict": "refused",
- "notes": "open flow refused: i2c_as_gpio has conflicting settings in nexpnr and gowin_pack."
+ "notes": "open flow refused: i2c_as_gpio has conflicting settings in nexpnr and gowin_pack.",
+ "vendor_only": {},
+ "packer_only": {}
 }

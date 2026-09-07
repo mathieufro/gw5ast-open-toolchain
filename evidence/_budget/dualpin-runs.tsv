@@ -2,9 +2,13 @@
 # cap 10 oracle runs, because the ae350 ledger had 2 of 8 left and P2.T38
 # needs both. One vendor run per row; the open-flow companion of a run is
 # not an oracle run and is not counted.
-batch_id	slug	runs	cum	finished_utc
-p2t29-dualpin	dualpin	3	3	2026-09-07T06:34:34+00:00
-p2t29-dualpin2	dualpin	10	13	2026-09-07T06:51:37+00:00
+#
+# Reconciliation notes added 2026-09-07 (gestalt-p2 C3). Overstating spend is
+# the safe direction, so both `runs` figures below are kept at the HIGHER of
+# the two candidate counts rather than lowered; neither total is reduced.
+batch_id	slug	runs	cum	finished_utc	note
+p2t29-dualpin	dualpin	3	3	2026-09-07T06:34:34+00:00	VOID batch is charged 3 runs (0000/0001/0002 all RUN_START); only 0000 and 0001 have a RUN_DONE terminal line in _runs/p2t29-dualpin-void.log, 0002 has none. Kept at 3 (the higher, as-charged figure) rather than reduced to 2 completions -- a started run with no recorded terminal outcome is not assumed free.
+p2t29-dualpin2	dualpin	10	13	2026-09-07T06:51:37+00:00	Committed evidence/dualpin/runs.jsonl holds 9 rows (0001-0009); the batch's own staging file _runs/p2t29-dualpin2.rows.jsonl holds 10 (0000-0009). Row -0000 is the all-off baseline and was dropped when runs.jsonl was committed. Kept at 10 (the higher, staged figure, matching BATCH_COMPLETE's own runs=10) rather than reduced to 9 -- the dropped baseline still consumed an oracle run and must not vanish from the ledger. The missing committed row is a separate defect (evidence/dualpin/runs.jsonl should carry all 10) that is out of scope for this budget file to fix, since evidence/dualpin/** is owned by another agent mid-edit; flagged here so it is not lost.
 # p2t29-dualpin is VOID: its vehicle (input -> DFF -> LED) cannot reach E1 and
 # only a vendor run could show why -- the .tr carries no CLS placement column
 # for a design with no register-to-register path. Log kept as

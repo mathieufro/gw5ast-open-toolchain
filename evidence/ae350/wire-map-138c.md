@@ -1,5 +1,15 @@
 # `AE350_SOC` fabric wire map — GW5AST-138C
 
+> **Superseded as the map of record by `portmap-reconciled-138c.md`.** That
+> file is generated from the chipdb the router loads and is the one place the
+> map, the direction convention and the residual are stated. Retracted here:
+> **the 867 bound / 44 unbound pairing** of §4-§6, which belongs to the
+> pre-`6e58e8b` generation — the current map binds **884 of 911** with **27**
+> unmapped, and `867/44` and `884/27` are the two generations, never one map.
+> Nothing measured is retracted: the parser repair (§1), the table locations
+> (§2, §6), the wire classes (§3) and the pip cross-check (§4) all stand, and
+> §7 already carries the corrected reading.
+
 `P2.T08a`, extended by `P2.T08b` (§6) and corrected by §7. Companion data
 file: `wire-map-138c.json`, regenerated from the `.dat` by
 `tools/derive_ae350_wire_map.py`; `fse_create_ae350()` reads the same tables
@@ -118,6 +128,36 @@ looked up in that tile's changed-wire set:
   invisible to a pip diff", was the clue that the direction was backwards: it
   is the `F`/`Q`/`OF` half that a pip diff cannot see, and that half is the
   block's **outputs** (§7).
+
+### The presence differential, re-stated on corrected data
+
+`moved.json` used to write `-1` whenever a tile appeared in one bitmap and not
+the other, which arithmetic then read as a count and which made every row-0
+column of the band look like an unknown. `chipdb.tile_bitmap` omits a tile whose
+every bit is zero, so that case is not an unknown at all: the absent side is
+all-zero and the moved count is the popcount of the side that is there. The
+producer (`$DATASTORE/ae350-analysis/diff.py`) now records the real count and,
+separately, which bitmaps the tile was non-zero in, and the artefact was
+regenerated from the same two banked bitstreams — 0 vendor runs.
+
+Corrected totals: **1643** tiles carry a moved bit, **92 350** bits in all, and
+**166** of those tiles are non-zero on one side only (previously all `-1`).
+
+What the corrected data **does** support:
+
+- every die-row-0 column of the band, **150 to 180**, carries a real moved-bit
+  count — 4 at column 150 rising to 302 at column 173 — and every one of those
+  tiles is non-zero **only** in the AE350 bitstream. The control has no set bit
+  there at all, so every one of those bits is the block's;
+- die-row-0 columns **145-149 carry no moved bit**, which is the observation §6
+  rests on when it rejects base `0x8314`;
+- column **181** is the only row-0 tile of the band present in both bitstreams
+  (28 moved bits).
+
+What it **does not** support, and never did: anything per tap. `moved.json`
+counts *bits per tile*; it names no wire, no pip and no port. A statement about
+which wire a port bit sits on has to come from the pip decode, not from this
+file — that is `portmap-reconciled-138c.md` §2.
 
 The flop endpoints of run `p2t26-tilewires` were **not** pinned — `top.cst`
 holds four `IO_LOC` lines and nothing else, and `run.p` is encrypted — so a

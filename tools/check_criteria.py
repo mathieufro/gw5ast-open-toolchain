@@ -504,18 +504,20 @@ def check_phase_report(report_path, evidence_rows, evidence_dir):
 #: amended: row 0, column 159 -- not the `(0, 145)` first guess).
 AE350_ANCHOR_TILE = (0, 159)
 
-#: The chipdb node the vendor's dedicated `PLL_R[0]` route bypasses
-#: (`evidence/ae350/e1-138c.md` "Head order"): the ordinary fabric tap the
-#: `.dat` table assigns to `CORE_CLK`, never realised by the vendor because
-#: it takes the PLL output directly instead.
+#: The ordinary fabric tap the `.dat` table names for `CORE_CLK`, which the
+#: vendor never realises (`evidence/ae350/e1-138c.md` "Head order").  The
+#: chipdb records it and must **not** bind the port to it: a port with a
+#: fabric alternative is not a fixed connection.
 AE350_CORE_CLK_FABRIC_TAP = (0, 87, "CLK1")
 
-#: Phrases each evidence file must carry for the corresponding `--ae350`
-#: check to count as measured, not merely present.  Matched literally
-#: (case-sensitive), not as regexes -- see `_evidence_confirms`.
-_CORE_CLK_NONROUTABLE_PHRASE = "fixed, non-routable connection"
-_FUSE_SET_RESOLVED_PHRASE = "no bit marks the block's presence"
-_RECONCILIATION_TOKEN = "637"
+#: The PLL sites the dedicated `CLKOUT1 -> CORE_CLK` hop was measured from
+#: (`evidence/ae350/core-clock.md`: `tNET 0.000 ns` from each).  `S19` names
+#: `PLL_R[0]`; the measurement found the same edge at `PLL_L[0]`, so the model
+#: owes one per site and this check requires both.
+AE350_CORE_CLK_PLL_SITES = ("PLL_L[0]", "PLL_R[0]")
+
+#: The line `evidence/ae350/reconciliation.md` states its result on.
+_RECONCILIATION_VERDICT = "RECONCILIATION-VERDICT:"
 
 
 def _import_apycula_chipdb():
@@ -574,42 +576,123 @@ def check_ae350_bel_exists(db):
     return True, f"{len(ae350['ins'])} in / {len(ae350['outs'])} out bits at {AE350_ANCHOR_TILE}"
 
 
-def check_ae350_core_clk_nonroutable(db, evidence_dir):
-    """`(ok, detail)`: the `CORE_CLK` tap is modelled, and recorded as fixed."""
-    tap_present = any(
-        AE350_CORE_CLK_FABRIC_TAP in wires
-        for name, (_kind, wires) in db.nodes.items()
-        if name.startswith(f"X{AE350_ANCHOR_TILE[1]}Y{AE350_ANCHOR_TILE[0]}/AE350_SOC")
-    )
-    if not tap_present:
-        return False, f"no AE350_SOC node routes to {AE350_CORE_CLK_FABRIC_TAP}"
-    text = _evidence_text(evidence_dir, "ae350", "e1-138c.md") or ""
-    if _CORE_CLK_NONROUTABLE_PHRASE not in text:
-        return False, (
-            "chipdb tap present, but evidence/ae350/e1-138c.md does not "
-            f"record it as a {_CORE_CLK_NONROUTABLE_PHRASE!r}")
-    return True, "modelled tap present; evidence records the fixed PLL_R[0] route"
+def check_ae350_core_clk_nonroutable(db):
+    """`(ok, detail)`: `CORE_CLK` has one dedicated PLL hop and no fabric route.
+
+    Every clause is read from the chipdb: the port's bel-pin wire, the pips
+    that reach it, the node each pip source shares with a PLL's `CLKOUT1`, and
+    the fuses those pips cost.  Nothing here consults a document.
+    """
+    ae350 = (getattr(db, "extra_func", {}) or {}).get(
+        AE350_ANCHOR_TILE, {}).get("ae350") or {}
+    edge = ae350.get("core_clk")
+    if not edge:
+        return False, "the chipdb models no dedicated PLL -> CORE_CLK edge"
+    wire = edge.get("wire")
+    if ae350.get("ins", {}).get("CORE_CLK") != wire:
+        return False, (f"CORE_CLK is bound to {ae350.get('ins', {}).get('CORE_CLK')!r}, "
+                       f"not to the dedicated wire {wire!r}")
+
+    missing = [site for site in AE350_CORE_CLK_PLL_SITES
+               if site not in (edge.get("sources") or {})]
+    if missing:
+        return False, f"no dedicated edge from {', '.join(missing)}"
+
+    row, col = AE350_ANCHOR_TILE
+    pips = db.tiles[db.grid[row][col]].pips.get(wire) or {}
+    for site, source in sorted(edge["sources"].items()):
+        alias = source["alias"]
+        if alias not in pips:
+            return False, f"{site}: no pip from {alias!r} into {wire!r}"
+        if pips[alias]:
+            return False, (f"{site}: the hop from {alias!r} costs "
+                           f"{len(pips[alias])} fuse(s); a fixed connection "
+                           "costs none")
+        prow, pcol, pwire = source["pll_wire"]
+        shared = [name for name, (_kind, wires) in db.nodes.items()
+                  if (row, col, alias) in wires
+                  and (prow, pcol, pwire) in wires]
+        if not shared:
+            return False, (f"{site}: {alias!r} shares no node with "
+                           f"{pwire!r} at ({prow}, {pcol})")
+
+    fabric = [name for name, (_kind, wires) in db.nodes.items()
+              if (row, col, wire) in wires
+              and AE350_CORE_CLK_FABRIC_TAP in wires]
+    if fabric:
+        return False, (f"CORE_CLK still reaches the fabric tap "
+                       f"{AE350_CORE_CLK_FABRIC_TAP} through node {fabric[0]}")
+    if len(pips) != len(AE350_CORE_CLK_PLL_SITES):
+        return False, (f"{wire!r} has {len(pips)} sources; a fixed connection "
+                       f"has exactly {len(AE350_CORE_CLK_PLL_SITES)}, one per "
+                       "PLL site")
+    return True, (f"{wire} driven only by {len(pips)} fuseless dedicated hops "
+                  f"({', '.join(sorted(edge['sources']))}); fabric tap "
+                  f"{AE350_CORE_CLK_FABRIC_TAP} recorded, not bound")
 
 
-def check_ae350_fuse_set(evidence_dir):
-    """`(ok, detail)`: the fuse set is zero, or the non-zero set is enumerated."""
-    e1 = _evidence_text(evidence_dir, "ae350", "e1-138c.md") or ""
-    if _FUSE_SET_RESOLVED_PHRASE in e1:
-        return True, "e1-138c.md: no bit marks the block's presence (zero, measured)"
-    enumerated = _evidence_text(evidence_dir, "ae350", "config-fuses-138c.md")
-    if enumerated and re.search(r"\b\d+\s+bits?\b", enumerated):
-        return True, "config-fuses-138c.md: non-zero set enumerated"
-    return False, "neither e1-138c.md nor config-fuses-138c.md records a fuse-set result"
+def check_ae350_fuse_set(db):
+    """`(ok, detail)`: the packer's fuse set for the bel is zero, or enumerated.
+
+    Read from `gowin_pack` itself: whatever `get_AE350_SOC_fuses` returns is
+    the set this flow emits, and an empty return is the claim "no fuse marks
+    the block".  A non-empty return must be enumerated bit for bit, which it
+    is by construction -- the check then reports the count.
+    """
+    try:
+        from apycula import gowin_pack  # noqa: E402
+    except ImportError:
+        return False, "apycula.gowin_pack is not importable"
+    packer = gowin_pack.GW5AST_138C.__new__(gowin_pack.GW5AST_138C)
+    packer.chipdb = db
+    try:
+        fuses = gowin_pack.GW5AST_138C.get_AE350_SOC_fuses(packer, None)
+    except Exception as exc:  # noqa: BLE001 -- report, never crash the run
+        return False, f"get_AE350_SOC_fuses raised {exc!r}"
+    if not fuses:
+        return True, "get_AE350_SOC_fuses returns []: no fuse marks the block"
+    bits = sum(len(cell.bits) for cell in fuses)
+    return True, f"get_AE350_SOC_fuses enumerates {bits} bits over {len(fuses)} tiles"
 
 
-def check_ae350_reconciliation(evidence_dir):
-    """`(ok, detail)`: the 637-vs-~900 wire reconciliation line is present."""
+def check_ae350_reconciliation(db, evidence_dir):
+    """`(ok, detail)`: the recorded reconciliation matches the live map.
+
+    The verdict line states how many of the block's fabric wires the `.dat`
+    `McuIns`/`McuOuts` tables cover.  Its denominator must be the number of
+    port bits the chipdb actually carries, and the covered count must agree
+    with `mcu-tables.json`'s own measurement of the two tables.
+    """
     text = _evidence_text(evidence_dir, "ae350", "reconciliation.md")
     if not text:
         return False, "evidence/ae350/reconciliation.md is absent or empty"
-    if _RECONCILIATION_TOKEN not in text:
-        return False, f"reconciliation.md does not mention {_RECONCILIATION_TOKEN!r}"
-    return True, "reconciliation.md records the 637-entry reconciliation"
+    match = re.search(
+        rf"{re.escape(_RECONCILIATION_VERDICT)}\s*(\d+)\s*/\s*(\d+)\s+wires covered",
+        text)
+    if not match:
+        return False, f"reconciliation.md carries no {_RECONCILIATION_VERDICT} line"
+    covered, total = int(match.group(1)), int(match.group(2))
+
+    ae350 = (getattr(db, "extra_func", {}) or {}).get(
+        AE350_ANCHOR_TILE, {}).get("ae350") or {}
+    bits = len(ae350.get("ins", {})) + len(ae350.get("outs", {}))
+    if total != bits:
+        return False, (f"reconciliation.md reconciles against {total} wires, "
+                       f"but the chipdb carries {bits} port bits")
+
+    tables_path = os.path.join(evidence_dir or "", "ae350", "mcu-tables.json")
+    if not os.path.isfile(tables_path):
+        return False, "evidence/ae350/mcu-tables.json is absent"
+    with open(tables_path, encoding="utf-8") as fh:
+        counts = (json.load(fh).get("counts") or {})
+    entries = counts.get("total")
+    if entries != counts.get("McuIns", 0) + counts.get("McuOuts", 0):
+        return False, f"mcu-tables.json counts are inconsistent: {counts}"
+    if covered > entries:
+        return False, (f"reconciliation.md claims {covered} covered wires from "
+                       f"{entries} table entries")
+    return True, (f"{covered}/{bits} wires covered by {entries} "
+                  f"McuIns/McuOuts entries")
 
 
 def check_ae350(chipdb_path, evidence_dir):
@@ -617,9 +700,14 @@ def check_ae350(chipdb_path, evidence_dir):
 
     Four structural facts of `S19`'s non-hardware half, each an independent
     check so one missing artefact never hides another: (1) the `AE350_SOC`
-    bel/port-map exists; (2) `PLL_R[0].CLKOUT1 -> CORE_CLK` is a modelled,
-    fixed, non-routable tap; (3) the fuse set is zero or enumerated; (4) the
-    637-entry wire reconciliation is recorded. This mode never reads
+    bel/port-map exists; (2) `CLKOUT1 -> CORE_CLK` is a fixed, fuseless hop
+    from each PLL site and the port has no fabric route; (3) the packer's fuse
+    set for the bel is zero or enumerated; (4) the recorded wire
+    reconciliation agrees with the live map and with the table counts.
+
+    Every clause is decided from the chipdb, from `gowin_pack`, or from a
+    machine-readable field, and never from prose an artefact-authoring phase
+    could have written to satisfy it. This mode never reads
     `spec-primitives.md` -- see the module docstring.
     """
     lines = []
@@ -627,14 +715,16 @@ def check_ae350(chipdb_path, evidence_dir):
 
     checks = []
     if db is None:
-        checks.append(("bel exists", False, load_error))
-        checks.append(("CORE_CLK non-routable", False, load_error))
+        for name in ("bel exists", "CORE_CLK non-routable", "fuse set",
+                     "reconciliation"):
+            checks.append((name, False, load_error))
     else:
         checks.append(("bel exists", *check_ae350_bel_exists(db)))
         checks.append(("CORE_CLK non-routable",
-                        *check_ae350_core_clk_nonroutable(db, evidence_dir)))
-    checks.append(("fuse set", *check_ae350_fuse_set(evidence_dir)))
-    checks.append(("reconciliation", *check_ae350_reconciliation(evidence_dir)))
+                        *check_ae350_core_clk_nonroutable(db)))
+        checks.append(("fuse set", *check_ae350_fuse_set(db)))
+        checks.append(("reconciliation",
+                        *check_ae350_reconciliation(db, evidence_dir)))
 
     satisfied = 0
     for name, ok, detail in checks:

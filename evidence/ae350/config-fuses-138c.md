@@ -1,5 +1,18 @@
 # `P2.T24` — the `AE350_SOC` configuration fuse set, GW5AST-138C
 
+> **SUPERSEDED by `fuse-set-138c.md` (2026-09-07).** The filter used below
+> subtracts pips and bel `modes`/`flags` but **not** the `shortval` tables of
+> tile types 224/228 — which are ordinary CLS logic tiles whose `LUT`/`CLS*`
+> tables occupy exactly the tile rows all 77 bits are in. Subtract every
+> modelled table and the count is **0**, in five AE350 bitstreams and in the
+> control. The 77 bits are one design's LUT and CLS configuration, not an
+> AE350 configuration band; there is no AE350 configuration band. The two
+> sentences below that are wrong as written are corrected in place: the table
+> is **not** emitted (`get_AE350_SOC_fuses` returns `[]`), and the closing
+> `CONFIG-FUSE-VERDICT` line is retracted. The measurement itself — which bits
+> that filter leaves — stands, and is reproducible with
+> `$OTC/tools/derive_ae350_band_bits.py`.
+
 Source: the two banked runs, `p2t26-tilewires` (instantiates `AE350_SOC`) and
 `p2t26-baseline` (does not). **0 new vendor runs.**
 
@@ -47,8 +60,10 @@ row a pip or a bel fuse of these tile types uses.
 | `(159, 46)` | 224 | 5 |
 | `(159, 64)` | 228 | 3 |
 
-The literal bit list is `apycula.gowin_pack.GW5AST_138C.AE350_SOC_CONFIG_FUSES`
-and `gowin_pack` emits it whenever an `AE350_SOC` bel is placed.
+The literal bit list is the `routing_and_bels` filter of
+`$OTC/evidence/ae350/band-bits-138c.json`. Nothing emits it: the table it once
+lived in, `GW5AST_138C.AE350_SOC_CONFIG_FUSES`, is retracted, and
+`get_AE350_SOC_fuses` returns `[]`.
 
 ## What this is not
 
@@ -60,7 +75,6 @@ one, and no pip or bel apicula models accounts for any of them. Closing the
 weaker half needs a second AE350 design with a different port set — one vendor
 run, not spent here.
 
-CONFIG-FUSE-VERDICT: not zero, unlike `EMCU`. 77 bits over 9 tiles of `ttyp`
-224/228 in tile rows 10-11, columns 156-160, interface rows 10/28/46/64; 0 in
-the AE350-free control; emitted by `GW5AST_138C.get_AE350_SOC_fuses`;
-unconditionality unproven pending a second AE350 shape. 0 vendor runs.
+CONFIG-FUSE-VERDICT: **RETRACTED**, superseded by `fuse-set-138c.md`'s
+`FUSE-SET-VERDICT: zero, measured`. The 77 bits are `shortval:LUT`/`CLS*`
+fuses of ordinary logic in CLS tiles, not block configuration.

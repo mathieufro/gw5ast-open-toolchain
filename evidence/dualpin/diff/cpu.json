@@ -3,18 +3,10 @@
   "cpu"
  ],
  "vendor": {},
- "packer": {
-  "180,108": [
-   2502,
-   2503
-  ]
- },
- "symdiff": {
-  "180,108": [
-   2502,
-   2503
-  ]
- },
+ "packer": {},
+ "symdiff": {},
  "level": "E1",
- "verdict": "ok"
+ "verdict": "ok",
+ "vendor_only": {},
+ "packer_only": {}
 }
