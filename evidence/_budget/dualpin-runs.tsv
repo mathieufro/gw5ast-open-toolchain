@@ -1,0 +1,12 @@
+# ae350-dualpins sub-ledger. Authorised by the orchestrator on 2026-09-07,
+# cap 10 oracle runs, because the ae350 ledger had 2 of 8 left and P2.T38
+# needs both. One vendor run per row; the open-flow companion of a run is
+# not an oracle run and is not counted.
+batch_id	slug	runs	cum	finished_utc
+p2t29-dualpin	dualpin	3	3	2026-09-07T06:34:34+00:00
+p2t29-dualpin2	dualpin	10	13	2026-09-07T06:51:37+00:00
+# p2t29-dualpin is VOID: its vehicle (input -> DFF -> LED) cannot reach E1 and
+# only a vendor run could show why -- the .tr carries no CLS placement column
+# for a design with no register-to-register path. Log kept as
+# _runs/p2t29-dualpin-void.log. Three runs; the overrun over the authorised
+# ten is these three and is recorded, not absorbed.

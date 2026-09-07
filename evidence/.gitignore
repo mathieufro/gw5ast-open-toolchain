@@ -180,3 +180,6 @@
 # a .json or .tsv is not covered by "*.md".
 !ae350/wire-map-138c.json
 !_budget/ae350-runs.tsv
+# the ae350-dualpins sub-ledger (P2.T29): same class as the two ledgers above --
+# a .tsv directly under evidence/_budget/, which the "*.md" allowance misses.
+!_budget/dualpin-runs.tsv
