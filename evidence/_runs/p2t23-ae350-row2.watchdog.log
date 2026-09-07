@@ -1,0 +1,2 @@
+07:38:10 WATCHDOG_ARMED batch=p2t23-ae350-row2 stall=5min poll=100s (independent process)
+07:41:09 WATCHDOG_COMPLETE batch=p2t23-ae350-row2 saw BATCH_COMPLETE (clean exit)

@@ -74,3 +74,19 @@ resets and the `Emb_TCM` subset — with the remaining buses named as residual.
 An expired box delivers partial evidence, never a blank row.
 
 RESCOPE-VERDICT (rev 3, after P2.T08b): 2 tasks void (P2.T37 and its replacement P2.T37'), 1 re-targeted and reduced to a table read (P2.T08), 1 amended (P2.T07 anchors at row 0 col 145, port columns 159-180, no split band), 1 new cheap task closed (P2.T08b: the input table is at 0x91ea, 139 of the 142 mapped, 3 resist); all others stand. Runs used 2 of 8, 6 remaining.
+
+## Status after `P2.T23` (2026-09-07, `e1-138c.md`)
+
+| task | status |
+|---|---|
+| `P2.T20` shape | **DONE**, re-targeted: `shapes/ae350_soc.py` is the ShapeSpec for the **149-port** vehicle, not the `Emb_TCM` subset the blueprint wrote it for — the subset is strictly less informative and no cheaper. |
+| `P2.T21` vendor oracle run | **DONE, folded into `P2.T23`.** The batch runs `gw_sh` itself, so a separate oracle task has nothing left to do; the four artefacts and the pre-flight are the batch's head gates. The **package caveat is narrowed, not assumed away**: on PG484 the vendor places and routes `AE350_SOC` at `X159Y0` — the only site of its type on the die, so the package cannot move it. Whether the FPG676 reference designs name that same site is still unread; it cannot differ, because there is nowhere else for it to go. |
+| `P2.T22`/`P2.T23` | **DONE at `E1`**, `verdict: ok`. |
+| `P2.T24` fuse set | **DONE, and it does not go the way `P2.T24` recorded.** Two AE350 designs share **zero** interface-band bits (77 over 9 tiles against 3 at one tile), so no bit marks the block's presence: `get_AE350_SOC_fuses` returns `[]`, as `EMCU` does, and the per-design band is a named gap. 0 further vendor runs. |
+| `P2.T25` `AE350_RAM` | **STANDS, and is now cheap.** Its blueprint priced ~10 vendor runs (1 baseline + 1 presence diff + up to 8 bus points); the presence-diff half is void for the same reason `P2.T24` is — a per-design band cannot be read as a fuse set — so `ae350_ram.py` is `ae350_soc.py` plus one `AE350_RAM` instance, and the row needs **1** vendor run, not ten. 4 of 8 spent, 4 remaining. |
+
+RESCOPE-VERDICT (rev 4, after `P2.T23`): `P2.T20` done and re-targeted;
+`P2.T21` folded in and its package caveat discharged; `P2.T23` closed at `E1`
+with `verdict: ok`; `P2.T24` closed against its own expectation — no
+unconditional fuse set exists; `P2.T25` re-priced from ~10 vendor runs to 1.
+Runs used 4 of 8.
