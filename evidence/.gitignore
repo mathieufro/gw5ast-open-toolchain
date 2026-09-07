@@ -213,3 +213,20 @@
 # named-exception pattern as _budget/clocking-runs.tsv above -- a .tsv directly
 # under a slug directory is not covered by "*.md".
 !oddr-iddr/ttyp-adjudication.tsv
+
+# the P3.T06/P3.T07 pin -> bank -> HCLK table: the machine-readable artefact
+# `tools/derive_pin_hclk_138c.py --check` regenerates and
+# tools/tests/test_pin_hclk_138c.py reads. It was silently untracked by P3.T06
+# -- pin-hclk-138c.md claims it is the machine-readable half of itself, which
+# is not true on a fresh checkout while it is denied by the leading `*`.
+# Fixed on the spot. Same named-exception pattern as ae350/wire-map-138c.json.
+!iologic/pin-hclk-138c.json
+# the P3.T07 sweep driver: the twelve-ball vendor campaign and the decoder
+# every block/lane number in pin-to-hclk/summary.md comes out of. Same
+# named-exception pattern as hclk/probe_clkmux.py above -- a .py is not
+# covered by "*.md", and the summary claims the table is decoded rather than
+# retyped, which is only auditable if this is in the tree.
+!pin-to-hclk/sweep_pin_hclk.py
+# the Phase-3 oracle-run ledger, same class as _budget/clocking-runs.tsv and
+# _budget/ae350-runs.tsv above.
+!_budget/iologic-runs.tsv

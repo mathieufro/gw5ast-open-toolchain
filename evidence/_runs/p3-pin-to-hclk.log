@@ -1,0 +1,21 @@
+# P3.T07 -- pin -> HCLK reachability on GW5AST-138C.
+# Not produced by fuzz.gw5ast138c.harness's batch driver: the swept axis is the
+# package ball, and ShapeSpec.pins is one dict per shape rendered once (gen.py is
+# Phase 0's and frozen), so a per-sweep-point pin is not something a shape can ask
+# for. The runs below went through the same gen.run -> oracle.run_oracle path the
+# driver uses, one at a time, from evidence/pin-to-hclk/sweep_pin_hclk.py.
+
+10:36:49 RUN iddr-plain-V22: refused -- CK0013 Instance 'dut' is not connected to buffer or IODELAY by wire 'din_r' -- an input gearbox may not sit behind a fabric flop
+10:36:49 RUN iddr-plain-V22-fixed: ok -- IDDR clocked from V22: vendor uses an ordinary global (CLK0 <= GB10), zero HCLK bels lit
+10:41:29 RUN iddr-clkdiv-V22: ok -- IDDR + unpinned CLKDIV on V22: WARN PR1014 generic routing, zero HCLK bels lit
+10:42:29 RUN iddr-clkdiv-V19: ok -- same on the SGCLKC_4 ball: WARN PR1014, zero HCLK bels lit
+10:43:11 RUN iddr-clkdiv-W20: ok -- same on the MGCLKC_5 ball: WARN PR1014, zero HCLK bels lit
+10:44:58 RUN dhce-iddr-V22: refused -- CK2060 The connection between instance 'gate0' and instance 'dut' is incorrect -- DHCE.CLKOUT may not drive an IDDR
+10:44:58 RUN dhce-clkdiv-ides4-V22: ok -- instrument found: DHCE -> CLKDIV + IDES4.FCLK; HCLK block 4 lane 0, entry L2HCLK40
+10:53:03 RUN sweep-a: ok -- V19 b4l0, F20 b1l0, Y17 b4l1, G15 b3l0 -- all entries L2HCLK<b><l>
+10:53:52 RUN sweep-b: ok -- W20 b4l0, D21 b1l0, W14 b4l1, N15 b5l0
+10:54:40 RUN sweep-c: ok -- P20 b4l0, F21 b1l0, AA9 b4l1, V22 b5l0
+10:55:58 RUN ctl-v22-rightside: ok -- V22 pinned RIGHTSIDE[4] -> block 3 lane 0: a bottom-edge ball reaches a right-edge block
+10:56:45 RUN ctl-f20-bottomside: ok -- F20 pinned BOTTOMSIDE[4] -> block 5 lane 0: a right-edge ball reaches a bottom-edge block
+REFUSED 2 (CK0013, CK2060) -- vendor refusals are measurements (D30/A13), not aborts
+BATCH_COMPLETE p3-pin-to-hclk runs=12 ok=10 diff=0 aborted=0

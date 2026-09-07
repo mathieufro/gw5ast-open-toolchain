@@ -32,19 +32,50 @@ def table():
 
 def test_pin_hclk_every_pin_marks_its_derivation(table):
     """No cell of the table is silently sourced."""
-    allowed = {"DAT-DERIVED", "FSE-DERIVED", "ASSUMED"}
+    allowed = {"DAT-DERIVED", "FSE-DERIVED", "MEASURED",
+               "MEASURED_NOT_PIN_DETERMINED"}
     expected = {"bank", "cell", "iologic", "hclk_block", "hclk_lanes"}
     for pin in table["pins"]:
         assert set(pin["derived"]) == expected, pin["site"]
         assert set(pin["derived"].values()) <= allowed, pin["site"]
 
 
-def test_pin_hclk_block_and_lanes_are_assumed_not_measured(table):
-    """The block assignment is a hypothesis for `P3.T07`, never evidence."""
-    assert table["block_rule"] == "NEAREST_BLOCK_ON_SIDE"
+def test_pin_hclk_block_is_measured_only_where_a_run_measured_it(table):
+    """`P3.T07` refuted the nearest-block hypothesis: a ball does not decide
+    the block. A pin therefore carries a block only if a named run put it
+    there, and every other pin says so instead of carrying a guess."""
+    assert table["block_rule"] == "MEASURED_NOT_PIN_DETERMINED"
+    measured = table["measured_pin_to_hclk"]["balls"]
     for pin in table["pins"]:
-        assert pin["derived"]["hclk_block"] == "ASSUMED", pin["site"]
-        assert pin["derived"]["hclk_lanes"] == "ASSUMED", pin["site"]
+        if pin["ball"] in measured:
+            assert pin["derived"]["hclk_block"] == "MEASURED", pin["site"]
+            assert pin["hclk_block"] == measured[pin["ball"]]["hclk_block"]
+            assert pin["hclk_lanes"] == [measured[pin["ball"]]["hclk_lane"]]
+            assert pin["hclk_run_id"] == measured[pin["ball"]]["run_id"]
+        else:
+            assert pin["hclk_block"] is None, pin["site"]
+            assert pin["hclk_lanes"] is None, pin["site"]
+            assert pin["hclk_block_source"].startswith("NOT_PIN_DETERMINED")
+
+
+def test_pin_hclk_every_measured_ball_entered_on_the_logic_entry_wire(table):
+    """The one finding the whole row turns on: no candidate used a dedicated
+    pin -> HCLK edge, so `pin_to_hclk_entries` must stay empty."""
+    measured = table["measured_pin_to_hclk"]["balls"]
+    assert len(measured) == 12
+    for ball, entry in measured.items():
+        assert entry["entry_wire"] == "L2HCLK%d%d" % (entry["hclk_block"],
+                                                      entry["hclk_lane"]), ball
+
+
+def test_pin_hclk_controls_move_a_ball_to_another_edge(table):
+    """A block a ball landed on unpinned proves nothing on its own; the
+    controls are what make the "not pin-determined" claim a measurement."""
+    controls = table["measured_pin_to_hclk"]["controls"]
+    balls = table["measured_pin_to_hclk"]["balls"]
+    assert set(controls) == {"V22", "F20"}
+    for ball, control in controls.items():
+        assert control["hclk_block"] != balls[ball]["hclk_block"], ball
 
 
 def test_pin_hclk_chipdb_entries_are_empty_until_measured(table):
@@ -81,15 +112,15 @@ def test_pin_hclk_blocks_match_the_p1t04_topology(table):
     assert got == BLOCK_CELLS
 
 
-def test_pin_hclk_every_pin_gets_a_block_on_its_own_side(table):
-    """Every I/O edge of this die has a block, so no pin is left unassigned,
-    and no pin is assigned across the die."""
+def test_pin_hclk_nearest_block_geometry_still_closes(table):
+    """The nearest-block column survives as geometry, not as a claim about
+    clocks: every pin still has one, on its own die edge."""
     side_of_block = {b["hclk_idx"]: b["side"] for b in table["hclk_blocks"]}
     expect = {"L": "left", "R": "right", "B": "bottom"}
     for pin in table["pins"]:
-        assert pin["hclk_block"] is not None, pin["site"]
-        assert side_of_block[pin["hclk_block"]] == expect[pin["side"]], pin["site"]
-        assert pin["hclk_lanes"] == [0, 1, 2, 3], pin["site"]
+        nearest = pin["nearest_block_on_side"]
+        assert nearest is not None, pin["site"]
+        assert side_of_block[nearest] == expect[pin["side"]], pin["site"]
 
 
 def test_pin_hclk_ddr_bank_pins_are_flagged(table):

@@ -1,0 +1,13 @@
+# Phase-3 (ws_03_io_iologic) oracle-run ledger. Blueprint P3-io-iologic.md
+# "Oracle-run budget (corrected, F9)": 110 planned vendor runs = 104 row runs
+# over the 13 evidence rows + 6 adjudication runs in P3.T04.
+# Per-task allocation, verbatim from the blueprint:
+#   T04 6, T07 12, T11 2, T12 6, T13 8, T14 6, T16 2, T21 28, T23 6, T24 2,
+#   T25 10, T26 4, T27 4, T29 8, T31 6  -> sum 110.
+# P3.T08 re-runs P3.T07's designs at --level E1 and adds NO new oracle runs
+# (blueprint P3.T08 "Expected vendor runs": counted inside P3.T07's 12).
+# One vendor gw_sh invocation = one run. The open-flow companion (yosys +
+# nextpnr + gowin_pack) of a run is not an oracle run and is not counted.
+batch_id	slug	runs	cumulative	timestamp
+0	-	0	0	2026-09-07T00:00:00+00:00
+p3-pin-to-hclk	pin-to-hclk	12	12	2026-09-07T11:10:58+00:00

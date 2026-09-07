@@ -84,9 +84,58 @@ _NO_IOLOGIC_TTYPS = frozenset({48, 49, 50, 51})
 #: `IO{side}{n}{A|B}` -- the site-name spelling `chipdb.pin_bank` is keyed by.
 _SITE_RE = re.compile(r"^IO([TBLR])(\d+)([AB])$")
 
-#: The rule that puts a pin on a block. Named in the artefact so a reader of
-#: the JSON alone knows what the `ASSUMED` cells mean.
-BLOCK_RULE = "NEAREST_BLOCK_ON_SIDE"
+#: What decides the block a ball's clock lands on. `P3.T07` measured that
+#: nothing about the ball does: twelve candidates over four banks all entered
+#: the HCLK network on their lane's `L2HCLK<block><lane>` wire -- the logic
+#: entry off the global clock plane -- and two `INS_LOC` controls moved a
+#: bottom-edge ball onto a right-edge block and a right-edge ball onto a
+#: bottom-edge block, both routing.
+BLOCK_RULE = "MEASURED_NOT_PIN_DETERMINED"
+
+#: The rule this file used before that measurement, kept because it is still
+#: computed and still corroborated -- as a *nearest block* geometry fact, no
+#: longer as a claim about where a clock goes.
+NEAREST_RULE = "NEAREST_BLOCK_ON_SIDE"
+
+#: `P3.T07`'s result: ball -> (bank, block, lane, entry wire, run id).
+#: Every value here comes out of a decoded vendor bitstream's `HCLK` bel
+#: (`HCLK_MUX_BETA<block><lane>=<source>`) paired with the `CLKDIV_` bel whose
+#: `DIV_MODE` names the clock (`evidence/pin-to-hclk/`).
+MEASURED_BLOCK = {
+    "V19": (4, 4, 0, "L2HCLK40", "p3-pin-to-hclk-sweep-a-V19"),
+    "F20": (2, 1, 0, "L2HCLK10", "p3-pin-to-hclk-sweep-a-F20"),
+    "Y17": (5, 4, 1, "L2HCLK41", "p3-pin-to-hclk-sweep-a-Y17"),
+    "G15": (3, 3, 0, "L2HCLK30", "p3-pin-to-hclk-sweep-a-G15"),
+    "W20": (4, 4, 0, "L2HCLK40", "p3-pin-to-hclk-sweep-b-W20"),
+    "D21": (2, 1, 0, "L2HCLK10", "p3-pin-to-hclk-sweep-b-D21"),
+    "W14": (5, 4, 1, "L2HCLK41", "p3-pin-to-hclk-sweep-b-W14"),
+    "N15": (4, 5, 0, "L2HCLK50", "p3-pin-to-hclk-sweep-b-N15"),
+    "P20": (4, 4, 0, "L2HCLK40", "p3-pin-to-hclk-sweep-c-P20"),
+    "F21": (2, 1, 0, "L2HCLK10", "p3-pin-to-hclk-sweep-c-F21"),
+    "AA9": (5, 4, 1, "L2HCLK41", "p3-pin-to-hclk-sweep-c-AA9"),
+    "V22": (4, 5, 0, "L2HCLK50", "p3-pin-to-hclk-sweep-c-V22"),
+}
+
+#: The two controls: the same ball, its divider pinned to a block on another
+#: edge.  Both route, which is what turns "the placer chose this block" into
+#: "the ball does not choose the block".
+MEASURED_CONTROLS = {
+    "V22": (3, 0, "L2HCLK30", "RIGHTSIDE[4]",
+            "p3-pin-to-hclk-ctl-v22-rightside-V22"),
+    "F20": (5, 0, "L2HCLK50", "BOTTOMSIDE[4]",
+            "p3-pin-to-hclk-ctl-f20-bottomside-F20"),
+}
+
+#: Blocks no Phase-3 run can reach, and why -- stated rather than left blank.
+BLOCKS_NOT_REACHED = [0, 2]
+BLOCKS_NOT_REACHED_REASON = (
+    "the only balls the bank -> block geometry places on blocks 0 and 2 are "
+    "in banks 7 and 6, the DDR3 banks, where no Phase-3 shape may put a pin "
+    "(D20c, D54). Not measured, and stated as such.")
+
+NOT_PIN_DETERMINED = (
+    "NOT_PIN_DETERMINED (P3.T07): the block a ball lands on is chosen by the "
+    "placer over the global clock plane, not fixed by the ball")
 
 _OUT = os.path.join(paths.OTC_ROOT, "evidence", "iologic", "pin-hclk-138c.json")
 
@@ -200,7 +249,8 @@ def derive():
             raise DerivationError(
                 f"{site} ({pin['INDEX']}): .dat Bank says {dat_bank}, "
                 f"{PACKAGE}.json says {json_bank}")
-        block = nearest_block_on_side(side, (row, col))
+        nearest = nearest_block_on_side(side, (row, col))
+        measured = MEASURED_BLOCK.get(str(pin["INDEX"]))
         pins.append({
             "ball": str(pin["INDEX"]),
             "site": site,
@@ -210,8 +260,11 @@ def derive():
             "row": row,
             "col": col,
             "iologic": has_iologic(fse, grid[row][col], ab),
-            "hclk_block": block,
-            "hclk_lanes": list(LANES_PER_BLOCK) if block is not None else [],
+            "hclk_block": measured[1] if measured else None,
+            "hclk_lanes": [measured[2]] if measured else None,
+            "hclk_block_source": "MEASURED" if measured else NOT_PIN_DETERMINED,
+            "hclk_run_id": measured[4] if measured else None,
+            "nearest_block_on_side": nearest,
             "cfg": str(pin.get("CFG", "")),
             "diff": str(pin.get("DIFF", "")),
             "true_lvds": bool(pin.get("TRUELVDS", False)),
@@ -221,8 +274,8 @@ def derive():
                 "bank": "DAT-DERIVED",
                 "cell": "DAT-DERIVED",
                 "iologic": "FSE-DERIVED",
-                "hclk_block": "ASSUMED",
-                "hclk_lanes": "ASSUMED",
+                "hclk_block": "MEASURED" if measured else BLOCK_RULE,
+                "hclk_lanes": "MEASURED" if measured else BLOCK_RULE,
             },
         })
 
@@ -240,16 +293,46 @@ def derive():
             "cell": f"IDE/data/device/{DEVICE}/{PACKAGE}.json PIN_DATA[*].NAME + grid dims",
             "iologic": f"IDE/share/device/{DEVICE}/{DEVICE}.fse shortval 21/22",
             "hclk_blocks": "evidence/hclk/topology-138c.md (P1.T04, MEASURED)",
-            "hclk_block_of_pin": f"{BLOCK_RULE} (ASSUMED, to be settled by P3.T07)",
+            "hclk_block_of_pin": (
+                "MEASURED, P3.T07 (12 vendor runs, "
+                "evidence/pin-to-hclk/runs.jsonl): the block is NOT a "
+                "property of the ball. Every candidate entered the HCLK "
+                "network on its lane's L2HCLK<block><lane> wire -- the logic "
+                "entry off the global clock plane -- and two INS_LOC controls "
+                "moved a bottom-edge ball onto a right-edge block and a "
+                "right-edge ball onto a bottom-edge block, both routing."),
         },
         "block_rule": BLOCK_RULE,
         "hclk_blocks": [{"hclk_idx": i, "row": r, "col": c, "side": s}
                         for i, r, c, s in HCLK_BLOCKS],
         "ddr_banks": list(DDR_BANKS),
-        # Shaped like the values of `chipdb._gw5_pin_to_hclk`. Empty on
-        # purpose: an entry needs a measured fabric wire and `hclknames` index
-        # (see the module doc), and P3.T07 is the task that measures them.
+        "measured_pin_to_hclk": {
+            "method": (
+                "io_basic HCLK probe: DHCE -> unpinned CLKDIV per ball, one "
+                "DIV_MODE per clock so the decode says which ball landed "
+                "where, plus an IDES4 whose FCLK is clock 0's HCLK. Read out "
+                "of the decoded vendor bitstream's HCLK bel "
+                "(HCLK_MUX_BETA<block><lane>=<source>) and CLKDIV_ bel."),
+            "balls": {ball: {"bank": v[0], "hclk_block": v[1],
+                             "hclk_lane": v[2], "entry_wire": v[3],
+                             "run_id": v[4]}
+                      for ball, v in sorted(MEASURED_BLOCK.items())},
+            "controls": {ball: {"hclk_block": v[0], "hclk_lane": v[1],
+                                "entry_wire": v[2], "ins_loc": v[3],
+                                "run_id": v[4]}
+                         for ball, v in sorted(MEASURED_CONTROLS.items())},
+            "blocks_not_reached": list(BLOCKS_NOT_REACHED),
+            "blocks_not_reached_reason": BLOCKS_NOT_REACHED_REASON,
+        },
+        # Shaped like the values of `chipdb._gw5_pin_to_hclk`. Still empty,
+        # and now for a MEASURED reason rather than a derivational one.
         "pin_to_hclk_entries": [],
+        "pin_to_hclk_entries_note": (
+            "chipdb._gw5_pin_to_hclk entries model a DEDICATED pin -> HCLK "
+            "edge, and no candidate ball uses one. All twelve entered on "
+            "L2HCLK<block><lane>, the ordinary logic entry any global clock "
+            "reaches, so an entry here would add a routing edge the silicon "
+            "does not have. The 25A entry is untouched."),
         "clock_pin_candidates": clock_candidates,
         "corroboration": corroboration(pins),
         "pins": pins,
@@ -257,11 +340,13 @@ def derive():
 
 
 def corroboration(pins):
-    """Two independent checks on `BLOCK_RULE`, computed and recorded.
+    """Two independent checks on `NEAREST_RULE`, computed and recorded.
 
-    Neither makes the block assignment MEASURED -- only a vendor run does that
-    (`P3.T07`) -- but both would have failed loudly on a wrong rule, and a
-    reader of the JSON alone should see them:
+    `P3.T07` has since measured that no rule of this shape decides where a
+    clock goes -- the block is the placer's choice over the global clock plane.
+    The two checks are kept because they are still true statements about the
+    die's geometry, and because both would have failed loudly on a wrong
+    reading of the bank table:
 
     1. **bank -> block is a function.** If the rule split a bank across two
        blocks, a bank's pins could not share one `BANK_VCCIO`-scoped clock
@@ -277,14 +362,14 @@ def corroboration(pins):
     bank_to_block = {}
     split_banks = []
     for pin in pins:
-        seen = bank_to_block.setdefault(pin["bank"], pin["hclk_block"])
-        if seen != pin["hclk_block"] and pin["bank"] not in split_banks:
+        seen = bank_to_block.setdefault(pin["bank"], pin["nearest_block_on_side"])
+        if seen != pin["nearest_block_on_side"] and pin["bank"] not in split_banks:
             split_banks.append(pin["bank"])
     distances = []
     for pin in pins:
         if not re.search(r"\b(S|M)?GCLK", pin["cfg"] or ""):
             continue
-        row, col = blocks[pin["hclk_block"]]
+        row, col = blocks[pin["nearest_block_on_side"]]
         axis = abs(pin["col"] - col) if pin["side"] == "B" else abs(pin["row"] - row)
         distances.append(axis)
     return {
