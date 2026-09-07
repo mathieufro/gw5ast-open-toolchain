@@ -90,3 +90,17 @@ RESCOPE-VERDICT (rev 4, after `P2.T23`): `P2.T20` done and re-targeted;
 with `verdict: ok`; `P2.T24` closed against its own expectation — no
 unconditional fuse set exists; `P2.T25` re-priced from ~10 vendor runs to 1.
 Runs used 4 of 8.
+
+## Status after `P2.T25` (2026-09-07, `../ae350-ram/summary.md`)
+
+| task | status |
+|---|---|
+| `P2.T25` `AE350_RAM` | **DONE, `refused`.** The vendor's own front end says `ERROR (RP0008) : There is no AE350_RAM resource in current device` — with an `AE350_SOC` beside it and with the die otherwise empty, so the refusal is the primitive's and unconditional. `P2.T23` is the control: same tool, same device, same Tcl header, same design minus the block, and it builds. **2 vendor runs**, not the 1 rev 4 priced: the second point is what turns "the one AE350 site is taken" into "the device has no such resource". |
+| `P2.T09` `AE350_RAM` extra-func entry | **VOID.** Its two tests assert a bel that must not exist: a bel for a resource the vendor denies would let the open flow accept a netlist the vendor refuses. The chipdb is unchanged and the absence is pinned instead by `tests/test_ae350_ram_absent.py`. The `create_reuse_wire` hazard `port-inventory.md` raised is void with it — there is no second bel to collide. |
+| `P2.T24` fuse set (`AE350_RAM` half) | **VOID by the same fact.** Zero fuses, and not by measuring a bitstream: GowinSynthesis stops before place and route, so no `AE350_RAM` bitstream exists on this device. |
+
+RESCOPE-VERDICT (rev 5, after `P2.T25`): `P2.T25` closed at a terminal
+`refused` verdict with the vendor's exact error text; `P2.T09` and the
+`AE350_RAM` half of `P2.T24` void, because the primitive is not a resource of
+this die; the chipdb, the `.bin` and the installed `nextpnr-himbaechel` are
+byte-unchanged. Runs used 6 of 8.
