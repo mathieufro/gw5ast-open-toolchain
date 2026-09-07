@@ -1,0 +1,16 @@
+# P3.T01 - Phase-3 preflight over the inherited Phase-0 / Phase-1 state
+apicula_sha: d165577823541cad41ba643b9ce349722cb2de8b
+nextpnr_sha: 850912d02e484990c396b8c18ba110802f5b88d1
+chipdb_sha256: 7f3c64c94fcf6ae8f4cfbe4e8a90bf38af83251d4bc0f818fd347636580f506e
+mask_sha256: 59147bfc633e10c5c1f4875bef6cf0cf9b76f8d58868ffc084f8c252557a1ec0
+ide_version: 1.9.12.03
+gowinhome: /Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+
+ok   1 chipdb builds, canonical == datastore copy: exit=0 canonical=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula/apycula/GW5AST-138C.msgpack.xz sha256=7f3c64c94fcf6ae8f4cfbe4e8a90bf38af83251d4bc0f818fd347636580f506e copy_sha256=7f3c64c94fcf6ae8f4cfbe4e8a90bf38af83251d4bc0f818fd347636580f506e
+ok   2 HAS_5A_HCLK in chip_flags: exit=0 HAS_5A_HCLK count=1
+ok   3 D39 state (1) guard spelled GW5AST-138C: GW5AST-138AC occurrences=0, fse_iologic bare 138C guards=1
+ok   4 IOLOGIC-before-HCLK refusal test green: exit=0 1 passed, 574 deselected in 0.43s
+ok   5 harness selftest --inject-one-fuse: exit=0 expected_line_present=True (--design-dir /Users/alex/fine-line-data/open-toolchain-gw5ast/oracle-smoke)
+ok   6 DEL-e tools present and --help ok: all 4 present, --help exit 0
+ok   7 apicula tests package present: present
+P3-PREFLIGHT ok: 7/7 checks
