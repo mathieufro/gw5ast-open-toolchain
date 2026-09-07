@@ -128,3 +128,35 @@ Toolchain pair, installed at all four locations the harness reads:
   comparison above (`evidence/oser/audit_gearbox_attrs.py --slug ides`).
 * Designs and logs: `$DATASTORE/p3t14/`, batch log
   `evidence/_runs/p3-ides.log`.
+
+## The GW5A gearbox output window (fix, no new oracle run)
+
+The open flow put an `IDDR`'s `Q0` on IOLOGIC bel pin `Q8` (wire `F0`) while
+the vendor takes the data out of the tile on `F7` (`Q14`).  Which pin each
+gearbox occupies was MEASURED from the vendor bitstreams already on disk, by
+tracing every word ball back to the IOLOGIC wire that drives it:
+
+| primitive | vendor bel pins | wires | pre-5A map the open flow used |
+|---|---|---|---|
+| `IDDR` / `IDDRC` | `Q14`-`Q15` | `F7`, `OF0` | `Q8`-`Q9` |
+| `IDES4` | `Q8`-`Q11` | `F0`-`F3` | `Q6`-`Q9` |
+| `IDES8` | `Q8`-`Q15` | `F0`-`F5`, `F7`, `OF0` | `Q2`-`Q9` |
+| `IDES10` | `Q6`-`Q15` | | `Q0`-`Q9` |
+
+The GW5A IOLOGIC carries sixteen fabric outputs where the older families carry
+ten, and the windows are not the older ones shifted by a constant: `IDDR`,
+`IDES8` and `IDES10` are top-aligned at `Q15`, `IDES4` is not.  `IVIDEO` has no
+measured bitstream here and keeps the pre-5A window rather than a guessed one.
+
+Landed as `nextpnr` `reconnect_ides_outs` (family read off the bel: a GW5A
+IOLOGIC is the one carrying a `Q15`) and `gowin_unpack._iologic_ports_gw5`.
+Every row below was re-diffed with `tools/redo_open_half.py` -- the vendor half
+is the one already measured, so the fix spent **no** oracle run.
+
+Result, per point (`conns` before -> after): `ides4-reset-pad` 10 -> 2,
+`ides4-reset-tied` 10 -> 2, `ides8-reset-pad` 20 -> **0** (`verdict: ok`),
+`ides8-reset-tied` 16 -> 2, `ides10-reset-pad` 14 -> 12, `ides10-reset-tied`
+12 -> 9.  `cells`/`attrs` stay 0 and both decode checks stay `ok` on all six.
+The residue is the same IO-tile wire-alias gap the `oddr-iddr` row names, plus,
+on the two `IDES10` points, the six wires of the `Q6`/`Q7` half of the window,
+which the two flows still reach over different routes.

@@ -174,3 +174,14 @@ that and were reused.
 * `archive/runs-bank2-block1.jsonl` -- the row `P3.T13`'s first two runs
   produced on the bank-2 pad, kept because it is what measured the
   consequence of not pinning the lane.
+
+## `ovideo-default` closes at `verdict: ok` (fix, no new oracle run)
+
+The point was `E0 diff` on the decode check alone: `gowin_pack` encodes an
+`OVIDEO` as `OUTMODE = LVDSOUT` (value id 74) and the vendor writes the same
+fuses, so `_iologic_mode`, keyed on `VIDEOTX`, named no cell and `c1` reported
+the `OVIDEO` missing from a bitstream that carried it.  `gowin_unpack` now
+carries `_iologic_outmode_alias = {'LVDSOUT': 'OVIDEO'}`, on the output path
+only -- the same id in `INMODE` is a different mode and must keep failing to
+resolve.  Re-diffed with `tools/redo_open_half.py`: all six points are
+`verdict: ok`, `cells`/`attrs`/`conns` 0, `c1` and `c2` `ok`.

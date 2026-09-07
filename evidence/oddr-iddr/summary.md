@@ -445,3 +445,37 @@ the `p3t11/iddr-pair` SDF: the band is empty because the model publishes no IO
 arc at all, not because every arc passed. The two contract tests are
 `tools/tests/test_v12a_io_138c.py::test_v12a_io_output_contract` and
 `::test_v12a_io_exceptions_enumerated`, which run this literal command.
+
+## The GW5A gearbox output window (fix, no new oracle run)
+
+The open flow put an `IDDR`'s `Q0` on IOLOGIC bel pin `Q8` (wire `F0`) while
+the vendor takes the data out of the tile on `F7` (`Q14`).  Which pin each
+gearbox occupies was MEASURED from the vendor bitstreams already on disk, by
+tracing every word ball back to the IOLOGIC wire that drives it:
+
+| primitive | vendor bel pins | wires | pre-5A map the open flow used |
+|---|---|---|---|
+| `IDDR` / `IDDRC` | `Q14`-`Q15` | `F7`, `OF0` | `Q8`-`Q9` |
+| `IDES4` | `Q8`-`Q11` | `F0`-`F3` | `Q6`-`Q9` |
+| `IDES8` | `Q8`-`Q15` | `F0`-`F5`, `F7`, `OF0` | `Q2`-`Q9` |
+| `IDES10` | `Q6`-`Q15` | | `Q0`-`Q9` |
+
+The GW5A IOLOGIC carries sixteen fabric outputs where the older families carry
+ten, and the windows are not the older ones shifted by a constant: `IDDR`,
+`IDES8` and `IDES10` are top-aligned at `Q15`, `IDES4` is not.  `IVIDEO` has no
+measured bitstream here and keeps the pre-5A window rather than a guessed one.
+
+Landed as `nextpnr` `reconnect_ides_outs` (family read off the bel: a GW5A
+IOLOGIC is the one carrying a `Q15`) and `gowin_unpack._iologic_ports_gw5`.
+Every row below was re-diffed with `tools/redo_open_half.py` -- the vendor half
+is the one already measured, so the fix spent **no** oracle run.
+
+Result: the three `ODDR` points stay `ok`; the three `IDDR` points go from
+`conns` **4** to `conns` **2**, `cells`/`attrs` 0, `c1`/`c2` `ok`.  What is left
+is not the pin map: both flows now drive `IOLOGIC.Q14`, and the vendor's `Q14`
+is in the `dout` net while the open flow's is not, because the open route
+`F7 -> EW10 -> ... -> W11` has one hop the tile decode does not reconstruct --
+`W11` is not a pip destination in ttyp 247 and nothing joins it to `EW10`, so
+the net splits in two and its identity changes.  Named gap: **an IO-tile wire
+alias missing from the 138C chipdb (`EW10`/`W11`, ttyp 247)**, a Phase-1-owned
+`chipdb.py` question, not an IOLOGIC one.

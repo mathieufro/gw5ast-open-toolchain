@@ -1,0 +1,17 @@
+[  0%] Built target nextpnr_route
+[  0%] Built target oourafft
+[  0%] Built target nextpnr_place
+[  0%] Built target nextpnr_kernel
+[  3%] Built target json11
+[  6%] Built target bbasm
+[ 10%] Built target nextpnr-himbaechel-gowin-chipdb
+[ 12%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack.cc.o
+[ 13%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/gowin.cc.o
+[ 15%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_luts.cc.o
+[ 17%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_dsp.cc.o
+[ 18%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_bsram.cc.o
+[ 20%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_io.cc.o
+[ 22%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_iologic.cc.o
+[ 24%] Linking CXX executable ../nextpnr-himbaechel
+[100%] Built target nextpnr-himbaechel
+EXIT=0
