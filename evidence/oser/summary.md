@@ -1,5 +1,18 @@
 # OSER4 / OSER8 / OSER10 / OVIDEO on GW5AST-138C
 
+Status: **not closed**, and the blocker below is **fixed** -- see
+`evidence/iologic/io2hclk-138c.md` (`P3.F1`, `D106`). The 138C now carries an
+`io2hclk` table derived from its own `.fse`, the packer emits the fast-clock
+selection, `nextpnr` refuses an unrouted arc by name instead of aborting, and
+the `oser4-default` design builds through the whole open flow (`yosys`,
+`nextpnr`, `gowin_pack` all rc=0) with six of the vendor's seven fuses
+matched. The one remaining bit is the *lane* the router picked -- vendor lane
+2, open flow lane 3 -- which no constraint in the design fixes on either side.
+`P3.T13` still holds 6 of its 8 runs and closes the row once the lane is
+pinned in both flows or masked as routing.
+
+Original status, kept as the record of the measurement:
+
 Status: **not closed.** `E1` is unreachable through the open flow as the
 database stands, for a reason measured here rather than guessed, and the
 reason is a bigger finding than the row: **`G-FCLK-138C` does not generalise
