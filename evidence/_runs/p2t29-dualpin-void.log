@@ -1,0 +1,13 @@
+06:30:43 BATCH_START batch=p2t29-dualpin shape=dualpin level=E1 pid=37659 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/dualpin
+06:31:22 BATCH_HEAD selftest --inject-one-fuse: ok
+06:31:36 BATCH_HEAD selftest --unpacker-completeness: ok
+06:31:37 BATCH_HEAD selftest --probe-mask-classes: ok
+06:31:38 BATCH_HEAD gw_sh pre-flight: ok
+06:31:39 BATCH_CHIPDB batch=p2t29-dualpin sha256=85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010
+06:31:39 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 10 run ids)
+06:31:39 BATCH_RESUME batch=p2t29-dualpin planned=10 already_terminal=0
+06:31:39 RUN_START p2t29-dualpin-dualpin-0000 sweep='none'
+06:33:05 RUN_DONE p2t29-dualpin-dualpin-0000 verdict=diff
+06:33:05 RUN_START p2t29-dualpin-dualpin-0001 sweep='jtag'
+06:34:33 RUN_DONE p2t29-dualpin-dualpin-0001 verdict=diff
+06:34:34 RUN_START p2t29-dualpin-dualpin-0002 sweep='sspi'

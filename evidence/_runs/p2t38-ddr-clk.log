@@ -1,0 +1,12 @@
+07:00:14 BATCH_START batch=p2t38-ddr-clk shape=ae350_soc level=E1 pid=81508 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-ddr-clk
+07:00:52 BATCH_HEAD selftest --inject-one-fuse: ok
+07:01:05 BATCH_HEAD selftest --unpacker-completeness: ok
+07:01:06 BATCH_HEAD selftest --probe-mask-classes: ok
+07:01:06 BATCH_HEAD gw_sh pre-flight: ok
+07:01:06 BATCH_CHIPDB batch=p2t38-ddr-clk sha256=85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010
+07:01:06 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+07:01:06 BATCH_RESUME batch=p2t38-ddr-clk planned=1 already_terminal=0
+07:01:07 RUN_START p2t38-ddr-clk-ae350_soc-0000 sweep=None
+07:02:43 RUN_DONE p2t38-ddr-clk-ae350_soc-0000 verdict=ok
+07:02:43 BATCH_SKIPPED batch=p2t38-ddr-clk n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p2t38-ddr-clk.rows.jsonl
+BATCH_COMPLETE p2t38-ddr-clk runs=1 ok=1 diff=0 aborted=0

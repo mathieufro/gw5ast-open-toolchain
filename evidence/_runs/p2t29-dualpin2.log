@@ -1,0 +1,30 @@
+06:37:47 BATCH_START batch=p2t29-dualpin2 shape=dualpin level=E1 pid=49925 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/dualpin
+06:38:29 BATCH_HEAD selftest --inject-one-fuse: ok
+06:38:43 BATCH_HEAD selftest --unpacker-completeness: ok
+06:38:44 BATCH_HEAD selftest --probe-mask-classes: ok
+06:38:44 BATCH_HEAD gw_sh pre-flight: ok
+06:38:44 BATCH_CHIPDB batch=p2t29-dualpin2 sha256=85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010
+06:38:44 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 10 run ids)
+06:38:44 BATCH_RESUME batch=p2t29-dualpin2 planned=10 already_terminal=0
+06:38:44 RUN_START p2t29-dualpin2-dualpin-0000 sweep='none'
+06:40:18 RUN_DONE p2t29-dualpin2-dualpin-0000 verdict=ok
+06:40:18 RUN_START p2t29-dualpin2-dualpin-0001 sweep='jtag'
+06:41:54 RUN_DONE p2t29-dualpin2-dualpin-0001 verdict=ok
+06:41:54 RUN_START p2t29-dualpin2-dualpin-0002 sweep='sspi'
+06:43:31 RUN_DONE p2t29-dualpin2-dualpin-0002 verdict=ok
+06:43:31 RUN_START p2t29-dualpin2-dualpin-0003 sweep='mspi'
+06:45:03 RUN_DONE p2t29-dualpin2-dualpin-0003 verdict=ok
+06:45:03 RUN_START p2t29-dualpin2-dualpin-0004 sweep='ready'
+06:46:37 RUN_DONE p2t29-dualpin2-dualpin-0004 verdict=ok
+06:46:37 RUN_START p2t29-dualpin2-dualpin-0005 sweep='done'
+06:48:11 RUN_DONE p2t29-dualpin2-dualpin-0005 verdict=ok
+06:48:11 RUN_START p2t29-dualpin2-dualpin-0006 sweep='reconfign'
+06:48:11 RUN_DONE p2t29-dualpin2-dualpin-0006 verdict=aborted
+06:48:12 RUN_START p2t29-dualpin2-dualpin-0007 sweep='cpu'
+06:49:44 RUN_DONE p2t29-dualpin2-dualpin-0007 verdict=ok
+06:49:44 RUN_START p2t29-dualpin2-dualpin-0008 sweep='i2c'
+06:50:06 RUN_DONE p2t29-dualpin2-dualpin-0008 verdict=aborted
+06:50:06 RUN_START p2t29-dualpin2-dualpin-0009 sweep='ae350_triple'
+06:51:37 RUN_DONE p2t29-dualpin2-dualpin-0009 verdict=ok
+06:51:37 BATCH_SKIPPED batch=p2t29-dualpin2 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p2t29-dualpin2.rows.jsonl
+BATCH_COMPLETE p2t29-dualpin2 runs=10 ok=8 diff=0 aborted=2

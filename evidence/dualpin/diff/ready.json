@@ -1,0 +1,18 @@
+{
+ "options": [
+  "ready"
+ ],
+ "vendor": {
+  "180,108": [
+   2488
+  ]
+ },
+ "packer": {
+  "180,108": [
+   2488
+  ]
+ },
+ "symdiff": {},
+ "level": "E1",
+ "verdict": "ok"
+}

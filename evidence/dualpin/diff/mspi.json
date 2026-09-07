@@ -1,0 +1,18 @@
+{
+ "options": [
+  "mspi"
+ ],
+ "vendor": {
+  "180,108": [
+   2492
+  ]
+ },
+ "packer": {
+  "180,108": [
+   2492
+  ]
+ },
+ "symdiff": {},
+ "level": "E1",
+ "verdict": "ok"
+}

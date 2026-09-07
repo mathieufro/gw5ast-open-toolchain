@@ -1,0 +1,260 @@
+{
+ "jtag": {
+  "options": [
+   "jtag"
+  ],
+  "vendor": {
+   "180,108": [
+    2489
+   ]
+  },
+  "packer": {
+   "180,108": [
+    2489
+   ]
+  },
+  "symdiff": {},
+  "level": "E1",
+  "verdict": "ok"
+ },
+ "sspi": {
+  "options": [
+   "sspi"
+  ],
+  "vendor": {
+   "166,108": [
+    300,
+    410,
+    411,
+    415,
+    758,
+    806,
+    807,
+    810,
+    872,
+    873,
+    874,
+    924,
+    926,
+    929,
+    930,
+    934
+   ],
+   "167,108": [
+    1034,
+    1035,
+    1160,
+    1163
+   ],
+   "180,108": [
+    2491
+   ]
+  },
+  "packer": {
+   "180,108": [
+    2491
+   ]
+  },
+  "symdiff": {
+   "166,108": [
+    300,
+    410,
+    411,
+    415,
+    758,
+    806,
+    807,
+    810,
+    872,
+    873,
+    874,
+    924,
+    926,
+    929,
+    930,
+    934
+   ],
+   "167,108": [
+    1034,
+    1035,
+    1160,
+    1163
+   ]
+  },
+  "level": "E1",
+  "verdict": "ok"
+ },
+ "mspi": {
+  "options": [
+   "mspi"
+  ],
+  "vendor": {
+   "180,108": [
+    2492
+   ]
+  },
+  "packer": {
+   "180,108": [
+    2492
+   ]
+  },
+  "symdiff": {},
+  "level": "E1",
+  "verdict": "ok"
+ },
+ "ready": {
+  "options": [
+   "ready"
+  ],
+  "vendor": {
+   "180,108": [
+    2488
+   ]
+  },
+  "packer": {
+   "180,108": [
+    2488
+   ]
+  },
+  "symdiff": {},
+  "level": "E1",
+  "verdict": "ok"
+ },
+ "done": {
+  "options": [
+   "done"
+  ],
+  "vendor": {
+   "180,108": [
+    2486
+   ]
+  },
+  "packer": {
+   "180,108": [
+    2486
+   ]
+  },
+  "symdiff": {},
+  "level": "E1",
+  "verdict": "ok"
+ },
+ "reconfign": {
+  "options": [
+   "reconfign"
+  ],
+  "vendor": {},
+  "packer": {},
+  "symdiff": {},
+  "level": "E1",
+  "verdict": "refused",
+  "notes": "vendor refused: configuration that does not support RECONFIG_N (set_option -use_reconfign_as_gpio 1)"
+ },
+ "cpu": {
+  "options": [
+   "cpu"
+  ],
+  "vendor": {},
+  "packer": {
+   "180,108": [
+    2502,
+    2503
+   ]
+  },
+  "symdiff": {
+   "180,108": [
+    2502,
+    2503
+   ]
+  },
+  "level": "E1",
+  "verdict": "ok"
+ },
+ "i2c": {
+  "options": [
+   "i2c"
+  ],
+  "vendor": {},
+  "packer": {},
+  "symdiff": {},
+  "level": "E1",
+  "verdict": "refused",
+  "notes": "open flow refused: i2c_as_gpio has conflicting settings in nexpnr and gowin_pack."
+ },
+ "ae350_triple": {
+  "options": [
+   "sspi",
+   "mspi",
+   "cpu"
+  ],
+  "vendor": {
+   "166,108": [
+    300,
+    410,
+    411,
+    415,
+    758,
+    806,
+    807,
+    810,
+    872,
+    873,
+    874,
+    924,
+    926,
+    929,
+    930,
+    934
+   ],
+   "167,108": [
+    1034,
+    1035,
+    1160,
+    1163
+   ],
+   "180,108": [
+    2491,
+    2492
+   ]
+  },
+  "packer": {
+   "180,108": [
+    2491,
+    2492,
+    2502,
+    2503
+   ]
+  },
+  "symdiff": {
+   "166,108": [
+    300,
+    410,
+    411,
+    415,
+    758,
+    806,
+    807,
+    810,
+    872,
+    873,
+    874,
+    924,
+    926,
+    929,
+    930,
+    934
+   ],
+   "167,108": [
+    1034,
+    1035,
+    1160,
+    1163
+   ],
+   "180,108": [
+    2502,
+    2503
+   ]
+  },
+  "level": "E1",
+  "verdict": "ok"
+ }
+}

@@ -1,0 +1,12 @@
+06:56:10 BATCH_START batch=p2t38-pll-l shape=ae350_soc level=E1 pid=77292 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-pll-l
+06:56:49 BATCH_HEAD selftest --inject-one-fuse: ok
+06:57:02 BATCH_HEAD selftest --unpacker-completeness: ok
+06:57:02 BATCH_HEAD selftest --probe-mask-classes: ok
+06:57:03 BATCH_HEAD gw_sh pre-flight: ok
+06:57:03 BATCH_CHIPDB batch=p2t38-pll-l sha256=85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010
+06:57:03 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+06:57:03 BATCH_RESUME batch=p2t38-pll-l planned=1 already_terminal=0
+06:57:03 RUN_START p2t38-pll-l-ae350_soc-0000 sweep=None
+06:58:40 RUN_DONE p2t38-pll-l-ae350_soc-0000 verdict=ok
+06:58:40 BATCH_SKIPPED batch=p2t38-pll-l n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p2t38-pll-l.rows.jsonl
+BATCH_COMPLETE p2t38-pll-l runs=1 ok=1 diff=0 aborted=0

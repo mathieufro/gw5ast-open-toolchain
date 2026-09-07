@@ -1,0 +1,18 @@
+{
+ "options": [
+  "jtag"
+ ],
+ "vendor": {
+  "180,108": [
+   2489
+  ]
+ },
+ "packer": {
+  "180,108": [
+   2489
+  ]
+ },
+ "symdiff": {},
+ "level": "E1",
+ "verdict": "ok"
+}

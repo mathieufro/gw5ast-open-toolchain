@@ -1,0 +1,33 @@
+BATCH_START batch=p2t29-dualpin2 shape=dualpin level=E1 pid=49925 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/dualpin
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p2t29-dualpin2 sha256=85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 10 run ids)
+BATCH_RESUME batch=p2t29-dualpin2 planned=10 already_terminal=0
+RUN_START p2t29-dualpin2-dualpin-0000 sweep='none'
+RUN_DONE p2t29-dualpin2-dualpin-0000 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0001 sweep='jtag'
+RUN_DONE p2t29-dualpin2-dualpin-0001 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0002 sweep='sspi'
+RUN_DONE p2t29-dualpin2-dualpin-0002 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0003 sweep='mspi'
+RUN_DONE p2t29-dualpin2-dualpin-0003 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0004 sweep='ready'
+RUN_DONE p2t29-dualpin2-dualpin-0004 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0005 sweep='done'
+RUN_DONE p2t29-dualpin2-dualpin-0005 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0006 sweep='reconfign'
+RUN_DONE p2t29-dualpin2-dualpin-0006 verdict=aborted
+RUN_START p2t29-dualpin2-dualpin-0007 sweep='cpu'
+RUN_DONE p2t29-dualpin2-dualpin-0007 verdict=ok
+RUN_START p2t29-dualpin2-dualpin-0008 sweep='i2c'
+RUN_DONE p2t29-dualpin2-dualpin-0008 verdict=aborted
+RUN_START p2t29-dualpin2-dualpin-0009 sweep='ae350_triple'
+RUN_DONE p2t29-dualpin2-dualpin-0009 verdict=ok
+BATCH_SKIPPED batch=p2t29-dualpin2 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p2t29-dualpin2.rows.jsonl
+BATCH_COMPLETE p2t29-dualpin2 runs=10 ok=8 diff=0 aborted=2

@@ -1,0 +1,2 @@
+09:00:16 WATCHDOG_ARMED batch=p2t38-ddr-clk stall=7min poll=140s (independent process)
+09:02:45 WATCHDOG_COMPLETE batch=p2t38-ddr-clk saw BATCH_COMPLETE (clean exit)

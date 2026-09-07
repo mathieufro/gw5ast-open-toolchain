@@ -1,0 +1,2 @@
+08:37:46 WATCHDOG_ARMED batch=p2t29-dualpin2 stall=6min poll=120s (independent process)
+08:51:38 WATCHDOG_COMPLETE batch=p2t29-dualpin2 saw BATCH_COMPLETE (clean exit)
