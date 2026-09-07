@@ -37,3 +37,14 @@ bin GW5AST-138C 929efdf8fa276a4d5eb82780c0361e5f9ac63c4c9d816d192fad145681fb139d
 std GW5AST-138C faa33ef430b528dfb4e9c7f689da2f669815754b56ded389caaa5da9afc1a36c 819816 1.9.12.03
 std GW5AST-138C-run2 faa33ef430b528dfb4e9c7f689da2f669815754b56ded389caaa5da9afc1a36c 819816 1.9.12.03
 bin GW5AST-138C d700cade55494c427b563ee8e5e6e4704a83befca993f1de87028612ae48846c 32909055 1.9.12.03
+#
+# P2.T07/T08 (2026-09-07): fse_create_ae350 on ae350/create-138c. 25A, 60B and the
+# pre-GW5 control are byte-identical to their baselines; 138C moves by an additive
+# delta only (extra_func +ae350/+ae350_config, nodes +698). See evidence/ae350/portmap-138c.md.
+std GW5A-25A    60f1ba427f964feab3048f5dca82dc075acf9374a456476919202626d1335564 321512 1.9.12.03
+std GW5AT-60B   615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8 322028 1.9.12.03
+std GW1N-9C     6d07813c08119cc7926ce747a802639b20204fccc510afd45d5fe9a1ee032e2e 191840 1.9.12.03
+std GW5AST-138C b2df200a0412ef4059968aba4703a93585833fa1ed7a6ef94f401e44bc565f36 833336 1.9.12.03
+# control builds at the epic/gw5ast138c tip, same shell, for the guard above
+std GW1N-9C-control     6d07813c08119cc7926ce747a802639b20204fccc510afd45d5fe9a1ee032e2e 191840 1.9.12.03
+std GW5AST-138C-control 100ffd8e9d3901da3701849788c96cb4f027639b5e6f93c3c7e4c55d1ed69dc5 821444 1.9.12.03
