@@ -166,13 +166,59 @@ def test_check_timing_l0_uses_max_field_end_to_end(tmp_path):
     assert rc != 0
 
 
-@pytest.mark.parametrize("cls", ["io", "dsp"])
+@pytest.mark.parametrize("cls", ["dsp"])
 def test_check_timing_l0_skips_unpopulated_classes(tmp_path, cls):
     chipdb = write_timing(tmp_path, synthetic_timing())
     sdf = write_sdf(tmp_path, [1.25] * 10)
     rc, out, err = run_tool("--classes", cls, "--sdf", sdf, "--chipdb", chipdb)
     assert rc == 0, out + err
     assert out == f"L0 skipped: class {cls} has no arcs yet\n"
+
+
+def test_io_class_is_live_and_reports_vendor_arcs_as_unmapped(tmp_path):
+    """`io` is a measured zero-arc class, not an unimplemented one (P3.T32).
+
+    The class must run rather than skip, keep the `V12a` stdout contract, quote
+    the no-data measurement, and list every vendor IO/IOLOGIC arc as unmapped
+    -- never compare one against an invented model.
+    """
+    chipdb = write_timing(tmp_path, synthetic_timing())
+    sdf_path = tmp_path / "io.sdf"
+    sdf_path.write_text(
+        "(DELAYFILE\n"
+        '  (SDFVERSION "3.0")\n'
+        f"  {CONDITION_LINE}\n"
+        "  (TIMESCALE 1ns)\n"
+        '  (CELL (CELLTYPE "IBUF") (INSTANCE clk_ibuf)\n'
+        "    (DELAY (ABSOLUTE (IOPATH I O (0.608:0.613:0.619))))\n"
+        "  )\n"
+        '  (CELL (CELLTYPE "ODDR") (INSTANCE dut)\n'
+        "    (DELAY (ABSOLUTE (IOPATH CLK Q0 (1.160:1.160:1.160))))\n"
+        "  )\n"
+        '  (CELL (CELLTYPE "LUT4") (INSTANCE lut_a)\n'
+        "    (DELAY (ABSOLUTE (IOPATH I0 F (1.0:2.0:3.0))))\n"
+        "  )\n"
+        ")\n"
+    )
+    rc, out, err = run_tool(
+        "--classes", "io", "--sdf", str(sdf_path), "--chipdb", chipdb)
+    assert rc == 0, out + err
+    lines = out.splitlines()
+    assert lines[0] == "L0 ok: 0/0 arcs within ±10%, 0 exceptions listed"
+    assert "BY MEASUREMENT (P3.T32)" in out
+    assert "timing-io-iologic.md" in out
+    # the two IO cells are unmapped; the LUT4 is not an IO cell and is filtered
+    assert "unmapped: 2 SDF arcs" in out
+    assert "LUT4" not in out
+
+
+def test_io_class_inventory_publishes_no_group(tmp_path):
+    """No `io`/`iregoreg` group is required, and none is present."""
+    chipdb = write_timing(tmp_path, synthetic_timing())
+    rc, out, err = run_tool("--classes", "io", "--chipdb", chipdb)
+    assert rc == 0, out + err
+    assert "io       -" in out and "iregoreg -" in out
+    assert "L0 INVENTORY ok: 0/0 required groups populated" in out
 
 
 # --------------------------------------------------------------------------

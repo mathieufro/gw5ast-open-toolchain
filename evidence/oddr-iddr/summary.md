@@ -375,3 +375,47 @@ fabric-wire -> `Q_i` map, which the **IDES** row (`P3.T14`) decodes for free
 from bitstreams it is already paying for, over three widths and ten pads.
 The fix belongs there, with that evidence. `test_oddr_iddr_rows_e1` carries
 the strict `xfail` that fails the day the mapping is corrected.
+
+
+## L0-IO-ARCS
+
+`P3.T32` / `P3.T33`. **No IO or IOLOGIC timing arc is emitted, by measurement,
+not by omission.** `apycula/tm_parser.parse_io` (`.tm` offset `0x3278`) and
+`parse_iregoreg` (`0x306c`) return the `NoData` sentinel, so no group reaches
+the chipdb and `create_timing_info` installs no IO/IOLOGIC cell arc; its two
+new branches carry the same marker so a database that ever starts publishing
+the groups is reported instead of silently ignored.
+
+The reason, in two measurements (`evidence/_runs/p3-tm-io.log`,
+`apicula/doc/timing-io-iologic.md`):
+
+1. Both blocks are **inherited GW2A bytes** -- byte-identical across GW2A-18,
+   GW2A-55, GW2AR-18, GW5A-25A, GW5AT-60B and GW5AST-138C. Chunk 0 differs from
+   GW2A-18 chunk 0 in 81 bytes, every one at or after `0x3738`: only the
+   `iodelay`/`wire`/`fanout`/`glbsrc`/`hclk` tail was re-characterised for GW5A.
+2. The numbers **contradict the vendor's own 138C SDF**. `OBUF I->O` is
+   2.528/2.737 ns against a whole-block maximum of 0.819 ns, so no scaling of
+   the `io` block yields an output-buffer arc; and no assignment of the three
+   clock-to-out candidate pairs (1.019/1.213, 0.945/1.289, 0.635/0.831 ns) to
+   `ODDR CLK->Q` 1.160/1.146 or `IDDR CLK->Q0/Q1` 0.572/0.486 lands inside the
+   ±10 % L0 band.
+
+`V12a --classes io` therefore reports every vendor IO/IOLOGIC arc as *unmapped*
+rather than comparing it against an invented model
+(`tools/check_timing_l0.py`, `IO_NO_ARCS_NOTE`). Against the `p3t11/iddr-pair`
+SDF:
+
+```
+L0 ok: 0/0 arcs within ±10%, 0 exceptions listed
+(VOLTAGE 0.93:0.90:0.87) (PROCESS "best=0.65: nom=1.0: worst=1.8") (TEMPERATURE 85:25:0)
+grade: C1/I0 -- derived (1.25 x C2/I1, P0.T35 -- NOT measured)
+unmapped: 12 SDF arcs have no nextpnr model arc: IDDR/dut_iddr CLK->Q0,
+IDDR/dut_iddr CLK->Q1, IDDRC/dut_iddrc CLK->Q0, IDDRC/dut_iddrc CLK->Q1,
+IDDRC/dut_iddrc CLEAR->Q0, IDDRC/dut_iddrc CLEAR->Q1, IBUF/clk_ibuf I->O,
+IBUF/resetn_ibuf I->O, IBUF/din_a_ibuf I->O, IBUF/din_b_ibuf I->O ...
+```
+
+This is **not** a claim that the 138C has no IO timing anywhere: `read_tm`
+stops before chunk 3, the device-specific payload. Whether that payload carries
+a real IO table is Phase 6's question (`S17b`); this phase must not widen the
+break to find out.

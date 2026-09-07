@@ -40,10 +40,15 @@ installs no PLL cell arc, and the vendor's own SDF gives every
 `CLKIN -> CLKOUTn` IOPATH as `0.000`. The `pll` band therefore asserts exactly
 that: every vendor PLL arc is compared against a model delay of `0.0`, so a
 future vendor release that starts publishing a non-zero PLL delay fails this
-check loudly instead of passing unnoticed. `io` and `dsp` still have no cells
-on this die until Phases 3 and 4, so those classes print
-`L0 skipped: class <c> has no arcs yet` and exit 0 -- the chipdb's `iodelay`
-group is not the `io` class, whose cells do not exist until Phase 3.
+check loudly instead of passing unnoticed. **io** went live in Phase 3
+(`P3.T32`) and is a *measured* zero-arc class for the same kind of reason as
+`pll`: the `.tm` IO blocks are inherited GW2A bytes the vendor's own 138C SDF
+contradicts, so nothing is published and every vendor IO/IOLOGIC arc is
+reported as **unmapped** rather than compared against an invented model
+(`IO_NO_ARCS_NOTE`; `apicula/doc/timing-io-iologic.md`). The chipdb's
+`iodelay` group is not part of the `io` class -- it is the IODELAY pip model
+Phase 0/1 already emits. `dsp` still has no cells until Phase 4 and prints
+`L0 skipped: class dsp has no arcs yet`, exit 0.
 `--classes all` is Phase 6's union re-assertion and aggregates whatever classes
 are live.
 """
@@ -79,13 +84,22 @@ CFU_GROUPS = {
 PLL_GROUPS = {
     "pll": False,   # `parse_pll` publishes nothing -- see PLL_NO_ARCS_NOTE
 }
+# `io` became live in Phase 3 (`P3.T32`/`P3.T33`) and is, like `pll`, a
+# *measured* zero-arc class: `parse_io` (`.tm` 0x3278) and `parse_iregoreg`
+# (0x306c) publish nothing, so neither group is required and neither will be
+# present. `iodelay` is not in the class -- it is the IODELAY pip model
+# Phase 0/1 already emits, not an IO cell arc.
+IO_GROUPS = {
+    "io": False,        # IO buffers -- no group published, see IO_NO_ARCS_NOTE
+    "iregoreg": False,  # IREG/OREG  -- idem
+}
 CLASS_GROUPS = {
     "cfu": CFU_GROUPS,
     "pll": PLL_GROUPS,
-    "io": {},   # `iodelay` belongs to the IOLOGIC work of Phase 3, not to Phase 0
+    "io": IO_GROUPS,
     "dsp": {},
 }
-LIVE_CLASSES = ("cfu", "pll")    # populated on this die today (`D60`, `P1.T33`)
+LIVE_CLASSES = ("cfu", "pll", "io")   # populated on this die today (`D60`, `P1.T33`, `P3.T32`)
 ALL_CLASSES = ("cfu", "pll", "io", "dsp")
 
 # Which SDF cell types belong to each class. `None` == every cell (the `cfu`
@@ -93,7 +107,10 @@ ALL_CLASSES = ("cfu", "pll", "io", "dsp")
 CLASS_SDF_CELLS = {
     "cfu": None,
     "pll": re.compile(r"^(PLL|PLLA|rPLL|RPLLA|PLLVR)$"),
-    "io": None,
+    "io": re.compile(
+        r"^(IBUF|OBUF|TBUF|IOBUF|ELVDS_\w+|TLVDS_\w+|MIPI_\w+|"
+        r"IDDRC?|ODDRC?|IDES\d+|OSER\d+|IVIDEO|OVIDEO|IEM|IODELAY\w*|"
+        r"IODELAYA?|DQCE|DQS)$"),
     "dsp": None,
 }
 # Classes whose model delay for an arc nextpnr does not install is `0.0` rather
@@ -107,6 +124,18 @@ PLL_NO_ARCS_NOTE = (
     "gives the Arora-V PLL CLKOUT0..6/CLKFBOUT/LOCK, and the vendor SDF emits every "
     "CLKIN->CLKOUTn IOPATH as 0.000. DS1239E Table 3-18 publishes no CLKIN->CLKOUT "
     "delay at all."
+)
+
+IO_NO_ARCS_NOTE = (
+    "io: 0 chipdb arcs and 0 nextpnr arcs BY MEASUREMENT (P3.T32) -- the .tm "
+    "blocks at 0x3278 (IO buffers) and 0x306c (IREG/OREG) are byte-identical to "
+    "GW2A-18/-55/GW2AR-18, i.e. inherited and never characterised for GW5A, and "
+    "the vendor's own 138C SDF contradicts them: OBUF I->O is 2.528/2.737 ns "
+    "against a whole-block maximum of 0.819 ns, and no clock-to-out candidate "
+    "lands within +/-10% of ODDR CLK->Q 1.160/1.146 or IDDR CLK->Q0/Q1 "
+    "0.572/0.486. Every vendor IO/IOLOGIC arc below is therefore reported as "
+    "unmapped rather than compared against an invented model. See "
+    "apicula/doc/timing-io-iologic.md."
 )
 
 # C1/I0 = 1.25 x C2/I1 by construction (P0.T35). The band is a float-round-trip
@@ -382,6 +411,8 @@ def band_mode(timing, sdf_path, grade, out, classes=("cfu",)):
           file=out)
     if any(c in ZERO_MODEL_CLASSES for c in classes):
         print(PLL_NO_ARCS_NOTE, file=out)
+    if "io" in classes:
+        print(IO_NO_ARCS_NOTE, file=out)
     for cell, inst, frm, to, m, ns, dev in exceptions:
         print(f"exception: {cell}/{inst} {frm}->{to} model={m:.3f}ns "
               f"sdf={ns:.3f}ns dev={dev * 100:+.1f}%", file=out)
@@ -412,6 +443,8 @@ def inventory_mode(timing, classes, chipdb_path, out):
         groups = CLASS_GROUPS[cls]
         if cls in ZERO_MODEL_CLASSES:
             print(f"{cls:5} {PLL_NO_ARCS_NOTE}", file=out)
+        if cls == "io":
+            print(f"{cls:5} {IO_NO_ARCS_NOTE}", file=out)
         per_group = class_arcs(timing, groups)
         for group, required in groups.items():
             per_grade = per_group.get(group, {})

@@ -1,0 +1,38 @@
+P3.T32 -- IO / IOLOGIC timing groups of GW5AST-138C.tm
+tool: apycula.tm_parser (io_block / iregoreg_block), GOWINHOME = the selected Gowin install
+
+block shapes (both determinate, both reproduce on GW1N/GW2A/GW5A):
+  iregoreg  0x306c  524 B   2 paths, 3 reserved words, 30 paths (4 floats each)
+  io        0x3278 1200 B   5 records of 240 B, one populated path at record +0x8
+
+sha256[:12] per block, chunks 0 and 1:
+  GW5AST-138C  iregoreg 05b78b8765ef   io 548846ce8c8b
+  GW5A-25A     iregoreg 05b78b8765ef   io 548846ce8c8b
+  GW5AT-60B    iregoreg 05b78b8765ef   io 548846ce8c8b
+  GW2A-18      iregoreg 05b78b8765ef   io 548846ce8c8b
+  GW2A-55      iregoreg 05b78b8765ef   io 548846ce8c8b
+  GW2AR-18     iregoreg 05b78b8765ef   io 548846ce8c8b
+  GW1N-9       iregoreg 79114382e19d   io 89d0043aab4f
+GW5AST-138C chunk 0 vs GW2A-18 chunk 0: 81 bytes differ, all at offset >= 0x3738
+  (only the iodelay/wire/fanout/glbsrc/hclk tail was re-characterised for GW5A)
+chunk 2 = chunk 0 x 0.86 (P0.T36), so it carries no independent IO measurement
+
+decoded values, chunk 0 (ns, max of each 4-float path):
+  io        path_0..4  0.6875  0.5865  0.5385  0.8190  0.6630
+  iregoreg  clock-to-out candidates  1.019/1.213, 0.945/1.289, 0.635/0.831
+            setup/hold candidates    0.069..0.261 ; four 1.980 entries
+
+vendor SDF, -device_version C, default (worst-case) condition, max field
+(p3t11/{oddr,iddr}-pair, p3t12/p3-oddr-iddr-io_basic-*):
+  IBUF  I->O       0.619
+  OBUF  I->O       2.528, 2.737     <- larger than the whole io block's maximum
+  ODDR  CLK->Q0/Q1 1.160, 1.146
+  IDDR  CLK->Q0/Q1 0.572, 0.486
+  IDDRC CLEAR->Q0/Q1 0.748, 0.565
+  ODDRC CLEAR->Q0/Q1 1.092, 1.160
+
+verdict: no-data: parse_io      -- inherited GW2A block; no value within 3x of OBUF I->O
+verdict: no-data: parse_iregoreg -- inherited GW2A block; no clock-to-out assignment
+                                    inside the +/-10% L0 band of ODDR/IDDR CLK->Q
+Both parsers return the NoData sentinel with these reasons; nothing reaches the
+chipdb. Chunks 3+ (device-specific payload) are Phase 6's question, not this one.
