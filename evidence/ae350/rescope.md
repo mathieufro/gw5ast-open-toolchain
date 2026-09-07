@@ -54,10 +54,16 @@ untouched; the clocking ledger closed at 269/290 and is not drawn on.
 | `P2.T09`-`P2.T13`, `P2.T15` bel / packer / unpacker | Unchanged, but `P2.T09`'s port list now comes from `wire-map-138c.json` instead of being discovered. |
 | **`P2.T37'`** validate the table against one vendor bitstream | **VOID, already done, 0 further runs.** The validation `P2.T37'` reserved 2 runs for is in `wire-map-138c.md` §4: 437 of 466 checked output bits name a wire whose pip really changes between `p2t26-tilewires` and `p2t26-baseline`. Nothing is left to buy. `discovered-wires.json` is superseded by `wire-map-138c.json`. |
 | **`P2.T14`/`P2.T16`-`P2.T17`** (whatever remained of `EC5` discovery scaffolding) | Fold into `P2.T08`; there is no campaign to scaffold. |
-| **NEW `P2.T08b`** the unmapped input bits | Input bits 274-415 have no record: the `Ins` table holds 257 records. Either the AE350 leaves them unbound in fabric (they are `VCC`/`GND`-tied in the golden netlist for most of them — check `port-inventory.md`'s `tied_to` column first, 0 runs) or a second table holds them. Cheap, and it is the only open class. |
+| **NEW `P2.T08b`** the unmapped input bits | **DONE, 0 runs.** Neither guess was right: the bits are not unbound and there is no second table. `0x8314` is a *third* block's table — five of its columns show no changed bit in run `p2t26-tilewires`, which drives all 410 fabric-driven input bits from their own flops. The AE350's input table is at `0x91ea`, row 0 columns 159-180, the same tiles the block drives, over the disjoint `F`/`Q`/`OF` wire class. `read_ae350_soc_ins` now locates it by that geometry instead of addressing a base. 139 of the 142 map; 3 resist. `wire-map-138c.md` §6. |
 
 Run budget after `P2.T08a`: **2 of 8 spent, 6 remaining** — the 2 reserved for
-`P2.T37'` are released.
+`P2.T37'` are released. `P2.T08b` spends none of them.
+
+`P2.T08b` also invalidates one assumption `P2.T07` inherited: the block does not
+read one half of its band and drive the other. It reads and drives the same
+tiles, columns 159-180, so `fse_create_ae350()` must not anchor or bound the bel
+on a split band. The `(0, 145)` anchor `P2.T26` recommends still stands as the
+first column of the measured footprint, but the *port* columns are 159-180.
 
 ## Stop rule
 
@@ -67,4 +73,4 @@ closes at `E0` on the reduced port set of option 3 — the six clocks, the two
 resets and the `Emb_TCM` subset — with the remaining buses named as residual.
 An expired box delivers partial evidence, never a blank row.
 
-RESCOPE-VERDICT (rev 2, after P2.T08a): 2 tasks void (P2.T37 and its replacement P2.T37'), 1 re-targeted and reduced to a table read (P2.T08), 1 amended (P2.T07 anchors at row 0 col 145), 1 new cheap task (P2.T08b, the 142 unmapped input bits); all others stand. Runs used 2 of 8, 6 remaining.
+RESCOPE-VERDICT (rev 3, after P2.T08b): 2 tasks void (P2.T37 and its replacement P2.T37'), 1 re-targeted and reduced to a table read (P2.T08), 1 amended (P2.T07 anchors at row 0 col 145, port columns 159-180, no split band), 1 new cheap task closed (P2.T08b: the input table is at 0x91ea, 139 of the 142 mapped, 3 resist); all others stand. Runs used 2 of 8, 6 remaining.

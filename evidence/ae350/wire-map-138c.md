@@ -1,9 +1,10 @@
 # `AE350_SOC` fabric wire map — GW5AST-138C
 
-`P2.T08a`. Companion data file: `wire-map-138c.json` (the file
-`fse_create_ae350()` reads). Status **PARTIAL**: the output half is
-**MEASURED**, the input half is **DAT-DERIVED**. Gowin IDE Standard
-1.9.12.03; runs `p2t26-tilewires` and `p2t26-baseline`, no new vendor run.
+`P2.T08a`, extended by `P2.T08b` (§6). Companion data file:
+`wire-map-138c.json` (the file `fse_create_ae350()` reads). Status
+**PARTIAL**: the output half is **MEASURED**, the input half is
+**DAT-DERIVED** on a **MEASURED** band. Gowin IDE Standard 1.9.12.03; runs
+`p2t26-tilewires` and `p2t26-baseline`, no new vendor run.
 
 ## 1. The parser defect, and what it actually was
 
@@ -42,14 +43,14 @@ the point.
 | table | shipped base (words) | base used | slots | live | bits of that direction |
 |---|---|---|---|---|---|
 | `Ae350SocOuts` | `0x8bb0` | `0x8bb1` | 518 | 492 | 495 |
-| `Ae350SocIns` | `0x86a0` (stale) | `0x8314` | 433 | 415 | 416 |
+| `Ae350SocIns` | `0x86a0` (stale) | `0x91ea` (§6) | 433 | 415 | 416 |
 
 The shipped `Outs` base is one word short of the record boundary. The shipped
 `Ins` base is stale the way `CibFabricNode`'s was: it points at a *different*
-block's table, in columns 51-139. The AE350's own input table is at `0x8314`.
-`AE350_SOC_INS_BASES` tries the candidates in order and keeps the one whose
-last tapped column is immediately before a column `Ae350SocOuts` drives — the
-block's own geometry, not a hard-coded number.
+block's table, in columns 51-139. `P2.T08a` replaced it with `0x8314`;
+`P2.T08b` shows `0x8314` is another block's table too, and that the AE350's own
+input table is at `0x91ea` — see §6. The base is no longer addressed at all:
+`Datfile.read_ae350_soc_ins` *locates* the table from the block's geometry.
 
 ## 3. What the tables say
 
@@ -82,7 +83,8 @@ ports in `primitive.xml` declaration order and each bus LSB first. A
 | inputs | 416 | 398 | 18 | **256** | 142 |
 | outputs | 495 | 469 | 26 | **466** | 3 |
 
-**Slots that do not fit** (`slots_that_do_not_fit` in the JSON):
+**Slots that do not fit** (`slots_that_do_not_fit` in the JSON), as read by
+`P2.T08a`; the `Ins` row is superseded by §6:
 
 - `Ae350SocOuts`: 3 — columns 22, 23 and 87. Columns 88, 89, 95 and 96 *do*
   appear in the presence diff (the clock spine), so these are plausible and
@@ -134,3 +136,59 @@ each needs its own anchor before Phase 3 or 5b can use it. No consumer reads
 any of them today (`chipdb.py` references none), so nothing regresses.
 
 WIRE-MAP-VERDICT: 867/911 port bits carry a (row, col, wire); 722 of those sit in the measured footprint; outputs 437/466 cross-checked MEASURED against the run-1 bitstream; input bits 274-415 unmapped (the Ins table holds 257 records).
+
+## 6. `P2.T08b` — where the input tail really is
+
+`P2.T08a` left input bits 274-415 unmapped: read at `0x8314` the table runs out
+of the AE350 after 256 records and the ordinal rule walks into a neighbouring
+block's, in columns 109-115. Two measurements say `0x8314` was never the
+AE350's input table either:
+
+- run `p2t26-tilewires` drives **all 410 fabric-driven input bits from their own
+  flops** and its post-PnR netlist keeps all 149 ports, so the block has at
+  least 410 taps. 256 is not enough for the design the vendor itself routes.
+- of the eleven columns `0x8314` names, **145-149 show no changed bit at all**
+  in die row 0 of that run (`moved.json` row 0 covers columns 150-181). A tap
+  the design drives cannot sit in a tile the bitstream does not touch.
+
+Sweeping every base in the 5-series table block for a 433-slot window whose live
+records are *all* row-0 tap wires (`F`/`Q`/`OF` — what a tile drives, and so the
+only thing a block input can read) inside the band `Ae350SocOuts` drives finds
+**exactly one** region, at `0x91ea`: 415 live records, every one of them a
+distinct tap, in die row 0 columns **159-180**. Every one of those columns is in
+the run's row-0 changed set.
+
+So the earlier "inputs read the left of the band, outputs drive the right" is
+wrong. **The block reads and drives the same tiles**, over disjoint wire
+classes: it taps `F`/`Q`/`OF` and drives `A`-`D`, `CLK`, `CE`, `LSR` in columns
+159-180. That is also the only reading with room for the port count — eleven
+columns hold 264 taps, against 416 input bits; twenty-two hold 528.
+
+The window can slide within the run without breaking any of those properties,
+which would rotate every bit's wire. The block's own layout fixes the phase: the
+table walks the band one whole column at a time, so the true base is the one
+whose first record opens a column. `0x91ea` is the only candidate that does
+(`col 166`, wire `Q0`, a full 24-tap column); every other scores a fragment.
+
+| | before (`0x8314`) | after (`0x91ea`) |
+|---|---|---|
+| input bits with a record in the AE350's own band | 256 | **398** |
+| of the 142 bits `P2.T08a` could not map | 0 | **139** |
+| input records in another block's columns | 142 | **0** |
+
+**What still resists.** Three of the 142 land on a sentinel slot and stay
+unmapped: `DDR_HRDATA[12]` (bit 276), `GPIO_IN[25]` (bit 376) and `EMA[1]`
+(bit 409). They are part of a wider residual: 18 sentinels fall inside the bit
+range and 17 live records sit past the last input bit. Single scattered holes in
+the middle of `ROM_HRDATA`, `EXTS_HRDATA` and `GP_INT` are not plausible as
+genuinely untapped bits, so the phase inside the band is provisional even though
+the direction, the row and the band are not. The likeliest explanation is that
+the vendor splits this port map across numbered tables the way it splits
+`MDdrDllIns1`-`7`; a per-bit trace of the run-1 bitstream would settle it. No
+vendor run was spent: this is a `.dat` result.
+
+WIRE-MAP-T08B-VERDICT: input tail sourced from the `.dat`, not from a campaign;
+`Ae350SocIns` relocated to base 0x91ea (row 0, columns 159-180) and located by
+geometry rather than addressed; 139 of the 142 previously unmapped bits now
+carry a tap, 3 resist (`DDR_HRDATA[12]`, `GPIO_IN[25]`, `EMA[1]`); band
+MEASURED against run `p2t26-tilewires`, per-bit phase DAT-DERIVED; 0 vendor runs.

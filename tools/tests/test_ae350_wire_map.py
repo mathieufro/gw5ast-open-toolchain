@@ -1,8 +1,8 @@
-"""Tests for the ``P2.T26`` re-scope artefacts.
+"""Tests for the ``P2.T26``/``P2.T08a``/``P2.T08b`` wire-map artefacts.
 
-One test per artefact: the wire map (``wire-map-138c.json`` and its prose
-companion) and the re-scoped task plan (``rescope.md``).  Each asserts the
-property the artefact exists to carry, not its wording.
+One test per property the artefacts exist to carry -- the arithmetic that fails
+if a bus is dropped, the geometry that fails if a table is misread, and the
+run-ledger identity -- never their wording.
 """
 
 import json
@@ -21,6 +21,8 @@ RESCOPE = EVIDENCE / "rescope.md"
 RUN_CAP = 8
 #: Port bit total, measured four independent ways by ``P2.T02``.
 PORT_BITS = 911
+#: Per direction, from the same inventory.
+DIRECTION_BITS = {"Ae350SocIns": 416, "Ae350SocOuts": 495}
 
 
 def load_map():
@@ -30,59 +32,88 @@ def load_map():
 
 
 def test_wire_map_accounts_for_every_port_bit():
-    """Resolved plus unresolved bits equal the measured port-bit total.
+    """Every declared bit of every declared bus appears exactly once."""
+    bits = load_map()["bits"]
+    assert sum(len(v) for v in bits.values()) == PORT_BITS
+    for table, expected in DIRECTION_BITS.items():
+        assert [b["bit"] for b in bits[table]] == list(range(expected))
 
-    The arithmetic identity that fails if a bus is silently dropped.
+
+def test_every_bit_is_either_placed_or_named_unbound():
+    """A bit with no record is an explicit verdict, never a silent gap."""
+    for table, entries in load_map()["bits"].items():
+        for entry in entries:
+            placed = entry["row"] is not None
+            assert placed == (entry["provenance"] != "UNBOUND"), entry
+            if placed:
+                assert entry["col"] is not None and entry["wire"]
+
+
+def test_input_taps_are_row_zero_wires_the_fabric_drives():
+    """An input tap can only be an F, Q or OF wire of the block's own row."""
+    for entry in load_map()["bits"]["Ae350SocIns"]:
+        if entry["provenance"] == "UNBOUND":
+            continue
+        assert entry["row"] == 0
+        assert re.fullmatch(r"(?:F|Q|OF)\d", entry["wire"]), entry
+
+
+def test_no_two_bits_share_one_fabric_wire():
+    """Two ports on one wire would be a misread table, not a port map."""
+    for table, entries in load_map()["bits"].items():
+        placed = [(e["row"], e["col"], e["wire"]) for e in entries
+                  if e["provenance"] != "UNBOUND"]
+        assert len(set(placed)) == len(placed), table
+
+
+def test_input_taps_sit_inside_the_measured_footprint():
+    """The map describes the block the vendor placed, not a neighbour of it.
+
+    ``P2.T08a`` read the input table at a base whose columns fall outside the
+    footprint; this is the assertion that caught it.
     """
     doc = load_map()
-    assert doc["ports"]["bits"] == PORT_BITS
-    assert doc["ports"]["input_bits"] + doc["ports"]["output_bits"] == PORT_BITS
-    assert doc["resolved_port_bits"] + doc["unresolved_port_bits"] == PORT_BITS
+    low, high = doc["footprint_cols"]
+    columns = {e["col"] for e in doc["bits"]["Ae350SocIns"]
+               if e["provenance"] != "UNBOUND"}
+    assert columns
+    assert min(columns) >= low and max(columns) <= high
 
 
-def test_wire_map_footprint_is_measured_and_cites_its_runs():
-    """The footprint is device data derived from named vendor runs."""
+def test_the_map_cites_runs_the_budget_ledger_records():
+    """Measured evidence names the vendor runs it came from."""
     doc = load_map()
-    assert doc["provenance"] == "MEASURED"
     assert doc["device"] == "GW5AST-138C"
-    runs = doc["runs"]
-    assert runs, "a MEASURED footprint must name the runs it came from"
-    ledger = BUDGET.read_text().splitlines()
-    recorded = {line.split("\t")[0] for line in ledger[1:] if line.strip()}
-    assert set(runs) <= recorded, f"runs {set(runs) - recorded} are not in {BUDGET}"
-    fp = doc["placement"]["fabric_footprint"]
-    assert fp["col_min"] < fp["col_max"]
-    assert fp["moved_bits_in_band"] <= fp["moved_bits_total"]
-    assert fp["fraction_in_band"] > 0.99, "a footprint that is not concentrated is not a footprint"
+    recorded = {line.split("\t")[0]
+                for line in BUDGET.read_text().splitlines()[1:] if line.strip()}
+    assert doc["runs"] and set(doc["runs"]) <= recorded
 
 
-def test_wire_map_names_its_unresolved_classes_and_carries_one_verdict():
-    """An incomplete map states what is missing; it is never a blank row."""
-    doc = load_map()
-    if doc["unresolved_port_bits"]:
-        assert doc["status"] == "PARTIAL"
-        assert doc["unresolved_classes"], "unresolved bits with no named class is a blank row"
-    verdicts = [ln for ln in MAP_MD.read_text().splitlines()
-                if ln.startswith("WIRE-MAP-VERDICT: ")]
+def test_each_artefact_carries_exactly_one_verdict_line():
+    """One artefact, one verdict; a second would be an unreduced review."""
+    text = MAP_MD.read_text()
+    for prefix in ("WIRE-MAP-VERDICT: ", "WIRE-MAP-T08B-VERDICT: "):
+        assert sum(ln.startswith(prefix) for ln in text.splitlines()) == 1, prefix
+    verdicts = [ln for ln in RESCOPE.read_text().splitlines()
+                if ln.startswith("RESCOPE-VERDICT")]
     assert len(verdicts) == 1
 
 
-def test_rescope_carries_one_verdict_and_a_budget_inside_the_cap():
-    """The re-scope states a single verdict and does not overrun the cap."""
-    text = RESCOPE.read_text()
-    verdicts = [ln for ln in text.splitlines() if ln.startswith("RESCOPE-VERDICT: ")]
-    assert len(verdicts) == 1, "exactly one RESCOPE-VERDICT line"
-    spent = int(re.search(r"Runs used (\d+) of (\d+)", verdicts[0]).group(1))
-    cap = int(re.search(r"Runs used (\d+) of (\d+)", verdicts[0]).group(2))
+def test_the_rescope_stays_inside_the_run_cap_the_ledger_records():
+    """The verdict's run count is the ledger's, and the ledger is inside the cap."""
+    verdict = next(ln for ln in RESCOPE.read_text().splitlines()
+                   if ln.startswith("RESCOPE-VERDICT"))
+    spent, cap = (int(g) for g in re.search(r"Runs used (\d+) of (\d+)", verdict).groups())
     assert cap == RUN_CAP
     rows = [ln.split("\t") for ln in BUDGET.read_text().splitlines()[1:] if ln.strip()]
-    assert sum(int(r[2]) for r in rows) == spent, "the verdict's run count must match the ledger"
+    assert sum(int(r[2]) for r in rows) == spent
     assert spent <= cap
 
 
 def test_rescope_disposes_of_every_task_the_reconciliation_routed_to_ec5():
     """`P2.T37` was the whole of the EC5 route; the re-scope must rule on it."""
     text = RESCOPE.read_text()
-    for task in ("P2.T07", "P2.T08", "P2.T37"):
-        assert re.search(rf"\|\s*\**`?{re.escape(task)}`?", text), f"{task} is not disposed of"
+    for task in ("P2.T07", "P2.T08", "P2.T08b", "P2.T37"):
+        row = rf"^\|[^|\n]*`{re.escape(task)}`"
+        assert re.search(row, text, re.M), f"{task} is not disposed of"
     assert "VOID" in text, "P2.T37's premise is superseded and the plan must say so"
