@@ -136,3 +136,45 @@ the `clocking_dcs` shape builds — so it refuses exactly what `P1.F2` closed at
 `CLKSEL`/`SELFORCE` fuses are pip fuses, so the equivalence check could not
 see the untraced part. Status is `refused:<named error>` (`A12`); `S9` stays
 NOT REACHED. The vendor half of each run completed and left its `.fs`.
+
+## `P1.F5` — the control side, traced; the refusal is lifted
+
+**Full artefact: `control-138c.md`.** The `refused:<named error>` status the
+section above records was correct on the evidence it had and is now
+**superseded by measurement**, not by weakening the guard: the twenty
+`SELFORCE`/`CLKSEL[0..3]` wires of the four DCS are traced, so
+`gowin_pack.reject_untraced_dcs_control` (`D30`) no longer has anything to
+refuse on this die.
+
+Three things had to be settled in order.
+
+1. **Is the control dynamic at all on Arora V?** Yes, and the vendor's own
+   documents say so — `UG306-1.0.9E` §3.2 Table 3-2 lists `CLKSEL` and
+   `SELFORCE` as `Input` ports with no tie-off note, the prose says `CLKOUT`
+   *"can be dynamically switched"*, `DCS_MODE`'s sixteen values are a
+   switching-mode enumeration, and Gowin's own `prim_sim.v`, shipped in a
+   **GW5AST138** reference design, samples `CLKSEL` on clock edges. So
+   `refused:not-a-dynamic-input-on-GW5AST-138C` was **not** available.
+2. **Why five campaigns found nothing.** They searched the bridge cells. The
+   control wires are not there — on the 25A they are not in the DCS's cell
+   either — they are ordinary fabric wires of the cell *beside* the bridge,
+   `(54, 89)`, reached through the fabric crossbar and carrying ordinary pip
+   fuses rather than clock-mux fuses.
+3. **The wires.** Two orthogonal differential axes, both against an
+   all-constant baseline that still places `DCS 4/20`: five runs each making
+   one control bit dynamic on all four DCS (bit identity) and four runs each
+   making one instance's whole control bus dynamic (site identity). The two
+   axes agree on all twenty wires; the `n{1..4}` sweep confirms the site
+   order independently, `n1dyn` most sharply — the vendor put one logical DCS
+   on two hardware DCS and drove exactly those two sites' wire groups.
+
+### Sweep
+
+18 vendor attribution runs, batch `p1f5-dcsctl`
+(`base`, `sel0..sel3`, `force`, `n{1..4}{dyn,con}`, `inst0..inst3`), all
+`gw_sh` rc 0. Then the `clocking_dcs` shape's own three points (`q1`, `q2`,
+`sel4`) through the open flow at `E1`, batch `p1f5-dcs`.
+
+### Verdict
+
+See `control-138c.md` §7.

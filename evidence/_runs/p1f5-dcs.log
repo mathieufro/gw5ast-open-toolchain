@@ -1,0 +1,16 @@
+02:49:43 BATCH_START batch=p1f5-dcs shape=clocking_dcs level=E1 pid=72490 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1f5-dcs
+02:50:41 BATCH_HEAD selftest --inject-one-fuse: ok
+02:50:59 BATCH_HEAD selftest --unpacker-completeness: ok
+02:51:01 BATCH_HEAD selftest --probe-mask-classes: ok
+02:51:01 BATCH_HEAD gw_sh pre-flight: ok
+02:51:01 BATCH_CHIPDB batch=p1f5-dcs sha256=43bea88d29576153669f982f30f4fda2149cfde23c941d6c9a21d47f144cee57
+02:51:01 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 3 run ids)
+02:51:01 BATCH_RESUME batch=p1f5-dcs planned=3 already_terminal=0
+02:51:01 RUN_START p1f5-dcs-clocking_dcs-0000 sweep='q1'
+02:52:57 RUN_DONE p1f5-dcs-clocking_dcs-0000 verdict=ok
+02:52:57 RUN_START p1f5-dcs-clocking_dcs-0001 sweep='q2'
+02:54:24 RUN_DONE p1f5-dcs-clocking_dcs-0001 verdict=ok
+02:54:24 RUN_START p1f5-dcs-clocking_dcs-0002 sweep='sel4'
+02:58:35 RUN_DONE p1f5-dcs-clocking_dcs-0002 verdict=ok
+02:58:35 BATCH_SKIPPED batch=p1f5-dcs n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1f5-dcs.rows.jsonl
+BATCH_COMPLETE p1f5-dcs runs=3 ok=3 diff=0 aborted=0
