@@ -217,7 +217,7 @@ nodes move it — `gowin_arch_gen` consumes them, unlike `A14`'s keys),
 change).
 
 Runs: 18 attribution (`p1f5-dcsctl`) + 3 (`p1f5-dcs`) = **21**, cumulative
-**269 / 290**. The task's own budget was 14; the overrun is the two extra
+**269 / 290**. The task's own budget was 14 — 7 over. The overrun is the two extra
 disambiguation axes (`n{1..4}` and `inst0..3`, 12 runs) that the first six
 showed were needed, because the four DCS could not be told apart from the
 per-bit runs alone.
