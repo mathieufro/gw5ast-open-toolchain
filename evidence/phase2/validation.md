@@ -379,3 +379,28 @@ that carries the same weight, and passes, is `c1` in the diff above:
    tool, `tools/derive_ae350_wire_map.py`, which imports no `chipdb`, so the
    reconciliation test still compares two independent readings; a test
    asserts that independence. `64f537d` (open-toolchain), `c5d7842` (apicula).
+
+---
+
+## The gate
+
+One full gate per repository, foreground, at the phase-close tip — `C12`'s
+rule that the orchestrator runs the gate once per phase and no push runs one.
+
+| repo | command | wall clock | result |
+|---|---|---|---|
+| apicula | `GATE_SCOPE=full make gate` | **7:02** | `GATE full: ok, 2 checks` — 475 passed, 6 skipped, 1 xfailed (fast) + 54 passed, 1 xfailed (heavy) |
+| nextpnr | `GATE_SCOPE=full make gate` | **0:38** | `GATE full: ok, 0 checks` — `hclk-6block` 2/2, `arch-gen-deterministic` `bba=828038b9 chipdb=d6e00bdc`, `dcs-spines` 4/4 |
+| open-toolchain | `GATE_SCOPE=full make gate` | **0:12** | `GATE full: ok, 3 checks` — 180 passed; `check_evidence.py`; `check_criteria.py --phase 0` |
+| fine-line (umbrella) | `GATE_SCOPE=full make gate` | **0:12** | `GATE full: ok, 3 checks` — `CRITERIA ok: 14/14` |
+
+The apicula gate was **red on its first run** and is the fifth defect this
+close found: `test_clkdiv_routes_138c` pinned a `.bin` archived during
+Phase 1 and ran it against the installed binary, which aborts —
+`Assertion failure: int(ctx->idstring_idx_to_str->size()) == idx` — because
+the AE350 `constids.inc` append since invalidated it. Repointed at the
+installed database, the only one that can be that binary's pair, and re-run
+green (`ae350/gate-chipdb-pin-138c`, merged as `ebef8e9`). One re-run, no
+second failure.
+
+PHASE2-GATE: pass
