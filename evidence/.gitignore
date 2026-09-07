@@ -171,3 +171,12 @@
 # pattern as plla/ and dhcen/ above -- .json is not covered by "*.md".
 !ae350/port-inventory.json
 !ae350/mcu-tables.json
+
+# the P2.T26 AE350 wire map and its run ledger: the data file
+# `fse_create_ae350()` reads (the measured footprint, the interface tile bands
+# and the .dat table pointers), and the oracle-run ledger rescope.md's budget
+# and tools/tests/test_ae350_wire_map.py both read. Same named-exception
+# pattern as _budget/clocking-runs.tsv and ae350/port-inventory.json above --
+# a .json or .tsv is not covered by "*.md".
+!ae350/wire-map-138c.json
+!_budget/ae350-runs.tsv

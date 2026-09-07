@@ -1,0 +1,63 @@
+*** GOWIN Tcl Command Line Console  *** 
+The available OpenGL surface format was either not version 3.2 or higher or not a Core Profile.
+Chromium on macOS will fall back to software rendering in this case.
+Hardware acceleration and features such as WebGL will not be available.
+current working directory: /Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run
+current device: GW5AST-138C  GW5AST-LV138PG484AC1/I0
+add new file: "../top.v"
+add new file: "../top.sdc"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file '/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/top.v'
+Compiling module 'top'("/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/top.v":5)
+NOTE  (EX0101) : Current top module is "top"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/gwsynthesis/run.vg" completed
+[100%] Generate report file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/gwsynthesis/run_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/gwsynthesis/run.vg"
+Parsing netlist file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/gwsynthesis/run.vg" completed
+Processing netlist completed
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.power.html" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.pin.html" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.rpt.html" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.rpt.txt" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.sdf" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.vo" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.tr.html" completed
+Generate file "/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.tr" completed
+Mon Sep  7 05:27:45 2026
+

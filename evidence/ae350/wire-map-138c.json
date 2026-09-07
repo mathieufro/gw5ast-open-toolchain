@@ -1,0 +1,97 @@
+{
+  "dat_tables": {
+    "Ae350SocIns": {
+      "abs_offset_1_9_12_03": "0x83b4c",
+      "delta_from_rs_table": "0x86a0",
+      "slots": 433
+    },
+    "Ae350SocOuts": {
+      "abs_offset_1_9_12_03": "0x8405c",
+      "delta_from_rs_table": "0x8bb0",
+      "slots": 518
+    },
+    "correct_form": "read_scaledGrid16(numRows, 3, 6, 1, RSTable5ATOffset + delta), as used for PllLTIns/Adc25kIns",
+    "defect": "dat_parser.py:545-546 call read_scaledGrid16(n, 3, 3, base, stride); the signature is (numRows, numCols, rowScaling, colScaling, baseOffset), so base lands in colScaling and the tables decode to garbage. The same transposition affects every entry at dat_parser.py:525-546 and :601-650 (Mipi*, Gtrl12*, *DdrDll*, Cmsera*, AdcLRC*).",
+    "note": "the 138C .dat DOES carry the AE350 port map; the legacy McuIns/McuOuts triples are a red herring",
+    "rs_table_offset_1_9_12_03": "0x7b4ac",
+    "triple_order": "(row, col, wire), row and col 1-based (chipdb.py:2489-2492 fse_create_adc)"
+  },
+  "device": "GW5AST-138C",
+  "ide": "Gowin IDE Standard 1.9.12.03",
+  "placement": {
+    "evidence": "run p2t26-tilewires placed AE350_SOC 1/1 with no physical constraints file",
+    "fabric_footprint": {
+      "col_max": 181,
+      "col_min": 145,
+      "fraction_in_band": 0.99988,
+      "moved_bits_in_band": 85401,
+      "moved_bits_total": 85411,
+      "outside_band": [
+        [
+          95,
+          2
+        ],
+        [
+          96,
+          8
+        ]
+      ],
+      "peak_col": 159,
+      "row_max": 108,
+      "row_min": 0
+    },
+    "interface_tile_bands": [
+      {
+        "cols": [
+          145,
+          180
+        ],
+        "moved_bits": 2464,
+        "rows": [
+          10,
+          28,
+          46
+        ],
+        "tiles": 108,
+        "touched_by_diff": 72,
+        "ttyp": 224
+      },
+      {
+        "cols": [
+          145,
+          180
+        ],
+        "moved_bits": 119,
+        "rows": [
+          64,
+          82,
+          100
+        ],
+        "tiles": 108,
+        "touched_by_diff": 23,
+        "ttyp": 228
+      }
+    ],
+    "site": "single fixed site, no INS_LOC accepted or needed"
+  },
+  "ports": {
+    "bits": 911,
+    "declarations": 149,
+    "input_bits": 416,
+    "output_bits": 495
+  },
+  "primitive": "AE350_SOC",
+  "provenance": "MEASURED",
+  "resolved_port_bits": 0,
+  "runs": [
+    "p2t26-tilewires",
+    "p2t26-baseline"
+  ],
+  "status": "PARTIAL",
+  "unresolved_classes": [
+    "per-bit port -> wire binding: the presence diff localises the block but does not name a wire per port bit",
+    "the exact base offset and length of Ae350SocIns/Ae350SocOuts once the parser transposition is fixed",
+    "which of the two interface bands (ttyp 224 vs ttyp 228) carries inputs and which outputs"
+  ],
+  "unresolved_port_bits": 911
+}
