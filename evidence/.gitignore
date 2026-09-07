@@ -183,3 +183,9 @@
 # the ae350-dualpins sub-ledger (P2.T29): same class as the two ledgers above --
 # a .tsv directly under evidence/_budget/, which the "*.md" allowance misses.
 !_budget/dualpin-runs.tsv
+# the pip cross-check the wire map's MEASURED provenance rests on: the row-0
+# taps run p2t26-tilewires' bitstream is seen to use, kept as its own input so
+# that `tools/derive_ae350_wire_map.py` can regenerate the map from the .dat
+# without the banked runs. Same named-exception pattern as
+# ae350/wire-map-138c.json above.
+!ae350/wire-map-pipdiff-138c.json

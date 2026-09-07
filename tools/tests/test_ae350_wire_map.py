@@ -22,7 +22,11 @@ RUN_CAP = 8
 #: Port bit total, measured four independent ways by ``P2.T02``.
 PORT_BITS = 911
 #: Per direction, from the same inventory.
-DIRECTION_BITS = {"Ae350SocIns": 416, "Ae350SocOuts": 495}
+DIRECTION_BITS = {"inputs": 416, "outputs": 495}
+
+#: The three taps that sit outside the block's own column band -- two output
+#: taps and the clock-spine alternative for `CORE_CLK`, all named in the map.
+OUT_OF_BAND_TAPS = {(0, 22, "F7"), (0, 23, "OF3"), (0, 87, "CLK1")}
 
 
 def load_map():
@@ -49,13 +53,21 @@ def test_every_bit_is_either_placed_or_named_unbound():
                 assert entry["col"] is not None and entry["wire"]
 
 
-def test_input_taps_are_row_zero_wires_the_fabric_drives():
-    """An input tap can only be an F, Q or OF wire of the block's own row."""
-    for entry in load_map()["bits"]["Ae350SocIns"]:
-        if entry["provenance"] == "UNBOUND":
-            continue
-        assert entry["row"] == 0
-        assert re.fullmatch(r"(?:F|Q|OF)\d", entry["wire"]), entry
+def test_a_taps_direction_is_the_wire_class_not_the_table():
+    """Every tap is a row-0 wire, and its class alone fixes its direction.
+
+    `F`, `Q` and `OF` end no pip, so only the block drives them: they are its
+    outputs. `A`-`D`, `CE`, `CLK` and `LSR` are pip destinations, dead ends
+    unless the block reads them: they are its inputs.
+    """
+    driven_by_the_block = re.compile(r"(?:F|Q|OF)\d")
+    for direction, entries in load_map()["bits"].items():
+        for entry in entries:
+            if entry["provenance"] == "UNBOUND":
+                continue
+            assert entry["row"] == 0, entry
+            is_output = bool(driven_by_the_block.fullmatch(entry["wire"]))
+            assert is_output == (direction == "outputs"), entry
 
 
 def test_no_two_bits_share_one_fabric_wire():
@@ -66,18 +78,25 @@ def test_no_two_bits_share_one_fabric_wire():
         assert len(set(placed)) == len(placed), table
 
 
-def test_input_taps_sit_inside_the_measured_footprint():
+def test_every_tap_sits_inside_the_footprint_or_is_named():
     """The map describes the block the vendor placed, not a neighbour of it.
 
     ``P2.T08a`` read the input table at a base whose columns fall outside the
-    footprint; this is the assertion that caught it.
+    footprint; this is the assertion that caught it. Three taps genuinely sit
+    outside the band -- two on the far left of row 0 and the clock-spine
+    alternative for ``CORE_CLK`` -- and the map has to name each of them rather
+    than let a stray column pass unremarked.
     """
     doc = load_map()
     low, high = doc["footprint_cols"]
-    columns = {e["col"] for e in doc["bits"]["Ae350SocIns"]
-               if e["provenance"] != "UNBOUND"}
-    assert columns
-    assert min(columns) >= low and max(columns) <= high
+    outside = {(e["row"], e["col"], e["wire"])
+               for entries in doc["bits"].values() for e in entries
+               if e["provenance"] != "UNBOUND" and not low <= e["col"] <= high}
+    assert outside == OUT_OF_BAND_TAPS
+    named = {(t["row"], t["col"], t["wire"])
+             for direction in ("inputs", "outputs")
+             for t in doc["summary"][direction]["out_of_footprint_taps"]}
+    assert named == OUT_OF_BAND_TAPS
 
 
 def test_the_map_cites_runs_the_budget_ledger_records():

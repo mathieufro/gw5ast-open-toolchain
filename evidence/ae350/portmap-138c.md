@@ -3,6 +3,15 @@
 apicula branch `ae350/create-138c`. No vendor run: the map is read from the
 device data, cross-checked against `wire-map-138c.json` (`P2.T08a`).
 
+> **Superseded.** Three of this row's premises were later refuted by
+> measurement: the bel is at `(0, 159)`, not `(0, 145)` (`e0-138c.md` §1); the
+> band filter is gone, so a live record binds wherever it lands; and a tap's
+> direction is its wire's, not its table's (`route-138c.md` §1-3,
+> `wire-map-138c.md` §7). The current map binds **884 of 911** bits. The
+> numbers below are `P2.T07`'s and are kept as the record of what was believed
+> then — including the cross-check against the version of
+> `wire-map-138c.json` that stood at the time.
+
 ## The bel
 
 | | |

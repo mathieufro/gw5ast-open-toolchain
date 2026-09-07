@@ -1,8 +1,11 @@
 # `AE350_SOC` fabric wire map — GW5AST-138C
 
-`P2.T08a`, extended by `P2.T08b` (§6). Companion data file:
-`wire-map-138c.json` (the file `fse_create_ae350()` reads). Status
-**PARTIAL**: the output half is **MEASURED**, the input half is
+`P2.T08a`, extended by `P2.T08b` (§6) and corrected by §7. Companion data
+file: `wire-map-138c.json`, regenerated from the `.dat` by
+`tools/derive_ae350_wire_map.py`; `fse_create_ae350()` reads the same tables
+through its own code and `tools/tests/test_ae350_chipdb_reconciliation.py`
+holds the two against each other. Status **PARTIAL**: the input half is
+**MEASURED** (415 of 416 taps carry a pip the vendor set), the output half is
 **DAT-DERIVED** on a **MEASURED** band. Gowin IDE Standard 1.9.12.03; runs
 `p2t26-tilewires` and `p2t26-baseline`, no new vendor run.
 
@@ -55,16 +58,18 @@ input table is at `0x91ea` — see §6. The base is no longer addressed at all:
 ## 3. What the tables say
 
 Every live record has row 1, i.e. **die row 0**. The taps are in row 0 of the
-band the presence diff measured:
+band the presence diff measured. What separates the two directions is the
+**wire class**, not the table (§7):
 
-| | columns (0-based) | wires |
+| | wires | columns (0-based) |
 |---|---|---|
-| inputs | 145-155 | `F0`-`F7`, `Q0`-`Q7`, `OF0`-`OF7` — what a tile drives |
-| outputs | 156-180 (plus 22, 23, 87) | `A0`-`D7`, `F*`, `Q*`, `OF*`, `CLK0`-`CLK2`, `LSR1`, `LSR2`, `CE0`-`CE2` |
+| inputs | `A0`-`D7`, `CLK0`-`CLK2`, `LSR1`, `LSR2`, `CE0`-`CE2` — pip destinations | 161-180, plus 87 |
+| outputs | `F0`-`F7`, `Q0`-`Q7`, `OF0`-`OF7` — what only the block drives | 156-180, plus 22, 23 |
 
-The two halves are contiguous and disjoint: inputs end at column 155, outputs
-begin at 156. That is one hard block reading the left of its band and driving
-the right, and it reproduces the measured footprint (145-181).
+The two halves are disjoint in wire class and *overlapping* in column: the
+block reads and drives the same tiles, which is what the P2.T08b relocation
+first showed (§6) and the direction repair completed. The earlier reading —
+inputs to the left of column 156, outputs to the right — is refuted.
 
 **The row-0 taps are `ttyp` 242 tiles, not 224 or 228.** `ttyp` 224 (rows 10,
 28, 46) and `ttyp` 228 (rows 64, 82, 100) carry the block's *configuration* —
@@ -73,15 +78,20 @@ they are where the presence diff's bits moved — but no port record names them.
 
 ## 4. The per-bit map
 
-**Rule.** Slot *i* of a direction's table is bit *i* of that direction, counting
-ports in `primitive.xml` declaration order and each bus LSB first. A
-`0xffff/0xffff/0xffff` slot is an unbound bit. Trailing slots past the bit count
-(23 for `Outs`, 17 for `Ins`) are the array's spare capacity.
+**Rule.** Bit *i* of a direction is record *i* of that direction's map,
+counting ports in `primitive.xml` declaration order and each bus LSB first. The
+input map is the fabric-driven run of `Ae350SocOuts`; the output map is
+`Ae350SocOuts` outside that run with `Ae350SocIns` filling it (§7). A
+`0xffff/0xffff/0xffff` record is an unbound bit, and so is the one output bit
+past the end of `Ae350SocIns` inside the run.
 
 | | bits | bound | unbound | in footprint | outside |
 |---|---|---|---|---|---|
-| inputs | 416 | 398 | 18 | **256** | 142 |
-| outputs | 495 | 469 | 26 | **466** | 3 |
+| inputs | 416 | **416** | 0 | 415 | 1 |
+| outputs | 495 | **468** | 27 | 466 | 2 |
+
+The counts in the two tables below are `P2.T08a`'s, kept as the record of what
+was believed then; §7 carries the current ones.
 
 **Slots that do not fit** (`slots_that_do_not_fit` in the JSON), as read by
 `P2.T08a`; the `Ins` row is superseded by §6:
@@ -100,12 +110,14 @@ the pips whose fuses differ between the AE350 bitstream and the baseline were
 decoded (`chipdb.tile_bitmap` + the tile's pip table), and each mapped bit was
 looked up in that tile's changed-wire set:
 
-- `Ae350SocOuts`: **437 of 466 checked bits matched** (93.8 %). Those 437 are
-  marked `MEASURED` in the JSON; the rest `DAT-DERIVED`.
-- `Ae350SocIns`: 11 of 256. This is expected and not disconfirming — an input
-  tap is a tile *output* wire (`F`/`Q`/`OF`), which the block reads directly;
-  it is not the destination of a pip, so a presence diff of pip fuses cannot
-  see it. The input half stays `DAT-DERIVED`.
+- `Ae350SocOuts`: **437 of 466 checked bits matched** (93.8 %). Those 437 taps
+  are the ones `wire-map-pipdiff-138c.json` lists, and a bit is `MEASURED` in
+  the JSON exactly when its tap is one of them. Under the direction repair 415
+  of them are input taps and 22 output ones (§7).
+- `Ae350SocIns`: 11 of 256. That, read at the time as "an input tap is
+  invisible to a pip diff", was the clue that the direction was backwards: it
+  is the `F`/`Q`/`OF` half that a pip diff cannot see, and that half is the
+  block's **outputs** (§7).
 
 The flop endpoints of run `p2t26-tilewires` were **not** pinned — `top.cst`
 holds four `IO_LOC` lines and nothing else, and `run.p` is encrypted — so a
@@ -135,7 +147,7 @@ to 17920), so their bases carry the same kind of drift the `Ins` base did and
 each needs its own anchor before Phase 3 or 5b can use it. No consumer reads
 any of them today (`chipdb.py` references none), so nothing regresses.
 
-WIRE-MAP-VERDICT: 867/911 port bits carry a (row, col, wire); 722 of those sit in the measured footprint; outputs 437/466 cross-checked MEASURED against the run-1 bitstream; input bits 274-415 unmapped (the Ins table holds 257 records).
+WIRE-MAP-VERDICT: 884/911 port bits carry a (row, col, wire); 881 of those sit in the measured footprint and the other three are named; 437 taps cross-checked MEASURED against the run-1 bitstream, of which 415 are the block's inputs — every input bit bound, 27 output bits unbound.
 
 ## 6. `P2.T08b` — where the input tail really is
 
@@ -187,8 +199,62 @@ the vendor splits this port map across numbered tables the way it splits
 `MDdrDllIns1`-`7`; a per-bit trace of the run-1 bitstream would settle it. No
 vendor run was spent: this is a `.dat` result.
 
-WIRE-MAP-T08B-VERDICT: input tail sourced from the `.dat`, not from a campaign;
+WIRE-MAP-T08B-VERDICT: table tail sourced from the `.dat`, not from a campaign;
 `Ae350SocIns` relocated to base 0x91ea (row 0, columns 159-180) and located by
-geometry rather than addressed; 139 of the 142 previously unmapped bits now
-carry a tap, 3 resist (`DDR_HRDATA[12]`, `GPIO_IN[25]`, `EMA[1]`); band
-MEASURED against run `p2t26-tilewires`, per-bit phase DAT-DERIVED; 0 vendor runs.
+geometry rather than addressed; the relocation stands, its direction does not —
+that run is the middle of the **output** map (§7), and read that way its 18
+sentinel slots leave 18 output bits unbound and its 17 slots past bit 415 are
+ordinary output bits, closing the residual this verdict left open; band
+MEASURED against run `p2t26-tilewires`; 0 vendor runs.
+
+## 7. The direction repair — a tap's direction is the wire's, not the table's
+
+Die row 0 is a row of routing tiles with **no bels**: tile type 242 has 125 pips
+and zero LUT/DFF sites. A tap there is an ordinary local wire, so its direction
+is fixed by the routing graph and not by which table the record came out of:
+
+- `F`, `Q` and `OF` end no pip, so nothing in the fabric can drive them and only
+  the block can — they are the block's **outputs**;
+- `A`-`D`, `CE`, `CLK` and `LSR` are pip *destinations* and dead ends unless
+  something reads them — they are the block's **inputs**.
+
+Measured on the vendor bitstream of the 149-port vehicle against its own
+no-block baseline: 415 of the 416 fabric-driven wires carry a pip the vendor
+set, 418 pips are sourced from `F`/`Q`/`OF`, and the `CE`, `LSR` and `CLK` tap
+counts are exactly the block's 13 clock-enable, 2 reset and 6 clock inputs.
+Bound the other way round, every input pin was an unreachable sink and the open
+router stopped; bound this way the flow routes the vehicle and packs a
+bitstream.
+
+So neither `.dat` table is one direction. `Ae350SocOuts` holds the whole input
+map in one run — slots 44 to 477 — with the head and tail of the output map
+either side of it; `Ae350SocIns` holds the output map's middle run. The run
+bounds are derived from the wire classes, not written down. Within the head the
+slot order and the port order disagree, so the class decides there: an `LSR` tap
+can only be a reset input and a `CLK` tap only a clock input.
+
+| | bits | bound | MEASURED | DAT-DERIVED | unbound | outside the band |
+|---|---|---|---|---|---|---|
+| inputs | 416 | 416 | 415 | 1 | 0 | 1 |
+| outputs | 495 | 468 | 22 | 446 | 27 | 2 |
+| total | 911 | **884** | 437 | 447 | 27 | 3 |
+
+The three taps outside the band are the clock-spine alternative for `CORE_CLK`
+at `(0, 87)/CLK1` — a fabric route the vendor never takes, preferring the
+dedicated PLL path — and two `ROM_HADDR` output taps at `(0, 22)/F7` and
+`(0, 23)/OF3`. They are as bound as any other bit; the map names them rather
+than filtering them away.
+
+The 27 unbound bits are all outputs, and all of them are sentinel records: 18
+`Ae350SocIns` slots inside the middle run, 8 `Ae350SocOuts` slots in the head
+and tail, and one bit (`SCAN_OUT[3]`) past the end of `Ae350SocIns` inside the
+run. They get an `AE350_UNMAPPED_*` placeholder wire that exists in no wire
+table, so a design that drives one fails by name instead of routing somewhere
+plausible.
+
+**Reproducing this file.** `tools/derive_ae350_wire_map.py` regenerates
+`wire-map-138c.json` from the `.dat` tables, the port inventory and
+`wire-map-pipdiff-138c.json`; `--check` fails if the committed artefact has
+drifted from the tables. It imports no part of `apycula.chipdb`, so the
+reconciliation test compares two independent readings rather than one reading
+with itself.
