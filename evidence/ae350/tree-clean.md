@@ -60,14 +60,23 @@ Each pointer commit's own diff is gitlinks only — asserted by
 walks every `Submodule pointer:` commit since `b001aec` and fails if one
 touches anything else.
 
-## 4. Ordering note
+## 4. Ordering, and the observer effect
 
-The recorded raw status is the state after the last content commit and its
-pointer bump. Storing that file is itself a commit, so one final pointer bump
-follows it; that bump is what leaves the tree in exactly the state recorded
-above. There is no way to record a tree's cleanliness from inside the tree
-without this one-step tail, and pretending otherwise would be the sort of
-tidying the `V11` form exists to forbid.
+Two things make recording a tree's cleanliness from inside that tree less
+trivial than it looks, and both are stated rather than tidied away.
+
+**The write is observed.** `git status --porcelain > tree-status-raw.txt`
+redirects into the evidence tree, so the shell truncates the file — dirtying
+the `open-toolchain` gitlink — *before* `git status` runs, and the output then
+records that gitlink as modified. The capture therefore writes to a scratch
+file first and the result is copied in, so what is recorded is the status as
+it stood, not the status of recording it.
+
+**One commit follows.** Storing the file is itself a commit, so a final
+pointer bump follows it, and that bump is what leaves the tree in exactly the
+state recorded above. There is no way to avoid this one-step tail, and
+pretending otherwise would be the sort of tidying the `V11` form exists to
+forbid.
 
 ## 5. Branches
 
