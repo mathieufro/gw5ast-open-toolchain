@@ -1,0 +1,182 @@
+Info: Using uarch 'gowin' for device 'GW5AST-LV138PG484AC1/I0'
+
+Info: Reading constraints...
+Info: Create constant nets...
+Info: Modify LUTs...
+Info: Pack IOBs...
+Info: Pack I3C IOs...
+Info: Pack MIPI IOs...
+Info: Pack diff IOBs...
+Info: Pack FFs into IO cells...
+Info: Pack IODELAY...
+Info: Pack Input Edge Monitors...
+Info: Pack IO logic...
+Info: Pack DESER16 logic...
+Info: Pack GSR...
+Info: Pack PINCFG...
+Info: Pack HCLK cells...
+Info: Pack DLLDLYs...
+Info: Pack wide LUTs...
+Info: Packed MUX2_LUT8:2, MUX2_LU7:1, MUX2_LUT6:0, MUX2_LUT5:34
+Info: Pack ALUs...
+Info: Pack SSRAMs...
+Info: Constrained 0 LUTFF pairs.
+Info: Pack PLL...
+Info: Pack ADC...
+Info: Pack BSRAMs...
+Info: Pack DSP...
+Info: Pack INV...
+Info: Pack buffered nets...
+Warning: AE350_SOC port SCAN_OUT18 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port SCAN_OUT7 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port SCAN_OUT3 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port ROM_HADDR29 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port GPIO_OUT12 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port GPIO_OE11 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port EXTS_HWDATA3 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port EXTS_HWDATA0 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port EXTS_HSIZE1 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port EXTS_HPROT0 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port EXTS_HADDR31 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port EXTM_HRDATA4 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DMA_ACK5 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DMA_ACK3 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DMA_ACK2 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DMA_ACK1 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DMA_ACK0 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DDR_HWDATA10 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DDR_HWDATA7 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DDR_HWDATA3 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DDR_HTRANS0 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DDR_HPROT3 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port DDR_HADDR5 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port APB_PWDATA29 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port APB_PSTRB2 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port APB_PPROT0 is not mapped by the device data; disconnecting it.
+Warning: AE350_SOC port APB_PADDR29 is not mapped by the device data; disconnecting it.
+Info: Pack EMCU and UserFlash cells...
+Info: Pack UserFlash cells...
+Info: Pack DQCE cells...
+Info: Pack DCS cells...
+Info: Checksum: 0x57e14aa2
+
+Info: Device utilisation:
+Info: 	                 VCC:       1/      1   100%
+Info: 	                 IOB:       4/    324     1%
+Info: 	                LUT4:     225/ 138240     0%
+Info: 	           MUX2_LUT5:      54/  69120     0%
+Info: 	           MUX2_LUT6:      10/  34560     0%
+Info: 	           MUX2_LUT7:       5/  17280     0%
+Info: 	           MUX2_LUT8:       2/  17280     0%
+Info: 	                 ALU:       0/ 103680     0%
+Info: 	                 GND:       1/      1   100%
+Info: 	                 DFF:     905/ 138240     0%
+Info: 	           RAM16SDP4:       0/  17280     0%
+Info: 	               BSRAM:       0/    340     0%
+Info: 	           MULT12X12:       0/    596     0%
+Info: 	        MULTALU27X18:       0/    298     0%
+Info: 	     MULTADDALU12X12:       0/    298     0%
+Info: 	                 GSR:       1/      1   100%
+Info: 	              PINCFG:       1/      1   100%
+Info: 	                 PLL:       0/     12     0%
+Info: 	                BUFG:       1/     48     2%
+Info: 	                DQCE:       0/     12     0%
+Info: 	                 DCS:       0/      4     0%
+Info: 	               DHCEN:       0/     24     0%
+Info: 	              CLKDIV:       0/     24     0%
+Info: 	             CLKDIV2:       0/     24     0%
+Info: 	           AE350_SOC:       1/      1   100%
+
+Info: Running custom HCLK placer...
+Info: Placed 0 cells based on constraints.
+Info: Creating initial analytic placement for 1061 cells, random placement wirelen = 188621.
+Info:     at initial placer iter 0, wirelen = 628
+Info:     at initial placer iter 1, wirelen = 604
+Info:     at initial placer iter 2, wirelen = 604
+Info:     at initial placer iter 3, wirelen = 604
+Info: Running main analytical placer, max placement attempts per cell = 183315.
+Info:     at iteration #1, type ALL: wirelen solved = 604, spread = 11054, legal = 176193; time = 0.05s
+Info:     at iteration #2, type ALL: wirelen solved = 626, spread = 9559, legal = 175278; time = 0.02s
+Info:     at iteration #3, type ALL: wirelen solved = 638, spread = 9241, legal = 174915; time = 0.02s
+Info:     at iteration #4, type ALL: wirelen solved = 1589, spread = 9013, legal = 174046; time = 0.02s
+Info:     at iteration #5, type ALL: wirelen solved = 1230, spread = 9246, legal = 172678; time = 0.02s
+Info:     at iteration #6, type ALL: wirelen solved = 1441, spread = 8718, legal = 171313; time = 0.02s
+Info:     at iteration #7, type ALL: wirelen solved = 1565, spread = 8405, legal = 170710; time = 0.02s
+Info:     at iteration #8, type ALL: wirelen solved = 1635, spread = 8745, legal = 171017; time = 0.02s
+Info:     at iteration #9, type ALL: wirelen solved = 1919, spread = 8735, legal = 170574; time = 0.02s
+Info:     at iteration #10, type ALL: wirelen solved = 2009, spread = 8873, legal = 170515; time = 0.02s
+Info:     at iteration #11, type ALL: wirelen solved = 2687, spread = 7983, legal = 169874; time = 0.02s
+Info:     at iteration #12, type ALL: wirelen solved = 2837, spread = 8179, legal = 170222; time = 0.02s
+Info:     at iteration #13, type ALL: wirelen solved = 3343, spread = 7924, legal = 170620; time = 0.02s
+Info:     at iteration #14, type ALL: wirelen solved = 3285, spread = 7833, legal = 171240; time = 0.02s
+Info:     at iteration #15, type ALL: wirelen solved = 3812, spread = 7912, legal = 171962; time = 0.02s
+Info:     at iteration #16, type ALL: wirelen solved = 3814, spread = 8447, legal = 172391; time = 0.03s
+Info: HeAP Placer Time: 0.77s
+Info:   of which solving equations: 0.09s
+Info:   of which spreading cells: 0.13s
+Info:   of which strict legalisation: 0.12s
+
+Info: Running simulated annealing placer for refinement.
+Info:   at iteration #1: temp = 0.000000, timing cost = 1, wirelen = 169874
+Info:   at iteration #5: temp = 0.000000, timing cost = 5, wirelen = 158663
+Info:   at iteration #10: temp = 0.000000, timing cost = 9, wirelen = 132617
+Info:   at iteration #15: temp = 0.000000, timing cost = 6, wirelen = 100330
+Info:   at iteration #20: temp = 0.000000, timing cost = 10, wirelen = 65284
+Info:   at iteration #25: temp = 0.000000, timing cost = 8, wirelen = 34356
+Info:   at iteration #30: temp = 0.000000, timing cost = 3, wirelen = 16787
+Info:   at iteration #35: temp = 0.000000, timing cost = 3, wirelen = 14185
+Info:   at iteration #40: temp = 0.000000, timing cost = 2, wirelen = 13748
+Info:   at iteration #45: temp = 0.000000, timing cost = 2, wirelen = 13491
+Info:   at iteration #50: temp = 0.000000, timing cost = 2, wirelen = 13324
+Info:   at iteration #55: temp = 0.000000, timing cost = 1, wirelen = 13186
+Info:   at iteration #55: temp = 0.000000, timing cost = 0, wirelen = 13186 
+Info: SA placement time 0.50s
+
+Info: Max frequency for clock 'clk_IBUF_I_O': 652.74 MHz (PASS at 12.00 MHz)
+
+Info: Slack histogram:
+Info:  legend: * represents 4 endpoint(s)
+Info:          + represents [1,4) endpoint(s)
+Info: [ 81801,  81862) |+
+Info: [ 81862,  81923) | 
+Info: [ 81923,  81984) | 
+Info: [ 81984,  82045) |+
+Info: [ 82045,  82106) | 
+Info: [ 82106,  82167) | 
+Info: [ 82167,  82228) |+
+Info: [ 82228,  82289) | 
+Info: [ 82289,  82350) | 
+Info: [ 82350,  82411) |*+
+Info: [ 82411,  82472) | 
+Info: [ 82472,  82533) | 
+Info: [ 82533,  82594) | 
+Info: [ 82594,  82655) |****+
+Info: [ 82655,  82716) | 
+Info: [ 82716,  82777) | 
+Info: [ 82777,  82838) |*********************+
+Info: [ 82838,  82899) | 
+Info: [ 82899,  82960) | 
+Info: [ 82960,  83021) |************************************************************ 
+Info: Checksum: 0xb4d95c59
+Info: Routing globals...
+Info:     'clk_IBUF_I_O' net was routed.
+
+Info: Routing..
+Info: Setting up routing queue.
+Info: Routing 3672 arcs.
+Info:            |   (re-)routed arcs  |   delta    | remaining|       time spent     |
+Info:    IterCnt |  w/ripup   wo/ripup |  w/r  wo/r |      arcs| batch(sec) total(sec)|
+Info:       1000 |        2        961 |    2   961 |      2675|       0.22       0.22|
+Info:       2000 |       35       1886 |   33   925 |      1712|       0.52       0.75|
+Info:       3000 |      157       2730 |  122   844 |       843|       2.07       2.82|
+Info:       4000 |      436       3427 |  279   697 |       144|       5.03       7.85|
+Info:       4218 |      500       3576 |   64   149 |         0|       1.41       9.26|
+Info: Routing complete.
+Info: Router1 time 9.26s
+Info: Checksum: 0xa0eec0ce
+
+Info: No Fmax available; no interior timing paths found in design.
+
+27 warnings, 0 errors
+
+Info: Program finished normally.
