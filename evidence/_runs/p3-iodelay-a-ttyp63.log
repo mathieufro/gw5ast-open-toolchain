@@ -1,0 +1,51 @@
+18:27:28 BATCH_START batch=p3-iodelay-a shape=iodelay_a level=E1 pid=96315 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t21
+18:28:24 BATCH_HEAD selftest --inject-one-fuse: ok
+18:28:41 BATCH_HEAD selftest --unpacker-completeness: ok
+18:28:42 BATCH_HEAD selftest --probe-mask-classes: ok
+18:28:43 BATCH_HEAD gw_sh pre-flight: ok
+18:28:43 BATCH_CHIPDB batch=p3-iodelay-a sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+18:28:43 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 28 run ids)
+18:28:43 BATCH_RESUME batch=p3-iodelay-a planned=28 already_terminal=0
+18:28:43 RUN_START p3-iodelay-a-iodelay_a-0000 sweep='c-static-dly-0'
+18:29:02 RUN_DONE p3-iodelay-a-iodelay_a-0000 verdict=aborted
+18:29:02 RUN_START p3-iodelay-a-iodelay_a-0001 sweep='c-static-dly-1'
+18:29:21 RUN_DONE p3-iodelay-a-iodelay_a-0001 verdict=aborted
+18:29:22 RUN_START p3-iodelay-a-iodelay_a-0002 sweep='c-static-dly-3'
+18:29:38 RUN_DONE p3-iodelay-a-iodelay_a-0002 verdict=aborted
+18:29:38 RUN_START p3-iodelay-a-iodelay_a-0003 sweep='c-static-dly-2'
+18:29:55 RUN_DONE p3-iodelay-a-iodelay_a-0003 verdict=aborted
+18:29:55 RUN_START p3-iodelay-a-iodelay_a-0004 sweep='c-static-dly-6'
+18:30:12 RUN_DONE p3-iodelay-a-iodelay_a-0004 verdict=aborted
+18:30:13 RUN_START p3-iodelay-a-iodelay_a-0005 sweep='c-static-dly-4'
+18:30:34 RUN_DONE p3-iodelay-a-iodelay_a-0005 verdict=aborted
+18:30:34 RUN_START p3-iodelay-a-iodelay_a-0006 sweep='c-static-dly-12'
+18:31:00 RUN_DONE p3-iodelay-a-iodelay_a-0006 verdict=aborted
+18:31:00 RUN_START p3-iodelay-a-iodelay_a-0007 sweep='c-static-dly-8'
+18:31:28 RUN_DONE p3-iodelay-a-iodelay_a-0007 verdict=aborted
+18:31:28 RUN_START p3-iodelay-a-iodelay_a-0008 sweep='c-static-dly-24'
+18:31:58 RUN_DONE p3-iodelay-a-iodelay_a-0008 verdict=aborted
+18:31:58 RUN_START p3-iodelay-a-iodelay_a-0009 sweep='c-static-dly-16'
+18:32:27 RUN_DONE p3-iodelay-a-iodelay_a-0009 verdict=aborted
+18:32:27 RUN_START p3-iodelay-a-iodelay_a-0010 sweep='c-static-dly-48'
+18:32:59 RUN_DONE p3-iodelay-a-iodelay_a-0010 verdict=aborted
+18:32:59 RUN_START p3-iodelay-a-iodelay_a-0011 sweep='c-static-dly-32'
+18:33:30 RUN_DONE p3-iodelay-a-iodelay_a-0011 verdict=aborted
+18:33:31 RUN_START p3-iodelay-a-iodelay_a-0012 sweep='c-static-dly-96'
+18:34:02 RUN_DONE p3-iodelay-a-iodelay_a-0012 verdict=aborted
+18:34:02 RUN_START p3-iodelay-a-iodelay_a-0013 sweep='c-static-dly-64'
+18:34:32 RUN_DONE p3-iodelay-a-iodelay_a-0013 verdict=aborted
+18:34:32 RUN_START p3-iodelay-a-iodelay_a-0014 sweep='c-static-dly-192'
+18:35:04 RUN_DONE p3-iodelay-a-iodelay_a-0014 verdict=aborted
+18:35:04 RUN_START p3-iodelay-a-iodelay_a-0015 sweep='c-static-dly-128'
+18:35:35 RUN_DONE p3-iodelay-a-iodelay_a-0015 verdict=aborted
+18:35:35 RUN_START p3-iodelay-a-iodelay_a-0016 sweep='c-static-dly-129'
+18:36:07 RUN_DONE p3-iodelay-a-iodelay_a-0016 verdict=aborted
+18:36:07 RUN_START p3-iodelay-a-iodelay_a-0017 sweep='c-static-dly-131'
+18:36:39 RUN_DONE p3-iodelay-a-iodelay_a-0017 verdict=aborted
+18:36:39 RUN_START p3-iodelay-a-iodelay_a-0018 sweep='c-static-dly-130'
+18:37:11 RUN_DONE p3-iodelay-a-iodelay_a-0018 verdict=aborted
+18:37:11 RUN_START p3-iodelay-a-iodelay_a-0019 sweep='c-static-dly-134'
+18:37:42 RUN_DONE p3-iodelay-a-iodelay_a-0019 verdict=aborted
+18:37:42 RUN_START p3-iodelay-a-iodelay_a-0020 sweep='c-static-dly-132'
+18:38:13 RUN_DONE p3-iodelay-a-iodelay_a-0020 verdict=aborted
+18:38:13 RUN_START p3-iodelay-a-iodelay_a-0021 sweep='c-static-dly-140'

@@ -1,0 +1,10 @@
+[  0%] Built target oourafft
+[  0%] Built target nextpnr_kernel
+[  0%] Built target nextpnr_place
+[  0%] Built target nextpnr_route
+[  3%] Built target json11
+[  6%] Built target bbasm
+[ 10%] Built target nextpnr-himbaechel-gowin-chipdb
+[ 12%] Building CXX object himbaechel/CMakeFiles/nextpnr-himbaechel.dir/uarch/gowin/pack_iologic.cc.o
+[ 13%] Linking CXX executable ../nextpnr-himbaechel
+[100%] Built target nextpnr-himbaechel

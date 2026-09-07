@@ -1,0 +1,139 @@
+BATCH_START batch=p3-iodelay-a shape=iodelay_a level=E1 pid=96315 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t21
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p3-iodelay-a sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 28 run ids)
+BATCH_RESUME batch=p3-iodelay-a planned=28 already_terminal=0
+RUN_START p3-iodelay-a-iodelay_a-0000 sweep='c-static-dly-0'
+RUN_DONE p3-iodelay-a-iodelay_a-0000 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0001 sweep='c-static-dly-1'
+RUN_DONE p3-iodelay-a-iodelay_a-0001 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0002 sweep='c-static-dly-3'
+RUN_DONE p3-iodelay-a-iodelay_a-0002 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0003 sweep='c-static-dly-2'
+RUN_DONE p3-iodelay-a-iodelay_a-0003 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0004 sweep='c-static-dly-6'
+RUN_DONE p3-iodelay-a-iodelay_a-0004 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0005 sweep='c-static-dly-4'
+RUN_DONE p3-iodelay-a-iodelay_a-0005 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0006 sweep='c-static-dly-12'
+RUN_DONE p3-iodelay-a-iodelay_a-0006 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0007 sweep='c-static-dly-8'
+RUN_DONE p3-iodelay-a-iodelay_a-0007 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0008 sweep='c-static-dly-24'
+RUN_DONE p3-iodelay-a-iodelay_a-0008 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0009 sweep='c-static-dly-16'
+RUN_DONE p3-iodelay-a-iodelay_a-0009 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0010 sweep='c-static-dly-48'
+RUN_DONE p3-iodelay-a-iodelay_a-0010 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0011 sweep='c-static-dly-32'
+RUN_DONE p3-iodelay-a-iodelay_a-0011 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0012 sweep='c-static-dly-96'
+RUN_DONE p3-iodelay-a-iodelay_a-0012 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0013 sweep='c-static-dly-64'
+RUN_DONE p3-iodelay-a-iodelay_a-0013 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0014 sweep='c-static-dly-192'
+RUN_DONE p3-iodelay-a-iodelay_a-0014 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0015 sweep='c-static-dly-128'
+RUN_DONE p3-iodelay-a-iodelay_a-0015 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0016 sweep='c-static-dly-129'
+RUN_DONE p3-iodelay-a-iodelay_a-0016 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0017 sweep='c-static-dly-131'
+RUN_DONE p3-iodelay-a-iodelay_a-0017 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0018 sweep='c-static-dly-130'
+RUN_DONE p3-iodelay-a-iodelay_a-0018 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0019 sweep='c-static-dly-134'
+RUN_DONE p3-iodelay-a-iodelay_a-0019 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0020 sweep='c-static-dly-132'
+RUN_DONE p3-iodelay-a-iodelay_a-0020 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0021 sweep='c-static-dly-140'
+BATCH_START batch=p3-iodelay-a shape=iodelay_a level=E1 pid=22052 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t21b
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p3-iodelay-a sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 28 run ids)
+BATCH_RESUME batch=p3-iodelay-a planned=28 already_terminal=0
+RUN_START p3-iodelay-a-iodelay_a-0000 sweep='c-static-dly-0'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0000 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0001 sweep='c-static-dly-1'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0001 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0002 sweep='c-static-dly-3'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0002 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0003 sweep='c-static-dly-2'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0003 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0004 sweep='c-static-dly-6'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0004 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0005 sweep='c-static-dly-4'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0005 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0006 sweep='c-static-dly-12'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0006 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0007 sweep='c-static-dly-8'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0007 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0008 sweep='c-static-dly-24'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0008 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0009 sweep='c-static-dly-16'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0009 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0010 sweep='c-static-dly-48'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0010 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0011 sweep='c-static-dly-32'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0011 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0012 sweep='c-static-dly-96'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0012 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0013 sweep='c-static-dly-64'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0013 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0014 sweep='c-static-dly-192'
+RUN_DONE p3-iodelay-a-iodelay_a-0014 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0015 sweep='c-static-dly-128'
+RUN_DONE p3-iodelay-a-iodelay_a-0015 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0016 sweep='c-static-dly-129'
+RUN_DONE p3-iodelay-a-iodelay_a-0016 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0017 sweep='c-static-dly-131'
+RUN_DONE p3-iodelay-a-iodelay_a-0017 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0018 sweep='c-static-dly-130'
+RUN_DONE p3-iodelay-a-iodelay_a-0018 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0019 sweep='c-static-dly-134'
+RUN_DONE p3-iodelay-a-iodelay_a-0019 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0020 sweep='c-static-dly-132'
+RUN_DONE p3-iodelay-a-iodelay_a-0020 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0021 sweep='c-static-dly-140'
+RUN_DONE p3-iodelay-a-iodelay_a-0021 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0022 sweep='c-static-dly-136'
+RUN_DONE p3-iodelay-a-iodelay_a-0022 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0023 sweep='c-static-dly-152'
+RUN_DONE p3-iodelay-a-iodelay_a-0023 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0024 sweep='dyn-dly-en-true'
+RUN_DONE p3-iodelay-a-iodelay_a-0024 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0025 sweep='dyn-dly-en-false'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0025 verdict=diff
+RUN_START p3-iodelay-a-iodelay_a-0026 sweep='adapt-en-true'
+RUN_DONE p3-iodelay-a-iodelay_a-0026 verdict=aborted
+RUN_START p3-iodelay-a-iodelay_a-0027 sweep='adapt-en-false'
+Unknown attr name for table: IOLOGIC code:133
+RUN_DONE p3-iodelay-a-iodelay_a-0027 verdict=diff
+BATCH_SKIPPED batch=p3-iodelay-a n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-iodelay-a.rows.jsonl
+BATCH_COMPLETE p3-iodelay-a runs=28 ok=0 diff=16 aborted=12
