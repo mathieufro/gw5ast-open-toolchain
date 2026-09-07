@@ -189,3 +189,8 @@
 # without the banked runs. Same named-exception pattern as
 # ae350/wire-map-138c.json above.
 !ae350/wire-map-pipdiff-138c.json
+# the phase-close tree-clean check's RAW `git status --porcelain` output, kept
+# verbatim beside the filtered one so the exclusion list hides nothing (the
+# ratified V11 form). A .txt directly under a slug directory, so it needs the
+# same named exception as chipdb-sha256.txt above.
+!ae350/tree-status-raw.txt
