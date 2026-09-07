@@ -48,3 +48,12 @@ std GW5AST-138C b2df200a0412ef4059968aba4703a93585833fa1ed7a6ef94f401e44bc565f36
 # control builds at the epic/gw5ast138c tip, same shell, for the guard above
 std GW1N-9C-control     6d07813c08119cc7926ce747a802639b20204fccc510afd45d5fe9a1ee032e2e 191840 1.9.12.03
 std GW5AST-138C-control 100ffd8e9d3901da3701849788c96cb4f027639b5e6f93c3c7e4c55d1ed69dc5 821444 1.9.12.03
+#
+# P2 close (2026-09-07): the nextpnr `.bin` the AE350 rows were measured against,
+# and the pair it belongs to (msgpack d6e00bdc / .bin 85701f94 / binary d63e552b).
+# A SECOND, stale copy of the same file (0206b922, 32931799 B, built 02:31) sat under
+# `toolchains/nextpnr/share/nextpnr/himbaechel/gowin/` -- a database nextpnr will load
+# by path without ever checking that its constids still match the binary. Deleted at the
+# phase close; `tools/tests/test_evidence_admissibility_guards.py` now fails if two
+# differing copies of one database appear under the share tree again.
+bin GW5AST-138C 85701f94db2af0dfd04ccf64458b7f9be5dc2ed0c524ac8a890b024afe7af010 33236725 1.9.12.03

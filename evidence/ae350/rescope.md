@@ -104,3 +104,17 @@ RESCOPE-VERDICT (rev 5, after `P2.T25`): `P2.T25` closed at a terminal
 `AE350_RAM` half of `P2.T24` void, because the primitive is not a resource of
 this die; the chipdb, the `.bin` and the installed `nextpnr-himbaechel` are
 byte-unchanged. Runs used 6 of 8.
+
+## Status at the phase close (2026-09-07, `P2.T31`/`P2.T35`/`P2.T36`)
+
+| task | status |
+|---|---|
+| `P2.T38` PLL placement | **DONE.** `CORE-CLK-ROUTE: PLL_L[0] also legal` and `DDR-CLK-ROUTE: PLL_R[0].CLKOUT0 -> DDR_CLK`, both measured. **2 vendor runs**, the last of the box. |
+| `P2.T31` examples | **DONE for the two rows a bitstream can express.** `AE350_RAM` gets no example: the row is a `refused`, so a buildable one cannot exist. 0 vendor runs. |
+| `P2.T37` `EC5` discovery | **VOID since rev 3** and it stays void: the port map came from the `.dat` tables, so no bus was ever left for a presence diff to find. 0 vendor runs. |
+
+RESCOPE-VERDICT (rev 6, after `P2.T31`/`P2.T35`/`P2.T36` — the phase close):
+`P2.T38` closed both clock routes by measurement; `P2.T31` closed clause (d)
+for the two expressible rows and recorded why `AE350_RAM` has no example;
+`P2.T37` stays void. Nothing is left that needs the vendor. Runs used 8 of 8,
+0 remaining.

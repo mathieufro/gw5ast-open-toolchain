@@ -89,20 +89,55 @@ def test_the_map_cites_runs_the_budget_ledger_records():
     assert doc["runs"] and set(doc["runs"]) <= recorded
 
 
+def _rescope_verdicts():
+    """Every `RESCOPE-VERDICT` entry, in file order, with its revision number.
+
+    An entry is the whole paragraph, not its first line: a verdict wraps, and
+    the run count usually lands on a continuation line.
+
+    The re-scope is a ledger, not a snapshot: each task that changes the plan
+    appends a numbered revision and the earlier ones stay as the record of
+    what was believed when. What must not happen is two lines claiming the
+    same revision, or a gap where one was dropped.
+    """
+    out = []
+    lines = RESCOPE.read_text().splitlines()
+    for start, line in enumerate(lines):
+        if not line.startswith("RESCOPE-VERDICT"):
+            continue
+        end = start
+        while end < len(lines) and lines[end].strip():
+            end += 1
+        paragraph = " ".join(lines[start:end])
+        match = re.search(r"rev (\d+)", paragraph)
+        assert match, f"a verdict with no revision number: {paragraph}"
+        out.append((int(match.group(1)), paragraph))
+    return out
+
+
 def test_each_artefact_carries_exactly_one_verdict_line():
     """One artefact, one verdict; a second would be an unreduced review."""
     text = MAP_MD.read_text()
     for prefix in ("WIRE-MAP-VERDICT: ", "WIRE-MAP-T08B-VERDICT: "):
         assert sum(ln.startswith(prefix) for ln in text.splitlines()) == 1, prefix
-    verdicts = [ln for ln in RESCOPE.read_text().splitlines()
-                if ln.startswith("RESCOPE-VERDICT")]
-    assert len(verdicts) == 1
+
+
+def test_the_rescope_revisions_are_numbered_uniquely_and_without_a_gap():
+    """The ledger reads forwards: one line per revision, none missing."""
+    revs = [rev for rev, _line in _rescope_verdicts()]
+    assert revs, "the re-scope carries no verdict at all"
+    assert revs == sorted(set(revs)), f"repeated or out-of-order revisions: {revs}"
+    assert revs == list(range(revs[0], revs[0] + len(revs))), f"a gap: {revs}"
 
 
 def test_the_rescope_stays_inside_the_run_cap_the_ledger_records():
-    """The verdict's run count is the ledger's, and the ledger is inside the cap."""
-    verdict = next(ln for ln in RESCOPE.read_text().splitlines()
-                   if ln.startswith("RESCOPE-VERDICT"))
+    """The current verdict's run count is the ledger's, and it is inside the cap.
+
+    The *current* verdict is the last revision: an earlier one records the
+    count as it stood then, and re-checking it against today's ledger would
+    fail for the ordinary reason that more runs have since been spent.
+    """
+    verdict = _rescope_verdicts()[-1][1]
     spent, cap = (int(g) for g in re.search(r"Runs used (\d+) of (\d+)", verdict).groups())
     assert cap == RUN_CAP
     rows = [ln.split("\t") for ln in BUDGET.read_text().splitlines()[1:] if ln.strip()]

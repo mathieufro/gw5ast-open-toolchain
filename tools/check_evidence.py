@@ -65,7 +65,10 @@ whose `mask_sha256` does not match the checked-in
 inconsistent with its `diff_count` (`ok` with a non-zero cells/attrs/conns
 delta, or `diff` with an all-zero one -- `pips` is a statistic, never a
 verdict term, `D32`); any artefact path that does not resolve on disk or
-whose recorded sha256 does not match the file's actual sha256.
+whose recorded sha256 does not match the file's actual sha256. An artefact
+path may be absolute (the data store, where the artefacts live) or relative
+to `$OTC` or to the row's own slug directory (an in-repo batch log): all
+three spellings resolve, because a path a reader can follow is not a defect.
 """
 import argparse
 import hashlib
@@ -445,6 +448,29 @@ def _unexplained_bits_unjustified(unexplained_bits):
     return any(not _is_justified(item) for item in unexplained_bits)
 
 
+def _resolve_artifact(path, slug_dir, evidence_dir):
+    """Where an artefact path points on disk, absolute or relative.
+
+    An absolute path is taken as written.  A relative one is tried against
+    the slug directory that carries the row, then the evidence root, then
+    `$OTC` itself: rows record in-repo artefacts -- a batch log under
+    `evidence/_runs/` -- the way a reader would type them, relative to the
+    checkout root, and that spelling is portable where an absolute one is
+    not.  Only paths into the data store are absolute by nature (`D41`: the
+    committed tree is text, the artefacts live outside it).  Returns the
+    first candidate that exists, else the slug-relative one so the finding
+    names the path the row's own directory implies.
+    """
+    if os.path.isabs(path):
+        return path
+    roots = [root for root in (slug_dir, evidence_dir, PIPE_ROOT) if root]
+    for root in roots:
+        candidate = os.path.join(root, path)
+        if os.path.isfile(candidate):
+            return candidate
+    return os.path.join(roots[0], path) if roots else path
+
+
 def _diff_count_sum(diff_count):
     if not diff_count:
         return 0
@@ -591,7 +617,7 @@ def check(spec_path, evidence_dir, slugs, exclude_slugs, schema, apicula_root):
                         # "unknown") instead of a live path. Nothing to
                         # resolve on disk and no sha256 to re-check.
                         continue
-                    resolved = path if os.path.isabs(path) else os.path.join(slug_dir, path)
+                    resolved = _resolve_artifact(path, slug_dir, evidence_dir)
                     if not os.path.isfile(resolved):
                         n_missing_artifacts += 1
                         findings.append(
