@@ -1,0 +1,93 @@
+"""`P2.T10`: the chipdb builder agrees with the measured wire map, bit for bit.
+
+`wire-map-138c.json` is the measurement; `apycula.chipdb.fse_create_ae350` is the
+consumer. They are derived from the same tables by different code, so a
+disagreement means one of the two drifted -- which is exactly what `P2.T07`'s
+band filter did once the input table moved.
+"""
+
+import json
+import os
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import paths  # noqa: E402
+
+EVIDENCE = Path(__file__).resolve().parents[2] / "evidence" / "ae350"
+MAP_JSON = EVIDENCE / "wire-map-138c.json"
+DEVICE = "GW5AST-138C"
+
+
+@pytest.fixture(scope="module")
+def block():
+    """The `extra_func['ae350']` entry a real 138C `.dat` produces."""
+    sys.path.insert(0, paths.apicula_root())
+    home = os.getenv("GOWINHOME")
+    if not home:
+        pytest.skip("GOWINHOME is not set")
+    dat_path = Path(home) / "IDE" / "share" / "device" / DEVICE / f"{DEVICE}.dat"
+    if not dat_path.is_file():
+        pytest.skip(f"{dat_path} is absent")
+    from apycula import chipdb, dat_parser
+    from apycula import wirenames as wnames
+
+    chipdb.wire2node.clear()
+    wnames.select_wires(DEVICE)
+    grid = [[0] * 182 for _ in range(109)]
+    dev = chipdb.Device(grid=grid, tiles={0: chipdb.Tile(1, 1, 0)})
+    chipdb.fse_create_ae350(dev, DEVICE, dat_parser.Datfile(dat_path))
+    return chipdb, dev, dev.extra_func[chipdb._AE350_SOC_ANCHOR]["ae350"]
+
+
+def test_chipdb_anchor_is_the_first_column_of_the_measured_band(block):
+    """The bel sits at the band the measurement names, row 0 column 159."""
+    chipdb, _dev, _entry = block
+    assert chipdb._AE350_SOC_ANCHOR == (0, 159)
+
+
+def test_chipdb_portmap_matches_the_wire_map_bit_for_bit(block):
+    """Zero mismatches: same bound set, same wire name on every bound bit."""
+    chipdb, dev, entry = block
+    anchor_row, anchor_col = chipdb._AE350_SOC_ANCHOR
+    bits = json.loads(MAP_JSON.read_text())["bits"]
+    mismatches = []
+    for table, key in (("Ae350SocIns", "ins"), ("Ae350SocOuts", "outs")):
+        pins = entry[key]
+        ports = list(chipdb._ae350_port_bits(
+            chipdb._AE350_SOC_INPUTS if key == "ins"
+            else chipdb._AE350_SOC_OUTPUTS))
+        for measured in bits[table]:
+            port = ports[measured["bit"]]
+            got = pins[port]
+            unmapped = got.startswith(chipdb._AE350_UNMAPPED_PREFIX)
+            if measured["provenance"] == "UNBOUND":
+                if not unmapped:
+                    mismatches.append((table, port, "unbound", got))
+                continue
+            want = (measured["row"], measured["col"], measured["wire"])
+            if unmapped:
+                mismatches.append((table, port, want, got))
+                continue
+            if (anchor_row, anchor_col) == want[:2]:
+                # A tap in the bel's own cell needs no alias.
+                if got != measured["wire"]:
+                    mismatches.append((table, port, want, got))
+                continue
+            node = dev.nodes.get(f"X{anchor_col}Y{anchor_row}/{got}")
+            if node is None or want not in node[1]:
+                mismatches.append((table, port, want, got))
+    assert mismatches == []
+
+
+def test_chipdb_binds_every_bit_the_wire_map_binds(block):
+    """867 of 911: the count the measurement records, reproduced end to end."""
+    _chipdb, _dev, entry = block
+    bits = json.loads(MAP_JSON.read_text())["bits"]
+    expected = sum(1 for entries in bits.values() for b in entries
+                   if b["provenance"] != "UNBOUND")
+    bound = sum(1 for key in ("ins", "outs") for port in entry[key]
+                if port not in entry["unmapped"])
+    assert bound == expected == 867
