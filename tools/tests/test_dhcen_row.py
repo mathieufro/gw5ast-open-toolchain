@@ -15,11 +15,15 @@ Two further deviations, both measured (`evidence/dhcen/lane-138c.md`):
   the comparison, where they are a route of a net the vendor has no
   endpoint-identical twin for. The cross-block half is measured vendor-side
   instead (`gate_probe.py`, block 4 lanes 0 and 2);
-* **lane 3 is `aborted`, and that is the deliverable.** Its logic->HCLK entry
-  is the fabric wire `LSR2` -- the vendor's own bitstream enters lane 3 over
-  fabric too -- and `route_dhcen_net` refuses a DHCE-managed net that is not
-  global end to end. The same design without the `DHCE` routes and packs, so
-  the row records nextpnr policy, not a hole in the model.
+* lane 3 was `aborted` when `P1.T27` measured it -- its logic->HCLK entry is
+  the fabric wire `LSR2`, and `route_dhcen_net` refused a DHCE-managed net
+  that is not global end to end -- and `P1.F3` closed it: the entry lanes are
+  carried per block in the chipdb and `is_relaxed_sink` lifts the global
+  filter for exactly those sinks. The slug therefore holds **two** sweeps of
+  the same four lanes, and both are kept: `p1t27-dhce-e1b` is the record of
+  what nextpnr did before the fix, `p1f3-d` is the row that closes the
+  primitive. The assertion below is per batch, because a count over the shape
+  would have to be edited every time a lane is re-measured.
 """
 import json
 import os
@@ -32,11 +36,12 @@ RUNS = os.path.join(DHCEN_DIR, "runs.jsonl")
 SUMMARY = os.path.join(DHCEN_DIR, "summary.md")
 TABLE = os.path.join(OTC_ROOT, "evidence", "evidence-table.md")
 
-#: The shape `P1.T27` runs, the four lanes it sweeps, and the one lane the
-#: open flow cannot reach.
+#: The shape `P1.T27` runs and the four lanes it sweeps.
 SHAPE = "clocking_dhce"
 POINTS = {"b5l0", "b5l1", "b5l2", "b5l3"}
-GLOBAL_ONLY_GAP = {"b5l3"}
+#: The batch that closes the primitive.  `p1t27-dhce-e1b` stays in the slug as
+#: the pre-fix record -- a measurement is never deleted to satisfy a count.
+CLOSING_BATCH = "p1f3-d-"
 
 #: UG306E p.19 names three consumers a DHCE may gate; the summary has to say
 #: which of them this row does and does not speak for.
@@ -60,13 +65,13 @@ def _rows():
 
 def test_dhcen_row_closes():
     rows = [r for r in _rows() if r.get("shape") == SHAPE]
-    assert len(rows) == 4, f"{len(rows)} {SHAPE} rows, expected 4"
-    assert {r["sweep"]["site"] for r in rows} == POINTS
-    for r in rows:
+    closing = [r for r in rows if r["run_id"].startswith(CLOSING_BATCH)]
+    assert len(closing) == 4, f"{len(closing)} {CLOSING_BATCH} rows, expected 4"
+    assert {r["sweep"]["site"] for r in closing} == POINTS
+    # All four lanes close: `P1.F3` removed the one gap `P1.T27` recorded.
+    assert not [r for r in closing if r["verdict"] != "ok"]
+    for r in closing:
         rid = r["run_id"]
-        if r["sweep"]["site"] in GLOBAL_ONLY_GAP:
-            assert r["verdict"] == "aborted", f"{rid}: lane 3 is the gap"
-            continue
         assert r["verdict"] == "ok", f"{rid}: verdict {r['verdict']}"
         assert r["level"] == "E1", f"{rid}: level {r['level']}"
         assert r["primitive"] == "DHCE", f"{rid}: primitive {r['primitive']}"

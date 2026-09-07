@@ -123,3 +123,16 @@ routes no external net into either bridge cell for them either. What would
 close it is named in `input-side-138c.md` §6, together with the `PCLK*` half
 of the input multiplexer, which is still driverless and which no bitstream in
 this campaign selects.
+
+## `P1.T38` second pass — the row closes as a refusal, not at `E0`
+
+**Full artefact: `refusal-138c.md`.** Re-run on the pair this phase lands on,
+all three sweep points: `BATCH_COMPLETE p1t38c-dcs runs=3 ok=0 diff=0
+aborted=3`, `BATCH_SKIPPED … refused=3`, each row `verdict: "refused"` with
+`gowin_pack`'s exact words. `P1.F4`'s `reject_untraced_dcs_control` (`D30`)
+refuses every design that drives `CLKSEL`/`SELFORCE`, which is every design
+the `clocking_dcs` shape builds — so it refuses exactly what `P1.F2` closed at
+`E0`. The refusal is right and is kept: `E0`/`E1` mask routing (`D32`) and the
+`CLKSEL`/`SELFORCE` fuses are pip fuses, so the equivalence check could not
+see the untraced part. Status is `refused:<named error>` (`A12`); `S9` stays
+NOT REACHED. The vendor half of each run completed and left its `.fs`.

@@ -101,3 +101,12 @@ Attribution, scoped the way `V10` scopes it (never `--all`):
 upstream/master..epic/gw5ast138c` returns **0** in apicula,
 `upstream/main..epic/gw5ast138c` returns **0** in nextpnr, and the whole
 `open-toolchain` history returns **0**.
+
+## Second pass (`P1.T38`, 2026-09-07)
+
+Four vendor runs added, all `dcs`: `p1t38c-dcs-q1` (1, the single-point
+confirmation that `P1.F4`'s guard disturbs the design) and `p1t38c-dcs` (3,
+all sweep points on the landing pair). Cumulative **248** of the 290 the
+`D62` box allows for clocking. Every one of the four is `verdict: refused`
+with the packer's exact words, and the vendor half of each completed and left
+its `.fs` — the refusal is measured on both sides, not asserted.

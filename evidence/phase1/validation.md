@@ -262,3 +262,208 @@ things were red and were fixed forward rather than reported around.
 4. **Four false watchdog deaths** — see step 10.
 5. **The gate was red three times** before it was green; each fix is its own
    commit. See `phase-report.md` `## The gate`.
+
+---
+
+# Second pass, 2026-09-07 (`P1.T38`)
+
+Re-run in full on the pair the phase lands on — apicula `b31f05d`
+(`epic/gw5ast138c`, `P1.F1`-`P1.F4` merged), nextpnr `0882cd4c`,
+open-toolchain `main` — after the `C15` fixes. Nothing above is rewritten;
+this section records what the same eleven steps say now.
+
+**The pair.** Rebuilt from those tips because `P1.F4` changed chipdb keys:
+
+| half | sha256 | moved? |
+|---|---|---|
+| `apycula/GW5AST-138C.msgpack.xz` | `315c02d8…` | yes, from `6e95b906…` |
+| `chipdb-GW5AST-138C.bin` | `0206b922…` | **no** — byte-identical |
+| `nextpnr-himbaechel` | `f029437e…` | yes (rebuilt from `0882cd4c`) |
+
+The `.bin` not moving while the msgpack did is itself the measurement:
+`gowin_arch_gen.py` does not consume `control_wires_traced` or the
+clock-plane halves table, so the two halves of the "pair" do not move
+together and provenance must record all three sha256s (`A14`).
+
+## The DCS confirmation run — F4 **did** disturb it
+
+The step this pass was asked to run first was "the existing DCS design through
+the new pair, to confirm `P1.F4`'s `control_wires_traced` key and refusal did
+not disturb it". **It disturbed it, and the disturbance is correct.**
+
+```
+BATCH_COMPLETE p1t38c-dcs-q1 runs=1 ok=0 diff=0 aborted=1
+Exception: DCS CLKSEL0, CLKSEL1, CLKSEL2, CLKSEL3, SELFORCE is driven on a
+device whose DCS control wires have never been traced …
+```
+
+`P1.F4`'s `reject_untraced_dcs_control` refuses every design that drives
+`CLKSEL`/`SELFORCE` — which is every design the `clocking_dcs` shape builds,
+and therefore exactly the three sweep points `P1.F2` closed at `E0`. The full
+re-run confirms it on all three:
+
+```
+BATCH_COMPLETE p1t38c-dcs runs=3 ok=0 diff=0 aborted=3
+BATCH_SKIPPED  batch=p1t38c-dcs n=0 refused=3
+```
+
+The refusal is kept, not weakened, and the row's status becomes
+`refused:<named error>` (`A12`, `evidence/dcs/refusal-138c.md`): `E0`/`E1`
+compare cells, attributes and connectivity after the don't-care mask and the
+`CLKSEL`/`SELFORCE` routing is pip fuses, never a verdict term (`D32`) — so
+the equivalence check was structurally unable to see the unverified part. The
+vendor half of each run completed and left its `.fs`, which is the oracle
+artefact `D30` requires beside a refusal.
+
+Two defects were found and fixed while doing it (`A13`): `gowin_pack` raised a
+bare `Exception` for a refusal, and the harness recorded any non-zero open
+flow as `aborted` with only a returncode map — so a deliverable was thrown
+away and a refusal was indistinguishable from a crash. Now
+`gowin_pack.PackRefused` → `REFUSED: <text>` on stderr → exit `3`,
+`openflow.named_refusal` reads it back, and the row carries
+`verdict: "refused"` with the exact words. Four red-verified tests in
+`tests/test_pack_refusal_is_a_verdict.py`.
+
+## The one full gate per repo
+
+Foreground, once, then once more after fixing forward. **Red twice**, both
+caused by `P1.F3` landing after the first pass's gate:
+
+| red | cause | fix |
+|---|---|---|
+| apicula heavy | `test_clkdiv_routes_138c`: nextpnr exit `-11` (SIGSEGV) — the pinned `$DATASTORE/chipdb/p1t08d/.bin` predates this pair's constids | repinned to the pair's own `.bin` (`0206b922…`); passes in 18 s |
+| open-toolchain fast | `test_dhcen_row.py::test_dhcen_row_closes` asserted 4 `clocking_dhce` rows and "lane 3 is `aborted`" — `P1.F3` closed lane 3 at `E1` and added a second four-lane sweep, so the slug holds 8 | assertion scoped to the closing batch (`p1f3-d`), lane 3 required `ok`/`E1`; `p1t27-dhce-e1b` kept as the pre-fix record |
+
+Green, second run:
+
+```
+apicula          GATE full: ok, 2 checks   372 passed / 6 skipped / 1 xfail fast (32.7 s)
+                                           53 passed / 1 xfail heavy (414.2 s)   wall 466 s
+nextpnr          GATE full: ok             5 checks (hclk-6block 2/2, arch-gen determinism,
+                                           the DCS-spine checks)                 wall  41 s
+open-toolchain   GATE full: ok, 3 checks   84 tool tests; EVIDENCE ok: 174 rows, 0 pending,
+                                           0 blank, 0 missing artifacts; CRITERIA ok       wall   9 s
+tools/gate_status.py                       exit 0, every repo's newest marker PASS
+```
+
+## The eleven steps
+
+| step | criterion | exit | first pass | second pass |
+|---|---|---|---|---|
+| 1 | `V14` structural criteria | 0 | FAIL (6/7) | **PASS — `CRITERIA ok: 7/7`**, and `--phase 1` is **9/9** |
+| 2 | the `KeyError` traps | 0 | PASS | PASS (`ihclk 38`, `locs 6`) |
+| 3 | `V16` named refusal | 0 | PASS | PASS (1 passed, 453 deselected) |
+| 4 | `V12a --classes pll` | 0 | PASS | PASS (recorded absence, `NO-DATA` = 1, checkpoint names it) |
+| 5 | the phase's unit suite | 0 | PASS | PASS (25 passed, 2 xfailed, 42.3 s) |
+| 6 | `S3` family regression | 0 | PASS | PASS, one sha256 moved and is explained below |
+| 7 | evidence admissibility | 0 | PASS on the tool, FAIL as written | **PASS on both halves** under `A4`'s wording — see below |
+| 8 | mask integrity | 0 | PASS | PASS (`distinct mask_sha256: 1`, equal to the file) |
+| 9 | `V20` storage hygiene | 0 | PASS | PASS (three `OK-` lines) |
+| 10 | watchdog evidence | 0 | PASS, amended | PASS, amended — every exception enumerated below |
+| 11 | budget box | 0 | PASS | PASS (`cumulative 244` ≤ 290; checkpoint present) |
+| E2E | one design, both flows, `E1` | 0 | PASS (cited) | PASS (`p1f3-e2e`, 18/18, `EQUIV E1 ok`; cited, not re-run) |
+
+### Step 1, in full
+
+```
+$ python $OTC/tools/check_criteria.py $PIPE/spec-primitives.md $OTC/evidence \
+      --rows "PLL,HCLK block,CLKDIV,CLKDIV2,DHCE,DQCE,DCS"
+clause-d: deferred to Phase 7 (D65)
+CRITERIA ok: 7/7                                                    # exit 0
+
+$ python $OTC/tools/check_criteria.py $PIPE/spec-primitives.md $OTC/evidence --phase 1
+PHASE-REPORT phase1/phase-report.md: 2 REACHED, 2 backed, 0 unlinked, 0 unbacked
+clause-d: deferred to Phase 7 (D65)
+CRITERIA ok: 9/9                                                    # exit 0
+```
+
+`DCS` is the row that moved, and it moved to `refused:<named error>` — a
+terminal status DONE-STD admits with clauses (b) and (d) waived, backed by
+three `refused` evidence rows carrying the packer's words, nine unit tests
+(`test_gw5ast138c_dcs_control_wires.py` ×5,
+`test_pack_refusal_is_a_verdict.py` ×4) and the vendor `.fs` of each run. It
+did **not** move by being made to pass: `S9` still says all three of DHCE,
+DQCE and DCS are equivalence-closed, and `S9` is **NOT REACHED**.
+
+### Step 6, and the 25A sha256 that moved
+
+```
+GW5AST-138C  315c02d8e260a80072afee536d31bb175d2a9fd91dd8dac25e3f80c9a8e1673e
+GW5A-25A     60f1ba427f964feab3048f5dca82dc075acf9374a456476919202626d1335564
+GW5AT-60B    615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8
+```
+
+No `FAIL` line; three sha256s (`installs_available: 1`). `GW5AST-138C`
+reproduces the msgpack the installed `.bin` pair was built from, byte for
+byte. `GW5AT-60B` is unchanged from `P0.T40` and the first pass. `GW5A-25A`
+moved from `5ad9184d…` and the step requires that to be explained — the two
+chipdbs were loaded and diffed field by field. **One field differs,
+`extra_func`, and every difference is an *added* key; no key is removed and no
+value changes:**
+
+* `extra_func[*]['pll']['primitive']` on all six PLL entries (`D96`: the cell
+  type is data now, not a device gate) — already explained at the first pass;
+* `extra_func[*]['dcs'][*]['control_wires_traced'] = True` on all four 25A DCS
+  (`P1.F4`, `C4#2`). `True` is the right value for the 25A: its DCS control
+  wires *are* hand-traced (`gw5_dcs_inputs`), which is why the 138C refusal
+  does not touch it.
+
+### Step 7, and the `aborted` grep — resolved honestly
+
+```
+python $OTC/tools/check_evidence.py … --slug plla … --slug dcs
+RUNS: 7 files, 180 rows, 180 valid
+EVIDENCE ok: 174 rows, 0 pending, 0 blank, 0 missing artifacts       # exit 0
+```
+
+The blueprint's second command expects `grep -c '"verdict": "aborted"'` to
+return `0` per file. It returns 74 (`plla`), 2 (`hclk`), 1 (`dhcen`) = **77**.
+The first pass called this "FAIL as written" and owed an amendment; that
+amendment is `A4`, and the question this pass was asked is which of the two
+readings is true. Measured, over every row in the tree:
+
+* **0** `aborted` rows have an empty `notes`. All 77 carry a reason.
+* **76** are vendor-only campaign rows: `P1.T19` site tracing (12), the
+  `P1.T22` attrid/attrval map (12), the `P1.T23`/`P1.T41` PLL sweeps whose
+  open half had no PLL model yet (48), the `P1.T11` structural placement
+  proofs (2), and two more of the same shape. Each states the vendor result it
+  carries; the open half could not run, which is the measurement, not a
+  failure of it.
+* **1** is a real open-flow failure: `p1t27-dhce-e1b-clocking_dhce-0003`,
+  DHCE lane 3, `nextpnr` exit 125. It was **closed** by `P1.F3` —
+  `p1f3-d-clocking_dhce-0003` is `E1`, `ok` — and is kept as the pre-fix
+  record. A superseded record, not an open defect.
+
+**Verdict: exempt, not a defect**, on `spec.md` `A4`'s wording ("no `aborted`
+row **without a reason in `notes`**"), which supersedes the blueprint's
+literal "0". Recorded as `A15`. `V7` **PASSES**.
+
+The step's own script has a separate defect worth its amendment: it indexes
+`row['mask_sha256']` unconditionally, and only rows produced by an
+equivalence comparison carry that field (99 of 209 do; the other 110 are
+chipdb builds, PLL traces, calibration and timing rows). Counted over the rows
+that have it: **`distinct mask_sha256: 1`**, equal to the file's own sha256 —
+step 8 passes and the mask was not widened (`A16`).
+
+### Step 10, every exception enumerated
+
+39 detached batches have a watchdog log. Exceptions, each explained:
+
+| batch | shape of the exception | truth |
+|---|---|---|
+| `p1t29-nextpnr-build`, `t33-calibration`, `t33-recovery`, `t34-calib` | no `BATCH_COMPLETE` | not batches — their markers are `NEXTPNR_BUILD_COMPLETE` and the Phase-0 calibration equivalents |
+| `p1-dhcen-trace-1` | no `BATCH_COMPLETE` for its own id | the trace campaign writes one marker for the whole set: `BATCH_COMPLETE p1-dhcen-trace runs=9 ok=8 diff=0 aborted=1` |
+| `p1t15-clkdiv2-e1`, `t34-calib` | `WATCHDOG_ARMED` more than once | resumed batches — the watchdog is armed once per launch, which is the contract |
+| `p1-hclk-probe`, `p1t29-dce`, `p1t31-dcs` | `WATCHDOG_DEAD` | the three **false** deaths the first pass diagnosed and fixed with the ten-second exit grace; each has its own `BATCH_COMPLETE` seconds earlier |
+| `p1t14-trial3` | `WATCHDOG_STALL` | genuine, and paired with `WATCHDOG_COMPLETE` — the pairing the step asks for |
+| `p1f2-dcs-e0b` | `WATCHDOG_STALL` | genuine (the `sel4` run took 6 min against a 5 min stall threshold) and paired: `WATCHDOG_COMPLETE … saw BATCH_COMPLETE (clean exit)` two seconds later |
+
+No unexplained stall line. **PASS**, amended as at the first pass (`A8`).
+
+## Amendments this pass owes `spec.md`
+
+`A12` (the `DCS` row closes `refused:<error>`), `A13` (a named refusal is a
+verdict, not an abort), `A14` (the pair's three halves do not move together),
+`A15` (`V7` is settled by `A4`; no defect), `A16` (step 8's script assumes
+every row carries `mask_sha256`). All five are written into `spec.md`
+`## Amendments`.

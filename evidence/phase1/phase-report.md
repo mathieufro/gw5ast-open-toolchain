@@ -256,3 +256,159 @@ cd $FL/apicula && python -m fuzz.gw5ast138c.harness \
 Installed pair used by every row in this phase: `nextpnr-himbaechel`
 `cfc97099…`, `chipdb-GW5AST-138C.bin` `0a413537…`,
 `apycula/GW5AST-138C.msgpack.xz` `8bb0932e…`.
+
+---
+
+# Second pass, 2026-09-07 (`P1.T38`)
+
+The phase closes here. The first pass above landed the branches and ran the
+gate; `P1.F1`-`P1.F4` then paid off the Phase-1 gestalt (`impl/gestalt-p1.md`)
+and the `C15` gaps. This section says where the three exit criteria stand on
+the pair the phase actually lands on, what is still open, and what it cost.
+
+## 1. Exit criteria, second pass
+
+### `S7` — the 138C PLL: **REACHED**
+
+Unchanged from the first pass and strengthened by `P1.F3`. 12 bels; the
+five-tuple `(800., 1000., 5.079, 1300., 650.)`; the charge pump measured and
+fitted (45/45 points) and now **refusing** what it never measured
+(`PllPumpUnmeasured`, `P1.F1`/gestalt `B5`); one PLL design at `EQUIV E1 ok`,
+0/0/0, `c1`/`c2` ok; the `DYN_*` selects encoded from the cell. Both `P1.T40`
+output gaps closed by `P1.F3`: `PLL_L[0].CLKOUT0` drives an HCLK lane
+(`p1f3-a`) and a bottom-edge site clocks fabric (`p1f3-b`), each `EQUIV E1 ok`
+with 0 unexplained bits.
+
+### `S8` — HCLK / CLKDIV / CLKDIV2: **REACHED**
+
+Six HCLK blocks, 2 top / 4 bottom, `gw5_ihclk_wire_num` 38, `HAS_5A_HCLK`
+set, no `KeyError` path left. `CLKDIV` `E1` over nine `DIV_MODE` values.
+`CLKDIV2` `E0+hw-pending` by construction (`EC9`, no fuse to recover), and the
+recovery rule now compares the **lane** (`P1.F1`/gestalt `B3`), so a `CLKDIV`
+left at its `DIV_MODE=2` default on another lane no longer recovers a
+`CLKDIV2` for free. The `HCLK block` row is closed by the E2E rows, which now
+live in `evidence/hclk/` where its Evidence cell points (`P1.F1`/gestalt
+`B1a`). Four independent global clock nets route (`p1f3-c`).
+
+### `S9` — DHCE / DQCE / DCS: **NOT REACHED** (two of three halves closed)
+
+* **DHCE — closed.** All four lanes at `E1` (`p1f3-d`, 0/0/0, `c1`/`c2` ok).
+  Lane 3's `LSR2` fabric entry is carried per block in the chipdb and
+  `is_relaxed_sink` lifts the global filter for exactly those sinks. The gate
+  fuse of a `DHCEN_USED` placeholder is now asserted in `c1`
+  (`P1.F4`/gestalt `B4`).
+* **DQCE — closed at `E0`.** Both quadrants, `p1t29-dqce-e1d`, `EQUIV E0 ok`,
+  0/0/0, `c1`/`c2` ok. `E1` is structurally unattainable (`EC9`: a DQCE has no
+  CLS address).
+* **DCS — closes as `refused:<named error>`** (`A12`,
+  `evidence/dcs/refusal-138c.md`), which is a terminal status DONE-STD admits
+  but `S9` does not. `P1.F4`'s `reject_untraced_dcs_control` refuses every
+  design that drives `CLKSEL`/`SELFORCE` — every design that uses a DCS for
+  what a DCS is — and that is exactly the design `P1.F2` closed at `E0`.
+  Re-run on the landing pair, all three sweep points: `p1t38c-dcs`,
+  `refused=3`, packer's exact text in `notes`, vendor `.fs` beside each. The
+  guard is right and stays: `E0`/`E1` mask routing (`D32`) and the
+  `CLKSEL`/`SELFORCE` fuses are pip fuses, so the equivalence check could not
+  see the unverified part.
+
+`check_criteria.py --phase 1` is `CRITERIA ok: 9/9`, exit 0 — the DONE-STD
+roll-up. `S9` is a stronger claim than DONE-STD and it is **not** met.
+
+## 2. Gaps carried out of this phase
+
+| gap | blocks `S9`? | why |
+|---|---|---|
+| `SELFORCE` / `CLKSEL[0..3]` **unverified** on the 138C | **yes** | No vendor bitstream in either campaign routes an external net into a bridge cell for them, so the model carries pre-5A wire names. `S9`'s words are "all three are `E1`-equivalent"; a row that closes `refused:<error>` is not equivalent to anything, so this gap is what keeps `S9` NOT REACHED. Closing it needs one campaign: a vendor design that drives `CLKSEL` dynamically, traced (`input-side-138c.md` §6). |
+| `PCLK*` half of the DCS input multiplexer **driverless** | **no** | `get_clock_ins` builds the entries; `fse_create_5a138_clocks` never turns them into nodes. No bitstream in either campaign selects a `PCLK*` source, so nothing measured depends on it and no `S9` clause names it. A named, unexercised gap — it rides along with the `CLKSEL` campaign. |
+| blocks 0/1 share one SPINE row | no | no block↔lane bijection measured for that pair; `S8` does not ask for one. |
+| eleven of twelve PLL sites reach the plane through a logic-to-clock gate | no | measured and recorded (`hclk-entry-138c.md`); `S7` asks for a working PLL, which it has. |
+| `Fpfd` above 50 MHz unmeasured | no | now a **named refusal** rather than a silent extrapolation (`B5`). |
+| `C4` residues #3-#9 (hidden constants) | no | recorded follow-ups for the upstream PR, not phase criteria. |
+
+## 3. Deviations, as amendment lines for `spec.md`
+
+`A12` — the `DCS` row's terminal status is `refused:<error>`, not `E0`;
+`P1.F2` and `P1.F4` were mutually inconsistent and the refusal wins.
+`A13` — a named packer refusal was recorded as `aborted`, with the packer's
+words discarded; `PackRefused` + `REFUSED:`/exit 3 + `openflow.named_refusal`
++ the harness verdict, 4 red-verified tests.
+`A14` — the installed pair's three halves do not move together: `P1.F4`'s
+chipdb keys moved the msgpack (`6e95b906…` → `315c02d8…`) while the `.bin`
+came out byte-identical (`0206b922…`), because `gowin_arch_gen.py` does not
+consume them. Provenance must record all three sha256s.
+`A15` — `V7`'s "0 `aborted` rows" is settled by `A4`: 77 rows, 0 without a
+reason, 76 vendor-only, 1 superseded by `P1.F3`. No defect.
+`A16` — Validation step 8's script assumes every row carries `mask_sha256`;
+only equivalence rows do (99 of 209). Measured over those: one distinct value,
+equal to the file's own sha256.
+
+All five are written into `spec.md` `## Amendments`.
+
+## 4. The gate, second pass
+
+Red twice — both because `P1.F3` landed after the first pass's gate — and
+fixed forward, then green in one run:
+
+| red | cause | fix |
+|---|---|---|
+| apicula heavy | `test_clkdiv_routes_138c`, nextpnr exit `-11`: the pinned `p1t08d` `.bin` predates this pair's constids | repinned to the pair's `.bin` (`0206b922…`) |
+| open-toolchain fast | `test_dhcen_row.py` asserted 4 `clocking_dhce` rows and "lane 3 is `aborted`"; `P1.F3` closed lane 3 and added a second sweep | assertion scoped to the closing batch `p1f3-d`, lane 3 required `ok`/`E1`, the pre-fix rows kept |
+
+Green: apicula `GATE full: ok, 2 checks` (372 passed / 6 skipped / 1 xfail
+fast in 32.7 s; 53 passed / 1 xfail heavy in 414.2 s; 466 s wall), nextpnr
+`GATE full: ok` (5 checks, 41 s), open-toolchain `GATE full: ok, 3 checks`
+(84 tool tests; `EVIDENCE ok: 174 rows, 0 pending, 0 blank, 0 missing
+artifacts`; `CRITERIA ok`; 9 s). `tools/gate_status.py` exits 0.
+
+## 5. Reproduction, second pass
+
+```sh
+export FL=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84
+export OTC=$FL/open-toolchain
+export PIPE=/Users/alex/fine-line/.atelier/pipelines/2026-09-03-open-toolchain-gw5ast-7e84
+export DATASTORE=/Users/alex/fine-line-data/open-toolchain-gw5ast
+export GOWINHOME=/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+export DYLD_LIBRARY_PATH=$GOWINHOME/IDE/lib
+export DYLD_FRAMEWORK_PATH=$GOWINHOME/IDE/lib
+source /Users/alex/fine-line/vendor/venv/bin/activate
+
+# the pair, from the epic tips (apicula b31f05d, nextpnr 0882cd4c)
+cd $FL/nextpnr && cmake --build build -j8
+cd $FL/apicula && python -m apycula.chipdb_builder GW5AST-138C
+PYTHONPATH=$FL/apicula python \
+  $FL/nextpnr/himbaechel/uarch/gowin/gowin_arch_gen.py -d GW5AST-138C \
+  -o $FL/nextpnr/build/bba-gw5ast138c/chipdb-GW5AST-138C.bba
+$FL/nextpnr/build/bba/bbasm --le \
+  $FL/nextpnr/build/bba-gw5ast138c/chipdb-GW5AST-138C.bba \
+  $DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin
+cp $FL/nextpnr/build/nextpnr-himbaechel $DATASTORE/toolchains/nextpnr/bin/
+cp $FL/apicula/apycula/GW5AST-138C.msgpack.xz $DATASTORE/chipdb/std/
+cp $DATASTORE/chipdb/std/chipdb-GW5AST-138C.bin $DATASTORE/chipdb/p1t08d/
+
+# the DCS refusal, all three sweep points (4 vendor runs incl. the pilot)
+cd $FL/apicula && python -m fuzz.gw5ast138c.harness \
+    --shape clocking_dcs --level E0 --batch-id p1t38c-dcs-repro \
+    --design-dir $DATASTORE/batch/p1t38c-dcs-repro
+
+# the one full gate per repo
+cd $FL/apicula        && GATE_SCOPE=full make gate
+cd $FL/nextpnr        && GATE_SCOPE=full make gate
+cd $FL/open-toolchain && GATE_SCOPE=full make gate && python tools/gate_status.py
+
+# the phase's criteria
+python $OTC/tools/check_criteria.py $PIPE/spec-primitives.md $OTC/evidence --phase 1
+```
+
+Pair every row in this section was measured on: `nextpnr-himbaechel`
+`f029437eb33f356176f6854e0da978a08bee80d211c097be1ff8947059fe587a`,
+`chipdb-GW5AST-138C.bin`
+`0206b922d5e08e025eb3ab7728bdfa135930d299faed9986a3f12c93d4d82819`,
+`apycula/GW5AST-138C.msgpack.xz`
+`315c02d8e260a80072afee536d31bb175d2a9fd91dd8dac25e3f80c9a8e1673e`.
+
+## 6. Runs
+
+**248** vendor-oracle runs cumulative against the `D62` box of 290 — 244 at the
+first pass, 4 added here (`p1t38c-dcs-q1` 1, `p1t38c-dcs` 3), all `dcs`, all
+`refused`. `evidence/_budget/clocking-runs.tsv`,
+`evidence/_budget/clocking-checkpoint.md` `## Second pass`.

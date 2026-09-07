@@ -1,0 +1,12 @@
+01:38:25 BATCH_START batch=p1t38c-dcs-q1 shape=clocking_dcs level=E0 pid=8601 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/batch/p1t38c-dcs-q1
+01:39:07 BATCH_HEAD selftest --inject-one-fuse: ok
+01:39:21 BATCH_HEAD selftest --unpacker-completeness: ok
+01:39:21 BATCH_HEAD selftest --probe-mask-classes: ok
+01:39:22 BATCH_HEAD gw_sh pre-flight: ok
+01:39:22 BATCH_CHIPDB batch=p1t38c-dcs-q1 sha256=0206b922d5e08e025eb3ab7728bdfa135930d299faed9986a3f12c93d4d82819
+01:39:22 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+01:39:22 BATCH_RESUME batch=p1t38c-dcs-q1 planned=1 already_terminal=0
+01:39:22 RUN_START p1t38c-dcs-q1-clocking_dcs-0000 sweep='q1'
+01:39:39 RUN_DONE p1t38c-dcs-q1-clocking_dcs-0000 verdict=aborted
+01:39:39 BATCH_SKIPPED batch=p1t38c-dcs-q1 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p1t38c-dcs-q1.rows.jsonl
+BATCH_COMPLETE p1t38c-dcs-q1 runs=1 ok=0 diff=0 aborted=1
