@@ -419,3 +419,29 @@ This is **not** a claim that the 138C has no IO timing anywhere: `read_tm`
 stops before chunk 3, the device-specific payload. Whether that payload carries
 a real IO table is Phase 6's question (`S17b`); this phase must not widen the
 break to find out.
+
+## L0-IO-ARCS (`P3.T34`, this phase's own SDF)
+
+The run of record for the exit criterion, against a vendor SDF from this
+phase's `p3-oddr-iddr` batch (`-device_version C`, default worst-case
+condition, `max` field), exit `0`:
+
+```
+python $OTC/tools/check_timing_l0.py --classes io \
+  --sdf $DATASTORE/p3t12/p3-oddr-iddr-io_basic-0000/run/impl/pnr/run.sdf \
+  --chipdb $FL/apicula/apycula/GW5AST-138C.msgpack.xz
+```
+
+```
+L0 ok: 0/0 arcs within ±10%, 0 exceptions listed
+(VOLTAGE 0.93:0.90:0.87) (PROCESS "best=0.65: nom=1.0: worst=1.8") (TEMPERATURE 85:25:0)
+grade: C1/I0 -- derived (1.25 x C2/I1, P0.T35 -- NOT measured)
+io: 0 chipdb arcs and 0 nextpnr arcs BY MEASUREMENT (P3.T32) -- the .tm blocks at 0x3278 (IO buffers) and 0x306c (IREG/OREG) are byte-identical to GW2A-18/-55/GW2AR-18, i.e. inherited and never characterised for GW5A, and the vendor's own 138C SDF contradicts them: OBUF I->O is 2.528/2.737 ns against a whole-block maximum of 0.819 ns, and no clock-to-out candidate lands within +/-10% of ODDR CLK->Q 1.160/1.146 or IDDR CLK->Q0/Q1 0.572/0.486. Every vendor IO/IOLOGIC arc below is therefore reported as unmapped rather than compared against an invented model. See apicula/doc/timing-io-iologic.md.
+unmapped: 5 SDF arcs have no nextpnr model arc: ODDR/dut CLK->Q0, ODDR/dut CLK->Q1, IBUF/clk_ibuf I->O, IBUF/din_ibuf I->O, OBUF/dout_obuf I->O
+```
+
+`0/0` and `0 exceptions` is the same measured verdict `P3.T33` recorded against
+the `p3t11/iddr-pair` SDF: the band is empty because the model publishes no IO
+arc at all, not because every arc passed. The two contract tests are
+`tools/tests/test_v12a_io_138c.py::test_v12a_io_output_contract` and
+`::test_v12a_io_exceptions_enumerated`, which run this literal command.
