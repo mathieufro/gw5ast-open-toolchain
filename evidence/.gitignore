@@ -162,3 +162,12 @@
 !plla/sweep-c-138c.json
 !plla/gen_sites_e1_138c.py
 !plla/sites-e1-138c.json
+
+# the P2.T02/T03 AE350 measurements: the machine-readable port inventory
+# (149 ports, 911 bits, four sources reconciled) and the McuIns/McuOuts dump
+# whose emptiness is the whole reconciliation verdict.
+# tools/tests/test_ae350_evidence.py reads both, so on a fresh checkout the
+# tests fail while they are denied by the leading `*`. Same named-exception
+# pattern as plla/ and dhcen/ above -- .json is not covered by "*.md".
+!ae350/port-inventory.json
+!ae350/mcu-tables.json

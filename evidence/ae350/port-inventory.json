@@ -1,0 +1,1378 @@
+{
+ "counts": {
+  "distinct_names": 149,
+  "published_ports": 149,
+  "vo_demo_ports": 149,
+  "vo_ports": 149,
+  "xml_bits": 911,
+  "xml_parameters": 0,
+  "xml_ports": 149
+ },
+ "discrepancies": [],
+ "ports": [
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "POR_N",
+   "tied_to": "POR_RSTN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "HW_RSTN",
+   "tied_to": "HW_RSTN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CORE_CLK",
+   "tied_to": "CORE_CLK",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_CLK",
+   "tied_to": "DDR_CLK",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "AHB_CLK",
+   "tied_to": "AHB_CLK",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_CLK",
+   "tied_to": "APB_CLK",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DBG_TCK",
+   "tied_to": "TCK_IN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "RTC_CLK",
+   "tied_to": "RTC_CLK",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CORE_CE",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "AXI_CE",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_CE",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "AHB_CE",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_CE",
+   "tied_to": "VCC, GND, VCC, VCC, GND, VCC, GND, VCC",
+   "width": 8
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB2AHB_CE",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SCAN_TEST",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SCAN_EN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "GP_INT",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 16
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DMA_REQ",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 8
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "WAKEUP_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TEST_CLK",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TEST_MODE",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TEST_RSTN",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "ROM_HRDATA",
+   "tied_to": "u_RiscV_AE350_SOC/mem_RAMOUT_3937_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3810_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3683_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3556_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3429_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3302_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3175_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_3048_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2921_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2794_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2667_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2540_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2413_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2286_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2159_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_2032_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1905_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1778_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1651_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1524_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1397_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1270_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1143_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_1016_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_889_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_762_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_635_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_508_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_381_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_254_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_127_G[0]_6 , u_RiscV_AE350_SOC/mem_RAMOUT_0_G[0]_6",
+   "width": 32
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "ROM_HREADY",
+   "tied_to": "u_RiscV_AE350_SOC/ROM_HREADY",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "ROM_HRESP",
+   "tied_to": "u_RiscV_AE350_SOC/ROM_HRESP",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PRDATA",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 32
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PREADY",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PSLVERR",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HRDATA",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 32
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HREADYIN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HRESP",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HADDR",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 32
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HBURST",
+   "tied_to": "GND, GND, GND",
+   "width": 3
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HPROT",
+   "tied_to": "GND, GND, GND, GND",
+   "width": 4
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HREADY",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HSEL",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HSIZE",
+   "tied_to": "GND, GND, GND",
+   "width": 3
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HTRANS",
+   "tied_to": "GND, GND",
+   "width": 2
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HWDATA",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 64
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HWRITE",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HRDATA",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HRDATA [63:0]",
+   "width": 64
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HREADY",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HREADY",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HRESP",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TMS_IN",
+   "tied_to": "TMS_IN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TRST_IN",
+   "tied_to": "TRST_IN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TDI_IN",
+   "tied_to": "TDI_IN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_HOLDN_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_WPN_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_CLK_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_CSN_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_MISO_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_MOSI_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "I2C_SCL_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "I2C_SDA_IN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_RXD",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_CTSN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_DSRN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_DCDN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_RIN",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_RXD",
+   "tied_to": "UART2_RXD",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_CTSN",
+   "tied_to": "UART2_CTSN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_DCDN",
+   "tied_to": "UART2_DCDN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_DSRN",
+   "tied_to": "UART2_DSRN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_RIN",
+   "tied_to": "UART2_RIN",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "GPIO_IN",
+   "tied_to": "GPIO_in[31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DMA_ACK",
+   "tied_to": "u_RiscV_AE350_SOC/DMA_ACK [7:0]",
+   "width": 8
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SCAN_IN",
+   "tied_to": "GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND",
+   "width": 20
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "INTEG_TCK",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "INTEG_TDI",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "INTEG_TMS",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "INTEG_TRST",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "PGEN_CHAIN_I",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EMA",
+   "tied_to": "GND, VCC, VCC",
+   "width": 3
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EMAW",
+   "tied_to": "GND, VCC",
+   "width": 2
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EMAS",
+   "tied_to": "GND",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "RET1N",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "input",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "RET2N",
+   "tied_to": "VCC",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "PRESETN",
+   "tied_to": "u_RiscV_AE350_SOC/PRESETN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "HRESETN",
+   "tied_to": "u_RiscV_AE350_SOC/HRESETN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_RSTN",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_RSTN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CORE0_WFI_MODE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CORE0_WFI_MODE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "RTC_WAKEUP",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_RTC_WAKEUP",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "ROM_HADDR",
+   "tied_to": "u_RiscV_AE350_SOC/ROM_HADDR [31:2], u_RiscV_AE350_SOC/ROM_HADDR_0 [1:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "ROM_HTRANS",
+   "tied_to": "u_RiscV_AE350_SOC/ROM_HTRANS [1], u_RiscV_AE350_SOC/ROM_HTRANS_0 [0]",
+   "width": 2
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "ROM_HWRITE",
+   "tied_to": "u_RiscV_AE350_SOC/ROM_HWRITE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PADDR",
+   "tied_to": "u_RiscV_AE350_SOC/APB_PADDR [31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PENABLE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_APB_PENABLE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PSEL",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_APB_PSEL",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PWDATA",
+   "tied_to": "u_RiscV_AE350_SOC/APB_PWDATA [31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PWRITE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_APB_PWRITE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PPROT",
+   "tied_to": "u_RiscV_AE350_SOC/APB_PPROT [2:0]",
+   "width": 3
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "APB_PSTRB",
+   "tied_to": "u_RiscV_AE350_SOC/APB_PSTRB [3:0]",
+   "width": 4
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HADDR",
+   "tied_to": "u_RiscV_AE350_SOC/EXTS_HADDR [31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HBURST",
+   "tied_to": "u_RiscV_AE350_SOC/EXTS_HBURST [2:0]",
+   "width": 3
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HPROT",
+   "tied_to": "u_RiscV_AE350_SOC/EXTS_HPROT [3:0]",
+   "width": 4
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HSEL",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_EXTS_HSEL",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HSIZE",
+   "tied_to": "u_RiscV_AE350_SOC/EXTS_HSIZE [2:0]",
+   "width": 3
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HTRANS",
+   "tied_to": "u_RiscV_AE350_SOC/EXTS_HTRANS [1:0]",
+   "width": 2
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HWDATA",
+   "tied_to": "u_RiscV_AE350_SOC/EXTS_HWDATA [31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTS_HWRITE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_EXTS_HWRITE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HRDATA",
+   "tied_to": "u_RiscV_AE350_SOC/EXTM_HRDATA [63:0]",
+   "width": 64
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HREADYOUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_EXTM_HREADYOUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "EXTM_HRESP",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_EXTM_HRESP",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HADDR",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HADDR_0 [31:28], u_RiscV_AE350_SOC/DDR_HADDR [27:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HBURST",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HBURST [2:0]",
+   "width": 3
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HPROT",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HPROT [3:0]",
+   "width": 4
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HSIZE",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HSIZE [2:0]",
+   "width": 3
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HTRANS",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HTRANS [1], u_RiscV_AE350_SOC/DDR_HTRANS_0 [0]",
+   "width": 2
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HWDATA",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HWDATA [63:0]",
+   "width": 64
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "DDR_HWRITE",
+   "tied_to": "u_RiscV_AE350_SOC/DDR_HWRITE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TDO_OUT",
+   "tied_to": "TDO_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "TDO_OE",
+   "tied_to": "TDO_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_HOLDN_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_HOLDN_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_HOLDN_OE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_HOLDN_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_WPN_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_WPN_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_WPN_OE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_WPN_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_CLK_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_CLK_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_CLK_OE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_CLK_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_CSN_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_CSN_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_CSN_OE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_CSN_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_MISO_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_MISO_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_MISO_OE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_MISO_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_MOSI_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_MOSI_OUT",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SPI2_MOSI_OE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_SPI2_MOSI_OE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "I2C_SCL",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_I2C_SCL",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "I2C_SDA",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_I2C_SDA",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_TXD",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_UART1_TXD",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_RTSN",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_UART1_RTSN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_DTRN",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_UART1_DTRN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_OUT1N",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_UART1_OUT1N",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART1_OUT2N",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_UART1_OUT2N",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_TXD",
+   "tied_to": "UART2_TXD",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_RTSN",
+   "tied_to": "UART2_RTSN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_DTRN",
+   "tied_to": "UART2_DTRN",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_OUT1N",
+   "tied_to": "UART2_OUT1N",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "UART2_OUT2N",
+   "tied_to": "UART2_OUT2N",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH0_PWM",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH0_PWM",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH0_PWMOE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH0_PWMOE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH1_PWM",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH1_PWM",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH1_PWMOE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH1_PWMOE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH2_PWM",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH2_PWM",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH2_PWMOE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH2_PWMOE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH3_PWM",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH3_PWM",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "CH3_PWMOE",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_CH3_PWMOE",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "GPIO_OE",
+   "tied_to": "u_RiscV_AE350_SOC/GPIO_OE [31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "GPIO_OUT",
+   "tied_to": "GPIO_OUT[31:0]",
+   "width": 32
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "INTEG_TDO",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_INTEG_TDO",
+   "width": 1
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "SCAN_OUT",
+   "tied_to": "u_RiscV_AE350_SOC/SCAN_OUT [19:0]",
+   "width": 20
+  },
+  {
+   "direction": "output",
+   "in_vo": true,
+   "in_vo_demo": true,
+   "in_xml": true,
+   "name": "PRDYN_CHAIN_O",
+   "tied_to": "u_RiscV_AE350_SOC/u_AE350_SOC_218_PRDYN_CHAIN_O",
+   "width": 1
+  }
+ ],
+ "primitive": "AE350_SOC",
+ "published_sources": {
+  "agreement_with_primitive_xml": {
+   "only_published": [],
+   "only_xml": [],
+   "width_or_direction_differences": {}
+  },
+  "apicula_wiki": {
+   "bits": 911,
+   "ports": 149,
+   "url": "https://github.com/YosysHQ/apicula/wiki/AE350_SOC"
+  },
+  "litex": {
+   "bits": 911,
+   "ports": 149,
+   "url": "https://raw.githubusercontent.com/enjoy-digital/litex/master/litex/soc/cores/cpu/gowin_ae350/core.py"
+  }
+ },
+ "sources": {
+  "vo_demo": "/Users/alex/fine-line/vendor/gowin/ip/ae350/RiscV_AE350_SOC_V1.3/RiscV_AE350_SOC_V1.3/ref_design/FPGA_RefDesign/DK_START_GW5AST138_V1.0/ae350_demo/src/riscv_ae350_soc/riscv_ae350_soc.vo",
+  "vo_golden": "/Users/alex/fine-line/vendor/gowin/ip/ae350/RiscV_AE350_SOC_V1.3/RiscV_AE350_SOC_V1.3/example/DDR3_Shared/ref_design/FPGA_RefDesign/DK_START_GW5AST138_V1.0/ae350_shared_ddr3/src/riscv_ae350_soc/riscv_ae350_soc.vo",
+  "xml": "/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA/IDE/bin/prim_syns/gw5a/primitive.xml"
+ }
+}
