@@ -229,3 +229,90 @@ A half only.** Every point of `P3.T12`'s sweep lands on an A-half ball
 (`AB16` = `IOB80A`, `AA15` = `IOB83A`), so the row closes on A-half evidence
 and the B half is a stated limit of it, carried to the serialiser and
 deserialiser rows (`P3.T13`, `P3.T14`) as an inherited input.
+
+## SWEEP (`P3.T12`)
+
+**6 oracle runs**, the task's cap, one per point of `shapes/io_basic.py`'s
+`POINTS` (`oddr-default`, `oddr-txclk-pol`, `oddr-init`, `iddr-default`,
+`iddr-q0-init`, `iddr-q1-init`). Batch log `evidence/_runs/p3-oddr-iddr.log`
+(`BATCH_COMPLETE p3-oddr-iddr runs=6 ok=0 diff=6 aborted=0`); designs under
+`$DATASTORE/p3t12`; rows `evidence/oddr-iddr/runs.jsonl`.
+
+The rows published here are **re-derived** from those six vendor bitstreams
+and the open flow's, by `recompare_rows.py`, after the packer and decode
+corrections below landed — the comparison is a pure function of the two
+bitstreams, so no further oracle run was spent
+(`evidence/_runs/p3-oddr-iddr-recompare.log`), the same separation `P3.T08`
+used over `P3.T07`'s designs.
+
+### The packer now writes exactly the vendor's IOLOGIC fuses
+
+`GW5AST_138C.common_iologic_handler` and `GW5AST_138C.get_in_iologic_attrs`
+apply the two `P3.T11` findings (`GSR` only on the explicit opt-in;
+`LSRMUX_LSR=INV` for a cell with an asynchronous clear, with no `LSRIMUX_0`
+beside it). Measured at `IOLOGICA` of tile type 247, per primitive:
+
+| primitive | vendor fuses | `gowin_pack` before | after |
+|---|---|---|---|
+| `ODDR` | `(20,59) (21,54) (21,112) (21,113)` | +`(21,119)` | **identical** |
+| `IDDR` | `(21,15) (21,104)` | +`(21,119)` | **identical** |
+| `IDDRC` | `(21,15) (21,49) (21,56) (21,104)` | +`(21,119)`, −`(21,56)` | **identical** |
+
+and on the real pair, at `(79,108)A`, the open bitstream and the vendor's set
+the same four bits.
+
+### Three defects the row uncovered, all fixed here
+
+1. **`equiv.split_bel_name('IOLOGICAO')` answered `('IOLOGICA', 14)`.** The
+   generic rule reads a trailing capital as the `A`/`B` side letter, and an
+   IOLOGIC bel name ends in its *direction*. Nothing matched the decoded
+   `('IOLOGIC', 0)`, so `decode_check` `c1` reported the placed ODDR missing
+   from a bitstream that in fact carried it. Phase 3 is the first phase to
+   place an IOLOGIC, which is why no earlier row could hit it.
+2. **`E1` had no path for an IOLOGIC.** Its site is a bitstream address, not a
+   `CLS` coordinate, so `INS_LOC` cannot constrain it and the `.tr` half of
+   `E1` has nothing to compare — exactly the property `level_e1_bitstream`
+   exists for. `IOLOGIC` joins `CLKDIV2`/`CLKDIV`/`PLL` in
+   `BITSTREAM_ADDRESSED_CELL_TYPES`, and every row now closes `E1` on
+   `X79Y108/IOLOGICAO` (or `X82Y108` for the input points) matching the
+   vendor's own decoded placement.
+3. **`io_basic` named no comparison scope.** `equiv.in_scope` reads an empty
+   tile list as the empty set, so the `E0` comparison compared nothing and its
+   zeroes were vacuous. The whole-die alternative is not available: the vendor
+   bitstream decodes to 138 576 cells against the open flow's 384 (MEASURED
+   here) because the vendor configures every unused DFF. The scope is now the
+   two data balls' own cells, `(79,108)` and `(82,108)`, which is where an
+   IOLOGIC can be at all — its pad's cell. The `P3.T07` HCLK probe keeps the
+   empty scope it was measured under.
+
+### Verdict, and the one term that is not closed
+
+All six rows: `level = E1`, `decode_check.c1 = ok`, `decode_check.c2 = ok`,
+`diff_count.cells = 0`, `diff_count.attrs = 0`, `unexplained_bits = []`, no
+over-emitted fuse. `check_evidence.py --slug oddr-iddr` prints `EVIDENCE ok`.
+
+Every row is nevertheless `verdict: diff`, on **six `conns` entries and
+nothing else**. They are the same six `(cell, port)` keys on both sides, with
+an identical net *partition* — `IOB(79,108,0).I`, `IOLOGIC.D0`, `.DI` and `.Q`
+share one net on each side, `IOLOGIC.D1` has its own, `IOB(82,108,0).O` has
+its own — and different net *identities*. `equiv.net_id` digests a net's
+sorted endpoint set as `(x, y, z, type, port)`, so a net keeps its identity
+only if every endpoint sits at the same site on both sides; these nets run out
+to the shape's context flops, and the two flows place those independently.
+
+They are placed independently because the `INS_LOC` export cannot name them:
+GowinSynthesis renames the instance (`din_r` becomes `din_r_s0` in the
+vendor's own timing report), and `equiv.insloc_lines` deliberately refuses to
+constrain a name the vendor's netlist does not carry, since `gw_sh` aborts the
+whole run on `ERROR (CT1135)`. So this is free placement of out-of-scope
+cells, which `dontcare.mask`'s `free_placement` entry admits at `E0` and
+explicitly not at `E1`.
+
+**The fix is a shape change, and it needs runs this task does not have.**
+Drive `D0` and `D1` from two package balls instead of from a fabric flop and
+its inverse: the design then contains no fabric cell at all, every net of the
+scoped tiles has both endpoints inside them, and the `conns` term closes with
+the rest. That is six new oracle runs against a `P3.T12` cap of six already
+spent — a budget deviation, which the blueprint requires be priced before it
+is spent, not absorbed. Recorded here for that decision; the packer, the
+decode and the `E1` evidence above stand either way.
