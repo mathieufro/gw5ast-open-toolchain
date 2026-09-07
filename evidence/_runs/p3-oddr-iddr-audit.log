@@ -1,0 +1,81 @@
+BATCH_START p3-oddr-iddr-audit pid=34105 2026-09-07T11:21:28Z
+RUN_START p3-oddr-iddr-audit-oddr-pair 2026-09-07T11:21:28Z
+Traceback (most recent call last):
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 459, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 428, in main
+    record = run_one(step, args.design_root, do_oracle=args.run == "all")
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 410, in run_one
+    record["cells"] = vendor_attrvals(fs_path)
+                      ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 219, in vendor_attrvals
+    netlist = equiv.unpack_netlist(fs_path)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/fuzz/gw5ast138c/harness/equiv.py", line 520, in unpack_netlist
+    db = load_db(device)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/fuzz/gw5ast138c/harness/equiv.py", line 502, in load_db
+    return load_chipdb(path)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/apycula/chipdb.py", line 334, in load_chipdb
+    with lzma.open(path, 'rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/lzma.py", line 317, in open
+    binary_file = LZMAFile(filename, lz_mode, format=format, check=check,
+                           preset=preset, filters=filters)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/lzma.py", line 120, in __init__
+    self._fp = builtins.open(filename, mode)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/alex/fine-line/apicula-wt/p3ddr/apycula/GW5AST-138C.msgpack.xz'
+RUN_DONE p3-oddr-iddr-audit-oddr-pair rc=1 2026-09-07T11:21:41Z
+RUN_START p3-oddr-iddr-audit-iddr-pair 2026-09-07T11:21:41Z
+Traceback (most recent call last):
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 459, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 428, in main
+    record = run_one(step, args.design_root, do_oracle=args.run == "all")
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 410, in run_one
+    record["cells"] = vendor_attrvals(fs_path)
+                      ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 219, in vendor_attrvals
+    netlist = equiv.unpack_netlist(fs_path)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/fuzz/gw5ast138c/harness/equiv.py", line 520, in unpack_netlist
+    db = load_db(device)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/fuzz/gw5ast138c/harness/equiv.py", line 502, in load_db
+    return load_chipdb(path)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/apycula/chipdb.py", line 334, in load_chipdb
+    with lzma.open(path, 'rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/lzma.py", line 317, in open
+    binary_file = LZMAFile(filename, lz_mode, format=format, check=check,
+                           preset=preset, filters=filters)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/lzma.py", line 120, in __init__
+    self._fp = builtins.open(filename, mode)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/alex/fine-line/apicula-wt/p3ddr/apycula/GW5AST-138C.msgpack.xz'
+RUN_DONE p3-oddr-iddr-audit-iddr-pair rc=1 2026-09-07T11:21:54Z
+Traceback (most recent call last):
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 459, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 428, in main
+    record = run_one(step, args.design_root, do_oracle=args.run == "all")
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 410, in run_one
+    record["cells"] = vendor_attrvals(fs_path)
+                      ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/oddr-iddr/audit_oddr_iddr_attrs.py", line 219, in vendor_attrvals
+    netlist = equiv.unpack_netlist(fs_path)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/fuzz/gw5ast138c/harness/equiv.py", line 520, in unpack_netlist
+    db = load_db(device)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/fuzz/gw5ast138c/harness/equiv.py", line 502, in load_db
+    return load_chipdb(path)
+  File "/Users/alex/fine-line/apicula-wt/p3ddr/apycula/chipdb.py", line 334, in load_chipdb
+    with lzma.open(path, 'rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/lzma.py", line 317, in open
+    binary_file = LZMAFile(filename, lz_mode, format=format, check=check,
+                           preset=preset, filters=filters)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/lzma.py", line 120, in __init__
+    self._fp = builtins.open(filename, mode)
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/alex/fine-line/apicula-wt/p3ddr/apycula/GW5AST-138C.msgpack.xz'
+BATCH_COMPLETE p3-oddr-iddr-audit runs=2 ok=0 diff=0 aborted=2

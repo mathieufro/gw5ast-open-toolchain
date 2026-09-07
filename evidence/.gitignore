@@ -230,3 +230,15 @@
 # the Phase-3 oracle-run ledger, same class as _budget/clocking-runs.tsv and
 # _budget/ae350-runs.tsv above.
 !_budget/iologic-runs.tsv
+# the P3.T11 ODDR/ODDRC/IDDR/IDDRC attribute audit: the driver that spends the
+# task's two oracle runs and decodes them, and its three text artefacts. The
+# summary's per-primitive attribute and fuse tables are read out of these, and
+# tests/test_io_iologic_138c.py::test_oddr_iddr_attr_gap_recorded reads the
+# .tsv, so a claim in the summary is only auditable with them in the tree.
+# Same named-exception pattern as pin-to-hclk/sweep_pin_hclk.py above.
+!oddr-iddr/audit_oddr_iddr_attrs.py
+!oddr-iddr/attr-gap.tsv
+!oddr-iddr/fuse-delta.json
+!oddr-iddr/audit-runs.json
+# the P3.T11 batch driver, beside the log it writes.
+!_runs/p3-oddr-iddr-audit.sh

@@ -138,3 +138,94 @@ nextpnr's own utilisation dump instead.
 
 **Byte-identical** to the values of record. The ttyp gate is device-guarded, and
 that is now measured rather than argued.
+
+## ATTRIBUTE-AUDIT (`P3.T11`)
+
+**2 oracle runs**, the task's whole cap, covering **four** primitives: one
+vendor design carries `ODDR` **and** `ODDRC`, the other `IDDR` **and**
+`IDDRC`. The two `C` variants add a `CLEAR` port and no parameter
+(`$GOWINHOME/IDE/simlib/gw5a/prim_sim.v:7793` `IDDR`, `:7854` `IDDRC`,
+`:7988` `ODDR`, `:8070` `ODDRC` — `TXCLK_POL`+`INIT` on the output pair,
+`Q0_INIT`+`Q1_INIT` on the input pair), so one design per direction measures
+both. Driver: `evidence/oddr-iddr/audit_oddr_iddr_attrs.py`; log
+`evidence/_runs/p3-oddr-iddr-audit.log`; per-run record `audit-runs.json`.
+
+**The HCLK-clocked variant is not run, by measurement rather than omission.**
+`P3.T08` established `G-FCLK-138C`: this die has no HCLK→FCLK edge
+(`dev.io2hclk == {}`) and none of `P3.T07`'s twelve vendor bitstreams
+configures a single `FCLK*` pip. The vendor clocks IOLOGIC on the 138C over
+`BUFG`/global, which is what both audit designs do.
+
+### Instrument
+
+`gowin_unpack` surfaces only `MODE=` and `CLKODDRMUX_ECLK=` as IOLOGIC flags.
+The audit calls `parse_attrvals` again on the same tile with the same tables
+and keeps the **whole** decoded `{attr: val}` dict, then computes, through
+`gowin_pack`'s own path (`add_attr_val` → `get_shortval_fuses`), the fuse set
+each side writes. The verdict term is the fuse set, not the attribute list:
+an attribute at its zero code moves no bit and is not a gap.
+
+**Instances are matched to decoded tiles by package ball**
+(`P3.T06`'s `evidence/iologic/pin-hclk-138c.json`), never by the decoded
+`MODE=` flag. `gowin_unpack.py:806-830` tells `ODDR` from `ODDRC` by the mere
+*presence* of `LSROMUX_0`, and this die sets `LSROMUX_0=0` on the plain
+variant too — so the flag calls a plain `ODDR` an `ODDRC`. That mislabelling
+is itself a finding and is recorded here rather than worked around silently.
+
+### Measured, per primitive, at `IOLOGICA` of tile type 247
+
+| primitive | ball | tile | vendor attributes | vendor fuses |
+|---|---|---|---|---|
+| `ODDR` | `AB16` (`IOB80A`) | `(79,108)A` | `OUTMODE=MODDRX1`, `CLKOMUX=ENABLE`, `LSROMUX_0=0`, `LSRIMUX_0=0` | `(20,59) (21,54) (21,112) (21,113)` |
+| `ODDRC` | `AB17` (`IOB80B`) | `(79,108)B` | **none decoded** — see the B-half gap below | none |
+| `IDDR` | `AA15` (`IOB83A`) | `(82,108)A` | `INMODE=IDDRX1`, `CLKIMUX=ENABLE`, `LSRIMUX_0=0`, `LSROMUX_0=0` | `(21,15) (21,104)` |
+| `IDDRC` | `W15` (`IOB72A`) | `(71,108)A` | `INMODE=IDDRX1`, `CLKIMUX=ENABLE`, `LSRMUX_LSR=INV`, `LSROMUX_0=0` | `(21,15) (21,49) (21,56) (21,104)` |
+
+`attr-gap.tsv` carries one row per attribute either side sets, with the fuse
+count that attribute's value is worth and a disposition; `fuse-delta.json`
+carries the two fuse sets and their difference per primitive, as they stood
+**before** the handler change `P3.T12` makes.
+
+### The 138C-specific differences, named
+
+1. **`GSR` — `attrid 5`, one fuse `(21,119)`, every primitive.** The generic
+   `Device.common_iologic_handler` (`gowin_pack.py:2138`) emits `GSR`
+   unconditionally and `DISGSR` when the cell has no `GSREN`. On this die
+   `DISGSR` is **not** the zero code: it sets `(21,119)`, and the vendor
+   leaves that fuse clear on all three primitives measured. It is the single
+   over-emitted bit in each. Disposition: **handler** — the 138C override
+   emits `GSR` only for the explicit `GSREN=TRUE` opt-in.
+2. **`LSRMUX_LSR` on `IDDRC` — `attrid 19`, two fuses.** The generic
+   `get_in_iologic_attrs` (`:2210-2219`) selects `SIG` for a cell with an
+   asynchronous clear and leaves `LSRIMUX_0` at the placeholder `UNKNOWN`.
+   The vendor selects **`INV`** and sets no `LSRIMUX_0` at all: `SIG` writes
+   `(21,49)` where the vendor writes `(21,56)`. Disposition: **handler**.
+3. **`OUTMODE`: vendor `MODDRX1`, `gowin_pack` `ODDRX1` — attrid 1, no fuse
+   difference.** Both spellings reach the same three fuses at this tile type,
+   so this is a naming difference and not a configuration one. Disposition:
+   **unexplained-justified**, no change.
+4. **`TSHX=SIG`, `LSRIMUX_0=0`, `LSROMUX_0=0`, `CLKODDRMUX_ECLK=UNKNOWN`
+   are all worth zero fuses here.** They are the zero code of their
+   attribute, so `gowin_pack` emitting them where the vendor's decode does
+   not report them is an encoding artefact, not an over-emission. Disposition:
+   **unexplained-justified**, no change — in particular the
+   `CLKODDRMUX_ECLK=UNKNOWN` that `G-FCLK-138C` makes unavoidable on this die
+   costs nothing.
+
+### Named gap: the B half of an IO tile has no IOLOGIC fuse table
+
+The `ODDRC` placed on `IOB80[B]` (the vendor's own timing report puts it
+there) configures **nothing** decodable: `db.shortval[247]['IOLOGICB']` holds
+**3** fuse coordinates against `IOLOGICA`'s **100**, and no bit inside it is
+set. The nine further bits the `ODDR` design moves in that tile are all
+`pip` bits (routing), not IOLOGIC configuration.
+
+This is the same shape the GW5A-25A shows — every IO tile type there has one
+populated IOLOGIC table (676 keys / 90 coordinates) and one stub (2 keys / 2
+coordinates), on the A half or the B half depending on the tile type — so it
+is a property of the database, not of this die alone. What it means here is
+concrete and bounded: **on tile type 247 an IOLOGIC may be configured on the
+A half only.** Every point of `P3.T12`'s sweep lands on an A-half ball
+(`AB16` = `IOB80A`, `AA15` = `IOB83A`), so the row closes on A-half evidence
+and the B half is a stated limit of it, carried to the serialiser and
+deserialiser rows (`P3.T13`, `P3.T14`) as an inherited input.

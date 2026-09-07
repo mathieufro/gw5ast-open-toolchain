@@ -1,0 +1,129 @@
+[
+  {
+    "cells": [
+      {
+        "attrs": {
+          "CLKOMUX": "ENABLE",
+          "LSRIMUX_0": "0",
+          "LSROMUX_0": "0",
+          "OUTMODE": "MODDRX1"
+        },
+        "flags": [
+          "MODE=ODDRC"
+        ],
+        "idx": "A",
+        "mode": "ODDRC",
+        "region_bits": 100,
+        "tile": [
+          79,
+          108
+        ],
+        "ttyp": 247,
+        "vendor_bits": [
+          [
+            20,
+            59
+          ],
+          [
+            21,
+            54
+          ],
+          [
+            21,
+            112
+          ],
+          [
+            21,
+            113
+          ]
+        ]
+      }
+    ],
+    "design_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t11/oddr-pair",
+    "ok": true,
+    "oracle_log": "/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t11/oddr-pair/gw_sh.log",
+    "reason": "decode-only",
+    "step": "oddr-pair",
+    "timestamp": "2026-09-07T11:32:50.219814+00:00",
+    "vendor_fs": "/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t11/oddr-pair/run/impl/pnr/run.fs",
+    "wall_clock_s": 0.0
+  },
+  {
+    "cells": [
+      {
+        "attrs": {
+          "CLKIMUX": "ENABLE",
+          "INMODE": "IDDRX1",
+          "LSRMUX_LSR": "INV",
+          "LSROMUX_0": "0"
+        },
+        "flags": [
+          "MODE=IDDR"
+        ],
+        "idx": "A",
+        "mode": "IDDR",
+        "region_bits": 100,
+        "tile": [
+          71,
+          108
+        ],
+        "ttyp": 247,
+        "vendor_bits": [
+          [
+            21,
+            15
+          ],
+          [
+            21,
+            49
+          ],
+          [
+            21,
+            56
+          ],
+          [
+            21,
+            104
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "CLKIMUX": "ENABLE",
+          "INMODE": "IDDRX1",
+          "LSRIMUX_0": "0",
+          "LSROMUX_0": "0"
+        },
+        "flags": [
+          "MODE=IDDRC"
+        ],
+        "idx": "A",
+        "mode": "IDDRC",
+        "region_bits": 100,
+        "tile": [
+          82,
+          108
+        ],
+        "ttyp": 247,
+        "vendor_bits": [
+          [
+            21,
+            15
+          ],
+          [
+            21,
+            104
+          ]
+        ]
+      }
+    ],
+    "design_dir": "/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t11/iddr-pair",
+    "ok": true,
+    "oracle_log": "/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t11/iddr-pair/gw_sh.log",
+    "reason": "decode-only",
+    "step": "iddr-pair",
+    "timestamp": "2026-09-07T11:33:16.781259+00:00",
+    "vendor_fs": "/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t11/iddr-pair/run/impl/pnr/run.fs",
+    "wall_clock_s": 0.0
+  }
+]
