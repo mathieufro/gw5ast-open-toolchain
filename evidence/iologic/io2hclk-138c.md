@@ -127,3 +127,33 @@ were right about the file they read. There are two:
 The venv's editable `apycula` install resolves to the *submodule checkout*, so
 any run that does not set `PYTHONPATH` to the task's worktree reads the second
 one. Every command in this row exports `PYTHONPATH=<apicula worktree>`.
+
+## Two findings this proof hands to `P3.T13`, both at zero run cost
+
+**1. The lane is each flow's own choice, and only one of them is stable.**
+Both vendor bitstreams already on disk -- `oser4-default` and the
+`TXCLK_POL=1` point -- select `FCLKSEL1=HCLK2`/`FCLKSEL2=HCLK2_`, lane 2 of
+block 1. `nextpnr` selects `IOLOGIC_FCLK=HCLK_OUT3` for the same design.
+Nothing in the design constrains it: `INS_LOC` and `BEL` pin the `CLKDIV`
+(block 5 lane 0, for `PCLK`), not the block lane the `FCLK` net lands on,
+and each flow's own HCLK-section allocator picks it. Closing the row at `E1`
+needs that named -- either a constraint that pins the lane in both flows, or a
+seventh `dontcare.mask` entry for the fast-clock selection attributes under
+the §5.3 rules (`Mask.masks()` returns `False` for every attribute today, so
+the entry alone would not change a verdict: the attribute comparison would
+have to consult it). It is a claim about the hardware either way and belongs
+in `P3.T13` with its remaining 6 runs, not in this fix.
+
+**2. `TXCLK_POL` never reaches the open bitstream.** The two sweep points
+differ only in `TXCLK_POL`; the vendor bitstream carries `TXCLK_POL=1` on the
+second, and the two open-flow bitstreams are byte-identical
+(`25a0a40e5c6f64e006ee43094e96a7efb18d37a4607547ebd4659ebf33b21e5e` both
+times). Neither `nextpnr`'s `pack_iologic` nor `gowin_pack` moves the
+parameter. That is a genuine `P3.T13` gap, now measured before its first new
+run rather than after it.
+
+## Runs spent here
+
+**Zero.** Both vendor bitstreams were already on disk from `P3.T13`'s two
+runs; everything above is the open flow, which is not an oracle run, and
+decoding a file, which is a pure function of it. Ledger unchanged at 28/110.
