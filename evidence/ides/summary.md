@@ -160,3 +160,29 @@ Result, per point (`conns` before -> after): `ides4-reset-pad` 10 -> 2,
 The residue is the same IO-tile wire-alias gap the `oddr-iddr` row names, plus,
 on the two `IDES10` points, the six wires of the `Q6`/`Q7` half of the window,
 which the two flows still reach over different routes.
+
+## `P3.F2`: the IO-tile wire alias, and the row closing
+
+**0 oracle runs.** Re-diffed with `tools/redo_open_half.py` against the vendor
+bitstreams already on disk.
+
+The residue this row named -- "the open route `F7 -> EW10 -> ... -> W11` has
+one hop the tile decode does not reconstruct" -- was an alias missing from
+`chipdb.wire2global`, not from the device data. A tile's `EW10` is the same
+piece of metal its eastern neighbour calls `E111` and its western neighbour
+calls `W111`; `SN10` is the vertical pair and `..20` the second wire of each
+axis. All three spellings are pip endpoints in the shipped ttyp-247 table, and
+`tracing.source_intertile_wire` already carried the correspondence, but
+`wire2global` gave `EW10` and the neighbours' `E11`/`W11` roots three
+different node names -- so a net routed over such a wire decoded as two
+unrelated halves and the open half's identity changed.
+
+`chipdb.intertile_aliases` maps the eight length-1 root names onto the two
+they share, which is the same table `tracing` uses. `nextpnr` needed no
+change: the alias is in apicula's decode path, so no arch-gen and no chipdb
+rebuild -- the toolchain pair is unchanged.
+
+Result: all six points `verdict: ok`, `cells`/`attrs`/`conns` **0/0/0**, both
+decode checks `ok`. `conns` 2/2/0/2/12/9 -> **0/0/0/0/0/0** -- including the
+two `IDES10` points, whose `Q6`/`Q7` half of the window was the other half of
+the same alias gap. The row closes at `E1` with nothing open.

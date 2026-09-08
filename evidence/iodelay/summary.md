@@ -115,3 +115,67 @@ allocation left — an overrun the owner should price.**
 | `apycula/GW5AST-138C.msgpack.xz` | `df0ae17df04eeb3ce23a9edf56d37adcd5fc5d231ebccfc7fd1d3daf7613a958` |
 | `chipdb-GW5AST-138C.bin` | `3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18` |
 | `nextpnr-himbaechel` | `084bbbfa61c1f2ff225640b80ce0440ba8ce45b2bb304ef295bf3729c318436e` (this task's build; the pair's `.bin` is unchanged -- no constids moved) |
+
+## `P3.F2`: the packer emits the step, and the row's fuses close
+
+**0 oracle runs.** Re-diffed with `tools/redo_open_half.py` against the 27
+vendor bitstreams still on disk.
+
+`gowin_pack` now spends the measured attribute instead of the pre-5A one:
+
+* `GW5AST_138C.delay_step_attrs` emits **one** `C_STATIC_DLY`, by value id --
+  `2` for step 1, `1000 + n` above it -- through
+  `ChipDB.get_iologic_attr_val`, which now takes a numeric value the way
+  `get_osc_attr_val` already does. The fuses come from the attribute-value
+  table, never from a bit list, and the base class's `DELAY_DEL7` refusal does
+  not apply here: bit 7 is fuse-backed on this die, so the ten points that
+  used to abort now build.
+* `GW5AST_138C.iodelay_enable_attrs` emits the enable set the vendor
+  programs -- `INDEL` alone, fuse (20, 81) -- and not the inherited
+  `CLKOMUX`/`IMARG`/`INDEL_0`/`INDEL_1`. Of those only `CLKOMUX` cost a fuse,
+  (21, 54), one of the seventeen bits the open bitstream set on every point
+  and the vendor's set on none.
+* `DYN_DLY_EN` / `ADAPT_EN` stay **refused by name**. `P3.T21` measured their
+  bits but not their meaning: both modes move six IOLOGIC attributes (77, 78,
+  89, 106, 108, 135) the shipped table does not name, so neither is
+  attributed and a guessed fuse is still worse than a refusal.
+
+```
+runs=28 ok=0 diff=25 aborted=3
+```
+
+| before (`P3.T21`) | after (`P3.F2`) |
+|---|---|
+| `ok` 0, `diff` 16, `aborted` 12 | `ok` 0, `diff` **25**, `aborted` **3** |
+| `attrs` 0, `conns` 1, no `C_STATIC_DLY` bit written | `cells` 0, **`attrs` 0**, `conns` 8 (three points 1), 0 unexplained bits |
+| 17 open-only bits at every step, constant | those are gone; the delay tile's attribute sets are identical |
+
+The three that abort are named, not counted as failures: two are
+`dyn-dly-en-true` and `adapt-en-true`, which the packer refuses by name, and
+`p3-iodelay-a-iodelay_a-0018`'s vendor bitstream has been deleted from the
+datastore, so its row is kept exactly as the oracle left it rather than
+rebuilt without its oracle output (`redo_open_half --skip-missing-vendor`).
+
+**The row does not reach `E1`, and the reason is no longer the delay line.**
+`cells` 0, `attrs` 0 and no unexplained bit says the packer's IOLOGIC fuse set
+now equals the vendor's at the delay tile. What is left is `conns`: the shape
+carries a `DLYSTEP` counter in fabric that neither flow is constrained to
+place identically, and the first difference of every point is the pad's own
+`CE`/`O` port on a different net (`vendor=CE->net:VCC`,
+`open=CE->net:<hash>`). The count went 1 -> 8 with `P3.F2`'s `EW10`/`W11`
+wire alias, which is the alias working as intended: those differences were
+previously hidden inside nets the decode had split in two.
+
+Two decode items, both named:
+
+* **Fixed.** `decode_check` `c1` compared the netlist's parameter as text
+  against the recovered attribute, so `C_STATIC_DLY = 0…01` against `1` read
+  as a mismatch on every point. `equiv._params_agree` now compares what the
+  two spellings mean (`apicula tests/test_equiv_param_spellings.py`), and
+  `c1_attr_mismatch` is empty on every point.
+* **Open.** `c1` still reports `mismatch`: 8 of the 27 required cells are the
+  shape's `ALU` cells, which `gowin_unpack` does not recover from the
+  bitstream. That is an ALU decode gap this shape is the only one to exercise;
+  it is unrelated to the delay line and is named here rather than folded into
+  the row.
+

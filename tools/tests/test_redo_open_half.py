@@ -42,3 +42,32 @@ def test_redo_finds_the_bitstream_it_will_reuse(tmp_path):
     row = {"vendor_fs": [{"path": str(fs)}]}
     assert redo_open_half.vendor_bitstream(row) == str(fs)
     assert redo_open_half.vendor_bitstream({"vendor_fs": []}) is None
+
+
+def _rows_file(tmp_path, vendor_path):
+    """A one-row batch whose vendor bitstream is at *vendor_path* (or gone)."""
+    path = tmp_path / "batch.rows.jsonl"
+    path.write_text(json.dumps({
+        "run_id": "row-0", "verdict": "diff", "level": "E1", "sweep": {"X": 0},
+        "vendor_fs": ([{"path": vendor_path}] if vendor_path else []),
+    }) + "\n", encoding="utf-8")
+    return str(path)
+
+
+def test_a_batch_is_refused_when_a_vendor_bitstream_is_missing(tmp_path):
+    """The default stays strict: rebuilding without the oracle output is the
+    thing this tool exists to prevent."""
+    rows = _rows_file(tmp_path, None)
+    with pytest.raises(SystemExit):
+        redo_open_half.main(["--rows", rows, "--shape", "io_basic",
+              "--design-root", str(tmp_path)])
+
+
+def test_the_missing_row_can_be_kept_instead_of_losing_the_batch(tmp_path,
+                                                                capsys):
+    """One deleted vendor bitstream must not cost the other measured rows."""
+    rows = _rows_file(tmp_path, None)
+    assert redo_open_half.main(["--rows", rows, "--shape", "io_basic",
+                 "--design-root", str(tmp_path),
+                 "--skip-missing-vendor"]) == 0
+    assert "vendor bitstream absent" in capsys.readouterr().out

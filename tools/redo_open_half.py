@@ -40,16 +40,17 @@ def vendor_bitstream(row):
 
 def redo(row, shape, design_root, level=None):
     """One repaired row: the vendor half kept, the open half rebuilt."""
-    from fuzz.gw5ast138c.harness import equiv, evidence, gen, openflow
-
-    spec = gen.load_shape(shape)
-    sweep_value = list(row["sweep"].values())[0]
-    design_dir = os.path.join(design_root, row["run_id"])
     if vendor_bitstream(row) is None:
         raise SystemExit(
             f"{row['run_id']}: no vendor bitstream on disk -- redoing the open "
             f"half of a run whose oracle output is gone would silently spend a "
             f"vendor run")
+
+    from fuzz.gw5ast138c.harness import equiv, evidence, gen, openflow
+
+    spec = gen.load_shape(shape)
+    sweep_value = list(row["sweep"].values())[0]
+    design_dir = os.path.join(design_root, row["run_id"])
 
     kept = {k: row[k] for k in VENDOR_FIELDS if k in row}
     base = dict(row, verdict="aborted", level=level or row.get("level", "E1"))
@@ -90,13 +91,26 @@ def main(argv=None):
     parser.add_argument("--level", default=None)
     parser.add_argument("--write", action="store_true",
                         help="rewrite --rows in place with the repaired rows")
+    parser.add_argument(
+        "--skip-missing-vendor", action="store_true",
+        help="keep a row whose vendor bitstream has been deleted from the "
+             "datastore exactly as it is, instead of refusing the batch; the "
+             "row is still never rebuilt without its oracle output")
     args = parser.parse_args(argv)
 
     rows = [json.loads(l) for l in open(args.rows, encoding="utf-8")
             if l.strip()]
-    out = [redo(row, args.shape, args.design_root, args.level) for row in rows]
+    out, skipped = [], []
+    for row in rows:
+        if args.skip_missing_vendor and vendor_bitstream(row) is None:
+            skipped.append(row["run_id"])
+            out.append(row)
+            continue
+        out.append(redo(row, args.shape, args.design_root, args.level))
     for row in out:
-        print("%-28s %s" % (row["run_id"], row["verdict"]))
+        mark = " (kept: vendor bitstream absent)" \
+            if row["run_id"] in skipped else ""
+        print("%-28s %s%s" % (row["run_id"], row["verdict"], mark))
     if args.write:
         with open(args.rows, "w", encoding="utf-8") as fh:
             for row in out:

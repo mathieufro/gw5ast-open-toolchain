@@ -79,3 +79,28 @@ def test_unused_io_attrvals_match_the_packer_default_set():
         "DRIVE_LEVEL": "8", "PADDI": "PADDI", "PULLMODE": "NONE",
     }
     assert set(DRIVE_ATTRS) <= set(dict(UNUSED_IO_ATTRVALS))
+
+
+def test_an_attribute_backed_by_no_open_only_fuse_is_a_decode_alias():
+    """The claim is about fuses.  Where the open bitstream's bits at a site
+    are a subset of the vendor's, nothing was invented there, and an
+    attribute that decodes only on the open side is the decoder resolving a
+    smaller bit set to another name -- `lvds_out_is_aliased` -- not a
+    configuration the vendor declined to make."""
+    report = _report()
+    _classify(report, "fixture", SITE, "unused",
+              vendor={"IO_TYPE": "LVCMOS33", "DRIVE": "8"},
+              opened={"IO_TYPE": "LVCMOS33", "LVDS_OUT": "ON"},
+              open_bits=set())
+    assert report.violations == []
+    assert report.classes["unused"]["LVDS_OUT:decode_alias"] == 1
+
+
+def test_an_attribute_backed_by_an_open_only_fuse_still_is_a_violation():
+    report = _report()
+    _classify(report, "fixture", SITE, "unused",
+              vendor={"IO_TYPE": "LVCMOS33"},
+              opened={"IO_TYPE": "LVCMOS33", "DRIVE": "8"},
+              open_bits={(20, 3)})
+    assert [(v.attr, v.kind) for v in report.violations] == [("DRIVE",
+                                                              "open_only")]

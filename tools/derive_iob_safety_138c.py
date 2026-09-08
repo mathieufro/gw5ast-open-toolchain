@@ -206,6 +206,26 @@ def bank_of(chipdb, db, row, col):
         return None
 
 
+def site_open_only_bits(db, vendor_bm, open_bm, row, col, name):
+    """Bits the open bitstream sets in a site's fuse cell and the vendor does not.
+
+    The claim is about **fuses**, so this is what decides it.  Where the open
+    bit set is a subset of the vendor's, no fuse was invented and an attribute
+    that decodes only on the open side is the decoder resolving a smaller bit
+    set to a different name -- the `lvds_out_is_aliased` case -- not a
+    configuration the vendor declined to make.
+    """
+    cell = fuse_cell(db, row, col, name) if not name.startswith("BANK") \
+        else (row, col)
+    if cell is None or cell not in vendor_bm or cell not in open_bm:
+        return None
+    vendor, opened = vendor_bm[cell], open_bm[cell]
+    return {(r, c)
+            for r, line in enumerate(opened)
+            for c, bit in enumerate(line)
+            if bit and not vendor[r][c]}
+
+
 def analyse(design, vendor_bm, open_bm, ctx):
     """Decode both bitstreams and enumerate every violation of the claim."""
     db, attrids, chipdb, gu, tables, used = ctx
@@ -231,11 +251,13 @@ def analyse(design, vendor_bm, open_bm, ctx):
         vendor, opened = vendor or {}, opened or {}
         report.sites[str(site)] = {"state": state,
                                    "vendor": vendor, "open": opened}
-        _classify(report, design, site, state, vendor, opened)
+        open_bits = site_open_only_bits(db, vendor_bm, open_bm,
+                                        site.row, site.col, site.name)
+        _classify(report, design, site, state, vendor, opened, open_bits)
     return report
 
 
-def _classify(report, design, site, state, vendor, opened):
+def _classify(report, design, site, state, vendor, opened, open_bits=None):
     for attr in sorted(set(vendor) | set(opened)):
         in_v, in_o = attr in vendor, attr in opened
         if in_v and in_o:
@@ -244,6 +266,8 @@ def _classify(report, design, site, state, vendor, opened):
             kind = "open_only"
         else:
             kind = "vendor_only"
+        if kind in ("open_only", "value_diff") and open_bits == set():
+            kind = "decode_alias"
         report.classes[state][f"{attr}:{kind}"] += 1
         if kind == "open_only" or (kind == "value_diff"
                                    and attr in SAFETY_ATTRS):
@@ -318,12 +342,12 @@ def unused_drive_bits(db, chipdb, attrids, vendor_bm, open_bm, row, col, name):
     return drive, tuple(sorted(only_open & nodrive))
 
 
-def run_dirs(paths):
+def run_dirs(paths, open_name="top.fs"):
     """Every run directory under *paths* that holds a full vendor/open pair."""
     found = []
     for path in paths:
         for root, _dirs, files in os.walk(path):
-            if ("top.fs" in files and "top_pnr.json" in files
+            if (open_name in files and "top_pnr.json" in files
                     and os.path.exists(
                         os.path.join(root, "run/impl/pnr/run.fs"))):
                 found.append(root)
@@ -337,12 +361,17 @@ def main(argv=None):
     parser.add_argument("--runs", nargs="+", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument(
+        "--open-name", default="top.fs",
+        help="the open-half bitstream to read inside each run directory; "
+             "point it at a repack (tools/repack_open_fs.py) to re-diff a "
+             "packer fix without spending an oracle run")
     args = parser.parse_args(argv)
 
     db, attrids, chipdb, gu, read_bitstream = load_device(
         args.apicula, args.chipdb)
     tables = bank_fuse_tables(db)
-    dirs = run_dirs(args.runs)
+    dirs = run_dirs(args.runs, args.open_name)
     if args.limit:
         dirs = dirs[:args.limit]
 
@@ -354,7 +383,7 @@ def main(argv=None):
         vendor_bm = chipdb.tile_bitmap(
             db, read_bitstream(os.path.join(path, "run/impl/pnr/run.fs"))[0])
         open_bm = chipdb.tile_bitmap(
-            db, read_bitstream(os.path.join(path, "top.fs"))[0])
+            db, read_bitstream(os.path.join(path, args.open_name))[0])
         used = used_sites(os.path.join(path, "top_pnr.json"))
         report = analyse(design, vendor_bm, open_bm,
                          (db, attrids, chipdb, gu, tables, used))
