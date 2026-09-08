@@ -1,0 +1,2 @@
+03:16:21 WATCHDOG_ARMED batch=p3-iodelay-b stall=5min poll=100s (independent process)
+03:20:22 WATCHDOG_COMPLETE batch=p3-iodelay-b saw BATCH_COMPLETE (clean exit)

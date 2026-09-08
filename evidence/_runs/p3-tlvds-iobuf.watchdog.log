@@ -1,0 +1,2 @@
+02:34:06 WATCHDOG_ARMED batch=p3-tlvds-iobuf stall=5min poll=100s (independent process)
+02:35:15 WATCHDOG_COMPLETE batch=p3-tlvds-iobuf saw BATCH_COMPLETE (clean exit)

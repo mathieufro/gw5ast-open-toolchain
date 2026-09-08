@@ -1,0 +1,12 @@
+00:34:06 BATCH_START batch=p3-tlvds-iobuf shape=diff_io_iobuf level=E1 pid=71295 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t24
+00:34:48 BATCH_HEAD selftest --inject-one-fuse: ok
+00:35:01 BATCH_HEAD selftest --unpacker-completeness: ok
+00:35:01 BATCH_HEAD selftest --probe-mask-classes: ok
+00:35:02 BATCH_HEAD gw_sh pre-flight: ok
+00:35:02 BATCH_CHIPDB batch=p3-tlvds-iobuf sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+00:35:02 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+00:35:02 BATCH_RESUME batch=p3-tlvds-iobuf planned=1 already_terminal=0
+00:35:02 RUN_START p3-tlvds-iobuf-diff_io_iobuf-0000 sweep='tlvds-iobuf'
+00:35:14 RUN_DONE p3-tlvds-iobuf-diff_io_iobuf-0000 verdict=aborted
+00:35:14 BATCH_SKIPPED batch=p3-tlvds-iobuf n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-tlvds-iobuf.rows.jsonl
+BATCH_COMPLETE p3-tlvds-iobuf runs=1 ok=0 diff=0 aborted=1

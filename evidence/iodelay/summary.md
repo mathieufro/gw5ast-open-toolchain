@@ -179,3 +179,61 @@ Two decode items, both named:
   it is unrelated to the delay line and is named here rather than folded into
   the row.
 
+## The `conns` residual, closed by re-shape (`P3.T22`, `D105`)
+
+The row's one open item was `conns` 8: `iodelay_a` drove `DLYSTEP` from a
+fabric counter, and a counter is placed freely by each flow, so eight of the
+delay cell's port nets carried two different endpoint digests for a reason
+that had nothing to do with `IODELAY`. `D105` is the rule that closes it — *a
+shape whose context cells the vendor renames must keep every net inside the
+scope* — and `iodelay_a_balls` is that rule applied: the eight step bits come
+off package balls, `DO` goes straight to a ball, and the design holds **no
+fabric cell at all**.
+
+**2 oracle runs** (`p3-iodelay-b`, ledger cumulative 100/140).
+
+| point | level | verdict | cells / attrs / conns | decode c1 / c2 |
+|---|---|---|---|---|
+| `c-static-dly-0` | `E1` | ok | 0 / 0 / **0** | ok / ok |
+| `c-static-dly-128` | `E1` | diff | 1 / 1 / 57 | ok / ok |
+
+`conns` 8 -> **0**. The connectivity model was right; the residual was the
+context, exactly as `D105` predicted, and the row's `E1` is now reached from
+the bitstream-addressed bel with a real tile scope.
+
+### And a new measured fact, which is why the row still does not close
+
+At `c-static-dly-128` the two flows disagree by one cell and one attribute,
+and the disagreement is the vendor's:
+
+    tile (52,108) bel 0: cell vendor=<absent> open=IOLOGIC
+    open  attrs: ('IOLOGIC', 0, 'C_STATIC_DLY', '128')
+    vendor attrs: (none)
+
+**The vendor programs no IOLOGIC fuse at all in that tile.** It kept the
+primitive — `run.vg` and `run.vo` both instantiate `IODELAY dut` — and still
+left the delay unprogrammed. The same `C_STATIC_DLY` values *are* programmed
+by the vendor in `P3.T21`/`P3.F2`'s sweep, whose designs differ from this one
+in exactly one respect: there the delayed output fed a fabric flop and a
+counter drove `DLYSTEP`. So on this die the vendor's static delay is
+**context-dependent** — an `IODELAY` whose output goes straight to a pad, in a
+design with no clocked fabric, gets none — and a fabric-free shape therefore
+cannot carry the delay line even though it is the only shape that can carry
+the connectivity.
+
+That is the row's measured reason for staying `E0`, and it replaces the old
+one. The two halves are now proven separately: connectivity by
+`iodelay_a_balls` (`conns` 0), fuses and attributes by `iodelay_a`
+(`attrs` 0 on every built point, `P3.F2`). What no single Phase-3 shape has
+yet shown is both at once. Naming the vendor's condition precisely enough to
+build that shape is the open work.
+
+### One decode gap fixed on the way
+
+`nextpnr` puts an `IOLOGICI_EMPTY`/`IOLOGICO_EMPTY` half on an IOLOGIC site
+when the design has no gearbox for that direction. Its configuration is
+*nothing*, so no bitstream on any device decodes a cell at its site — the same
+case as `IOLOGIC_DUMMY`, minus the main cell that stands in for it. Both
+`equiv.bitstream_bel_exported` and `decode_check`'s `c1` now exempt it by
+name; before, it read as a misplaced bel and a missing cell and held
+`c-static-dly-0` at `E0` with `c1=mismatch`.

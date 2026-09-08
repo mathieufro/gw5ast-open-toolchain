@@ -1,0 +1,16 @@
+00:35:46 BATCH_START batch=p3-elvds shape=diff_io_elvds level=E1 pid=72012 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t25
+00:36:27 BATCH_HEAD selftest --inject-one-fuse: ok
+00:36:40 BATCH_HEAD selftest --unpacker-completeness: ok
+00:36:41 BATCH_HEAD selftest --probe-mask-classes: ok
+00:36:41 BATCH_HEAD gw_sh pre-flight: ok
+00:36:41 BATCH_CHIPDB batch=p3-elvds sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+00:36:41 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 3 run ids)
+00:36:41 BATCH_RESUME batch=p3-elvds planned=3 already_terminal=0
+00:36:41 RUN_START p3-elvds-diff_io_elvds-0000 sweep='elvds-obuf'
+00:36:42 RUN_DONE p3-elvds-diff_io_elvds-0000 verdict=refused
+00:36:42 RUN_START p3-elvds-diff_io_elvds-0001 sweep='elvds-tbuf'
+00:36:43 RUN_DONE p3-elvds-diff_io_elvds-0001 verdict=refused
+00:36:43 RUN_START p3-elvds-diff_io_elvds-0002 sweep='elvds-iobuf'
+00:36:44 RUN_DONE p3-elvds-diff_io_elvds-0002 verdict=refused
+00:36:44 BATCH_SKIPPED batch=p3-elvds n=0 refused=3 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-elvds.rows.jsonl
+BATCH_COMPLETE p3-elvds runs=3 ok=0 diff=0 aborted=3

@@ -1,0 +1,38 @@
+BATCH_START batch=p3-tlvds shape=diff_io level=E1 pid=68689 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t23
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p3-tlvds sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 3 run ids)
+BATCH_RESUME batch=p3-tlvds planned=3 already_terminal=0
+RUN_START p3-tlvds-diff_io-0000 sweep='tlvds-ibuf'
+RUN_DONE p3-tlvds-diff_io-0000 verdict=aborted
+RUN_START p3-tlvds-diff_io-0001 sweep='tlvds-obuf'
+RUN_DONE p3-tlvds-diff_io-0001 verdict=aborted
+RUN_START p3-tlvds-diff_io-0002 sweep='tlvds-tbuf'
+RUN_DONE p3-tlvds-diff_io-0002 verdict=aborted
+BATCH_SKIPPED batch=p3-tlvds n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-tlvds.rows.jsonl
+BATCH_COMPLETE p3-tlvds runs=3 ok=0 diff=0 aborted=3
+BATCH_START batch=p3-tlvds shape=diff_io level=E1 pid=69518 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t23
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p3-tlvds sha256=3df1431840852dbdb9f22953c584927d7f3e5bf259f902ff7cd8be5b53c82d18
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 3 run ids)
+BATCH_RESUME batch=p3-tlvds planned=3 already_terminal=0
+RUN_START p3-tlvds-diff_io-0000 sweep='tlvds-ibuf'
+RUN_DONE p3-tlvds-diff_io-0000 verdict=ok
+RUN_START p3-tlvds-diff_io-0001 sweep='tlvds-obuf'
+RUN_DONE p3-tlvds-diff_io-0001 verdict=ok
+RUN_START p3-tlvds-diff_io-0002 sweep='tlvds-tbuf'
+RUN_DONE p3-tlvds-diff_io-0002 verdict=ok
+BATCH_SKIPPED batch=p3-tlvds n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-tlvds.rows.jsonl
+BATCH_COMPLETE p3-tlvds runs=3 ok=3 diff=0 aborted=0
