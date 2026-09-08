@@ -103,3 +103,37 @@ read four measured rows as absent · `A33` `DONE-STD` clause (c) for rows with
 nothing to compare · `A34` `G-FCLK-138C` closed inside the phase ·
 `A35` nine stale guards found by the phase-close gate · `A36` the E2E
 scenario amended by measurement.
+
+---
+
+## The gestalt gate's blocking findings, and where each stands
+
+`impl/gestalt-p3.md` returned **BLOCK** on eight findings before this close.
+
+| id | finding | state |
+|---|---|---|
+| `B1` | the phase failed its own exit gate, `CRITERIA ok: 4/11` | **CLOSED** — `CRITERIA ok: 20/20`, `EVIDENCE ok: 348 rows, 17 pending, 0 blank, 0 missing artifacts` |
+| `B2` | results written into the wrong table column | **CLOSED** (`A32`) — `ADC`, `OSC` and `IOB / bank config` moved into `138C status` |
+| `B3` | two rows invisible to the gate | **CLOSED** (`A32`) — the unescaped pipes are escaped and both rows parse |
+| `B4` | three slugs "blank" on the primitive-name comparison | **CLOSED** (`A32`) — join keys normalised, and a guard added so a shape cannot drift from a row id again |
+| `B5` | `PR #535 bank coercion` has no evidence at all | **CLOSED** — one row and a summary, `E0+hw-pending` with the one observation `P9` owes it |
+| `B6` | "IOLOGIC configures on the A half only" is refuted by this phase's own later measurement | **RETRACTED, with the B-half claim bounded** — the observation stands, the reason does not; the displacement is exercised against the vendor by the `OSER16` point alone, a plain `ODDR` on a B-half ball is a named one-run follow-up, and the fix is claimed for `GW5AST-138C` only (`A30`) |
+| `B7` | no evidence row measured at the branch HEAD | **PARTLY CLOSED** — the 12 ADC rows are re-derived at HEAD; the other E1 slugs are re-derived at the two intervening commits, and the pair they were measured against (`34adfe57` / `45b32e69`) is the pair in force. The re-derivation of `oddr-iddr`, `oser`, `ides`, `iob-bank` and `iodelay` at the final HEAD is **owed and costs 0 oracle runs** |
+| `B8` | a `gestalt-p2` exit condition deferred a third time | **CLOSED by naming both halves** — see below |
+
+### `B8` — both halves of `gestalt-p2`'s `D5`, named with an owner
+
+1. **`G-FCLK-138C`** — no longer deferred at all: the HCLK-to-IOLOGIC
+   fast-clock edge landed inside this phase and the gearbox rows close at
+   `E1` over it (`A34`).
+2. **The global-clock items** — the `router1.cc:347` trip on four
+   independent global clock nets, `PLL_B[*]` outputs reaching no fabric flop,
+   and no PLL-to-HCLK path in the model. **Owner: Phase 6** (`ws_06_timing`),
+   which owns the clock model end to end; none of the three is an IO or
+   IOLOGIC question and no shape in this phase drives four global nets or a
+   `PLL_B` output. Named here so it is visible rather than invisible.
+3. **`gestalt-p2`'s `D1`, the released SSPI pin** — honestly **not
+   discharged**: no design in this phase's corpus drives a released SSPI pin
+   as a GPIO, so the 20 `IOB` longval bits at `(166,108)`/`(167,108)` stay
+   unobserved. **Owner: `P9`**, which loads a bitstream on the real board and
+   is the only place the question can be answered rather than modelled.

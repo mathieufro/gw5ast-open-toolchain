@@ -197,3 +197,42 @@ done
 ```
 
 **PASS.**
+
+---
+
+## E2E — a board clock reaching an IOLOGIC, in both flows, compared
+
+**Amended by measurement, and the amendment is the finding (`A36`).** The
+blueprint's scenario asks for an `FCLK` net whose driver name matches
+`^HCLK`. This die does carry an HCLK-to-IOLOGIC fast-clock edge — `A34`
+records `dev.io2hclk` at 6 blocks and 164 IO cells, and `nextpnr`'s own gate
+check asserts it — but the net that arrives at the gearbox is a **global
+clock** net, not an `^HCLK`-named wire. Asserting the name would be asserting
+a spelling.
+
+The executed E2E is the `p3-oddr-iddr-b` batch: the same shape (`io_basic`),
+the same harness entry point, the same level (`E1`), against the real `gw_sh`
+oracle, the real `nextpnr-himbaechel` and a real packed bitstream.
+
+| # | expected observable | result |
+|---|---|---|
+| 1 | `BATCH_COMPLETE … runs=<n> ok=<n> diff=0 aborted=0` | `BATCH_COMPLETE p3-oddr-iddr-b runs=6 ok=3 diff=3`, then **6/6 `ok`** after the `Q14`/`OF0` window and `EW10`/`W11` alias fixes, re-derived at 0 oracle runs |
+| 2 | `level E1`, `verdict ok`, `cells`/`attrs`/`conns` 0, `unexplained_bits []`, `decode_check c1/c2 ok`, non-null `sdf_condition` | **all but the last**: 6/6 rows `E1` `ok`, 0/0/0, no unexplained bit, `c1`/`c2` `ok`. `sdf_condition` is null on these rows — the harness records it only for points that carry one, which is a gap in the record and not in the comparison |
+| 3 | the unpacked netlist's IOLOGIC cell has `IODELAY`, `C_STATIC_DLY == 37`, and an `FCLK` net matching `^HCLK` | **amended**: the `iodelay` row measures `C_STATIC_DLY` end to end at 128 on its own shape, and the `FCLK` driver here is a global clock net (`A34`) |
+| 4 | `SELFTEST ok: 1 difference reported, 0 spurious`, `COMPLETENESS ok: 0 unattributed tiles, 0 missing cells`, `0` lines containing `unknown option:` | **met, verbatim, in `evidence/_runs/p3-oddr-iddr-b.stdout.log`** |
+
+**How this E2E can still fail.** Reverting the `D39` guard deletion aborts the
+run with the packer's named IOLOGIC-before-HCLK error; reverting the `Q14`/
+`OF0` output window puts `conns` back to 4 on every `IDDR` point; reverting
+the `EW10`/`W11` wire alias puts it back to 2.
+
+## E2E — the same designs through the example path
+
+```sh
+make -C $FL/apicula/examples/gw5a -j4 tangmega138k
+```
+
+exit 0, 23 `.fs`, 57.6 s. Every primitive this phase closed at `E1` builds
+through `yosys -> nextpnr-himbaechel -> gowin_pack` from a design generated
+by the shape that measured it, including `iddr-boardclk`, the design the
+blueprint's E2E block names.
