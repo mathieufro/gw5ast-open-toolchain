@@ -45,3 +45,6 @@ p3t28b-adc-anchor	adc	0	112	2026-09-08T05:55:00+00:00
 #   is what completes both axes against the four points already on disk.
 #   Cumulative 120/160.
 p3-adc-fuses	adc	8	120	2026-09-08T04:01:04+00:00
+# P3.F3 B-half IOLOGIC, cap declared BEFORE the batch (gestalt-p3 B6): 3 runs --
+#   one ODDRC, one OSER4 and one IDES4, each on the B half of a pad pair, which
+#   is what the retracted "A half only" conclusion owes.  Cumulative 123/160.

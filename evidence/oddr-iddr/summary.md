@@ -179,3 +179,28 @@ splitting any net routed over such a wire. `chipdb.intertile_aliases` now maps t
 length-1 root names onto the two they share; `nextpnr` needed no change.
 
 **Result: all six points `verdict: ok`, `cells`/`attrs`/`conns` 0/0/0, both decode checks ok.** `IDDR` points go `conns` 2->0; `ODDR` points stay `ok`. The row closes at `E1` with nothing open.
+
+## The measured correction (`P3.F3`, 1 oracle run)
+
+The retraction above was owed a measurement, and this is it. `io_basic_b` puts
+an `ODDRC` on **`AB17`** -- `IOB80B`, the same `B`-half ball whose silence the
+retracted conclusion was drawn from -- with the pair's `A` half left empty, and
+scopes both the pad cell `(79,108)` and the aux cell `(80,108)` its IOLOGIC
+fuses live in.
+
+`p3f3-oddrc-b-io_basic_b-0000`: **`E1`, `ok`, `cells`/`attrs`/`conns` 0/0/0,
+`c1`/`c2` ok, `fuses_moved` and `unexplained_bits` empty.** The decode says
+where the configuration went:
+
+| cell | table | vendor | open |
+|---|---|---|---|
+| `(108,79)` ttyp 247 | `IOLOGICB` (the 3-coordinate stub) | `{}` | `{}` |
+| `(108,80)` ttyp 248 | `IOLOGICB` (the full table) | `OUTMODE=22, CLKOMUX=61, LSRIMUX_0=1` | *identical* |
+
+So the observation `P3.T11` made -- nothing decodes in the pad cell's own
+`IOLOGICB` -- is right, and it is right **because that table is the stub**.
+The `B` half is configurable, the vendor writes it one column over, and the
+open flow now writes exactly the same three attributes there. The `A`-half
+confinement of this phase's coverage was a consequence of the wrong reason and
+is lifted; `shapes/io_ser_b.py` (`OSER4` on `AB17`) and `shapes/io_des_b.py`
+(`IDES4` on `T15`) close the other two families the same way.

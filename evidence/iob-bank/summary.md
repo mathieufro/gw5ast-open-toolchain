@@ -174,3 +174,60 @@ configuration through the ordinary IO path?" Not from this corpus: no design in 
 drives a released SSPI pin as a GPIO, so the 20 `sspi` bits at `(166,108)`/`(167,108)`
 are unobserved here. What this row now settles is that the ordinary IO path is clean
 where it can be observed -- the prior cause `P3.T26` gave `W-IO` is gone.
+
+## The corpus now includes differential IO (`P3.F3`, 0 oracle runs)
+
+The 35 pairs this row was decided on placed **no** differential IO, so the
+diff-pair state was unobserved and said so. Four pairs that were already on
+disk have the shape the derivation consumes -- `p3t23/p3-tlvds-diff_io-000{0,1,2}`
+and `p3t24/p3-tlvds-iobuf-diff_io_iobuf-0000` -- so adding them costs nothing
+and the row no longer has a hole where its most electrically interesting case
+should be. **39 designs, 14 violations** (`iob-safety.json`).
+
+**Claim 1 -- the thermal claim -- is unchanged and still clear.** Over all 39
+designs the unused-pin figures are `unused_drive_sites` 0, `unused_drive_bits`
+0, `unused_other_open_only_bits` 0: the open flow sets no drive, pull or bank
+fuse on an unused pad that the vendor does not set. The 11 `open_only`
+violations are the same 11 as before, all confined to the `ae350-e0` skew named
+in `P2`; the differential designs add none.
+
+**Claim 2 -- "no used pin is left without its `IO_TYPE`" -- fails on three of
+the new pairs, and that is a real defect, not a decode artefact.** On
+`p3-tlvds-diff_io-0001` at `(R102C181)`:
+
+```
+IOBB vendor  IO_TYPE=236 LVDS_OUT=ON OPENDRAIN=OFF PADDI=PADDI
+             SLEWRATE=FAST PULLMODE=NONE PERSISTENT=OFF ODMUX=TRIMUX IOB_UNKNOWN51=TRIMUX
+IOBB open                                       (the first four absent)
+             SLEWRATE=FAST PULLMODE=NONE PERSISTENT=OFF ODMUX=TRIMUX IOB_UNKNOWN51=TRIMUX
+```
+
+`IOBA` -- the pair's positive half -- is **identical** on both sides. What the
+open flow writes into `IOBB` is the *unused-pin* default set: `nextpnr` places
+the differential cell on the `A` half, so `gowin_pack` never sees the negative
+pad as used and `get_unused_io_fuses` configures it as spare. The vendor
+configures both halves of the pair. `p3-tlvds-diff_io-0000` is the input case
+and misses it on `BANK3` instead. `p3-tlvds-iobuf` has none.
+
+The direction matters for what this row claims: every one of the three is an
+**under**-emission (`unset_on_used`, vendor-only fuses), so no bit is invented
+and PR #423's hazard class is untouched -- which is why the row's safety
+verdict stands. It is nonetheless a difference from the vendor on a pad the
+design uses, it is **owed to the `TLVDS_*` rows**, and it is repairable at
+**0 oracle runs** (`repack_open_fs.py` + this derivation over the four pairs
+already on disk) once `gowin_pack` configures a differential pair's negative
+half instead of defaulting it.
+
+**`HYSTERESIS=ON` on the extended corpus**: equal on 122 of 125 used inputs,
+with the 3 `open_only` the `ae350-e0` skew again, now including the
+single-ended receivers of the TLVDS designs. It remains **unvalidated for
+`SSTL15`**, which no design in any corpus places, and Phase 5b drives bank-6
+DDR3 inputs through the same default -- that is P5b's to settle before it packs
+a bank-6 bitstream.
+
+Reproduce (0 oracle runs)::
+
+    python tools/derive_iob_safety_138c.py --apicula <apicula> \
+        --chipdb <apicula>/apycula/GW5AST-138C.msgpack.xz \
+        --runs <the 35 paths in iob-safety.json> $DATASTORE/p3t23 $DATASTORE/p3t24 \
+        --out evidence/iob-bank/iob-safety.json

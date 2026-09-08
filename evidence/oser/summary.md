@@ -150,3 +150,21 @@ vendor/open attribute comparison above); `audit_gearbox_attrs.py` (the audit, sh
 with the `ides` row, `--slug ides`); `archive/runs-bank2-block1.jsonl` (the row
 `P3.T13`'s first two runs produced on the bank-2 pad, kept because it is what measured
 the consequence of not pinning the lane).
+
+## `OSER4` on the `B` half of a pad pair (`P3.F3`, 1 oracle run)
+
+Every point above sits on `AA9`, an `A`-half ball, because `P3.T11` concluded
+an IOLOGIC configures on the `A` half only. That conclusion is retracted
+(`$OTC/evidence/oddr-iddr/summary.md`): the hundred-coordinate `IOLOGICB`
+table is the **aux cell's**, and a `B` half's fuses go there.
+
+`io_ser_b` is this shape's `oser4-default` point moved to `AB17` (`IOB80B`,
+pad cell `(79,108)`, aux cell `(80,108)`) and nothing else changed, so a
+difference between the two rows would be the half and not the design.
+
+`p3f3-oser4-b-io_ser_b-0000`: **`E1`, `ok`, 0/0/0, `c1`/`c2` ok**, no
+`fuses_moved`, no `unexplained_bits`. The vendor's aux-cell `IOLOGICB` decodes
+`OUTMODE=25, CLKOMUX=61, LSRIMUX_0=1, WRFCLKSEL=102, FCLKSEL1=81,
+FCLKSEL2=114` -- the same `MODDRX21` gearbox and the same HCLK lane selection
+as the `A`-half row -- and the open flow reproduces it exactly. The pad cell's
+own `IOLOGICB` stub stays clear in both flows, as it is meant to.

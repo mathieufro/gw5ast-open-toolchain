@@ -186,3 +186,18 @@ Result: all six points `verdict: ok`, `cells`/`attrs`/`conns` **0/0/0**, both
 decode checks `ok`. `conns` 2/2/0/2/12/9 -> **0/0/0/0/0/0** -- including the
 two `IDES10` points, whose `Q6`/`Q7` half of the window was the other half of
 the same alias gap. The row closes at `E1` with nothing open.
+
+## `IDES4` on the `B` half of a pad pair (`P3.F3`, 1 oracle run)
+
+The rows above are on `AA9`, an `A`-half ball, for the reason retracted in
+`$OTC/evidence/oddr-iddr/summary.md`. `io_des_b` moves the deserialiser's own
+pad to `T15` (`IOB70B`, pad cell `(69,108)`, aux cell `(70,108)`) -- `T15` and
+not the `AB17` the two output shapes use, because `AB17` is one of this
+shape's own word balls -- and leaves the word balls, the clock and the resets
+where they are.
+
+`p3f3-ides4-b-io_des_b-0000`: **`E1`, `ok`, 0/0/0, `c1`/`c2` ok**, no
+`fuses_moved`, no `unexplained_bits`. The vendor's aux-cell `IOLOGICB` decodes
+`INMODE=10, CLKIMUX=61, LSROMUX_0=1`; the open flow writes the same three, in
+the same cell. The input half of the `B` column is therefore usable and
+measured, not inferred from the output half.

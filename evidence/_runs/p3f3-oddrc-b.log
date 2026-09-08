@@ -1,0 +1,12 @@
+05:51:23 BATCH_START batch=p3f3-oddrc-b shape=io_basic_b level=E1 pid=43047 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3f3
+05:52:06 BATCH_HEAD selftest --inject-one-fuse: ok
+05:52:19 BATCH_HEAD selftest --unpacker-completeness: ok
+05:52:20 BATCH_HEAD selftest --probe-mask-classes: ok
+05:52:20 BATCH_HEAD gw_sh pre-flight: ok
+05:52:20 BATCH_CHIPDB batch=p3f3-oddrc-b sha256=45b32e69130237d837d48c22c992bd296eabac5c45f523b07c142c09ed8cc7cb
+05:52:20 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+05:52:20 BATCH_RESUME batch=p3f3-oddrc-b planned=1 already_terminal=0
+05:52:20 RUN_START p3f3-oddrc-b-io_basic_b-0000 sweep='oddrc-default'
+05:53:52 RUN_DONE p3f3-oddrc-b-io_basic_b-0000 verdict=ok
+05:53:52 BATCH_SKIPPED batch=p3f3-oddrc-b n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/open-toolchain/evidence/_runs/p3f3-oddrc-b.rows.jsonl
+BATCH_COMPLETE p3f3-oddrc-b runs=1 ok=1 diff=0 aborted=0
