@@ -168,3 +168,38 @@ difference between the two rows would be the half and not the design.
 FCLKSEL2=114` -- the same `MODDRX21` gearbox and the same HCLK lane selection
 as the `A`-half row -- and the open flow reproduces it exactly. The pad cell's
 own `IOLOGICB` stub stays clear in both flows, as it is meant to.
+
+## `P3.F3`: the `B` column, and an over-emission the re-derivation found
+
+**Three vendor runs** (cumulative 123/160) put the retracted "A half only"
+conclusion to the vendor. `OSER4` on `AB17` (`IOB80B`), the `B` half of the
+pad pair with the `A` half left **empty**, closes `E1` `ok` `0/0/0`,
+`c1`/`c2` `ok`, `fuses_moved` and `unexplained_bits` empty, with the vendor's
+own `OUTMODE=25`, `CLKOMUX=61`, `LSRIMUX_0=1`, `WRFCLKSEL=102`,
+`FCLKSEL1=81`, `FCLKSEL2=114` reproduced in the **aux** cell `(108,80)` while
+the pad cell's own three-coordinate `IOLOGICB` stub stays clear in both flows.
+The `B` column is usable on its own and not as a passenger of its neighbour.
+
+**Then re-deriving the row at the branch HEAD (0 oracle runs) turned three of
+its six points from `ok` to `diff`** — `OSER8`, `OSER10` and `OVIDEO`, each
+`cells`/`attrs` 1 and `conns` ~74, all naming the same first difference: an
+`IOLOGIC` the open flow places on the `B` half of (52,108) and the vendor does
+not. Decoded from both bitstreams of the `OSER8` pair, at the aux cell:
+
+```
+(108,53) IOLOGICB  vendor  0 bits
+(108,53) IOLOGICB  open    5 bits
+    OUTMODE=LVDSOUT ISI=ENABLE CLKOMUX=ENABLE
+    FCLKSEL1=HCLK2 FCLKSEL2=HCLK2_ WRFCLKSEL=UNK102
+```
+
+An **over-emission**, and a real one: the pre-5A model configures the aux half
+of any gearbox wider than a DDR pair, and this die configures it only for the
+16:1 one. It was invisible until `IOLOGICB` inherited `IOBB`'s
+`fuse_cell_offset` (`2c68758`), because until then those attributes landed in
+the pad cell's own stub, which can hold almost none of them.
+`GW5AST_138C.get_IOLOGIC_DUMMY_fuses` now emits nothing for an
+`OUTMODE=DDRENABLE` dummy; `DDRENABLE16` still reaches the base handler,
+because the vendor really does configure an `OSER16`'s aux half (six bits,
+`P3.T16a`). All six sweep points plus the `B`-half point are `ok` `0/0/0`
+`c1`/`c2` `ok` at HEAD.

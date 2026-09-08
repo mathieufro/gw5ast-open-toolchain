@@ -1,0 +1,3 @@
+11:12:52 WATCHDOG_ARMED batch=p3f3-rederive stall=11min poll=220s (independent process)
+14:27:55 WATCHDOG_STALL batch=p3f3-rederive newest=p3f3-rederive.log age=14min > 11min — batch pid 49257 ALIVE but producing nothing
+17:04:41 WATCHDOG_DEAD batch=p3f3-rederive exited WITHOUT BATCH_COMPLETE (batch pid 49257 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

@@ -1,0 +1,2 @@
+17:18:55 WATCHDOG_ARMED batch=p3f3-gate-apicula stall=5min poll=100s (independent process)
+17:31:19 WATCHDOG_DEAD batch=p3f3-gate-apicula exited WITHOUT BATCH_COMPLETE (batch pid 38266 exited) — resume with the identical batch command (run ids with a terminal row are skipped)

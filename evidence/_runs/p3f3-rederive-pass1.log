@@ -1,0 +1,23 @@
+p3-oddr-iddr-b-io_basic-0000             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oddr-iddr-b-io_basic-0001             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oddr-iddr-b-io_basic-0002             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oddr-iddr-b-io_basic-0003             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oddr-iddr-b-io_basic-0004             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oddr-iddr-b-io_basic-0005             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3f3-oddrc-b-io_basic_b-0000             ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oser-b-io_ser-0000                    ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oser-b-io_ser-0001                    ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oser-b-io_ser-0002                    ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-oser-b-io_ser-0003                    ('ok', 0, 0, 0, 'ok', 'ok')        ('diff', 1, 1, 74, 'ok', 'ok') CHANGED
+p3-oser-b-io_ser-0004                    ('ok', 0, 0, 0, 'ok', 'ok')        ('diff', 1, 1, 74, 'ok', 'ok') CHANGED
+p3-oser-b-io_ser-0005                    ('ok', 0, 0, 0, 'ok', 'ok')        ('diff', 1, 1, 75, 'ok', 'ok') CHANGED
+p3f3-oser4-b-io_ser_b-0000               ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-ides-io_des-0000                      ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-ides-io_des-0001                      ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-ides-io_des-0002                      ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-ides-io_des-0003                      ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-ides-io_des-0004                      ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3-ides-io_des-0005                      ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+p3f3-ides4-b-io_des_b-0000               ('ok', 0, 0, 0, 'ok', 'ok')        ('ok', 0, 0, 0, 'ok', 'ok') SAME
+Unknown attr name for table: IOLOGIC code:133
+p3-iodelay-a-iodelay_a-0000              ('diff', 0, 0, 1, 'mismatch', 'ok') ('diff', 0, 0, 1, 'mismatch', 'ok') SAME

@@ -1,0 +1,54 @@
+GATE fast: pytest tools/tests
+........................................................................ [ 27%]
+........................................................................ [ 54%]
+........................................................................ [ 82%]
+.........s....................................                           [100%]
+261 passed, 1 skipped in 14.54s
+GATE fast: ok, 1 check
+GATE branch: check_evidence.py
+RUNS adc/runs.jsonl: 12 rows, 12 valid
+RUNS ae350-ram/runs.jsonl: 2 rows, 2 valid
+RUNS ae350/runs.jsonl: 6 rows, 6 valid
+RUNS bank-coercion/runs.jsonl: 1 rows, 1 valid
+RUNS calibration/runs.jsonl: 7 rows, 7 valid
+RUNS chipdb/runs.jsonl: 13 rows, 13 valid
+RUNS clkdiv/runs.jsonl: 10 rows, 10 valid
+RUNS clkdiv2/runs.jsonl: 8 rows, 8 valid
+RUNS dcs/runs.jsonl: 6 rows, 6 valid
+RUNS dhcen/runs.jsonl: 40 rows, 40 valid
+RUNS dqce/runs.jsonl: 2 rows, 2 valid
+RUNS dualpin/runs.jsonl: 9 rows, 9 valid
+RUNS e2e-p0/runs.jsonl: 1 rows, 1 valid
+RUNS elvds/runs.jsonl: 3 rows, 3 valid
+RUNS hclk/runs.jsonl: 11 rows, 11 valid
+RUNS ides/runs.jsonl: 7 rows, 7 valid
+RUNS iob-bank/runs.jsonl: 35 rows, 35 valid
+RUNS iodelay/runs.jsonl: 32 rows, 32 valid
+RUNS oddr-iddr/runs.jsonl: 7 rows, 7 valid
+RUNS oracle-smoke/runs.jsonl: 6 rows, 6 valid
+RUNS osc/runs.jsonl: 3 rows, 3 valid
+RUNS oser/runs.jsonl: 7 rows, 7 valid
+RUNS oser16-ides16/runs.jsonl: 3 rows, 3 valid
+RUNS pin-to-hclk/runs.jsonl: 14 rows, 14 valid
+RUNS plla/runs.jsonl: 103 rows, 103 valid
+RUNS timing-l0-cfu/runs.jsonl: 2 rows, 2 valid
+RUNS tlvds-iobuf/runs.jsonl: 1 rows, 1 valid
+RUNS tlvds/runs.jsonl: 3 rows, 3 valid
+RUNS: 28 files, 354 rows, 354 valid
+EVIDENCE ok: 351 rows, 17 pending, 0 blank, 0 missing artifacts
+0 admissibility findings
+GATE branch: check_criteria.py --phase 0
+PHASE-REPORT phase0/phase-report.md: 14 REACHED, 4 backed, 10 unlinked, 0 unbacked
+unlinked: entry: Licence Gate / prerequisites (no evidence slug claims it)
+unlinked: S1 (no evidence slug claims it)
+unlinked: S2 (no evidence slug claims it)
+unlinked: S28 (no evidence slug claims it)
+unlinked: standing: storage hygiene (no evidence slug claims it)
+unlinked: standing: DEL-e first cut exists (no evidence slug claims it)
+unlinked: standing: an evidence row is attributable (fuses_moved) (no evidence slug claims it)
+unlinked: standing: D26 measured budgets supersede §8's ASSUMED rows (no evidence slug claims it)
+unlinked: standing: nextpnr .cst round-trip seam (no evidence slug claims it)
+unlinked: S23b (no evidence slug claims it)
+CRITERIA ok: 14/14
+GATE branch: ok, 3 checks
+GATE full: ok, 3 checks (no additional checks yet)

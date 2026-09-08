@@ -193,3 +193,18 @@ Run `p3iodly-iddr-iodelay_a_iddr-0000`, one vendor run, `C_STATIC_DLY = 128`:
 
 The one-run way to `E1` is named and costs nothing to describe: a static-mode shape has no business exporting `DF` at
 all, so a variant of this shape without the `df` port would leave nothing to differ on.
+
+## `P3.F3`: re-derived at the branch HEAD, `conns` 8 → 5
+
+**0 oracle runs.** Every built point of this row was re-run through
+`tools/redo_open_half.py` at the branch HEAD, its vendor bitstream carried
+across verbatim. The verdicts are unchanged — the row is still `E0`, and still
+for its own named reason — but the connectivity residual is smaller than the
+number the sections above were written against: **23 of the row's points move
+from `conns` 8 to `conns` 5**, three differences recovered by the chipdb
+changes that landed after they were first measured (the `EW10`/`W11` IO-tile
+wire aliases and the `IOLOGICB` displacement). The remaining `c1` mismatch is
+unchanged and is **not** about the delay line: it is the `dlystep` counter's
+`ALU` cells, which the open flow packs differently. The row's verdict
+distribution at HEAD is `ok` 1, `diff` 28 (23 at `conns` 5, four at `conns` 1,
+one at `conns` 57), `aborted` 3.

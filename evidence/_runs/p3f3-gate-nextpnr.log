@@ -1,0 +1,24 @@
+ok   test_constids_appended_only_hclk_6block
+ok   test_hclk_fclk_map_covers_six_blocks
+GATE hclk-6block: 2/2 checks passed
+OK-arch-gen-deterministic GW5AST-138C bba=12af03de911e8581 chipdb=f2f92b0448b7218b
+ok   test_bridged_die_reaches_the_quadrant_spines
+ok   test_dcs_clock_inputs_are_reachable
+ok   test_derived_set_reproduces_the_named_set_on_pre5a
+ok   test_filter_reads_the_database
+ok   test_a_partly_routed_global_network_names_the_sinks_it_missed
+ok   test_arch_gen_names_the_fclk_wire_class
+ok   test_has_5a_hclk_is_set_for_138c
+ok   test_the_hclk_to_fclk_edge_is_modelled_for_every_block -- 6 blocks, 164 IO cells
+check_hclk_to_fclk_138c: 0 failure(s)
+ok   test_constids_appended_only -- 1357 pinned, 49 appended
+ok   test_constids_has_dlystep
+check_constids_append_only: 0 failure(s)
+ok   test_iodelay_gw1n_setn_unchanged
+ok   test_iodelay_gw5a_branch_moves_eight_bits_and_no_setn
+ok   test_iodelay_gw5a_dynamic_mode_is_refused_by_name -- not run: set NEXTPNR_HIMBAECHEL and GOWIN_CHIPDB_138C
+ok   test_iodelay_gw5a_moves_dlystep -- not run: set NEXTPNR_HIMBAECHEL and GOWIN_CHIPDB_138C
+ok   test_iodelay_one_per_io_block
+check_iodelay_gw5a: 0 failure(s)
+GATE branch: no evidence/criteria tools owned by nextpnr -- ok, 0 checks
+GATE full: no example/golden-netlist checks owned by nextpnr yet -- ok, 0 checks

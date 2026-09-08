@@ -236,3 +236,133 @@ exit 0, 23 `.fs`, 57.6 s. Every primitive this phase closed at `E1` builds
 through `yosys -> nextpnr-himbaechel -> gowin_pack` from a design generated
 by the shape that measured it, including `iddr-boardclk`, the design the
 blueprint's E2E block names.
+
+---
+
+# Second pass — the re-close after the gestalt fixes (`P3.F3`)
+
+Re-run in full at the phase re-close, in the foreground, with `$GOWINHOME` =
+`/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA` (Standard 1.9.12.03,
+licensed — `edu-provisional: false` on every row this phase wrote), against the
+toolchain pair rebuilt from the epic tips:
+
+```
+apycula/GW5AST-138C.msgpack.xz  f2f92b0448b7218b969237f150c694039bad9e0d4f0f17dfdbfde5108d0efd6c
+chipdb-GW5AST-138C.bin          45b32e69130237d837d48c22c992bd296eabac5c45f523b07c142c09ed8cc7cb
+nextpnr-himbaechel              34adfe5772eb7e963923ad9d3bfa264d0154ea4d94c3b57ff82954e0da9af1ca
+```
+
+Both halves rebuild **byte-identically** from their sources (chipdb 12.5 s;
+`gowin_arch_gen.py` 17.9 s + `bbasm --le` 1.0 s), and the `.bin` was reinstalled
+to both locations. The binary is unchanged and is still the pair's partner:
+`constids.inc` last moved at `50c80f92`, an ancestor of the `nextpnr` tip
+`7ed099ec`, so no `.bin` is invalidated.
+
+| # | step | result |
+|---|---|---|
+| 1 | `V14` per-primitive structural facts (`S10`, `S11`, `S12`, `S15`) | **PASS** — `OK-chipdb-fresh`, `CRITERIA ok: 27/27` |
+| 2 | `V16` named refusals | **PASS** — `13 passed, 900 deselected` |
+| 3 | `V12a --classes io` | **PASS, amended** — `L0 ok: 0/0 arcs`, the measured answer (`A31`) |
+| 4 | evidence admissibility (pre-`V9`) | **PASS** — `EVIDENCE ok: 351 rows, 17 pending, 0 blank, 0 missing artifacts` |
+| 5 | `S3` family regression | **PASS** — `60f1ba42…` / `615d4d03…` byte-identical, 2 `OK`, 0 `FAIL`, 1 `SKIP` |
+| 6 | the phase's example set builds | **PASS** — exit 0, 23 `.fs`, 4 min 4 s from a cleaned tree |
+| 7 | `V20` storage hygiene | **PASS** |
+| 8 | attribution and branch shape | **PASS** — `0` / `0` |
+
+## 1. `V14`
+
+```
+OK-chipdb-fresh
+PHASE-REPORT phase3/phase-report.md: 7 REACHED, 3 backed, 4 unlinked, 0 unbacked
+clause-d: deferred to Phase 7 (D65)
+CRITERIA ok: 27/27
+```
+
+**20/20 → 27/27**: the three `B`-half rows joining (`A42`) brings seven more
+criteria clauses within reach of an evidence row that can prove them.
+
+`0 unbacked`: every criterion the phase report calls REACHED is backed by an
+evidence slug or is explicitly deferred. The four `unlinked` lines are
+criteria no slug claims (`S15`, `S25`, `D65` clause (d), `D60`), which the
+tool reports rather than counts.
+
+## 2. `V16`
+
+```
+13 passed, 900 deselected
+```
+
+The deselected count grew from 872 to 900: the second pass adds the `B`-half,
+DDR-bank-by-ball, attrid-118 and narrow-gearbox-aux guards.
+
+## 3. `V12a --classes io`
+
+```
+L0 ok: 0/0 arcs within ±10%, 0 exceptions listed
+(VOLTAGE 0.93:0.90:0.87) (PROCESS "best=0.65: nom=1.0: worst=1.8") (TEMPERATURE 85:25:0)
+io: 0 chipdb arcs and 0 nextpnr arcs BY MEASUREMENT (P3.T32)
+unmapped: 8 SDF arcs have no nextpnr model arc
+```
+
+Unchanged, and unchanged for the reason `A31` records.
+
+## 4. Evidence admissibility
+
+```
+RUNS: 28 files, 354 rows, 354 valid
+EVIDENCE ok: 351 rows, 17 pending, 0 blank, 0 missing artifacts
+0 admissibility findings
+```
+
+**348 → 351**: the three `B`-half rows now join to a table row. They were
+invisible to the join until `A42`, and this line is what makes the repair
+visible rather than asserted.
+
+## 5. `S3` family regression
+
+```
+OK GW5A-25A  /Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+OK GW5AT-60B /Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+SKIP second-edition /Users/alex/Desktop/GowinIDE.app/Contents/Resources/Gowin_EDA
+GW5A-25A  60f1ba427f964feab3048f5dca82dc075acf9374a456476919202626d1335564
+GW5AT-60B 615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8
+```
+
+Both byte-identical to the values of record. The second pass's own packer
+change is `GW5AST_138C`-scoped, so neither family chipdb can see it — which is
+what this step re-proves rather than assumes.
+
+## 6. The example set
+
+```
+exit 0
+23
+```
+
+**4 min 4 s from a cleaned tree** — every `.json` and `.fs` deleted first, so
+the number is a full re-synthesis and not a re-pack of cached netlists (the
+first pass's 57.6 s was the latter). 6 inherited targets + 17 added by this
+phase. The only `Error` lines in the log are 18 benign ABC
+`Abc_FrameUpdateGia()` notices; `make` exits 0 and the working tree is clean
+afterwards.
+
+## 7 / 8. Storage hygiene, attribution
+
+```
+OK-evidence-gitignore
+OK-manifests
+OK-no-binaries
+0
+0
+```
+
+## E2E — re-executed by re-derivation
+
+The blueprint's E2E is the `p3-oddr-iddr-b` batch (`A36`). All **7**
+`oddr-iddr` rows — the six sweep points and the `P3.F3` `B`-half point —
+re-derive at the branch HEAD as `E1` `verdict: ok`, `cells`/`attrs`/`conns`
+**0/0/0**, `unexplained_bits []`, `decode_check c1/c2 ok`, with the vendor half
+of every row carried across verbatim. The two observables `A36` amended
+(`sdf_condition` null on these rows; the `FCLK` driver is a global clock net,
+not an `^HCLK`-named wire) are unchanged and unchanged for the same measured
+reasons.

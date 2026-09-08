@@ -48,3 +48,8 @@ p3-adc-fuses	adc	8	120	2026-09-08T04:01:04+00:00
 # P3.F3 B-half IOLOGIC, cap declared BEFORE the batch (gestalt-p3 B6): 3 runs --
 #   one ODDRC, one OSER4 and one IDES4, each on the B half of a pad pair, which
 #   is what the retracted "A half only" conclusion owes.  Cumulative 123/160.
+p3f3-b-half	oddr-iddr,oser,ides	3	123	2026-09-08T08:00:00+00:00
+# P3.F3 re-close (gestalt-p3 B7): the re-derivation of every Phase-3 row at the
+#   branch HEAD spends 0 oracle runs -- redo_open_half keeps each row's vendor
+#   bitstream and rebuilds only the open half.  Cumulative stays 123/160.
+p3f3-rederive	all-phase3	0	123	2026-09-08T08:32:00+00:00
