@@ -40,3 +40,8 @@ p3-iodelay-c	iodelay	1	110	2026-09-08T04:30:00+00:00
 p3t16a-ides16b	oser16-ides16	1	111	2026-09-08T03:09:24+00:00
 p3iodly-iddr	iodelay	1	112	2026-09-08T03:09:24+00:00
 p3t28b-adc-anchor	adc	0	112	2026-09-08T05:55:00+00:00
+# P3.T39 ADC fuse sweep, cap declared BEFORE the batch (D111): 8 runs -- the
+#   six remaining VSENCTL values and the two remaining DIV_CTL values, which
+#   is what completes both axes against the four points already on disk.
+#   Cumulative 120/160.
+p3-adc-fuses	adc	8	120	2026-09-08T04:01:04+00:00

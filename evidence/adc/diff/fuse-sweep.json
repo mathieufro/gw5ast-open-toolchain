@@ -1,0 +1,330 @@
+{
+ "div_ctl": {
+  "1": [
+   [
+    "unknown_137",
+    [
+     57,
+     0
+    ]
+   ],
+   [
+    "unknown_138",
+    [
+     57,
+     0
+    ]
+   ]
+  ],
+  "2": [
+   [
+    "unknown_137",
+    [
+     58,
+     0
+    ]
+   ],
+   [
+    "unknown_138",
+    [
+     58,
+     0
+    ]
+   ]
+  ],
+  "3": [
+   [
+    "unknown_137",
+    [
+     59,
+     0
+    ]
+   ],
+   [
+    "unknown_138",
+    [
+     59,
+     0
+    ]
+   ]
+  ]
+ },
+ "records": [
+  {
+   "entries": [
+    [
+     "unknown_137",
+     [
+      57,
+      0
+     ]
+    ],
+    [
+     "unknown_138",
+     [
+      57,
+      0
+     ]
+    ]
+   ],
+   "moved": 2,
+   "point": "adclrc-divctl1",
+   "routing": 0,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [
+    [
+     "unknown_137",
+     [
+      58,
+      0
+     ]
+    ],
+    [
+     "unknown_138",
+     [
+      58,
+      0
+     ]
+    ]
+   ],
+   "moved": 4,
+   "point": "adclrc-divctl2",
+   "routing": 0,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [
+    [
+     "unknown_137",
+     [
+      59,
+      0
+     ]
+    ],
+    [
+     "unknown_138",
+     [
+      59,
+      0
+     ]
+    ]
+   ],
+   "moved": 2,
+   "point": "adclrc-divctl3",
+   "routing": 0,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 4,
+   "point": "adclrc-vdd09",
+   "routing": 4,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 8,
+   "point": "adclrc-vdd09",
+   "routing": 8,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 6,
+   "point": "adclrc-vsen0",
+   "routing": 6,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 8,
+   "point": "adclrc-vsen0",
+   "routing": 8,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 2,
+   "point": "adclrc-vsen3",
+   "routing": 2,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 4,
+   "point": "adclrc-vsen3",
+   "routing": 4,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 14,
+   "point": "adclrc-vsen4",
+   "routing": 14,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 40,
+   "point": "adclrc-vsen4",
+   "routing": 40,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 4,
+   "point": "adclrc-vsen4",
+   "routing": 4,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 12,
+   "point": "adclrc-vsen5",
+   "routing": 12,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 26,
+   "point": "adclrc-vsen5",
+   "routing": 26,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 4,
+   "point": "adclrc-vsen5",
+   "routing": 4,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 16,
+   "point": "adclrc-vsen6",
+   "routing": 16,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 28,
+   "point": "adclrc-vsen6",
+   "routing": 28,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 4,
+   "point": "adclrc-vsen6",
+   "routing": 4,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 22,
+   "point": "adclrc-vsen7",
+   "routing": 22,
+   "tile": [
+    108,
+    167
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 44,
+   "point": "adclrc-vsen7",
+   "routing": 44,
+   "tile": [
+    108,
+    180
+   ],
+   "unattributed": []
+  },
+  {
+   "entries": [],
+   "moved": 4,
+   "point": "adclrc-vsen7",
+   "routing": 4,
+   "tile": [
+    108,
+    181
+   ],
+   "unattributed": []
+  }
+ ]
+}

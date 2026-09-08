@@ -1,0 +1,17 @@
+# P3 family regression (S3, §7.4) -- run at phase close, foreground
+edu-provisional: false
+GOWINHOME=/Applications/GowinIDE.app/Contents/Resources/Gowin_EDA (Standard 1.9.12.03, licensed)
+OK GW5A-25A /Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+OK GW5AT-60B /Applications/GowinIDE.app/Contents/Resources/Gowin_EDA
+SKIP second-edition /Users/alex/Desktop/GowinIDE.app/Contents/Resources/Gowin_EDA (not installed)
+chipdb sha256, against the Phase-2 close values:
+  GW5A-25A  60f1ba427f964feab3048f5dca82dc075acf9374a456476919202626d1335564  expected 60f1ba427f964feab3048f5dca82dc075acf9374a456476919202626d1335564
+  GW5AT-60B 615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8  expected 615d4d0349ba238c1760d9685c4893fb132e39ea253aed0af6021e5da20082d8
+25A example bitstream control (oddr-tlvds: ODDR + TLVDS, the two primitives this phase touched most):
+  one yosys+nextpnr, then gowin_pack twice -- once with this branch, once with the Phase-2 close checkout
+  head a6d984e97d9660e55836de08879f4a375424f9c0d8a2b58cfa094f1553ec08a2
+  base a6d984e97d9660e55836de08879f4a375424f9c0d8a2b58cfa094f1553ec08a2
+  BYTE-IDENTICAL
+  (built at device grade GW5A-LV25MG121NC1/I0; the Makefile's own GW5A-LV25MG121NES
+   still cannot resolve -- apicula builds no ES timing model, P1.T44, unchanged here)
+P3-FAMILY-REGRESSION ok: 2/2 builds, 0 diffs, 2 skipped

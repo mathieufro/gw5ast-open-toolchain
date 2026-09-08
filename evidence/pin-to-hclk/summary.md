@@ -155,3 +155,30 @@ around it.
 (`evidence/_budget/iologic-runs.tsv`). Seven of them found the instrument (the
 three empty designs above and the `CK0013`/`CK2060` refusals); five made the
 measurement. `P3.T08` spent none.
+
+## SUPERSEDED WITHIN THIS PHASE — the HCLK to IOLOGIC-FCLK edge exists now
+
+This row's `E1`-unattainable reason was `dev.io2hclk == {}`: the 138C database
+carried no HCLK-to-IOLOGIC fast-clock edge, so `nextpnr` routed a gated clock
+to the `CLKDIV` and stopped at `X82Y108/FCLKA`. That was true when these
+twelve runs were measured, and `P3.T13` then made it false: the vendor was
+measured driving `OSER`/`IDES` `FCLK` from `HCLK` (`FCLKSEL1`/`2` = `HCLK2`),
+and the table was built for this device under `D106`.
+
+Measured now, against the built chipdb: **`dev.io2hclk` carries 6 HCLK blocks
+and 164 IO cells**, `nextpnr`'s own gate check asserts it
+(`check_hclk_to_fclk_138c::test_the_hclk_to_fclk_edge_is_modelled_for_every_block`),
+and the `oser` and `ides` rows close at `E1` over it with the `FCLK` **lane**
+part of the placement match (`D107`).
+
+So the named gap **`G-FCLK-138C` is closed inside this phase** (`C15`), not
+carried. Two things do not change:
+
+* **This row stays `E0`, for a different reason.** Its designs are one vendor
+  build read at four balls each — a vendor-side measurement of which balls
+  reach the HCLK network, not a per-design equivalence — so there is no
+  per-row open bitstream to compare and `E1` is not the shape of the question
+  it answers.
+* **`D100a` stays named**: HCLK block 1, which serves the RGMII balls, still
+  has no modelled clock escape, and `nextpnr` reports `Failed to find a route
+  for arc 0 of net pclk` there. That is the gap the RGMII stand-in will meet.

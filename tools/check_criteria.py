@@ -266,9 +266,37 @@ def evidence_dir_populated(evidence_dir, slug, primitive_id, evidence_rows):
 # --------------------------------------------------------------------------
 # 3. DONE-STD evaluation
 # --------------------------------------------------------------------------
+#: What a row must say for `n/a` on both decode checks to be a recorded
+#: absence rather than a silent one.  `EC9` is the harness's own code for "the
+#: open flow produced no bitstream to decode"; `kind=measurement` is how a row
+#: that decodes the vendor alone -- a safety or attribute diff, not an
+#: equivalence run -- announces itself.
+_DECODE_NOT_APPLICABLE_MARKERS = ("EC9", "kind=measurement")
+
+NOT_APPLICABLE = "n/a"
+
+
 def _decode_ok(evrow):
+    """Clause (c): the two decode checks agree, or provably do not apply.
+
+    Clause (c) compares what the two flows decode, which presupposes that
+    both flows produced something to decode.  A row that decodes the vendor
+    alone -- because the open flow could not build the design (`EC9`), or
+    because the row is a vendor-side measurement rather than an equivalence
+    run -- has no such comparison to make, and reports `n/a` for both checks.
+    Reading that as a failure would make every honest non-equivalence row
+    permanently unclosable; reading it as a pass unconditionally would let a
+    silent `n/a` through.  So it counts only when the row says which of the
+    two it is.
+    """
     dc = evrow.get("decode_check") or {}
-    return dc.get("c1") == OK and dc.get("c2") == OK
+    c1, c2 = dc.get("c1"), dc.get("c2")
+    if c1 == OK and c2 == OK:
+        return True
+    if c1 == NOT_APPLICABLE and c2 == NOT_APPLICABLE:
+        notes = str(evrow.get("notes") or "")
+        return any(m in notes for m in _DECODE_NOT_APPLICABLE_MARKERS)
+    return False
 
 
 def evaluate_row(row, evidence_rows, evidence_dir, enable_clause_d):

@@ -1,0 +1,41 @@
+BATCH_START batch=p3-adc shape=adc_osc level=E1 pid=27999 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3adc
+BATCH_HEAD selftest --inject-one-fuse: FAILED — KeyError('ADC')
+BATCH_HEAD selftest --unpacker-completeness: FAILED — KeyError('ADC')
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_HEAD_BLOCKED batch=p3-adc — no row is produced by this batch
+BATCH_COMPLETE p3-adc runs=0 ok=0 diff=0 aborted=0
+BATCH_START batch=p3-adc shape=adc_osc level=E1 pid=30461 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3adc
+SELFTEST ok: 1 difference reported, 0 spurious
+BATCH_HEAD selftest --inject-one-fuse: ok
+COMPLETENESS ok: 0 unattributed tiles, 0 missing cells
+BATCH_HEAD selftest --unpacker-completeness: ok
+MASKPROBE ok: 6 classes probed, 6 reported
+BATCH_HEAD selftest --probe-mask-classes: ok
+BATCH_HEAD gw_sh pre-flight: ok
+BATCH_CHIPDB batch=p3-adc sha256=45b32e69130237d837d48c22c992bd296eabac5c45f523b07c142c09ed8cc7cb
+BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 12 run ids)
+BATCH_RESUME batch=p3-adc planned=12 already_terminal=4
+RUN_SKIP p3-adc-adc_osc-0000 (terminal row already present)
+RUN_SKIP p3-adc-adc_osc-0001 (terminal row already present)
+RUN_SKIP p3-adc-adc_osc-0002 (terminal row already present)
+RUN_SKIP p3-adc-adc_osc-0003 (terminal row already present)
+RUN_START p3-adc-adc_osc-0004 sweep='adclrc-vsen0'
+RUN_DONE p3-adc-adc_osc-0004 verdict=refused
+RUN_START p3-adc-adc_osc-0005 sweep='adclrc-vsen3'
+RUN_DONE p3-adc-adc_osc-0005 verdict=refused
+RUN_START p3-adc-adc_osc-0006 sweep='adclrc-vsen4'
+RUN_DONE p3-adc-adc_osc-0006 verdict=refused
+RUN_START p3-adc-adc_osc-0007 sweep='adclrc-vsen5'
+RUN_DONE p3-adc-adc_osc-0007 verdict=refused
+RUN_START p3-adc-adc_osc-0008 sweep='adclrc-vsen6'
+RUN_DONE p3-adc-adc_osc-0008 verdict=refused
+RUN_START p3-adc-adc_osc-0009 sweep='adclrc-vsen7'
+RUN_DONE p3-adc-adc_osc-0009 verdict=refused
+RUN_START p3-adc-adc_osc-0010 sweep='adclrc-divctl1'
+RUN_DONE p3-adc-adc_osc-0010 verdict=refused
+RUN_START p3-adc-adc_osc-0011 sweep='adclrc-divctl3'
+RUN_DONE p3-adc-adc_osc-0011 verdict=refused
+BATCH_SKIPPED batch=p3-adc n=4 refused=8 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-adc.rows.jsonl
+BATCH_COMPLETE p3-adc runs=8 ok=0 diff=0 aborted=8

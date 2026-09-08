@@ -18,7 +18,7 @@ ae350-runs.tsv` (6 of 8 spent on this line of work).
 | run_id | field | path | sha256 |
 |---|---|---|---|
 | `ae350-route-0001` | `vendor_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-tilewires/run/impl/pnr/run.fs` | `2f0c74d259ea8251b280cf11bd1c43eb95a34a384e94da44d7aeccec9ae54441` |
-| `ae350-route-0001` | `open_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-open-e0/top.fs` | `b07b3ed496591f44f3436d45dde5dbf0d2ad47596ba0b96eb53cea3df558e315` |
+| `ae350-route-0001` | `open_fs` | **overwritten in place** (`D99`) -- was `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-open-e0/top.fs`, `sha256:b07b3ed496591f44f3436d45dde5dbf0d2ad47596ba0b96eb53cea3df558e315`; a Phase-3 repack of the IOB safety corpus (`D108`) wrote its own bitstream over that path, which now reads `sha256:18392c3ff99f37d6b0d6f2388e83fc5815dd3cf5805daca2864812bc981f11d0`. The original is not reproducible and the row it belongs to is `aborted`, so nothing rests on it; what this line records is that a scratch directory was shared across two phases and the later one won | -- |
 | `ae350-row-0001` | `vendor_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/ae350-row/batch2/p2t23-ae350-row2-ae350_soc-0000/run/impl/pnr/run.fs` | `1b032a4b61dc8e0062b9fa88d5a52bf412b51e8c643de42f2eb20b8d355a27d5` |
 | `ae350-row-0001` | `open_fs` | **pruned** (`D99`) -- `sha256:6d91d0c816ff01418b20b31432f8c273d237df82404df9e35113a840f729622c`; overwritten by the second-pass E2E rebuild and not reproducible, see the row's note | -- |
 | second pass | `open_fs` | `/Users/alex/fine-line-data/open-toolchain-gw5ast/p2-close2/ae350-row2/top.fs` | `10c4713ad2c7f509f159c862a3356351a5d79c562d45a5b9b8252ed9a65ea796` |
