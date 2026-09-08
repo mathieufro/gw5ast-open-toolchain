@@ -271,3 +271,41 @@ which `apycula.attrids` does not name — `Unknown attr name for table: IOLOGIC
 code:133`. It costs no bits in the comparison here (`attrs` 0) but it is an
 unnamed vendor attribute on a die this epic ships, and it belongs in the
 attribute table.
+
+
+## `P3.T16a` — the delayed net reaches a clocked endpoint with no fabric at all
+
+`P3.T25` measured the puzzle (at `C_STATIC_DLY=128` on a pad-to-pad path the
+vendor programs **no** `IOLOGIC` fuse) and `P3.T29`'s `iodelay_a_clocked`
+named the rule (add a fabric capture flop and the vendor programs the full
+step). That row had to stay `E0` for a reason that had nothing to do with the
+rule: the capture flop is a *fabric* cell, GowinSynthesis renames it, so
+`INS_LOC` cannot pin it in both flows and the eight `conns` it differed by
+were the flop's.
+
+`iodelay_a_iddr` keeps the endpoint and drops the fabric: the delayed output
+is captured by the **`IDDR` in the pad's own `IOLOGIC`**, and both its outputs
+leave on package balls, so the design holds no freely placed cell.
+
+Run `p3iodly-iddr-iodelay_a_iddr-0000`, one vendor run, `C_STATIC_DLY = 128`:
+
+* `cells 0`, `attrs 0`, `fuses_moved []`, `unexplained_bits []`, `c1 ok`,
+  `c2 ok` — the scoped tile's fuses are bit-identical, so **the context rule is
+  confirmed on a shape that can carry the claim**: a static delay is programmed
+  only when the delayed net reaches a clocked endpoint, and an `IOLOGIC`'s own
+  `IDDR` is such an endpoint;
+* `conns` went **8 -> 4 -> 1**. Four were `SDTAP`, `VALUE`, `CE` (which shares
+  `VALUE`'s wire in the `IOLOGIC` port map) and `DF`: in static mode the vendor
+  ties the dynamic-load handshake to the rail and routes nothing to it, exactly
+  as it does the `DLYSTEP` bus. `nextpnr` now does the same, which closed three;
+* the **last one is `DF`**. The vendor prunes the delay-full flag as well and
+  leaves the pad it would drive unconnected — its `DF` net has a single
+  endpoint, the `IOLOGIC`'s own port — while the open flow honours the netlist
+  the user wrote and routes it to the ball. That is a deliberate difference in
+  what the two tools do with a port the mode does not produce, not a defect on
+  either side, so the row closes **`E0` with the rule named** rather than
+  reaching for `E1`.
+
+The one-run way to `E1` is now named and costs nothing to describe: a
+static-mode shape has no business exporting `DF` at all, so a variant of this
+shape without the `df` port would leave nothing to differ on.

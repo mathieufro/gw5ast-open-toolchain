@@ -1,84 +1,74 @@
-# `OSER16` / `IDES16` on the GW5AST-138C — adjudicated (`P3.T16`)
+# `OSER16` / `IDES16` on the GW5AST-138C — adjudicated and implemented
 
-## Verdict: **the vendor accepts both.** The blueprint's expected refusal is REFUTED.
+`P3.T16` adjudicated the two 16-bit gearboxes against the vendor; `P3.T17`
+replaced the open flow's accidental refusal with one that named the gap;
+`P3.T16a` closed it. Both primitives now build end to end in the open flow and
+both close at **`E1`, `ok`, `0/0/0`, with an empty `fuses_moved`** — the open
+bitstream's scoped fuses are bit-identical to the vendor's.
 
-Two vendor runs, one per primitive, on bank-5 ball `AA9` (`IOB53A`, cell
-`(108,52)`, HCLK block 4 — the same ball `io_ser`/`io_des` measure the 4/8/10-bit
-gearboxes on). `gw_sh` returned 0 with **zero** errors and wrote a full `run.fs`
-in both, and the PnR resource report names the primitive it built:
+## Verdict: the vendor accepts both, and so does the open flow now
 
-| run | primitive | vendor | IOLOGIC cells used |
-|---|---|---|---|
-| `p3-oser16-io_ser16-0000` | `OSER16` | **accepted** | `2/285` — the A+B pad pair |
-| `p3-ides16-io_des16-0000` | `IDES16` | **accepted** | `1/285` |
+| run | primitive | shape | vendor | open | level | verdict |
+|---|---|---|---|---|---|---|
+| `p3-oser16-io_ser16-0000` | `OSER16` | `io_ser16` | accepted, `IOLOGIC 2/285` | **ok** | `E1` | **ok** 0/0/0 |
+| `p3t16a-ides16b-io_des16_balls-0000` | `IDES16` | `io_des16_balls` | accepted, `IOLOGIC 1/285` | **ok** | `E1` | **ok** 0/0/0 |
+| `p3-ides16-io_des16-0000` | `IDES16` | `io_des16` | accepted | ok | `E0` | `diff` — the shape's own XOR fold |
 
-So the 138C silicon has a 16-bit gearbox in both directions, and the two
-primitives are *asymmetric in cost*: `OSER16` occupies two IOLOGIC cells and
-`IDES16` one. That asymmetry is a measured fact a future implementation needs
-and could not have been guessed from `cells_xtra_gw5a.v`, which declares
-`OSER14`/`IDES14`/`IDES32` and neither 16-bit form.
+The third row is kept, not replaced: it is `P3.T16`'s adjudication vehicle, and
+its three remaining `c1` misses are the three freely placed `MUX2_LUT*` cells
+of the `Q10`-`Q15` XOR fold that shape documents (`D105`). `io_des16_balls`
+drops the fold — `Q10`-`Q15` are simply left unconnected — so no fabric cell
+remains and the row closes.
 
-Where the expectation came from, and why it was wrong: `cells_xtra_gw5a.v` is
-yosys' GW5A cell list, not the device's. The *vendor's own* GW5A simulation
-library declares both — `$GOWINHOME/IDE/simlib/gw5a/prim_sim.v:11595` (`OSER16`)
-and `:8906` (`IDES16`) — and yosys elaborates `OSER16` fine (`RTLIL module
-\OSER16`, one instance) because the generic Gowin cell library carries it.
+**Vendor runs spent by `P3.T16a`: one.** `OSER16`'s row was re-derived from the
+bitstream `P3.T16` already bought (`tools/redo_open_half.py`), which spends no
+oracle run; only the clean `IDES16` shape needed the vendor.
 
-## The open flow, before `P3.T17`
+## The geometry, MEASURED — and it is not the GW1N one
 
-Both runs die in `nextpnr-himbaechel`, and both die on the *wrong* message:
+The two vendor bitstreams decode as follows at the pad pair under test
+(`AA9` = `IOB53A`, cell (108, 52)):
 
-```
-ERROR: OSER16 dut can not be placed at X52Y108/IOBA
-ERROR: IDES16 dut can not be placed at X52Y108/IOBA
-```
+| | tile / table | attributes |
+|---|---|---|
+| `OSER16` main | (108, 52) `IOLOGICA` | `OUTMODE=ODDRX8`, `HWL=TRUE`, `CLKOMUX=ENABLE`, `WRFCLKSEL=UNK102`, `FCLKSEL1=HCLK2`, `FCLKSEL2=HCLK2_` |
+| `OSER16` aux | (108, 53) `IOLOGICB` | `OUTMODE=LVDSOUT` (the die's alias for `DDRENABLE`), `ISI=ENABLE`, `OCLKCE=CE`, same clock selection |
+| `IDES16` | (108, 52) `IOLOGICA` | `INMODE=105`, `CLKIMUX=ENABLE` — and **nothing at all** in the `B` half |
 
-That text is raised by `pack_oser16`/`pack_ides16`
-(`himbaechel/uarch/gowin/pack_iologic.cc:780`, `:854`) when
-`GowinUtils::get_tile_io16_offs(x, y)` returns `(0,0)`, which it does for
-**every** IO tile of the 138C: the `io16` aux-offset table is populated for the
-GW1N/GW1NS families only. The refusal is therefore real, but its wording blames
-the ball, which sends a reader hunting for a better ball that does not exist.
-`P3.T17` replaces it with a refusal that names the device and the primitive.
+So on the Arora V families a 16-bit gearbox occupies **one pad pair**, not two
+consecutive cells: `OSER16` takes the pair's `A` and `B` halves and `IDES16`
+takes `A` alone. That is exactly the asymmetry the vendor's own resource report
+showed (`IOLOGIC 2/285` against `IOLOGIC 1/285`) and it is *why* it showed it.
+`get_tile_io16_offs` therefore stays `(0, 0)` on this family and means it; the
+`io16` extra_func records `pair: (0, 0)` with `aux: 'IOLOGICB'` so a packer can
+tell the two geometries apart without inferring anything from a zero.
 
-## Consequence (coordination note, not absorbed here)
+Three consequences fell out of that single fact:
 
-`P3.T16`'s Done-when flips to **implement**, and the blueprint says an
-acceptance raises a follow-up rather than being silently absorbed. The follow-up
-is recorded in `impl/PROGRESS.md` as **P3.T16a — implement `OSER16`/`IDES16` for
-the 138C in both tools** (bels + `io16` aux offsets in `chipdb.py`, the GW5A
-`get_tile_io16_offs` table in `himbaechel/uarch/gowin/globals.cc`/`gowin_utils`,
-the packer's fuse emission, and an `E1` shape whose sixteen output bits each
-land on their own ball). It is out of this task's four-run budget.
+* **the `B` half's IOLOGIC fuses live in the aux cell**, next to its pad's:
+  (108, 52)'s own `IOLOGICB` table stays clear and (108, 53)'s carries the aux
+  configuration. `chipdb` now gives `IOLOGICB` the `fuse_cell_offset` its
+  `IOBB` already had, and `gowin_pack`/`gowin_unpack` follow it. Before this,
+  the die's whole `B` column of IOLOGIC was unusable and nothing said so;
+* **`INMODE` value id 105** is this die's 16:1 input mode. It is not the pre-5A
+  `IDDRX8` (67) — `OSER16` reuses that id in the *output* direction — and no
+  shipped table names it, so it enters `attrids` as `UNK105` beside `UNK76`
+  (which is `IDES8` here) and `UNK102`;
+* **`OCLKCE=CE`** is the one attribute of the aux half the generic `DDRENABLE16`
+  handler misses.
 
-## Shape caveats
+## Extent: structural, and stated as such
 
-* `io_des16` XOR-reduces `Q10..Q15` onto one ball through a fabric LUT, because
-  bank 5 brings out eleven balls this shape has not already claimed, not
-  sixteen. A fabric LUT is placed freely by each flow, so this shape can never
-  close `conns` at `E1` (`D105`); it is an adjudication vehicle only. The
-  follow-up task owns the `E1` shape.
-* Both rows are recorded `verdict: refused`, `level: E0`, with the vendor's
-  acceptance and the open tools' exact text in `notes` and in
-  `vendor-refusal.txt`. `refused` here is the **open flow's** verdict — it is
-  the terminal verdict the vocabulary has for "one flow would not build it"
-  (`D30`), and the row says in full which flow refused and which accepted.
+`chipdb` creates the two bels on every cell that has both `IOLOGIC` halves and
+the pad pair to go with them — 156 cells on this die. That extent is derived
+from the device's own tables rather than fuzzed cell by cell the way the
+GW1N-9/GW1NS-4 ranges were, and one cell of it (108, 52) is measured. A ball
+whose pair the vendor refuses would therefore be accepted here and refused by
+`gw_sh`; no such ball is known, and finding one is a sweep, not a fix.
 
-## `P3.T17` — what the refusal now says, and the deviation it records
+## Decode
 
-The blueprint's literal wording — `OSER16 is not supported on GW5AST-138C` —
-is a claim about the *silicon*, and `P3.T16` measured it false. Both tools
-therefore refuse with **"is not implemented on GW5AST-138C"**, which names the
-device and the primitive (`D30`, `V16`) and is true: the gap is in the open
-tools' database, not in the die. The refusal says so in its own text so a
-reader is not sent hunting for a better ball.
-
-* `nextpnr-himbaechel` — `pack_io16` gates on the GW5A family before either
-  `pack_oser16`/`pack_ides16` can reach `check_io16_placement`.
-* `gowin_pack` — `GW5A._refuse_io16`, reached through `get_OSER16_fuses` /
-  `get_IDES16_fuses`, raises `PackRefused` (exit `3`, a verdict rather than a
-  crash) and quotes the vendor's measured IOLOGIC cost.
-
-`apycula/chipdb.py`'s standing comment that "OSER16 / IDES16 were only in three
-chips and these primitives simply do not exist in the latest series" is
-corrected in the same change: it is refuted by these two runs.
+A decoded 16-bit gearbox is reported under **both** the gearbox bel and the
+`IOLOGIC` half whose fuse table carries it. Both are true of the same bits and
+a placement may name either, so reporting one and dropping the other made the
+other unrecoverable — which is what the first `c1` mismatch of this task was.

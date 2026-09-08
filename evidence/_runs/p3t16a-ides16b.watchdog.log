@@ -1,0 +1,2 @@
+04:50:32 WATCHDOG_ARMED batch=p3t16a-ides16b stall=5min poll=100s (independent process)
+04:53:13 WATCHDOG_COMPLETE batch=p3t16a-ides16b saw BATCH_COMPLETE (clean exit)

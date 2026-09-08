@@ -79,3 +79,74 @@ out eleven free balls and not fifteen, and it claims **no analog ball at all** �
 the sweep uses the internal sources `VSENCTL` selects, so the board's IO
 envelope is untouched. The row is an adjudication and a localisation, not an
 `E1` identity claim.
+
+## `P3.T28a` — anchored geometrically, and what that settled
+
+`P3.T28a` re-ran the anchoring with the method that anchored the AE350 tables
+(`P2.T08a`/`P2.T08b`: locate a table by sweeping the 5-series block for a window
+whose live records land in the measured cells) and added a check plausibility
+alone cannot make — **each candidate record is held against the vendor's own ADC
+bitstreams**: is the wire it names one the vendor's routing actually drives, in
+the cell the record names? The tool is
+`$OTC/tools/anchor_adc_tables_138c.py`, it spends **no vendor run**, and it
+reads the four bitstreams `P3.T29` already bought.
+
+The measured wire sets come from a background subtraction: each ADC-corner tile
+is compared against a distant tile of the same type, so only the corner's own
+routing survives. Tiles (108, 180) and (108, 181) have types unique to the
+corner and therefore no twin; they contribute nothing rather than everything,
+which is why the confirmation below rests on (108, 179) and (108, 167).
+
+### What it settled
+
+* **The region is confirmed.** A run of records starting around word `0x1360e`
+  (byte `0xa20c8`) holds nothing but pip-destination wires — `A`-`D`, `CLK` —
+  in the block's own cells, and **every** one of them that falls in a
+  checkable tile is a wire the vendor's ADC routing drives there: 13 of 13 at
+  the best-covered phase, and 100 % at every phase in the run. Two of the
+  cells are independent of one another — `(109, 181)` = tile (108, 180), whose
+  `A0`/`A1` are the wires the `VSENCTL 1 -> 2` diff moves, and `(109, 168)` =
+  tile (108, 167), the second tile that diff moves — so this is not one
+  coincidence seen twice.
+* **The direction is the opposite of the table's name.** These are wires the
+  fabric drives and the block reads, i.e. the block's **inputs**, and they are
+  in the 0x12-slot table `dat_parser` calls `AdcLRCOuts`. That is the same
+  lesson `Ae350SocOuts` taught (`tools/derive_ae350_wire_map.py`: "the
+  direction rule is the load-bearing part, and it is not the table names").
+  Fifteen live records is also exactly the number of *fabric* inputs `ADCLRC`
+  has: of its 37 input ports, `ADCINBK[7:0]` are analog pads and
+  `FSCAL_VALUE[9:0]`/`OFFSET_VALUE[11:0]` are static configuration, leaving 15.
+
+### Why there is still no bel
+
+* **The phase is not fixed.** Every window in the run confirms at 100 %,
+  because the run is one long region of ADC-cell wires and sliding the window
+  by one record still lands inside it. A portmap is an assignment of *slot
+  index* to port name, so a window that is right about the region and wrong by
+  one record about the phase gives every port the wrong wire — silently. The
+  three filters that fixed the AE350's phase (the table walks the band column
+  by column, so the true base opens a column) do not fix this one: these
+  records do not walk their cells in column order.
+* **The output half has no candidate at all.** No 0x28-slot window of `F`/`Q`/
+  `OF` wires exists in the block's cells, and the only structurally clean
+  output-role windows anywhere near sit at `(109, 167)` = tile (108, 166),
+  where the bitstream shows no ADC routing, while the tile the bitstream *does*
+  show driving `OF0`-`OF7`/`F0`-`F5` — (108, 168) — appears in no window.
+* **`AdcULC*` has no candidate at all** under the same filters, in any of the
+  upper-left cells.
+
+So the row stays `refused` with the open flow's exact words, and it stays that
+way on a sharper reason than `P3.T28`'s: not "the tables read as zeros" but
+"the input table's region is confirmed by the vendor's own routing and its
+phase is not, and the output table is not located at all". This also
+**supersedes** `P3.T28`'s candidate bases `0xa2044` and `0xa1bca`: neither
+survives the wire-role filter.
+
+### The one measurement that would finish it
+
+A phase needs a record whose port is known independently. One vendor `ADCLRC`
+run that drives a **single** fabric input -- `ADCEN` alone, everything else
+tied off -- moves exactly one wire against the runs already on disk, and that
+one wire's position in the confirmed run fixes the phase for all fifteen. It is
+one run, and it was not spent here because the same run cannot also locate the
+output table, which is the other half of a portmap.
