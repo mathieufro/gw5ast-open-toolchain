@@ -1,0 +1,29 @@
+01:55:30 BATCH_START batch=p3-adc shape=adc_osc level=E1 pid=37605 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3adc
+01:56:12 BATCH_HEAD selftest --inject-one-fuse: ok
+01:56:26 BATCH_HEAD selftest --unpacker-completeness: ok
+01:56:26 BATCH_HEAD selftest --probe-mask-classes: ok
+01:56:27 BATCH_HEAD gw_sh pre-flight: ok
+01:56:27 BATCH_CHIPDB batch=p3-adc sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+01:56:27 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+01:56:27 BATCH_RESUME batch=p3-adc planned=1 already_terminal=0
+01:56:27 RUN_START p3-adc-adc_osc-0000 sweep='adclrc-temp'
+01:56:40 RUN_DONE p3-adc-adc_osc-0000 verdict=aborted
+01:56:40 BATCH_SKIPPED batch=p3-adc n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-adc.rows.jsonl
+BATCH_COMPLETE p3-adc runs=1 ok=0 diff=0 aborted=1
+01:57:31 BATCH_START batch=p3-adc shape=adc_osc level=E1 pid=38210 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3adc
+01:58:12 BATCH_HEAD selftest --inject-one-fuse: ok
+01:58:25 BATCH_HEAD selftest --unpacker-completeness: ok
+01:58:26 BATCH_HEAD selftest --probe-mask-classes: ok
+01:58:26 BATCH_HEAD gw_sh pre-flight: ok
+01:58:26 BATCH_CHIPDB batch=p3-adc sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+01:58:26 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 4 run ids)
+01:58:26 BATCH_RESUME batch=p3-adc planned=4 already_terminal=1
+01:58:26 RUN_SKIP p3-adc-adc_osc-0000 (terminal row already present)
+01:58:27 RUN_START p3-adc-adc_osc-0001 sweep='adclrc-vdd09'
+01:58:40 RUN_DONE p3-adc-adc_osc-0001 verdict=aborted
+01:58:40 RUN_START p3-adc-adc_osc-0002 sweep='adclrc-divctl2'
+01:58:53 RUN_DONE p3-adc-adc_osc-0002 verdict=aborted
+01:58:53 RUN_START p3-adc-adc_osc-0003 sweep='adculc-temp'
+01:59:15 RUN_DONE p3-adc-adc_osc-0003 verdict=aborted
+01:59:15 BATCH_SKIPPED batch=p3-adc n=1 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-adc.rows.jsonl
+BATCH_COMPLETE p3-adc runs=3 ok=0 diff=0 aborted=3

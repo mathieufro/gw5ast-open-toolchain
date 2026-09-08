@@ -1,0 +1,28 @@
+02:04:09 BATCH_START batch=p3-osc shape=osc level=E1 pid=42647 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3osc
+02:04:51 BATCH_HEAD selftest --inject-one-fuse: ok
+02:05:04 BATCH_HEAD selftest --unpacker-completeness: ok
+02:05:05 BATCH_HEAD selftest --probe-mask-classes: ok
+02:05:05 BATCH_HEAD gw_sh pre-flight: ok
+02:05:05 BATCH_CHIPDB batch=p3-osc sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+02:05:05 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 2 run ids)
+02:05:05 BATCH_RESUME batch=p3-osc planned=2 already_terminal=0
+02:05:06 RUN_START p3-osc-osc-0000 sweep='osca-div100'
+02:05:06 RUN_DONE p3-osc-osc-0000 verdict=refused
+02:05:07 RUN_START p3-osc-osc-0001 sweep='osca-div2'
+02:05:07 RUN_DONE p3-osc-osc-0001 verdict=refused
+02:05:07 BATCH_SKIPPED batch=p3-osc n=0 refused=2 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-osc.rows.jsonl
+BATCH_COMPLETE p3-osc runs=2 ok=0 diff=0 aborted=2
+02:05:53 BATCH_START batch=p3-osc shape=osc level=E1 pid=44584 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3osc
+02:06:34 BATCH_HEAD selftest --inject-one-fuse: ok
+02:06:47 BATCH_HEAD selftest --unpacker-completeness: ok
+02:06:48 BATCH_HEAD selftest --probe-mask-classes: ok
+02:06:48 BATCH_HEAD gw_sh pre-flight: ok
+02:06:49 BATCH_CHIPDB batch=p3-osc sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+02:06:49 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 3 run ids)
+02:06:49 BATCH_RESUME batch=p3-osc planned=3 already_terminal=2
+02:06:49 RUN_SKIP p3-osc-osc-0000 (terminal row already present)
+02:06:49 RUN_SKIP p3-osc-osc-0001 (terminal row already present)
+02:06:49 RUN_START p3-osc-osc-0002 sweep='oscb-div10'
+02:06:49 RUN_DONE p3-osc-osc-0002 verdict=refused
+02:06:49 BATCH_SKIPPED batch=p3-osc n=2 refused=1 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-osc.rows.jsonl
+BATCH_COMPLETE p3-osc runs=1 ok=0 diff=0 aborted=1

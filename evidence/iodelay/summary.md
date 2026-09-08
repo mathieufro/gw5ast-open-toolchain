@@ -237,3 +237,37 @@ case as `IOLOGIC_DUMMY`, minus the main cell that stands in for it. Both
 `equiv.bitstream_bel_exported` and `decode_check`'s `c1` now exempt it by
 name; before, it read as a misplaced bel and a missing cell and held
 `c-static-dly-0` at `E0` with `c1=mismatch`.
+
+---
+
+## The context rule, named (`p3-iodelay-c`, one run)
+
+The section above left the row open on one question: *what*, exactly, does the
+vendor need to see before it programs a static delay? The answer is one run.
+
+`iodelay_a_clocked` is `iodelay_a_balls` with **one** change — the delayed
+output is captured by a fabric flop clocked by the board oscillator, and the
+harness writes a `create_clock` for it — and at the same `C_STATIC_DLY = 128`
+the vendor now programs **bit `(21,10)` of tile `(52,108)`**, with `(21,3)`
+through `(21,9)` clear. That is exactly the encoding of 128 in the fuse table
+measured over 28 bitstreams at the top of this file, bit 7, weight 128.
+
+> **A static delay is a timing quantity, and the vendor programs it only when
+> the delayed net reaches a clocked fabric endpoint.** A pad-to-pad path has no
+> endpoint for the delay to move, so the parameter is silently dropped.
+
+That is the rule `P3.T25` measured the consequence of and could not name.
+
+`cells` 0 and `attrs` 0: the open flow emitted the same configuration, so the
+model is right in this context too. `conns` is 8, and the eight are the `D105`
+residual and nothing else — the capture flop is placed freely by each flow, and
+GowinSynthesis renames it, so `INS_LOC` cannot pin it (`P3.T12`, MEASURED).
+
+So the row stays `E0`, now for a fully named reason, and the shape that would
+close it is specified rather than guessed: it needs a clocked endpoint whose
+placement **both** flows can be made to agree on. One further gap is named on
+the way: in this context the vendor also sets `IOLOGIC` attribute id `133`,
+which `apycula.attrids` does not name — `Unknown attr name for table: IOLOGIC
+code:133`. It costs no bits in the comparison here (`attrs` 0) but it is an
+unnamed vendor attribute on a die this epic ships, and it belongs in the
+attribute table.

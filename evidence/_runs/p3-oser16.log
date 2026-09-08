@@ -1,0 +1,12 @@
+01:41:57 BATCH_START batch=p3-oser16 shape=io_ser16 level=E1 pid=10439 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t16/oser16
+01:42:40 BATCH_HEAD selftest --inject-one-fuse: ok
+01:42:53 BATCH_HEAD selftest --unpacker-completeness: ok
+01:42:54 BATCH_HEAD selftest --probe-mask-classes: ok
+01:42:55 BATCH_HEAD gw_sh pre-flight: ok
+01:42:55 BATCH_CHIPDB batch=p3-oser16 sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+01:42:55 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+01:42:55 BATCH_RESUME batch=p3-oser16 planned=1 already_terminal=0
+01:42:55 RUN_START p3-oser16-io_ser16-0000 sweep='oser16-default'
+01:43:09 RUN_DONE p3-oser16-io_ser16-0000 verdict=aborted
+01:43:09 BATCH_SKIPPED batch=p3-oser16 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-oser16.rows.jsonl
+BATCH_COMPLETE p3-oser16 runs=1 ok=0 diff=0 aborted=1

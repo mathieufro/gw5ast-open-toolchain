@@ -1,0 +1,12 @@
+02:07:56 BATCH_START batch=p3-iodelay-c shape=iodelay_a_clocked level=E0 pid=45594 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3iodly
+02:08:38 BATCH_HEAD selftest --inject-one-fuse: ok
+02:08:52 BATCH_HEAD selftest --unpacker-completeness: ok
+02:08:52 BATCH_HEAD selftest --probe-mask-classes: ok
+02:08:53 BATCH_HEAD gw_sh pre-flight: ok
+02:08:53 BATCH_CHIPDB batch=p3-iodelay-c sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+02:08:53 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+02:08:53 BATCH_RESUME batch=p3-iodelay-c planned=1 already_terminal=0
+02:08:53 RUN_START p3-iodelay-c-iodelay_a_clocked-0000 sweep='c-static-dly-128'
+02:10:23 RUN_DONE p3-iodelay-c-iodelay_a_clocked-0000 verdict=diff
+02:10:23 BATCH_SKIPPED batch=p3-iodelay-c n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-iodelay-c.rows.jsonl
+BATCH_COMPLETE p3-iodelay-c runs=1 ok=0 diff=1 aborted=0

@@ -1,0 +1,12 @@
+01:43:47 BATCH_START batch=p3-ides16 shape=io_des16 level=E1 pid=12170 design_dir=/Users/alex/fine-line-data/open-toolchain-gw5ast/p3t16/ides16
+01:44:29 BATCH_HEAD selftest --inject-one-fuse: ok
+01:44:42 BATCH_HEAD selftest --unpacker-completeness: ok
+01:44:42 BATCH_HEAD selftest --probe-mask-classes: ok
+01:44:43 BATCH_HEAD gw_sh pre-flight: ok
+01:44:43 BATCH_CHIPDB batch=p3-ides16 sha256=9c890f1a8744df7ed7010701f156303f34ecab73446ebea044c6f6bcb8eacfad
+01:44:43 BATCH_SIZE batch_runs=867 source=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/calibration/measured-budget.md parallelism=1 (this batch: 1 run ids)
+01:44:43 BATCH_RESUME batch=p3-ides16 planned=1 already_terminal=0
+01:44:43 RUN_START p3-ides16-io_des16-0000 sweep='ides16-default'
+01:44:57 RUN_DONE p3-ides16-io_des16-0000 verdict=aborted
+01:44:57 BATCH_SKIPPED batch=p3-ides16 n=0 refused=0 rows=/Users/alex/fine-line/.atelier/worktrees/2026-09-03-open-toolchain-gw5ast-7e84/apicula-wt/open-toolchain/evidence/_runs/p3-ides16.rows.jsonl
+BATCH_COMPLETE p3-ides16 runs=1 ok=0 diff=0 aborted=1
